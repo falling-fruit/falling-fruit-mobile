@@ -6,10 +6,10 @@
         id        = "com.phonegap.helloworld"
         version   = "1.0.0">
 
-    <name>HelloWorld</name>
+    <name>FallingFruit</name>
 
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Mapping the Urban Harvest
     </description>
 
     <author href="http://phonegap.com" email="support@phonegap.com">
@@ -88,7 +88,7 @@
 
         Otherwise, you can specify specific domains:
     -->
-    <access origin="http://127.0.0.1*"/> <!-- allow local pages -->
+    <access origin="*"/> <!-- allow local pages -->
     <!--
         <access origin="http://phonegap.com" />                    - allow any secure requests to http://phonegap.com/
         <access origin="http://phonegap.com" subdomains="true" />  - same as above, but including subdomains, such as http://build.phonegap.com/
