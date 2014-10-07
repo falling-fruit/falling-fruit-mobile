@@ -1,4 +1,4 @@
-window.FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch'])
+FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch'])
 
 FallingFruitApp.config ($interpolateProvider) ->
   $interpolateProvider.startSymbol('[{')
@@ -6,10 +6,17 @@ FallingFruitApp.config ($interpolateProvider) ->
 
 FallingFruitApp.config ($routeProvider)->
   $routeProvider
-    #AUTH
-    .when '/auth',
-      templateUrl: 'html/auth.html'
-      controller: 'AuthCtrl'
+    .when '/search',
+      templateUrl: 'html/search.html'
+      controller: 'SearchCtrl'
+
+    .when '/detail',
+      templateUrl: 'html/detail.html'
+      controller: 'DetailCtrl'
 
     .otherwise
-      redirectTo: '/auth'
+      redirectTo: '/search'
+
+controllers = {}
+factories = {}
+directives = {}

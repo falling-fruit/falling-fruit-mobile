@@ -10,6 +10,15 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
+    <div ng-controller="MainCtrl" class="main-container">
+      <div class="menu">
+        <div class="menu-left-btn"></div>
+        <div class="menu-title"></div>
+        <div ng-show="false" class="menu-switcher"></div>
+        <div class="menu-right-btn"></div>
+      </div>
+      <h1>Welcome to [{app_name}]!</h1>
+    </div>
     <div ng-view ng-class="transition_class" class="ng-view-container"></div>
     <script type="text/javascript" src="phonegap.js"></script>
     <script type="text/javascript" src="js/lib/underscore.js"></script>

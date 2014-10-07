@@ -1,3 +1,31 @@
+@font-face {
+  font-family: "Roboto-Regular";
+  src: url("../font/Roboto-Regular.ttf");
+}
+@font-face {
+  font-family: "Roboto-Regular";
+  font-style: italic;
+  src: url("../font/Roboto-Italic.ttf");
+}
+@font-face {
+  font-family: "Roboto-Regular";
+  font-style: bold;
+  src: url("../font/Roboto-Bold.ttf");
+}
+@font-face {
+  font-family: "Roboto-Regular";
+  font-style: italic bold;
+  src: url("../font/Roboto-BoldItalic.ttf");
+}
+@font-face {
+  font-family: "Roboto-Light";
+  src: url("../font/Roboto-Light.ttf");
+}
+@font-face {
+  font-family: "Roboto-Light";
+  font-style: italic;
+  src: url("../font/Roboto-LightItalic.ttf");
+}
 h1 {
   color: orange;
   font-family: "Helvetica-Neue";
