@@ -15,11 +15,11 @@ html(lang="en", ng-app="FallingFruitApp")
 
   body
 
-    .main-container(ng-controller="MainCtrl")
-      include jade/menu
-      include jade/auth
+    include jade/menu
 
     .ng-view-container(ng-view, ng-class="transition_class")
+
+    include jade/auth
 
     script(type="text/javascript", src="phonegap.js")
     //-script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=[API_KEY]&sensor=false")

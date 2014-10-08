@@ -1,0 +1,45 @@
+.transition(@duration, @type: cubic-bezier(.16, .70, .14, 1))
+{
+  -webkit-transition: all @duration @type;
+  -moz-transition: all @duration @type;
+  -ms-transition: all @duration @type;
+  transition: all @duration @type;
+}
+
+.transform-translate(@x, @y, @z) {
+  -webkit-transform: translate3d(@x, @y, @z);
+  -moz-transform: translate3d(@x, @y, @z);
+  -ms-transform: translate3d(@x, @y, @z);
+  transform: translate3d(@x, @y, @z);
+}
+
+.screen-cover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.vertical-scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-over-scrolling: touch;
+}
+
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.border-radius(@tl, @tr, @br, @bl) {
+  -webkit-border-radius: @tl @tr @br @bl;
+  -ms-border-radius: @tl @tr @br @bl;
+  -moz-border-radius: @tl @tr @br @bl;
+  border-radius: @tl @tr @br @bl;
+}

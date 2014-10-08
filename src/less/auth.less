@@ -1,4 +1,17 @@
-h1 {
-  color: orange;
-  font-family: "Helvetica-Neue"
+.auth-overlay {
+  .screen-cover();
+  top: 100%;
+  .transition(300ms);
+  z-index: @zindex-auth;
+  background-color: white;
+}
+
+.auth-overlay.show {
+  .transform-translate(0, -100%, 0);
+}
+
+.auth-container {
+  .screen-cover();
+  background-color: white;
+  z-index: @zindex-auth-inner;
 }
