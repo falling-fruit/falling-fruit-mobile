@@ -6,6 +6,7 @@
 #
 # Pods/
 node_modules/
+tmp/
 
 # Xcode
 .DS_Store
