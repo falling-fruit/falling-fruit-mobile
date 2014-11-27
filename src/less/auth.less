@@ -10,8 +10,80 @@
   .transform-translate(0, -100%, 0);
 }
 
+.auth-logo {
+  height: 30%;
+  background: url('../img/login-bg.png') center center no-repeat;
+  background-size: auto 100%;
+}
+
 .auth-container {
   .screen-cover();
   background-color: white;
   z-index: @zindex-auth-inner;
+}
+
+@auth-input-icon-dim: 50px;
+
+.auth-input-container {
+  position: relative;
+  background-color: @light-gray;
+  margin: 20px 10%;
+  overflow: hidden;
+  .border-radius(5px);
+}
+
+.auth-input-container.email {
+  margin-top: 30px;
+}
+
+.auth-input-container.password {
+  margin-bottom: 0px;
+}
+
+
+.auth-input-container input {
+  background-color: transparent;
+  display: block;
+  overflow: hidden;
+  border: none;
+  color: @gray;
+  font-size: @font-size-large;
+  padding: 10px 0 10px @auth-input-icon-dim;
+}
+
+.auth-text {
+  display: block;
+  padding: 20px 0;
+  text-align: center;
+  color: @gray;
+  font-size: @font-size-small;
+}
+
+.auth-btn-container {
+  display: table;
+  width: 80%;
+  margin: auto;
+  //border-collapse: collapse;
+  border-spacing: 20px;
+  table-layout: fixed;
+}
+
+.auth-btn-cell {
+  display: table-cell;
+  background-color: @orange;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  width: 49%;
+  .border-radius(5px);
+}
+
+.auth-btn-dark {
+  display: block;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: @dark-blue;
+  color: white;
+  text-align: center;
+  .border-radius(5px);
 }

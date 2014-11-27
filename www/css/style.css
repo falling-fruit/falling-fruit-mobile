@@ -14,21 +14,21 @@
   -webkit-over-scrolling: touch;
 }
 @font-face {
-  font-family: "Roboto-Regular";
+  font-family: "Roboto";
   src: url("../font/Roboto-Regular.ttf");
 }
 @font-face {
-  font-family: "Roboto-Regular";
+  font-family: "Roboto-Italic";
   font-style: italic;
   src: url("../font/Roboto-Italic.ttf");
 }
 @font-face {
-  font-family: "Roboto-Regular";
+  font-family: "Roboto-Bold";
   font-style: bold;
   src: url("../font/Roboto-Bold.ttf");
 }
 @font-face {
-  font-family: "Roboto-Regular";
+  font-family: "Roboto-Bold-Italic";
   font-style: italic bold;
   src: url("../font/Roboto-BoldItalic.ttf");
 }
@@ -42,10 +42,19 @@
   src: url("../font/Roboto-LightItalic.ttf");
 }
 body {
-  font-family: "Roboto-Regular";
+  font-family: "Roboto";
   overflow: hidden;
   margin: 0;
   padding: 0;
+}
+input,
+textarea,
+a {
+  font-family: "Roboto";
+  font-size: 16px;
+}
+a {
+  text-decoration: none;
 }
 .ng-view-container.ltr.ng-enter {
   position: absolute;
@@ -177,6 +186,11 @@ body {
   -ms-transform: translate3d(0, -100%, 0);
   transform: translate3d(0, -100%, 0);
 }
+.auth-logo {
+  height: 30%;
+  background: url('../img/login-bg.png') center center no-repeat;
+  background-size: auto 100%;
+}
 .auth-container {
   position: absolute;
   top: 0;
@@ -188,4 +202,67 @@ body {
   overflow: hidden;
   background-color: white;
   z-index: 41;
+}
+.auth-input-container {
+  position: relative;
+  background-color: #dce1e6;
+  margin: 20px 10%;
+  overflow: hidden;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.auth-input-container.email {
+  margin-top: 30px;
+}
+.auth-input-container.password {
+  margin-bottom: 0px;
+}
+.auth-input-container input {
+  background-color: transparent;
+  display: block;
+  overflow: hidden;
+  border: none;
+  color: #5a5f64;
+  font-size: 18px;
+  padding: 10px 0 10px 50px;
+}
+.auth-text {
+  display: block;
+  padding: 20px 0;
+  text-align: center;
+  color: #5a5f64;
+  font-size: 14px;
+}
+.auth-btn-container {
+  display: table;
+  width: 80%;
+  margin: auto;
+  border-spacing: 20px;
+  table-layout: fixed;
+}
+.auth-btn-cell {
+  display: table-cell;
+  background-color: #ff8100;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  width: 49%;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.auth-btn-dark {
+  display: block;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #022f27;
+  color: white;
+  text-align: center;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }

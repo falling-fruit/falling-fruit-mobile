@@ -1,3 +1,8 @@
-controllers.AuthCtrl = ($scope, $http, $location)->
+controllers.AuthCtrl = ($scope, $rootScope, $http, $location)->
   console.log "Auth Ctrl"
-  $scope.app_name = "Falling Fruit"
+  
+  $rootScope.$on "SHOW-AUTH", ()->
+    $scope.show_auth = true
+    $scope.auth_context = "login"
+
+  $rootScope.$broadcast "SHOW-AUTH"

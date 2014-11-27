@@ -66,9 +66,13 @@ factories = {};
 
 directives = {};
 
-controllers.AuthCtrl = function($scope, $http, $location) {
+controllers.AuthCtrl = function($scope, $rootScope, $http, $location) {
   console.log("Auth Ctrl");
-  return $scope.app_name = "Falling Fruit";
+  $rootScope.$on("SHOW-AUTH", function() {
+    $scope.show_auth = true;
+    return $scope.auth_context = "login";
+  });
+  return $rootScope.$broadcast("SHOW-AUTH");
 };
 
 controllers.DetailCtrl = function($scope, $http, $location) {
