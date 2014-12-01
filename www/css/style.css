@@ -242,12 +242,22 @@ a {
   border-spacing: 20px;
   table-layout: fixed;
 }
-.auth-btn-cell {
-  display: table-cell;
+.auth-btn {
+  display: block;
   background-color: #ff8100;
   color: white;
   text-align: center;
   padding: 10px;
+  width: 80%;
+  margin: auto;
+}
+.auth-btn-cell {
+  display: block;
+  background-color: #ff8100;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  display: table-cell;
   width: 49%;
   -webkit-border-radius: 5px;
   -ms-border-radius: 5px;

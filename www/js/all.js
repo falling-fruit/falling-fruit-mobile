@@ -1,4 +1,4 @@
-var FallingFruitApp, controllers, directives, factories;
+var FallingFruitApp, controllers, directives, factories, host, urls;
 
 FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch']);
 
@@ -9,19 +9,14 @@ FallingFruitApp.config(function($interpolateProvider) {
 
 FallingFruitApp.config([
   '$httpProvider', function($httpProvider) {
-    return $httpProvider.interceptors.push(function($q, $location, $rootScope) {
+    return $httpProvider.interceptors.push(function($q, $location, $rootScope, AuthFactory) {
       var interceptor;
       return interceptor = {
         request: function(config) {
-          var auth_param;
+          var access_token, auth_param;
           if (config.url.indexOf(".html") === -1) {
-            if (!$rootScope.auth_token) {
-              $rootScope.auth_token = localStorage.getItem("auth_token");
-            }
-            if (!$rootScope.auth_id) {
-              $rootScope.auth_id = localStorage.getItem("auth_id");
-            }
-            auth_param = "auth_id=" + auth_id + "&auth_token=" + auth_token;
+            access_token = AuthFactory.get_access_token();
+            auth_param = "auth_token=" + auth_token;
             config.url += config.url.indexOf("?") === -1 ? "?" + auth_param : "&" + auth_param;
           }
           return config || $q.when(config);
@@ -29,17 +24,9 @@ FallingFruitApp.config([
         responseError: function(rejection) {
           $rootScope.$broadcast("LOADING-STOP");
           if (rejection.status === 401) {
-            if ($rootScope.auth_token) {
-              delete $rootScope.auth_token;
-            }
-            localStorage.removeItem("auth_token");
-            if ($rootScope.auth_id) {
-              delete $rootScope.auth_id;
-            }
-            localStorage.removeItem("auth_id");
             $rootScope.$broadcast("LOGGED-OUT");
           } else {
-            $rootScope.$broadcast("loading-error", "Please try again.");
+            $rootScope.$broadcast("LOADING-ERROR", "Please try again.");
           }
           return rejection || $q.reject(rejection);
         }
@@ -60,19 +47,89 @@ FallingFruitApp.config(function($routeProvider) {
   });
 });
 
+host = "http://fallingfruit.org/";
+
+urls = {
+  login: host + "users/sign_in.json"
+};
+
 controllers = {};
 
 factories = {};
 
 directives = {};
 
-controllers.AuthCtrl = function($scope, $rootScope, $http, $location) {
+factories.AuthFactory = function($rootScope) {
+  var props;
+  props = {
+    email: null,
+    access_token: null,
+    save: function(email, access_token) {
+      this.email = email;
+      this.access_token = access_token;
+      localStorage.setItem('EMAIL', email);
+      return localStorage.setItem('TOKEN', access_token);
+    },
+    is_logged_in: function() {
+      if (!this.email) {
+        this.email = localStorage.getItem("EMAIL");
+      }
+      if (!this.access_token) {
+        this.access_token = localStorage.getItem("TOKEN");
+      }
+      if (!this.email || !this.access_token) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    clear: function() {
+      this.email = this.access_token = null;
+      localStorage.removeItem('EMAIL');
+      return localStorage.removeItem('TOKEN');
+    },
+    get_access_token: function() {
+      if (!this.access_token) {
+        this.access_token = localStorage.getItem("TOKEN");
+      }
+      return this.access_token;
+    },
+    get_email: function() {
+      if (!this.email) {
+        this.email = localStorage.getItem("EMAIL");
+      }
+      return this.email;
+    },
+    get_login_user_model: function() {
+      return {
+        email: this.email,
+        password: null
+      };
+    }
+  };
+  return props;
+};
+
+controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactory) {
   console.log("Auth Ctrl");
-  $rootScope.$on("SHOW-AUTH", function() {
+  $rootScope.$on("LOGGED-OUT", function() {
+    AuthFactory.clear();
+    $scope.login_user = AuthFactory.get_login_user_model();
     $scope.show_auth = true;
     return $scope.auth_context = "login";
   });
-  return $rootScope.$broadcast("SHOW-AUTH");
+  $scope.login = function() {
+    return $http.post(urls.login, $scope.login_user).success(function(data) {
+      return AuthFactory.save(this.scope.login_user, data.access_token);
+    }).error(function() {
+      return $scope.login_user.password = null;
+    });
+  };
+  if (!AuthFactory.is_logged_in()) {
+    return $rootScope.$broadcast("LOGGED-OUT");
+  } else {
+    return $rootScope.$broadcast("SHOW-MAP");
+  }
 };
 
 controllers.DetailCtrl = function($scope, $http, $location) {
@@ -86,7 +143,7 @@ controllers.MenuCtrl = function($scope, $rootScope, $http, $location) {
 
 controllers.SearchCtrl = function($scope, $http, $location) {
   console.log("Search Ctrl");
-  return $scope.app_name = "Falling Fruit";
+  return $scope.currentView = "map";
 };
 
 FallingFruitApp.controller(controllers);

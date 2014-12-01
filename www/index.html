@@ -20,11 +20,11 @@
       <div ng-show="auth_context == 'login'" class="auth-container login">
         <div class="auth-logo"></div>
         <div class="auth-input-container email">
-          <input type="text" placeholder="Email">
+          <input type="text" placeholder="Email" ng-model="login_user.email">
           <div class="auth-error-text"></div>
         </div>
         <div class="auth-input-container password">
-          <input type="text" placeholder="Password">
+          <input type="text" placeholder="Password" ng-model="login_user.password">
           <div class="auth-error-text"></div>
         </div><a auth_context="forgot_password" class="auth-text">Forgot Password?</a>
         <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Login</a><a ng-click="authContext = 'register'" class="auth-btn-cell">Register</a></div>

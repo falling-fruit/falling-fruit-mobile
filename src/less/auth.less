@@ -68,12 +68,23 @@
   table-layout: fixed;
 }
 
-.auth-btn-cell {
-  display: table-cell;
+.auth-btn-mixin() {
+  display: block;
   background-color: @orange;
   color: white;
   text-align: center;
   padding: 10px;
+}
+
+.auth-btn {
+  .auth-btn-mixin();
+  width: 80%;
+  margin: auto;
+}
+
+.auth-btn-cell {
+  .auth-btn-mixin();
+  display: table-cell;
   width: 49%;
   .border-radius(5px);
 }

@@ -3,11 +3,11 @@
   .auth-container.login(ng-show="auth_context == 'login'")
     .auth-logo
     .auth-input-container.email
-      input(type="text", placeholder="Email")
-      .auth-error-text()
+      input(type="text", placeholder="Email", ng-model="login_user.email")
+      .auth-error-text
     .auth-input-container.password
-      input(type="text", placeholder="Password")
-      .auth-error-text()
+      input(type="text", placeholder="Password", ng-model="login_user.password")
+      .auth-error-text
 
     a.auth-text(auth_context="forgot_password") Forgot Password?
 
