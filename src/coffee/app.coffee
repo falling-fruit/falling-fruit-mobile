@@ -9,9 +9,8 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
   $httpProvider.interceptors.push ($q, $location, $rootScope, AuthFactory)->
     interceptor =
       request: (config)->
-        if config.url.indexOf(".html") == -1
-          access_token = AuthFactory.get_access_token()          
-          auth_param = "auth_token=#{auth_token}"
+        if AuthFactory.needsAuth(config.url)
+          auth_param = "user_email=#{AuthFactory.get_email()}&auth_token=#{AuthFactory.get_access_token()}&api_key=BJBNKMWM"
           config.url += if config.url.indexOf("?") == -1 then "?#{auth_param}" else "&#{auth_param}"
 
         return config || $q.when(config)
@@ -44,6 +43,8 @@ host = "http://fallingfruit.org/"
 
 urls = 
   login: host + "users/sign_in.json"
+  register: host + "users.json"
+  forgot_password: host + "users.json"
 
 controllers = {}
 factories = {}

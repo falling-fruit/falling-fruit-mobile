@@ -13,10 +13,9 @@ FallingFruitApp.config([
       var interceptor;
       return interceptor = {
         request: function(config) {
-          var access_token, auth_param;
-          if (config.url.indexOf(".html") === -1) {
-            access_token = AuthFactory.get_access_token();
-            auth_param = "auth_token=" + auth_token;
+          var auth_param;
+          if (AuthFactory.needsAuth(config.url)) {
+            auth_param = "user_email=" + (AuthFactory.get_email()) + "&auth_token=" + (AuthFactory.get_access_token()) + "&api_key=BJBNKMWM";
             config.url += config.url.indexOf("?") === -1 ? "?" + auth_param : "&" + auth_param;
           }
           return config || $q.when(config);
@@ -50,7 +49,9 @@ FallingFruitApp.config(function($routeProvider) {
 host = "http://fallingfruit.org/";
 
 urls = {
-  login: host + "users/sign_in.json"
+  login: host + "users/sign_in.json",
+  register: host + "users.json",
+  forgot_password: host + "users.json"
 };
 
 controllers = {};
@@ -105,6 +106,9 @@ factories.AuthFactory = function($rootScope) {
         email: this.email,
         password: null
       };
+    },
+    needsAuth: function(url) {
+      return url.indexOf(".html") === -1 && url.indexOf("/users/") === -1;
     }
   };
   return props;
@@ -120,11 +124,17 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
   });
   $scope.login = function() {
     return $http.post(urls.login, $scope.login_user).success(function(data) {
-      return AuthFactory.save(this.scope.login_user, data.access_token);
+      if (data.hasOwnProperty("access_token") && data.access_token !== null) {
+        return AuthFactory.save($scope.login_user.email, data.access_token);
+      } else {
+        return console.log("DATA isnt as expected", data);
+      }
     }).error(function() {
       return $scope.login_user.password = null;
     });
   };
+  $scope.register = function() {};
+  $scope.forgot_password = function() {};
   if (!AuthFactory.is_logged_in()) {
     return $rootScope.$broadcast("LOGGED-OUT");
   } else {
