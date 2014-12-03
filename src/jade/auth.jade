@@ -1,24 +1,25 @@
 .auth-overlay(ng-controller="AuthCtrl", ng-class="show_auth == true ? 'show': ''")
   
   .auth-container.login(ng-show="auth_context == 'login'")
-    .auth-logo
-    .auth-input-container.email
+    .auth-login-logo
+    .auth-input-container.email      
       input(type="text", placeholder="Email", ng-model="login_user.email")
       .auth-error-text
     .auth-input-container.password
-      input(type="text", placeholder="Password", ng-model="login_user.password")
+      input(type="password", placeholder="Password", ng-model="login_user.password")
       .auth-error-text
 
-    a.auth-text(auth_context="forgot_password") Forgot Password?
+    a.auth-text(ng-click="auth_context='forgot_password'") Forgot Password?
 
     .auth-btn-container
       a.auth-btn-cell(ng-click="login()") Login
-      a.auth-btn-cell(ng-click="authContext = 'register'") Register
+      a.auth-btn-cell(ng-click="auth_context = 'register'") Register
 
     .auth-btn-container
       a.auth-btn-dark(ng-click="anonymous_login()") Use Anonymously
 
-  .auth-container.register(ng-show="authContext == 'register'")
+  .auth-container.register(ng-show="auth_context == 'register'")
+    .auth-default-logo
     .auth-input-container.name
       input(type="text", placeholder="Name")
       .auth-error-text()
@@ -34,13 +35,14 @@
 
     a.auth-btn(ng-click="register()") Send confirmation
 
-    a.auth-btn-dark(ng-click="authContext = 'login'") Login
+    a.auth-btn-dark(ng-click="auth_context = 'login'") Login
 
-  .auth-container.forgot_password(ng-show="auth_context == 'forgot_password'")
+  .auth-container.forgot-password(ng-show="auth_context == 'forgot_password'")
+    .auth-default-logo
     .auth-input-container.email
       input(type="text", placeholder="Email")
       .auth-error-text()
 
-    a.auth-btn-light(ng-click="register()") Send reset instructions
+    a.auth-btn(ng-click="forgot_password()") Send reset instructions
 
-    a.auth-btn-dark(ng-click="authContext = 'login'") Login
+    a.auth-btn-dark(ng-click="auth_context = 'login'") Login
