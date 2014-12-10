@@ -337,3 +337,6 @@ a {
 .forgot-password .auth-btn-dark {
   margin-top: 20px;
 }
+.angular-google-map-container {
+  height: 400px;
+}
