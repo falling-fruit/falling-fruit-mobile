@@ -1,4 +1,4 @@
-FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch'])
+FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch', 'uiGmapgoogle-maps'])
 
 FallingFruitApp.config ($interpolateProvider)->
   $interpolateProvider.startSymbol('[{')
@@ -26,6 +26,17 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
 
 ]
 
+FallingFruitApp.config (uiGmapGoogleMapApiProvider)->
+  params = 
+    client: "gme-fallingfruit"
+    channel: "ff-mobile"
+    #key: 'AIzaSyDm7gTRTOlOIsum_KOwfM-X13RYexMW41M'
+    sensor: "false"
+    v: '3.17'
+    libraries: 'weather,geometry,visualization'
+ 
+  uiGmapGoogleMapApiProvider.configure params
+
 FallingFruitApp.config ($routeProvider)->
   $routeProvider
     .when '/search',
@@ -39,7 +50,7 @@ FallingFruitApp.config ($routeProvider)->
     .otherwise
       redirectTo: '/search'
 
-host = "http://fallingfruit.org/"
+host = "https://fallingfruit.org/"
 
 urls = 
   login: host + "users/sign_in.json"

@@ -9,11 +9,10 @@
     <link rel="stylesheet" type="text/css" href="css/angular-csp.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
-  <body>
-    <div ng-controller="MenuCtrl" class="menu">
-      <div class="menu-left-btn"></div>
-      <div class="menu-title"></div>
-      <div class="menu-right-btn"></div>
+  <body>   
+    <div ng-controller="SearchCtrl" class="search-container">
+      <h1>Welcome to [{app_name}]</h1>
+      <ui-gmap-google-map center="map.center" zoom="map.zoom"></ui-gmap-google-map>
     </div>
     <div ng-view ng-class="transition_class" class="ng-view-container"></div>
     <div ng-controller="AuthCtrl" ng-class="show_auth == true ? 'show': ''" class="auth-overlay">
@@ -58,11 +57,12 @@
       </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/lib/underscore.js"></script>
+    <script type="text/javascript" src="js/lib/lodash.min.js"></script>
     <script type="text/javascript" src="js/lib/angular.js"></script>
     <script type="text/javascript" src="js/lib/angular-route.js"></script>
     <script type="text/javascript" src="js/lib/angular-touch.js"></script>
     <script type="text/javascript" src="js/lib/angular-animate.js"></script>
+    <script type="text/javascript" src="js/lib/angular-google-maps.min.js"></script>
     <script type="text/javascript" src="js/all.js"></script>
   </body>
 </html>

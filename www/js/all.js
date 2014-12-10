@@ -1,6 +1,6 @@
 var FallingFruitApp, controllers, directives, factories, host, urls;
 
-FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch']);
+FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch', 'uiGmapgoogle-maps']);
 
 FallingFruitApp.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('[{');
@@ -34,6 +34,18 @@ FallingFruitApp.config([
   }
 ]);
 
+FallingFruitApp.config(function(uiGmapGoogleMapApiProvider) {
+  var params;
+  params = {
+    client: "gme-fallingfruit",
+    channel: "ff-mobile",
+    sensor: "false",
+    v: '3.17',
+    libraries: 'weather,geometry,visualization'
+  };
+  return uiGmapGoogleMapApiProvider.configure(params);
+});
+
 FallingFruitApp.config(function($routeProvider) {
   return $routeProvider.when('/search', {
     templateUrl: 'html/search.html',
@@ -46,7 +58,7 @@ FallingFruitApp.config(function($routeProvider) {
   });
 });
 
-host = "http://fallingfruit.org/";
+host = "https://fallingfruit.org/";
 
 urls = {
   login: host + "users/sign_in.json",
@@ -151,9 +163,19 @@ controllers.MenuCtrl = function($scope, $rootScope, $http, $location) {
   return console.log("Menu Ctrl");
 };
 
-controllers.SearchCtrl = function($scope, $http, $location) {
+controllers.SearchCtrl = function($scope, $http, $location, uiGmapGoogleMapApi) {
   console.log("Search Ctrl");
-  return $scope.currentView = "map";
+  $scope.currentView = "map";
+  $scope.map = {
+    center: {
+      latitude: 45,
+      longitude: -73
+    },
+    zoom: 8
+  };
+  return uiGmapGoogleMapApi.then(function(maps) {
+    return console.log("READY");
+  });
 };
 
 FallingFruitApp.controller(controllers);
