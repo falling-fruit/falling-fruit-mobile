@@ -13,7 +13,7 @@
   transform: translate3d(@x, @y, @z);
 }
 
-.screen-cover {
+.screen-cover() {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -24,7 +24,7 @@
   overflow: hidden;
 }
 
-.vertical-scroll {
+.vertical-scroll() {
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-over-scrolling: touch;
@@ -42,4 +42,13 @@
   -ms-border-radius: @tl @tr @br @bl;
   -moz-border-radius: @tl @tr @br @bl;
   border-radius: @tl @tr @br @bl;
+}
+
+.auth-input-container-bg(@dim: @auth-input-icon-dim) {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: @dim;
+  height: 100%;
 }

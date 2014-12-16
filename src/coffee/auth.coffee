@@ -34,6 +34,9 @@ factories.AuthFactory = ($rootScope)->
     get_login_user_model: ()->
       return email: @email, password: null
 
+    get_register_user_model: ()->
+      return name: null, email: null, password: null
+
     needsAuth: (url)->
       return url.indexOf(".html") == -1 and url.indexOf("/users/") == -1
 
@@ -46,20 +49,34 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   $rootScope.$on "LOGGED-OUT", ()->
     AuthFactory.clear()
     $scope.login_user = AuthFactory.get_login_user_model()
+    $scope.register_user = AuthFactory.get_register_user_model()
     $scope.show_auth = true
     $scope.auth_context = "login"
 
   $scope.login = ()->
-    $http.post urls.login, $scope.login_user
+    $http.post urls.login, user: $scope.login_user
     .success (data)->
-      if data.hasOwnProperty("access_token") and data.access_token isnt null
+      if data.hasOwnProperty("auth_token") and data.auth_token isnt null
         AuthFactory.save($scope.login_user.email, data.access_token)
+        $scope.login_user = AuthFactory.get_login_user_model()
+        $scope.show_auth = false
       else
         console.log "DATA isnt as expected", data
     .error ()->
       $scope.login_user.password = null
 
   $scope.register = ()->
+    user = 
+      name: $scope.register_user.name
+      email: $scope.register_user.email
+      password: $scope.register_user.password
+
+    $http.post urls.register, user: user
+    .success (data)->
+      $scope.auth_context = "login"
+      $scope.login_user.email = $scope.register_user.email
+    .error ()->
+      $scope.register_user = AuthFactory.get_register_user_model()
 
   $scope.forgot_password = ()->
 

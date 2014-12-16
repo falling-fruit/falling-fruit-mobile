@@ -1,7 +1,12 @@
 
-<div ng-controller="MenuCtrl" class="menu">
-  <div class="menu-left-btn"></div>
-  <div class="menu-title"></div>
-  <div class="menu-right-btn"></div>
+<div ng-controller="DetailCtrl" ng-class="show_detail == true? 'show': ''" class="detail-outer-container">
+  <div class="menu">
+    <div ng-click="menu_left_btn_click()" class="menu-left-btn back"></div>
+    <div class="menu-title">[{menu_title}]</div>
+    <div class="menu-right-btn"></div>
+  </div>
+  <div ng-show="detail_context=='add'" class="detail-container">
+    <div class="detail-btn">Take a photo</div>
+    <div class="detail-btn-dark">Save</div>
+  </div>
 </div>
-<h1>Detail Controller</h1>

@@ -14,12 +14,10 @@ html(lang="en", ng-app="FallingFruitApp")
     link(rel="stylesheet", type="text/css", href="css/style.css")
 
   body    
-
-    include jade/search
-
-    .ng-view-container(ng-view, ng-class="transition_class")
-    
-    include jade/auth
+    .main-container
+      include jade/search
+      include jade/detail
+      include jade/auth
 
     script(type="text/javascript", src="cordova.js")
     script(type="text/javascript", src="js/lib/lodash.min.js")

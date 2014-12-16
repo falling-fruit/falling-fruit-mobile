@@ -3,7 +3,7 @@
   top: 100%;
   .transition(300ms);
   z-index: @zindex-auth;
-  background-color: rgba(250, 249, 249, 1);
+  background-color: @ff-white;
 }
 
 .auth-overlay.show {
@@ -35,15 +35,6 @@
   margin: 20px 10%;
   overflow: hidden;
   .border-radius(5px);
-}
-
-.auth-input-container-bg() {
-  content: " ";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: @auth-input-icon-dim;
-  height: 100%;
 }
 
 .auth-input-container.email:before {
@@ -95,6 +86,7 @@
   color: @gray;
   font-size: @font-size-large;
   padding: 10px 0 10px @auth-input-icon-dim;
+  width: 100%;
 }
 
 .auth-text {

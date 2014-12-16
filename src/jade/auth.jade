@@ -21,16 +21,16 @@
   .auth-container.register(ng-show="auth_context == 'register'")
     .auth-default-logo
     .auth-input-container.name
-      input(type="text", placeholder="Name")
+      input(type="text", placeholder="Name", ng-model="register_user.name")
       .auth-error-text()
     .auth-input-container.email
-      input(type="text", placeholder="Email")
+      input(type="text", placeholder="Email", ng-model="register_user.email")
       .auth-error-text()
     .auth-input-container.password-1
-      input(type="password", placeholder="Password")
+      input(type="password", placeholder="Password", ng-model="register_user.password")
       .auth-error-text()
     .auth-input-container.password-2
-      input(type="password", placeholder="Confirm Password")
+      input(type="password", placeholder="Confirm Password", ng-model="register_user.password_confirmation")
       .auth-error-text()
 
     a.auth-btn(ng-click="register()") Send confirmation

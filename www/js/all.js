@@ -119,6 +119,13 @@ factories.AuthFactory = function($rootScope) {
         password: null
       };
     },
+    get_register_user_model: function() {
+      return {
+        name: null,
+        email: null,
+        password: null
+      };
+    },
     needsAuth: function(url) {
       return url.indexOf(".html") === -1 && url.indexOf("/users/") === -1;
     }
@@ -131,13 +138,18 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
   $rootScope.$on("LOGGED-OUT", function() {
     AuthFactory.clear();
     $scope.login_user = AuthFactory.get_login_user_model();
+    $scope.register_user = AuthFactory.get_register_user_model();
     $scope.show_auth = true;
     return $scope.auth_context = "login";
   });
   $scope.login = function() {
-    return $http.post(urls.login, $scope.login_user).success(function(data) {
-      if (data.hasOwnProperty("access_token") && data.access_token !== null) {
-        return AuthFactory.save($scope.login_user.email, data.access_token);
+    return $http.post(urls.login, {
+      user: $scope.login_user
+    }).success(function(data) {
+      if (data.hasOwnProperty("auth_token") && data.auth_token !== null) {
+        AuthFactory.save($scope.login_user.email, data.access_token);
+        $scope.login_user = AuthFactory.get_login_user_model();
+        return $scope.show_auth = false;
       } else {
         return console.log("DATA isnt as expected", data);
       }
@@ -145,7 +157,22 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
       return $scope.login_user.password = null;
     });
   };
-  $scope.register = function() {};
+  $scope.register = function() {
+    var user;
+    user = {
+      name: $scope.register_user.name,
+      email: $scope.register_user.email,
+      password: $scope.register_user.password
+    };
+    return $http.post(urls.register, {
+      user: user
+    }).success(function(data) {
+      $scope.auth_context = "login";
+      return $scope.login_user.email = $scope.register_user.email;
+    }).error(function() {
+      return $scope.register_user = AuthFactory.get_register_user_model();
+    });
+  };
   $scope.forgot_password = function() {};
   if (!AuthFactory.is_logged_in()) {
     return $rootScope.$broadcast("LOGGED-OUT");
@@ -154,18 +181,26 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
   }
 };
 
-controllers.DetailCtrl = function($scope, $http, $location) {
+controllers.DetailCtrl = function($scope, $rootScope, $http, $location) {
   console.log("Detail Ctrl");
-  return $scope.app_name = "Falling Fruit Detail";
+  $rootScope.$on("SHOW-DETAIL", function() {
+    $scope.show_detail = true;
+    $scope.detail_context = "add";
+    return $scope.menu_title = "Add";
+  });
+  return $scope.menu_left_btn_click = function() {
+    return $scope.show_detail = false;
+  };
 };
 
 controllers.MenuCtrl = function($scope, $rootScope, $http, $location) {
   return console.log("Menu Ctrl");
 };
 
-controllers.SearchCtrl = function($scope, $http, $location, uiGmapGoogleMapApi) {
+controllers.SearchCtrl = function($scope, $rootScope, $http, $location) {
   console.log("Search Ctrl");
-  $scope.currentView = "map";
+  $scope.current_view = "map";
+  $scope.show_menu = false;
   $scope.map = {
     center: {
       latitude: 45,
@@ -173,9 +208,9 @@ controllers.SearchCtrl = function($scope, $http, $location, uiGmapGoogleMapApi) 
     },
     zoom: 8
   };
-  return uiGmapGoogleMapApi.then(function(maps) {
-    return console.log("READY");
-  });
+  return $scope.show_detail = function() {
+    return $rootScope.$broadcast("SHOW-DETAIL");
+  };
 };
 
 FallingFruitApp.controller(controllers);

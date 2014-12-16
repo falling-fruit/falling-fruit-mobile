@@ -1,3 +1,203 @@
 .angular-google-map-container { 
-  height: 400px; 
+  position: absolute;
+  top: @map-menu-height;
+  bottom: @map-footer-height;
+  width: 100%;
 }
+
+.search-outer-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  z-index: @zindex-search;
+}
+
+.search-inner-container {
+  position: absolute;
+  height: 100%;
+  width: 200%;
+  top: 0;
+  left: -100%;
+  overflow: hidden;
+  .transition(300ms);  
+}
+
+.search-inner-container.show {
+  .transform-translate(@search-side-menu-width, 0, 0);
+}
+
+.search-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 50%;
+  overflow: hidden;
+}
+
+.search-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: @ff-white;
+  height: @map-menu-height;
+  border-bottom: solid 1px @light-gray;
+}
+
+.ios7 .search-menu {
+  height: @map-menu-height + @ios7-offset;
+}
+
+.current-location {
+  position: absolute;
+  width: @map-menu-height + 5px;
+  height: @map-menu-height;
+  background: url("../img/svg/control-me.svg") no-repeat center center;
+  background-size: 30px;
+}
+
+.ios7 .current-location {
+  top: @ios7-offset;
+}
+
+.ios7 .angular-google-map-container {  
+  top: @map-menu-height + @ios7-offset;
+} 
+
+.search-view-container {
+  position: absolute;
+  top: @map-menu-height;
+  bottom: @map-footer-height;
+  width: 200%;
+  background-color: white;
+}
+
+.map-container {
+  position: absolute;
+  top: @map-menu-height;
+  bottom: @map-footer-height;
+  width: 100%;
+}
+
+.search-footer {
+  position: absolute;
+  bottom : 0;
+  left: 0;
+  width: 100%;
+  height: @map-footer-height;
+  background-color: @ff-white;
+  border-top: solid 1px @light-gray;
+}
+
+.search-footer .settings {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: @map-footer-height;
+  height: @map-footer-height;
+  background: url("../img/svg/control-settings.svg") no-repeat center center;
+  background-size: 30px;  
+}
+
+.search-footer .toggle-container {
+  display: block;
+  margin: 0 @map-footer-height;
+}
+
+.search-footer .add {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: @map-footer-height;
+  width: @map-footer-height;
+  background: url("../img/svg/control-add.svg") no-repeat center center;
+  background-size: 30px;
+}
+
+
+.search-input-container {
+  position: relative;
+  background-color: @light-gray;
+  margin: 10px 15px 0 @map-menu-height + 8px;
+  overflow: hidden;
+  .border-radius(5px);
+}
+
+.search-input-container:before {
+  .auth-input-container-bg(38px);
+  background: url('../img/svg/input-search.svg') no-repeat center center;
+  background-size: 20px;
+}
+
+.search-input-container input {
+  background-color: transparent;
+  display: block;
+  overflow: hidden;
+  border: none;
+  color: @gray;
+  font-size: @font-size-large;
+  padding: 0 0 0 38px;
+  height: @map-menu-height - 20px;
+  line-height: @map-menu-height - 20px;
+  width: 100%;
+}
+
+//SEARCH SIDE MENU 
+.search-side-menu-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.search-side-menu {
+  position: absolute;
+  width: @search-side-menu-width;
+  height: 100%;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  background-color: @side-menu-bg-color;
+  color: white;
+}
+
+.search-params-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: @btn-logout-container-height;
+  width: @search-side-menu-width;
+  .vertical-scroll();
+}
+
+.btn-logout-container {
+  display: block;
+  position: absolute;
+  bottom:0;
+  width: 100%;
+  height: @btn-logout-container-height;
+  border-top: solid 1px @side-menu-border-color;
+  text-align: center;
+  overflow: hidden;
+}
+
+.btn-logout {
+  display: inline-block;
+  height: @btn-logout-container-height - 20px;
+  line-height: @btn-logout-container-height - 20px;
+  padding: 0 50px;
+  margin: 10px auto;
+  background-color: rgba(61, 62, 62, 1);
+  color: white;
+
+  .border-radius(5px);
+}
+
+
+

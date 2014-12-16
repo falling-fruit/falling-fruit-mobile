@@ -1,6 +1,26 @@
-.search-container(ng-controller="SearchCtrl")
+.search-outer-container(ng-controller="SearchCtrl")
+  .search-inner-container(ng-class="show_menu == true ? 'show': ''")
+    .search-container
+      .search-menu
+        .current-location
 
-  h1 Welcome to [{app_name}]
+        .search-input-container
+          input(type="text", placeholder="Enter a location...", ng-model="search_text")
 
-  ui-gmap-google-map(center='map.center' zoom='map.zoom')
+
+
+      .search-view-container
+        .map-container
+
+      .search-footer
+        .settings(ng-click="show_menu = !show_menu")
+        .toggle-container
+        .add(ng-click="show_detail()")
+
+    //-ui-gmap-google-map(center='map.center' zoom='map.zoom')
+    .search-side-menu-container
+      .search-side-menu
+        .search-params-container
+        a.btn-logout-container(ng-click="logout()")
+          .btn-logout Sign out
 

@@ -1,0 +1,43 @@
+.detail-btn-mixin() {
+  display: block;
+  background-color: @orange;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin: auto 15%;
+  .border-radius(5px);
+}
+
+.detail-btn {
+  .detail-btn-mixin();  
+}
+
+.detail-btn-dark {
+  .detail-btn-mixin();  
+  background-color: @dark-blue;
+}
+
+.detail-container {
+  position: absolute;
+  top: @menu-height;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  .vertical-scroll();
+}
+
+.detail-outer-container {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  overflow: hidden;
+  z-index: @zindex-detail;
+  .transition(300ms);
+}
+
+.detail-outer-container.show {
+  .transform-translate(-100%, 0, 0);
+}
