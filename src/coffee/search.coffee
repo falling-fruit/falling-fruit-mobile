@@ -1,7 +1,8 @@
-controllers.SearchCtrl = ($scope, $http, $location, uiGmapGoogleMapApi)->
+controllers.SearchCtrl = ($scope, $rootScope, $http, $location)->
   console.log "Search Ctrl"
 
-  $scope.currentView = "map"
+  $scope.current_view = "map"
+  $scope.show_menu = false
 
   $scope.map =
     center: 
@@ -9,5 +10,5 @@ controllers.SearchCtrl = ($scope, $http, $location, uiGmapGoogleMapApi)->
       longitude: -73
     zoom: 8
 
-  uiGmapGoogleMapApi.then (maps)->
-    console.log "READY"
+  $scope.show_detail = -> $rootScope.$broadcast "SHOW-DETAIL"
+    

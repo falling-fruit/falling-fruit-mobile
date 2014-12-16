@@ -1,0 +1,38 @@
+.menu-component-mixin() {
+  position: absolute;
+  top: 0;  
+  overflow: hidden;
+  height: @menu-height;
+}
+
+.menu {
+  .menu-component-mixin();
+  left: 0;
+  width: 100%;
+  background-color: @light-gray;
+}
+
+.menu-left-btn {
+  .menu-component-mixin();
+  left: 0;
+  width: @menu-height;  
+}
+
+.menu-left-btn.back {
+  background: url('../img/svg/control-arrow.svg') center center no-repeat;
+  background-size: 22px;
+}
+
+.menu-title {
+  .menu-component-mixin();
+  left: @menu-height; 
+  right: @menu-height;   
+  line-height: @menu-height;
+  text-align: center;
+}
+
+.menu-right-btn {
+  .menu-component-mixin();
+  right: 0;
+  width: @menu-height;  
+}

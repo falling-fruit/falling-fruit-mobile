@@ -90,7 +90,7 @@ module.exports = (grunt)->
         files: [
           expand: true
           cwd: SRC_BASE + "jade/"
-          src: ["*.jade", "**/*.jade"]
+          src: ["*.jade", "**/*.jade", "!partials/*jade"]
           dest: DEST_BASE + "html/"
           ext: ".html"
         ]
@@ -117,7 +117,7 @@ module.exports = (grunt)->
 
       jade_compile:
         files: [SRC_BASE + "jade/*.jade", SRC_BASE + "jade/**/*.jade"]
-        tasks: "jade:compile"
+        tasks: ["jade:index"]
 
     ios_android_copy:
       files: [DEST_BASE + "*.html", DEST_BASE + "html/**/*.html", DEST_BASE + "html/*.html", DEST_BASE + "css/*.css", DEST_BASE + "js/*.js"]
