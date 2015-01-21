@@ -1,3 +1,4 @@
-FallingFruitApp.controller controllers
-FallingFruitApp.factory factories
 FallingFruitApp.directive directives
+FallingFruitApp.factory factories
+FallingFruitApp.controller controllers
+
