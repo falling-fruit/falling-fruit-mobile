@@ -1,0 +1,27 @@
+
+<div ng-controller="SearchCtrl" class="search-outer-container">
+  <div ng-class="show_menu == true ? 'show': ''" class="search-inner-container">
+    <div class="search-container">
+      <div class="search-menu">
+        <div class="current-location"></div>
+        <div class="search-input-container">
+          <input type="text" placeholder="Enter a location..." ng-model="search_text"/>
+        </div>
+      </div>
+      <div class="search-view-container">
+        <div class="map-container"></div>
+      </div>
+      <div class="search-footer">
+        <div ng-click="show_menu = !show_menu" class="settings"></div>
+        <div class="toggle-container"></div>
+        <div ng-click="show_detail()" class="add"></div>
+      </div>
+    </div>
+    <div class="search-side-menu-container">
+      <div class="search-side-menu">
+        <div class="search-params-container"></div><a ng-click="logout()" class="btn-logout-container">
+          <div class="btn-logout">Sign out</div></a>
+      </div>
+    </div>
+  </div>
+</div>
