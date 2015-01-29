@@ -1,0 +1,21 @@
+.detail-container(ng-show="detail_context=='view_location'")
+
+  .photo-list-container
+    ul.photo-list
+      li(ng-repeat="photo in location.photos")
+
+  .location-info
+    div [{location.title}]
+    div(ng-show="location.distance") Distance: [{location.distance}]m
+    div(ng-hide="location.no_season") Seasonality: [{location.season_start}] - [{location.season_stop}]
+
+  .location-description [{location.description}]
+  
+  .location-author by: [{location.author}]
+
+  a.btn-location-reviews(ng-click="detail_context='view_reviews'") All Reviews ([{location.num_reviews}])
+
+
+  .btn-detail-location-container
+    .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit Location';") Edit
+    .detail-btn-dark(ng-click="show_reviews()") Review

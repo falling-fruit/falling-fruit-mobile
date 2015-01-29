@@ -41,3 +41,99 @@
 .detail-outer-container.show {
   .transform-translate(-100%, 0, 0);
 }
+
+.photo-list-container {
+  display: block;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;  
+}
+
+.photo-list {    
+  list-style-type: none;
+}
+
+.photo-list li {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  background-color: @light-gray;
+}
+
+
+.location-info {
+  padding: 10px 20px;
+  border-bottom: solid 2px @light-gray;
+}
+
+.location-info div {
+  padding: 5px 0;
+}
+
+.location-description {
+  line-height: @font-size-default + 4px;
+  padding: 10px 20px;
+}
+
+.location-author {
+  font-size: @font-size-small;  
+  padding: 0 20px;
+}
+
+.btn-location-reviews {
+  display: block;
+  padding: 20px 0 10px 0;
+  text-align: center;    
+}
+
+.btn-detail-location-container {
+  display: table;
+  width: 80%;
+  margin: auto;
+  table-layout: fixed;
+  border-spacing: 20px;
+}
+
+.btn-detail-location-container .detail-btn-dark {
+  display: table-cell;
+  width: 49%;
+}
+
+
+.detail-input-container {
+  position: relative;
+  background-color: @light-gray;
+  margin: 20px 10%;
+  overflow: hidden;
+  .border-radius(5px);
+}
+
+
+.detail-input-container input {
+  background-color: transparent;
+  display: block;
+  overflow: hidden;
+  border: none;
+  color: @gray;
+  font-size: @font-size-large;
+  padding: 10px 0 10px 10px;
+  width: 100%;
+}
+
+
+.detail-btn.btn-photo {
+  position: relative;
+  overflow: hidden;  
+  margin-bottom: 20px;
+  &:before {
+    content: " ";
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    background: @orange url("../img/svg/input-photo.svg") no-repeat center left;
+    background-size: 25px;   
+    height: 25px; 
+    width: 25px;
+  }  
+}

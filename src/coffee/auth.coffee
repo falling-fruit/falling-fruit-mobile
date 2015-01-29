@@ -60,6 +60,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         AuthFactory.save($scope.login_user.email, data.access_token)
         $scope.login_user = AuthFactory.get_login_user_model()
         $scope.show_auth = false
+        $rootScope.$broadcast("LOGGED-IN")
       else
         console.log "DATA isnt as expected", data
     .error ()->

@@ -1,4 +1,4 @@
-var controllers, directives, factories, host, urls;
+var auth_host, controllers, directives, factories, host, urls;
 
 window.FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch']);
 
@@ -60,12 +60,20 @@ FallingFruitApp.config(function($routeProvider) {
   });
 });
 
-host = "https://fallingfruit.org/";
+auth_host = "https://fallingfruit.org/";
+
+host = auth_host + "api/";
 
 urls = {
-  login: host + "users/sign_in.json",
-  register: host + "users.json",
-  forgot_password: host + "users.json"
+  login: auth_host + "users/sign_in.json",
+  register: auth_host + "users.json",
+  forgot_password: auth_host + "users.json",
+  nearby: host + "locations/nearby.json",
+  location: host + "locations/",
+  add_location: host + "locations.json",
+  reviews: function(id) {
+    return host + ("locations/" + id + "/reviews.json");
+  }
 };
 
 controllers = {};
@@ -151,7 +159,8 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
       if (data.hasOwnProperty("auth_token") && data.auth_token !== null) {
         AuthFactory.save($scope.login_user.email, data.access_token);
         $scope.login_user = AuthFactory.get_login_user_model();
-        return $scope.show_auth = false;
+        $scope.show_auth = false;
+        return $rootScope.$broadcast("LOGGED-IN");
       } else {
         return console.log("DATA isnt as expected", data);
       }
@@ -183,15 +192,71 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
   }
 };
 
+factories.DetailFactory = function() {
+  var props;
+  props = {
+    new_location_model: function() {
+      return {};
+    },
+    new_review_model: function() {
+      return {};
+    }
+  };
+  return props;
+};
+
 controllers.DetailCtrl = function($scope, $rootScope, $http, $location) {
+  var load_location;
   console.log("Detail Ctrl");
-  $rootScope.$on("SHOW-DETAIL", function() {
+  $scope.location = null;
+  $scope.current_review = null;
+  $scope.reviews = null;
+  load_location = function(id) {
+    return $http.get(urls.location + id + ".json").success(function(data) {
+      $scope.location = data;
+      return console.log("DATA", data);
+    });
+  };
+  $rootScope.$on("SHOW-DETAIL", function(event, id) {
+    console.log("SHOW-DETAIL", id);
     $scope.show_detail = true;
-    $scope.detail_context = "add";
-    return $scope.menu_title = "Add";
+    if (id === void 0) {
+      $scope.detail_context = "add_location";
+      return $scope.menu_title = "Add";
+    } else {
+      $scope.location_id = id;
+      load_location(id);
+      $scope.detail_context = "view_location";
+      return $scope.menu_title = "Location";
+    }
   });
+  $scope.show_reviews = function() {
+    $scope.detail_context = 'view_reviews';
+    $scope.menu_title = 'Reviews';
+    return $http.get(urls.reviews($scope.location.id)).success(function(data) {
+      $scope.reviews = data;
+      return console.log("DATA", data);
+    });
+  };
   return $scope.menu_left_btn_click = function() {
-    return $scope.show_detail = false;
+    if ($scope.detail_context === "add_review") {
+      $scope.detail_context = "view_reviews";
+      return $scope.menu_title = "Reviews";
+    } else if ($scope.detail_context === "view_reviews") {
+      $scope.detail_context = "view_location";
+      return $scope.menu_title = "Location";
+    } else if ($scope.detail_context === "add_location") {
+      if ($scope.location_id === void 0) {
+        $scope.show_detail = false;
+        return $scope.location_id = void 0;
+      } else {
+        $scope.detail_context = "view_location";
+        return $scope.menu_title = "Location";
+      }
+    } else if ($scope.detail_context === "view_location") {
+      $scope.show_detail = false;
+      return $scope.location_id = void 0;
+    }
   };
 };
 
@@ -341,9 +406,10 @@ controllers.MenuCtrl = function($scope, $rootScope, $http, $location) {
   return console.log("Menu Ctrl");
 };
 
-controllers.SearchCtrl = function($scope, $rootScope, $http, $location) {
+controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFactory) {
+  var list_params, load_list, load_view;
   console.log("Search Ctrl");
-  $scope.current_view = "map";
+  $scope.current_view = "list";
   $scope.show_menu = false;
   $scope.map = {
     center: {
@@ -352,8 +418,39 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location) {
     },
     zoom: 8
   };
-  return $scope.show_detail = function() {
-    return $rootScope.$broadcast("SHOW-DETAIL");
+  list_params = {
+    lat: "39.991106",
+    lng: "-105.247455"
+  };
+  load_list = function() {
+    return $http.get(urls.nearby, {
+      params: list_params
+    }).success(function(data) {
+      var item, _i, _len;
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        item = data[_i];
+        if (item.hasOwnProperty("photos")) {
+          item.style = {
+            "background-image": "url('" + item.photos[0][0].thumbnail + "')"
+          };
+        }
+      }
+      return $scope.list_items = data;
+    });
+  };
+  load_view = function() {
+    return load_list();
+  };
+  $rootScope.$on("LOGGED-IN", load_view);
+  if (AuthFactory.is_logged_in()) {
+    load_view();
+  }
+  $scope.show_detail = function(location_id) {
+    return $rootScope.$broadcast("SHOW-DETAIL", location_id);
+  };
+  return $scope.logout = function() {
+    $rootScope.$broadcast("LOGGED-OUT");
+    return $scope.show_menu = false;
   };
 };
 

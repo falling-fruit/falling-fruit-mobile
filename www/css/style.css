@@ -29,6 +29,9 @@
 body {
   font-family: "Roboto";
   overflow: hidden;
+}
+body,
+ul {
   margin: 0;
   padding: 0;
 }
@@ -39,6 +42,10 @@ a {
   font-size: 16px;
 }
 a {
+  text-decoration: none;
+}
+a:hover,
+a:active {
   text-decoration: none;
 }
 div,
@@ -164,6 +171,40 @@ li {
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+}
+.detail-container.ng-hide-add {
+  display: block !important;
+  -webkit-transition: all linear 275ms;
+  -moz-transition: all linear 275ms;
+  -ms-transition: all linear 275ms;
+  transition: all linear 275ms;
+  -webkit-transform: scale3d(1, 1, 1);
+  -moz-transform: scale3d(1, 1, 1);
+  -ms-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
+}
+.detail-container.ng-hide-add.ng-hide-add-active {
+  -webkit-transform: scale3d(0, 0, 0);
+  -moz-transform: scale3d(0, 0, 0);
+  -ms-transform: scale3d(0, 0, 0);
+  transform: scale3d(0, 0, 0);
+}
+.detail-container.ng-hide-remove {
+  display: block !important;
+  -webkit-transition: all linear 300ms;
+  -moz-transition: all linear 300ms;
+  -ms-transition: all linear 300ms;
+  transition: all linear 300ms;
+  -webkit-transform: scale3d(0, 0, 0);
+  -moz-transform: scale3d(0, 0, 0);
+  -ms-transform: scale3d(0, 0, 0);
+  transform: scale3d(0, 0, 0);
+}
+.detail-container.ng-hide-remove.ng-hide-remove-active {
+  -webkit-transform: scale3d(1, 1, 1);
+  -moz-transform: scale3d(1, 1, 1);
+  -ms-transform: scale3d(1, 1, 1);
+  transform: scale3d(1, 1, 1);
 }
 .auth-overlay {
   position: absolute;
@@ -415,9 +456,35 @@ li {
 }
 .map-container {
   position: absolute;
-  top: 52px;
-  bottom: 56px;
-  width: 100%;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 11;
+}
+.list-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-over-scrolling: touch;
+  background-color: white;
+  z-index: 15;
+  -webkit-transition: all 300ms linear;
+  -moz-transition: all 300ms linear;
+  -ms-transition: all 300ms linear;
+  transition: all 300ms linear;
+  left: -50%;
+}
+.list-container.show {
+  -webkit-transform: translate3d(100%, 0, 0);
+  -moz-transform: translate3d(100%, 0, 0);
+  -ms-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
 }
 .search-footer {
   position: absolute;
@@ -437,9 +504,38 @@ li {
   background: url("../img/svg/control-settings.svg") no-repeat center center;
   background-size: 30px;
 }
-.search-footer .toggle-container {
+.search-footer .btn-group-container {
   display: block;
   margin: 0 56px;
+}
+.btn-group {
+  display: table;
+  width: 90%;
+  margin: 7px 5%;
+  border: solid 2px #29a858;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.btn-map {
+  display: table-cell;
+  height: 36px;
+  width: 50%;
+  text-align: center;
+  vertical-align: middle;
+}
+.btn-list {
+  display: table-cell;
+  height: 36px;
+  width: 50%;
+  text-align: center;
+  vertical-align: middle;
+  border-left: solid 2px #29a858;
+}
+.btn-group .active {
+  background-color: #29a858;
+  color: white;
 }
 .search-footer .add {
   position: absolute;
@@ -539,6 +635,51 @@ li {
   bottom: 56px;
   width: 100%;
 }
+.list-item {
+  position: relative;
+  display: block;
+  border-bottom: solid 1px #dce1e6;
+  height: 90px;
+  overflow: hidden;
+}
+.list-item-image {
+  position: absolute;
+  width: 70px;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  overflow: hidden;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #dce1e6;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.list-item-info-container {
+  margin-left: 90px;
+  overflow: hidden;
+}
+.list-item-distance {
+  color: black;
+  padding: 14px 0 5px 0;
+}
+.list-item-name {
+  color: #ff8100;
+  padding: 0 0 5px 0;
+}
+.list-item-description {
+  font-size: 12px;
+  color: #5a5f64;
+  height: 16px;
+  line-height: 16px;
+  padding-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .menu {
   position: absolute;
   top: 0;
@@ -632,4 +773,103 @@ li {
   -moz-transform: translate3d(-100%, 0, 0);
   -ms-transform: translate3d(-100%, 0, 0);
   transform: translate3d(-100%, 0, 0);
+}
+.photo-list-container {
+  display: block;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.photo-list {
+  list-style-type: none;
+}
+.photo-list li {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  background-color: #dce1e6;
+}
+.location-info {
+  padding: 10px 20px;
+  border-bottom: solid 2px #dce1e6;
+}
+.location-info div {
+  padding: 5px 0;
+}
+.location-description {
+  line-height: 20px;
+  padding: 10px 20px;
+}
+.location-author {
+  font-size: 14px;
+  padding: 0 20px;
+}
+.btn-location-reviews {
+  display: block;
+  padding: 20px 0 10px 0;
+  text-align: center;
+}
+.btn-detail-location-container {
+  display: table;
+  width: 80%;
+  margin: auto;
+  table-layout: fixed;
+  border-spacing: 20px;
+}
+.btn-detail-location-container .detail-btn-dark {
+  display: table-cell;
+  width: 49%;
+}
+.detail-input-container {
+  position: relative;
+  background-color: #dce1e6;
+  margin: 20px 10%;
+  overflow: hidden;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.detail-input-container input {
+  background-color: transparent;
+  display: block;
+  overflow: hidden;
+  border: none;
+  color: #5a5f64;
+  font-size: 18px;
+  padding: 10px 0 10px 10px;
+  width: 100%;
+}
+.detail-btn.btn-photo {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.detail-btn.btn-photo:before {
+  content: " ";
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  background: #ff8100 url("../img/svg/input-photo.svg") no-repeat center left;
+  background-size: 25px;
+  height: 25px;
+  width: 25px;
+}
+.detail-btn-dark.review {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.review-list-container .list-item {
+  padding: 10px 20px;
+  border-bottom: none;
+}
+.review-list-container .list-item-image {
+  left: 30px;
+}
+.list-item-author {
+  font-size: 14px;
+}
+.list-item-auth span {
+  color: #dce1e6;
 }

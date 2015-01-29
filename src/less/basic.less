@@ -1,8 +1,11 @@
 body {
   font-family: "Roboto";
   overflow: hidden;
+}
+
+body, ul {
   margin: 0;
-  padding: 0;
+  padding: 0;  
 }
 
 input, textarea, a {
@@ -12,6 +15,9 @@ input, textarea, a {
 
 a {
   text-decoration: none;
+  &:hover, &:active {
+    text-decoration: none;
+  }
 }
 
 div, input, textarea, a, ul, li {
