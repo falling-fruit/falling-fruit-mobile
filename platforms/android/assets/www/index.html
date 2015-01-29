@@ -22,10 +22,22 @@
             </div>
             <div class="search-view-container">
               <div directionstype="directions_type" stoplist="stopList" class="map-container"></div>
+              <div ng-class="current_view == 'map' ? '' : 'show'" class="list-container"><a ng-repeat="li in list_items track by li.location_id" ng-click="show_detail(li.location_id)" class="list-item">
+                  <div ng-style="li.style" class="list-item-image"></div>
+                  <div class="list-item-info-container">
+                    <div class="list-item-distance">[{::li.distance}]m</div>
+                    <div class="list-item-name">[{::li.title}]</div>
+                    <div class="list-item-description">[{::li.description}]</div>
+                  </div></a></div>
             </div>
             <div class="search-footer">
               <div ng-click="show_menu = !show_menu" class="settings"></div>
-              <div class="toggle-container"></div>
+              <div class="btn-group-container">
+                <div class="btn-group">
+                  <div ng-class="current_view == 'map' ? 'active' : ''" ng-click="current_view = 'map'" class="btn-map">Map</div>
+                  <div ng-class="current_view == 'list' ? 'active' : ''" ng-click="current_view = 'list'" class="btn-list">List</div>
+                </div>
+              </div>
               <div ng-click="show_detail()" class="add"></div>
             </div>
           </div>
@@ -43,7 +55,43 @@
           <div class="menu-title">[{menu_title}]</div>
           <div class="menu-right-btn"></div>
         </div>
-        <div ng-show="detail_context=='add'" class="detail-container">
+        <div ng-show="detail_context=='view_location'" class="detail-container">
+          <div class="photo-list-container">
+            <ul class="photo-list">
+              <li ng-repeat="photo in location.photos"></li>
+            </ul>
+          </div>
+          <div class="location-info">
+            <div>[{location.title}]</div>
+            <div ng-show="location.distance">Distance: [{location.distance}]m</div>
+            <div ng-hide="location.no_season">Seasonality: [{location.season_start}] - [{location.season_stop}]</div>
+          </div>
+          <div class="location-description">[{location.description}]</div>
+          <div class="location-author">by: [{location.author}]</div><a ng-click="detail_context='view_reviews'" class="btn-location-reviews">All Reviews ([{location.num_reviews}])</a>
+          <div class="btn-detail-location-container">
+            <div ng-click="detail_context='add_location'; menu_title='Edit Location';" class="detail-btn-dark">Edit</div>
+            <div ng-click="show_reviews()" class="detail-btn-dark">Review</div>
+          </div>
+        </div>
+        <div ng-show="detail_context=='add_location'" class="detail-container">
+          <div class="detail-input-container">
+            <input type="text" placeholder="Title..." ng-model="location.title">
+          </div>
+          <div class="detail-btn btn-photo">Take a photo</div>
+          <div class="detail-btn-dark">Save</div>
+        </div>
+        <div ng-show="detail_context=='view_reviews'" class="detail-container">
+          <div class="review-list-container"><a ng-repeat="r in reviews track by r.location_id" ng-click="show_detail(li.location_id)" class="list-item">
+              <div ng-style="li.style" class="list-item-image"></div>
+              <div class="list-item-info-container">
+                <div class="list-item-author"><span>by </span>[{::r.author}]</div>
+                <div class="list-item-name">[{::li.title}]</div>
+                <div class="list-item-description">[{::li.description}]</div>
+              </div></a>
+            <div ng-click="detail_context='add_review'; menu_title='Add Review';" class="detail-btn-dark review">Add a review</div>
+          </div>
+        </div>
+        <div ng-show="detail_context=='add_review'" class="detail-container">
           <div class="detail-btn">Take a photo</div>
           <div class="detail-btn-dark">Save</div>
         </div>
