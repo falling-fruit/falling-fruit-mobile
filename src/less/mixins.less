@@ -52,3 +52,11 @@
   width: @dim;
   height: 100%;
 }
+
+
+.transform-scale(@x, @y, @z) {
+  -webkit-transform: scale3d(@x, @y, @z);
+  -moz-transform: scale3d(@x, @y, @z);
+  -ms-transform: scale3d(@x, @y, @z);
+  transform: scale3d(@x, @y, @z);
+}

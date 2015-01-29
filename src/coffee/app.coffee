@@ -53,12 +53,21 @@ FallingFruitApp.config ($routeProvider)->
     .otherwise
       redirectTo: '/search'
 
-host = "https://fallingfruit.org/"
+auth_host = "https://fallingfruit.org/"
+host = auth_host + "api/"
 
 urls = 
-  login: host + "users/sign_in.json"
-  register: host + "users.json"
-  forgot_password: host + "users.json"
+  login: auth_host + "users/sign_in.json"
+  register: auth_host + "users.json"
+  forgot_password: auth_host + "users.json"
+
+  nearby: host + "locations/nearby.json"
+
+  location: host + "locations/"
+  add_location: host + "locations.json"
+
+  reviews: (id)-> host + "locations/#{id}/reviews.json"
+
 
 controllers = {}
 factories = {}

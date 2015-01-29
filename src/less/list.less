@@ -1,0 +1,50 @@
+@list-item-image-width: 70px;
+@list-item-image-gutter: 10px;
+
+.list-item {
+  position: relative;
+  display: block;
+  border-bottom: solid 1px @light-gray;
+  height: @list-item-image-width + @list-item-image-gutter*2;
+  overflow: hidden;
+}
+
+.list-item-image {
+  position: absolute;
+  width: @list-item-image-width;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;  
+  overflow: hidden;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: @light-gray;
+  .border-radius(5px);
+}
+
+.list-item-info-container {
+  margin-left: @list-item-image-width + 20px;
+  overflow: hidden;
+}
+
+.list-item-distance {
+  color: black;
+  padding: 14px 0 5px 0;
+}
+
+.list-item-name {
+  color: @orange;
+  padding: 0 0 5px 0;
+}
+
+.list-item-description {
+  font-size: @font-size-smaller;
+  color: @gray;
+  height: @font-size-smaller + 4px;
+  line-height: @font-size-smaller + 4px;
+  padding-right: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

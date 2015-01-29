@@ -1,0 +1,8 @@
+.list-container(ng-class="current_view == 'map' ? '' : 'show'")
+  a.list-item(ng-repeat="li in list_items track by li.location_id", ng-click="show_detail(li.location_id)")
+    .list-item-image(ng-style="li.style")
+
+    .list-item-info-container
+      .list-item-distance [{::li.distance}]m
+      .list-item-name [{::li.title}]
+      .list-item-description [{::li.description}]

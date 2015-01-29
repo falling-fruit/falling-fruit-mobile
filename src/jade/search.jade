@@ -13,16 +13,15 @@
       .search-view-container
         .map-container(directionstype="directions_type", stoplist="stopList")
         
+        include partials/list
 
       .search-footer
         .settings(ng-click="show_menu = !show_menu")
-        .toggle-container
+        .btn-group-container
+          .btn-group
+            .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="current_view = 'map'") Map
+            .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="current_view = 'list'") List
         .add(ng-click="show_detail()")
 
     //- ui-gmap-google-map(center='map.center' zoom='map.zoom')
-    .search-side-menu-container
-      .search-side-menu
-        .search-params-container
-        a.btn-logout-container(ng-click="logout()")
-          .btn-logout Sign out
-
+    include partials/search_side_menu

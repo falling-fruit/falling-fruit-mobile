@@ -1,0 +1,13 @@
+.detail-container(ng-show="detail_context=='view_reviews'")
+  .review-list-container
+    a.list-item(ng-repeat="r in reviews track by r.location_id", ng-click="show_detail(li.location_id)")
+      .list-item-image(ng-style="li.style")
+
+      .list-item-info-container
+        .list-item-author 
+          span by 
+          | [{::r.author}]
+        .list-item-name [{::li.title}]
+        .list-item-description [{::li.description}]
+
+    .detail-btn-dark.review(ng-click="detail_context='add_review'; menu_title='Add Review';") Add a review
