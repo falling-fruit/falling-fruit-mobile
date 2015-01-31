@@ -101,12 +101,16 @@
 }
 
 
-.detail-input-container {
+.detail-input-container-mixin() {
   position: relative;
   background-color: @light-gray;
   margin: 20px 10%;
   overflow: hidden;
-  .border-radius(5px);
+  .border-radius(5px);  
+}
+
+.detail-input-container {
+  .detail-input-container-mixin();  
 }
 
 
@@ -121,6 +125,115 @@
   width: 100%;
 }
 
+
+.detail-select-container {
+  .detail-input-container-mixin();
+  text-align: center;  
+  padding: 10px;
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50px;
+    background: url('../img/png/control-arrow-downward.png') no-repeat center center;
+    background-size: 20px;
+  }
+}
+
+.detail-select-container select {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.detail-textarea-container {
+  .detail-input-container-mixin();
+  padding: 5px;
+}
+
+
+.detail-textarea-container textarea {
+  resize: none;
+  height: 100px;  
+  border: none;
+  background-color: transparent;
+  width: 100%;  
+  font-size: @font-size-small;
+}
+
+.detail-textarea-container.location textarea {
+  height: 150px;
+}
+
+.detail-range-container {
+  display: table;
+  table-layout: fixed;
+  width: 80%;
+  margin: 10px 10%;
+}
+
+.detail-range-label-1 {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100px;
+}
+
+.detail-range-label-2 {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0 10px;
+  width: 40px;  
+}
+
+
+@input-range-dim: 28px;
+
+.detail-range-control {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.detail-range-control input[type="range"] {
+  -webkit-appearance: none !important;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+  display: block;
+
+  width: 100%;
+  height: @input-range-dim + 2px;
+  margin: 10px 0;  
+  background-color: @light-gray;
+
+  padding: 2px;
+
+  .border-radius(@input-range-dim);
+}
+
+.detail-range-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  height: @input-range-dim;
+  width: @input-range-dim;
+  border: solid 1px @gray;
+  background-color: white;
+  .border-radius(@input-range-dim);
+}
+
+.detail-toggle-container {
+  display: table;
+  width: 80%;
+  margin: 10px 10%;
+}
+
+.detail-toggle-label {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+}
 
 .detail-btn.btn-photo {
   position: relative;
@@ -137,3 +250,17 @@
     width: 25px;
   }  
 }
+
+.btn-photo input {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.btn-save {
+  margin-bottom: 20px;
+}
+

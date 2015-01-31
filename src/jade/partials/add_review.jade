@@ -1,3 +1,30 @@
 .detail-container(ng-show="detail_context=='add_review'")
-  .detail-btn Take a photo
-  .detail-btn-dark Save
+
+  .detail-textarea-container
+    textarea(ng-model="current_review.comment", placeholder="Add a comment...")
+
+  .detail-range-container
+    .detail-range-label-1 Quality 
+    .detail-range-label-2 [{current_review.quality_rating}]
+    .detail-range-control 
+      input(type="range", ng-model="current_review.quality_rating", min="0", max="5", step="1")
+
+  .detail-range-container
+    .detail-range-label-1 Yield
+    .detail-range-label-2 [{current_review.yield_rating}]
+    .detail-range-control 
+      input(type="range", ng-model="current_review.yield_rating", min="0", max="5", step="1")
+
+
+  .detail-range-container
+    .detail-range-label-1 Ripeness
+    .detail-range-label-2 [{current_review.fruiting}]
+    .detail-range-control 
+      input(type="range", ng-model="current_review.fruiting", min="0", max="5", step="1")
+
+
+  .detail-btn.btn-photo 
+    | Take a photo
+    input(type="file", capture="camera", accept="image/*", onchange="angular.element(this).scope().update_photo_list(this.files)")
+
+  .detail-btn-dark.btn-save Save

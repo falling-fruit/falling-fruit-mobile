@@ -1,7 +1,23 @@
-.detail-container(ng-show="detail_context=='add_location'")
-  .detail-input-container
-    input(type="text", placeholder="Title...", ng-model="location.title")    
+.detail-container(ng-show="detail_context=='add_location'")  
+  .detail-select-container 
+    | [{selected_location_source_type()}]
+    select(ng-model="location.types", ng-options="i as name for (i, name) in location_access_types")
+
+  //-.detail-input-container
+    input(type="text", placeholder="Title...", ng-model="current_review.title")    
+
+  .detail-textarea-container.location
+    textarea(ng-model="location.description")
+
+  .detail-select-container 
+    | [{selected_review_source_type()}]
+    select(ng-model="location.access", ng-options="i as name for (i, name) in location_access_types")
+
+  .detail-toggle-container
+    .detail-toggle-label Unverified
+    .ng-switcher(toggle="location.unverified")
 
 
-  .detail-btn.btn-photo Take a photo
-  .detail-btn-dark Save
+  //-SEASONALITY
+
+  .detail-btn-dark.btn-save(ng-click="save_review()") Save

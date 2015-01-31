@@ -19,9 +19,14 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
     $http.get urls.nearby , params: list_params
     .success (data)->   
       for item in data
-        if item.hasOwnProperty("photos")
-          item.style = 
-            "background-image": "url('#{item.photos[0][0].thumbnail}')"
+        if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
+          background_url = "url('#{item.photos[0][0].thumbnail}')"
+        else
+          background_url = "url('../img/png/no-image.png')"
+
+        item.style = 
+          "background-image": background_url
+
       
       $scope.list_items = data
 
