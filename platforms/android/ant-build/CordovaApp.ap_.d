@@ -71,6 +71,7 @@
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/svg \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/title.png \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/control-add.png \
+/Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/control-arrow-downward.png \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/control-arrow.png \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/control-me.png \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/control-radio-off.png \
@@ -93,6 +94,7 @@
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/map-location-dot.png \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/map-location-full.png \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/map-me.png \
+/Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/no-image.png \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/png/title-logo.png \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/svg/control-add.svg \
 /Users/achyuta/programs/mobile-apps/falling-fruit-mobile/platforms/android/assets/www/img/svg/control-arrow.svg \
