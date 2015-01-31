@@ -71,6 +71,7 @@ urls = {
   nearby: host + "locations/nearby.json",
   location: host + "locations/",
   add_location: host + "locations.json",
+  source_types: host + "locations/types.json",
   reviews: function(id) {
     return host + ("locations/" + id + "/reviews.json");
   }
@@ -192,30 +193,52 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
   }
 };
 
-factories.DetailFactory = function() {
+factories.DetailFactory = function($http) {
   var props;
   props = {
-    new_location_model: function() {
+    get_new_location_model: function() {
       return {};
     },
-    new_review_model: function() {
+    get_new_review_model: function() {
       return {};
+    },
+    source_types: [],
+    last_source_type_refresh: null,
+    get_source_types: function() {
+      return $http.get(urls.source_types).success(function(data) {
+        return this.source_types = data;
+      });
     }
   };
   return props;
 };
 
-controllers.DetailCtrl = function($scope, $rootScope, $http, $location) {
-  var load_location;
+controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, DetailFactory) {
+  var load_location, reset, source_types;
   console.log("Detail Ctrl");
-  $scope.location = null;
-  $scope.current_review = null;
-  $scope.reviews = null;
+  reset = function() {
+    $scope.location = null;
+    $scope.current_location = null;
+    $scope.current_review = null;
+    return $scope.reviews = [];
+  };
+  reset();
+  source_types = DetailFactory.get_source_types();
   load_location = function(id) {
     return $http.get(urls.location + id + ".json").success(function(data) {
       $scope.location = data;
       return console.log("DATA", data);
     });
+  };
+  $scope.location_access_types = ["Added by owner", "Permitted by owner", "Public", "Private but overhanging", "Private"];
+  $scope.selected_review_source_type = function() {
+    return "Source Type";
+  };
+  $scope.selected_review_access_type = function() {
+    return "Access Type";
+  };
+  $scope.selected_location_source_type = function() {
+    return "Source Type";
   };
   $rootScope.$on("SHOW-DETAIL", function(event, id) {
     console.log("SHOW-DETAIL", id);
@@ -234,9 +257,34 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $location) {
     $scope.detail_context = 'view_reviews';
     $scope.menu_title = 'Reviews';
     return $http.get(urls.reviews($scope.location.id)).success(function(data) {
-      $scope.reviews = data;
-      return console.log("DATA", data);
+      var background_url, item, _i, _len;
+      console.log("REVIEWS", data);
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        item = data[_i];
+        if (item.hasOwnProperty("photo_url") && item.photo_url !== null && item.photo_url.indexOf("missing.png") === -1) {
+          background_url = "url('" + item.photo_url + "')";
+        } else {
+          background_url = "url('../img/png/no-image.png')";
+        }
+        item.style = {
+          "background-image": background_url
+        };
+      }
+      return $scope.reviews = data;
     });
+  };
+  $scope.add_review = function(id) {
+    if (id !== void 0) {
+      $scope.current_review = _.findWhere($scope.reviews, {
+        id: id
+      });
+      console.log("CR", $scope.current_review);
+      $scope.menu_title = "Edit Review";
+    } else {
+      $scope.current_review = DetailFactory.get_new_review_model();
+      $scope.menu_title = "Add Review";
+    }
+    return $scope.detail_context = "add_review";
   };
   return $scope.menu_left_btn_click = function() {
     if ($scope.detail_context === "add_review") {
@@ -254,6 +302,7 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $location) {
         return $scope.menu_title = "Location";
       }
     } else if ($scope.detail_context === "view_location") {
+      $timeout(reset, 500);
       $scope.show_detail = false;
       return $scope.location_id = void 0;
     }
@@ -402,6 +451,29 @@ directives.confirmDialog = function() {
   };
 };
 
+directives.ngSwitcher = function() {
+  var props;
+  props = {
+    restrict: "C",
+    template: '<a ng-click="toggleSwitch()" class="switcher"><div class="switcher-circle"></div></a>',
+    scope: {
+      toggle: "="
+    },
+    controller: function($scope, $element) {
+      var switcherElem;
+      switcherElem = $element[0].getElementsByClassName("switcher")[0];
+      if ($scope.toggle === true) {
+        switcherElem.classList.add("on");
+      }
+      return $scope.toggleSwitch = function() {
+        switcherElem.classList.toggle("on");
+        return $scope.toggle = !$scope.toggle;
+      };
+    }
+  };
+  return props;
+};
+
 controllers.MenuCtrl = function($scope, $rootScope, $http, $location) {
   return console.log("Menu Ctrl");
 };
@@ -426,14 +498,17 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
     return $http.get(urls.nearby, {
       params: list_params
     }).success(function(data) {
-      var item, _i, _len;
+      var background_url, item, _i, _len;
       for (_i = 0, _len = data.length; _i < _len; _i++) {
         item = data[_i];
-        if (item.hasOwnProperty("photos")) {
-          item.style = {
-            "background-image": "url('" + item.photos[0][0].thumbnail + "')"
-          };
+        if (item.hasOwnProperty("photos") && item.photos[0][0].thumbnail.indexOf("missing.png") === -1) {
+          background_url = "url('" + item.photos[0][0].thumbnail + "')";
+        } else {
+          background_url = "url('../img/png/no-image.png')";
         }
+        item.style = {
+          "background-image": background_url
+        };
       }
       return $scope.list_items = data;
     });
