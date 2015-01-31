@@ -1,6 +1,18 @@
 .search-side-menu-container
   .search-side-menu
     .search-params-container
+      .search-param-header Map
+      a.search-param-radio
+        | Street Map
+        .search-radio-container
+          .search-radio-active(ng-show="map_options.type='street'")
+      a.search-param-radio
+        | Satellite
+        .search-radio-container
+          .search-radio-active(ng-show="map_options.type='satellite'")
+
+      
+
     a.btn-logout-container(ng-click="logout()")
       .btn-logout Sign out
 

@@ -1,26 +1,59 @@
-factories.DetailFactory = ()->
+factories.DetailFactory = ($http)->
   props = 
-    new_location_model: ()->
+    get_new_location_model: ()->
       return {}
 
-    new_review_model: ()->
+    get_new_review_model: ()->
       return {}
+
+    source_types: []
+
+    last_source_type_refresh: null
+
+    get_source_types: ()->      
+      $http.get urls.source_types
+      .success (data)-> @source_types = data       
+
 
   return props
 
 
-controllers.DetailCtrl = ($scope, $rootScope, $http, $location)->
+controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, DetailFactory)->
   console.log "Detail Ctrl"
 
-  $scope.location = null
-  $scope.current_review = null
-  $scope.reviews = null
+  reset = ()->
+    $scope.location = null
+    $scope.current_location = null
+    $scope.current_review = null
+    $scope.reviews = []
+
+  reset()
+
+  source_types = DetailFactory.get_source_types()
 
   load_location = (id)->
     $http.get urls.location + id + ".json"
     .success (data)->
       $scope.location = data
       console.log "DATA", data
+
+  $scope.location_access_types = [
+    "Added by owner"
+    "Permitted by owner"
+    "Public"
+    "Private but overhanging"
+    "Private"
+  ]
+
+  $scope.selected_review_source_type = ()->
+    return "Source Type"
+
+  $scope.selected_review_access_type = ()->
+    return "Access Type"
+
+  $scope.selected_location_source_type = ()->
+    return "Source Type"
+
 
   $rootScope.$on "SHOW-DETAIL", (event, id)->
     console.log "SHOW-DETAIL", id
@@ -34,16 +67,36 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $location)->
       $scope.detail_context = "view_location"
       $scope.menu_title = "Location"
 
-
   $scope.show_reviews = ()->
     $scope.detail_context='view_reviews' 
     $scope.menu_title='Reviews'
     $http.get urls.reviews($scope.location.id)
     .success (data)->
+      console.log "REVIEWS", data
+      for item in data
+        if item.hasOwnProperty("photo_url") and item.photo_url isnt null and item.photo_url.indexOf("missing.png") == -1
+          background_url = "url('#{item.photo_url}')"
+        else
+          background_url = "url('../img/png/no-image.png')"
+
+        item.style = 
+          "background-image": background_url
+
       $scope.reviews = data
-      console.log "DATA", data
       
 
+
+  $scope.add_review = (id)->
+    if id isnt undefined
+      $scope.current_review = _.findWhere($scope.reviews, id: id)
+      console.log "CR", $scope.current_review      
+      $scope.menu_title = "Edit Review"
+    else
+      $scope.current_review = DetailFactory.get_new_review_model()
+      $scope.menu_title = "Add Review"
+
+    $scope.detail_context = "add_review"
+      
   $scope.menu_left_btn_click = ()->
     if $scope.detail_context == "add_review"
       $scope.detail_context = "view_reviews"
@@ -59,6 +112,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $location)->
         $scope.detail_context = "view_location"
         $scope.menu_title = "Location"
     else if $scope.detail_context == "view_location"
+      $timeout reset, 500        
       $scope.show_detail = false
       $scope.location_id = undefined
 
@@ -68,3 +122,5 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $location)->
 
     
     
+
+

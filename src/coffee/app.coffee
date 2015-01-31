@@ -66,6 +66,8 @@ urls =
   location: host + "locations/"
   add_location: host + "locations.json"
 
+  source_types: host + "locations/types.json"
+
   reviews: (id)-> host + "locations/#{id}/reviews.json"
 
 

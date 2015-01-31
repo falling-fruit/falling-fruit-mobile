@@ -130,3 +130,20 @@ directives.confirmDialog = ()->
     oktxt: "@"
     canceltxt: "@"
 
+
+directives.ngSwitcher = ()->
+  props =
+    restrict: "C"
+    template: '<a ng-click="toggleSwitch()" class="switcher"><div class="switcher-circle"></div></a>'
+    scope:
+      toggle: "="
+    controller: ($scope, $element)->
+      switcherElem = $element[0].getElementsByClassName("switcher")[0]
+      switcherElem.classList.add("on") if $scope.toggle == true
+
+      $scope.toggleSwitch = ()->
+        switcherElem.classList.toggle("on")
+        $scope.toggle = !$scope.toggle
+
+
+  return props
