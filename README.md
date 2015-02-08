@@ -60,6 +60,8 @@ Finally to build and emulate on android:
 cordova emulate android
 ```
 
+If you want to debug with Chrome, go to: chrome://inspect/#devices
+
 ### Setup XCode (iOS SDK)
 
 Seemingly you can only build iOS applications on a Mac. Here are the instructions to setup X-Code:
