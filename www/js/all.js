@@ -72,6 +72,7 @@ urls = {
   location: host + "locations/",
   add_location: host + "locations.json",
   source_types: host + "locations/types.json",
+  markers: host + "locations/markers.json",
   reviews: function(id) {
     return host + ("locations/" + id + "/reviews.json");
   }
@@ -319,28 +320,111 @@ directives.mapContainer = function() {
       stoplist: "=",
       directionstype: "="
     },
-    controller: function($scope, $element) {
+    controller: function($scope, $element, $http) {
       var clear_all_markers_and_directions, container_elem, initialize;
       container_elem = $element[0];
       window.FFApp.map_initialized = false;
-      clear_all_markers_and_directions = function() {
-        var i, marker, _i, _len, _ref, _results;
-        if (FFApp.map_old_directions !== void 0) {
-          FFApp.map_old_directions.setMap(null);
-        }
-        if (FFApp.dir_elem !== void 0) {
-          window.FFApp.dir_elem.innerHTML = "";
-        }
-        if (FFApp.map_old_markers !== void 0) {
-          _ref = FFApp.map_old_markers;
-          _results = [];
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            marker = _ref[i];
-            _results.push(marker.setMap(null));
-          }
-          return _results;
-        }
-      };
+      window.FFApp.markersArray = [];
+      window.FFApp.openMarker = null;
+      window.FFApp.openMarkerId = null;
+      window.FFApp.markersMax = 5000;
+      
+      // will avoid adding duplicate markers (using location id)
+			add_markers_from_json = function(mdata,skip_ids){
+				var len = mdata.length;
+				for(var i = 0; i < len; i++){
+					var lid = mdata[i]["location_id"];
+					if((skip_ids != undefined) && (skip_ids.indexOf(parseInt(lid)) >= 0)) continue;
+					if((lid != undefined) && (find_marker(lid) != undefined)) continue;
+					var w = 36;
+					var h = 36;
+					var wo = parseInt(w/2,10);
+					var ho = parseInt(h/2,10);
+					if(window.FFApp.openMarkerId == lid){
+						var m = window.FFApp.openMarker; 
+					}else{
+						var m = new google.maps.Marker({
+							icon: {
+								url: 'img/png/map-location-dot.png',
+								size: new google.maps.Size(w,h),
+								origin: new google.maps.Point(0,0),
+								// by convention, icon center is at ~40%
+								anchor: new google.maps.Point(w*0.4,h*0.4)
+							},
+							position: new google.maps.LatLng(mdata[i]["lat"],mdata[i]["lng"]), 
+							map: window.FFApp.map_obj,
+							title: mdata[i]["title"],
+							draggable: false
+						});
+					}
+					window.FFApp.markersArray.push({marker: m, id: mdata[i]["location_id"], type: "point", types: mdata[i]["types"], parent_types: mdata[i]["parent_types"]});
+					/*for(var j = 0; j < mdata[i]["types"].length; j++){
+						var tid = mdata[i]["types"][j];
+						if(types_hash[tid] == undefined) types_hash[tid] = 1;
+						else types_hash[tid] += 1;
+					}
+					for(var j = 0; j < mdata[i]["parent_types"].length; j++){
+						var tid = mdata[i]["parent_types"][j];
+						if(types_hash[tid] == undefined) types_hash[tid] = 1;
+						else types_hash[tid] += 1;
+					}	*/				
+				}
+				//document.dispatchEvent(markersLoadedEvent);
+			};
+			
+		  find_marker = function(lid){
+				for(var i = 0; i < window.FFApp.markersArray.length; i++){
+					if(window.FFApp.markersArray[i].id == lid) return i;
+				}
+				return undefined;
+			};
+      
+      do_markers = function(muni,type_filter,cats) {
+      	var bounds = window.FFApp.map_obj.getBounds();
+				if(window.FFApp.markersArray.length >= window.FFApp.markersMax) return;
+				var list_params = {
+				  nelat: bounds.getNorthEast().lat(),
+				  nelng: bounds.getNorthEast().lng(),
+				  swlat: bounds.getSouthWest().lat(),
+				  swlng: bounds.getSouthWest().lng(),
+				  api_key: '***REMOVED***'
+				};
+				if (muni) list_params.muni = 1;
+				else list_params.muni = 0;
+				if (cats != undefined) list_params.c = cats;
+				if (type_filter != undefined) list_params.t = type_filter;
+				
+				//if(pb != null) pb.start(200);
+				$http.get(urls.markers, {
+          params: list_params
+        }).success(function(json) {
+					//if(pb != null) pb.setTotal(json.length);
+					//n_found = json.shift();
+					//n_limit = json.shift();
+					//clear_offscreen_markers();
+					add_markers_from_json(json);
+					/*if(type_filter != undefined) apply_type_filter();
+					// make markers clickable
+					for (var i = 0; i < markersArray.length; ++i) {
+						add_marker_infobox(i);
+					}
+					if(labelsOn) labelize_markers();
+					n = json.length;
+					if(n > 0){
+						if((n < n_found) && (n_found >= n_limit)){
+							$("#pg_text").html(markersArray.length + " of " + n_found + " visible");
+							markersPartial = true;
+						}else{
+							pb.hide();
+							markersPartial = false;
+						}
+					}else{
+						pb.hide();
+					}
+					search_filter(last_search);*/
+				});
+			};
+
       initialize = function() {
         var chicago, map_options;
         if (window.FFApp.map_initialized === true) {
@@ -360,20 +444,15 @@ directives.mapContainer = function() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
           window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
-
-          /*
-          marker = new google.maps.Marker
-            position: new google.maps.LatLng(43.069452, -89.411373),
-            map: map
-            title: "This is a marker!"
-            animation: google.maps.Animation.DROP
-           */
+          google.maps.event.addListenerOnce(window.FFApp.map_obj, 'tilesloaded', function(event) {
+        		console.log("ADDING MARKERS");
+            do_markers(true);
+          });
         }
         window.FFApp.map_initialized = true;
-        return clear_all_markers_and_directions();
       };
-      console.log("LOADING MAP DIRECTIVE, STOPS NOT LOADED YET");
-      return initialize();
+      console.log("LOADING MAP DIRECTIVE");
+      initialize();
     }
   };
 };
