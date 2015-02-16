@@ -69,6 +69,7 @@ urls = {
   register: auth_host + "users.json",
   forgot_password: auth_host + "users.json",
   nearby: host + "locations/nearby.json",
+  markers: host + "locations/markers.json",
   location: host + "locations/",
   add_location: host + "locations.json",
   source_types: host + "locations/types.json",
@@ -319,27 +320,100 @@ directives.mapContainer = function() {
       stoplist: "=",
       directionstype: "="
     },
-    controller: function($scope, $element) {
-      var clear_all_markers_and_directions, container_elem, initialize;
+    controller: function($scope, $element, $http, $rootScope) {
+      var add_markers_from_json, container_elem, do_markers, find_marker, initialize;
       container_elem = $element[0];
       window.FFApp.map_initialized = false;
-      clear_all_markers_and_directions = function() {
-        var i, marker, _i, _len, _ref, _results;
-        if (FFApp.map_old_directions !== void 0) {
-          FFApp.map_old_directions.setMap(null);
+      window.FFApp.markersArray = [];
+      window.FFApp.openMarker = null;
+      window.FFApp.openMarkerId = null;
+      window.FFApp.markersMax = 5000;
+      do_markers = function(muni, type_filter, cats) {
+        var bounds, list_params;
+        bounds = window.FFApp.map_obj.getBounds();
+        if (window.FFApp.markersArray.length >= window.FFApp.markersMax) {
+          return;
         }
-        if (FFApp.dir_elem !== void 0) {
-          window.FFApp.dir_elem.innerHTML = "";
+        list_params = {
+          nelat: bounds.getNorthEast().lat(),
+          nelng: bounds.getNorthEast().lng(),
+          swlat: bounds.getSouthWest().lat(),
+          swlng: bounds.getSouthWest().lng(),
+          api_key: "***REMOVED***"
+        };
+        if (muni) {
+          list_params.muni = 1;
+        } else {
+          list_params.muni = 0;
         }
-        if (FFApp.map_old_markers !== void 0) {
-          _ref = FFApp.map_old_markers;
-          _results = [];
-          for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
-            marker = _ref[i];
-            _results.push(marker.setMap(null));
+        if (cats !== undefined) {
+          list_params.c = cats;
+        }
+        if (type_filter !== undefined) {
+          list_params.t = type_filter;
+        }
+        return $http.get(urls.markers, {
+          params: list_params
+        }).success(function(json) {
+          return add_markers_from_json(json);
+        });
+      };
+      find_marker = function(lid) {
+        var i;
+        i = 0;
+        while (i < window.FFApp.markersArray.length) {
+          if (window.FFApp.markersArray[i].id === lid) {
+            return i;
           }
-          return _results;
+          i++;
         }
+        return undefined;
+      };
+      add_markers_from_json = function(mdata) {
+        var h, ho, i, len, lid, m, w, wo, _results;
+        len = mdata.length;
+        i = 0;
+        _results = [];
+        while (i < len) {
+          lid = mdata[i]["location_id"];
+          if (find_marker(lid !== undefined)) {
+            continue;
+          }
+          w = 36;
+          h = 36;
+          wo = parseInt(w / 2, 10);
+          ho = parseInt(h / 2, 10);
+          if (window.FFApp.openMarkerId === lid) {
+            m = window.FFApp.openMarker;
+          } else {
+            m = new google.maps.Marker({
+              icon: {
+                url: "img/png/map-location-dot.png",
+                size: new google.maps.Size(w, h),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(w * 0.4, h * 0.4)
+              },
+              position: new google.maps.LatLng(mdata[i]["lat"], mdata[i]["lng"]),
+              map: window.FFApp.map_obj,
+              title: mdata[i]["title"],
+              draggable: false
+            });
+            google.maps.event.addListener(m, "click", function() {
+              window.FFApp.openMarkerId = lid;
+              window.FFApp.openMarker = m;
+              return $rootScope.$broadcast("SHOW-DETAIL", lid);
+            });
+          }
+          window.FFApp.markersArray.push({
+            marker: m,
+            id: mdata[i]["location_id"],
+            type: "point",
+            types: mdata[i]["types"],
+            parent_types: mdata[i]["parent_types"]
+          });
+          _results.push(i++);
+        }
+        return _results;
       };
       initialize = function() {
         var chicago, map_options;
@@ -360,17 +434,16 @@ directives.mapContainer = function() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
           };
           window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
-
-          /*
-          marker = new google.maps.Marker
-            position: new google.maps.LatLng(43.069452, -89.411373),
-            map: map
-            title: "This is a marker!"
-            animation: google.maps.Animation.DROP
-           */
+          google.maps.event.addListenerOnce(window.FFApp.map_obj, "tilesloaded", function(event) {
+            console.log("ADDING MARKERS");
+            return do_markers(true);
+          });
+          google.maps.event.addListener(window.FFApp.map_obj, "idle", function() {
+            console.log("UPDATING MARKERS");
+            return do_markers(true);
+          });
         }
-        window.FFApp.map_initialized = true;
-        return clear_all_markers_and_directions();
+        return window.FFApp.map_initialized = true;
       };
       console.log("LOADING MAP DIRECTIVE, STOPS NOT LOADED YET");
       return initialize();

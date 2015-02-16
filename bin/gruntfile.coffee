@@ -119,13 +119,13 @@ module.exports = (grunt)->
         files: [SRC_BASE + "jade/*.jade", SRC_BASE + "jade/**/*.jade"]
         tasks: ["jade:index"]
 
-    ios_android_copy:
-      files: [DEST_BASE + "*.html", DEST_BASE + "html/**/*.html", DEST_BASE + "html/*.html", DEST_BASE + "css/*.css", DEST_BASE + "js/*.js"]
-      tasks: ["copy:ios", "copy:android"]
+      ios_android_copy:
+        files: [DEST_BASE + "*.html", DEST_BASE + "html/**/*.html", DEST_BASE + "html/*.html", DEST_BASE + "css/*.css", DEST_BASE + "js/*.js"]
+        tasks: ["copy:ios", "copy:android"]
 
-    lib_img_font_copy:
-      files: [DEST_BASE + "img/*.*", DEST_BASE + "font/*.*", DEST_BASE + "js/lib/*.js"]
-      tasks: ["copy:ios_lib_img_font", "copy:android_lib_img_font"]
+      lib_img_font_copy:
+        files: [DEST_BASE + "img/*.*", DEST_BASE + "font/*.*", DEST_BASE + "js/lib/*.js"]
+        tasks: ["copy:ios_lib_img_font", "copy:android_lib_img_font"]
 
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-less"

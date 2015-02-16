@@ -5,8 +5,79 @@
     <div class="menu-title">[{menu_title}]</div>
     <div class="menu-right-btn"></div>
   </div>
-  <div ng-show="detail_context=='add'" class="detail-container">
-    <div class="detail-btn">Take a photo</div>
-    <div class="detail-btn-dark">Save</div>
+  <div ng-show="detail_context=='view_location'" class="detail-container">
+    <div class="photo-list-container">
+      <ul class="photo-list">
+        <li ng-repeat="photo in location.photos"></li>
+      </ul>
+    </div>
+    <div class="location-info">
+      <div>[{location.title}]</div>
+      <div ng-show="location.distance">Distance: [{location.distance}]m</div>
+      <div ng-hide="location.no_season">Seasonality: [{location.season_start}] - [{location.season_stop}]</div>
+    </div>
+    <div class="location-description">[{location.description}]</div>
+    <div class="location-author">by: [{location.author}]</div><a ng-click="show_reviews()" ng-show="location.num_reviews &gt; 0" class="btn-location-reviews">All Reviews ([{location.num_reviews}])</a>
+    <div class="btn-detail-location-container">
+      <div ng-click="detail_context='add_location'; menu_title='Edit Location';" class="detail-btn-dark">Edit</div>
+      <div ng-click="show_reviews()" class="detail-btn-dark">Review</div>
+    </div>
+  </div>
+  <div ng-show="detail_context=='add_location'" class="detail-container"> 
+    <div class="detail-select-container">[{selected_location_source_type()}]
+      <select ng-model="location.types" ng-options="i as name for (i, name) in location_access_types"></select>
+    </div>
+    <div class="detail-textarea-container location">
+      <textarea ng-model="location.description"></textarea>
+    </div>
+    <div class="detail-select-container">[{selected_review_source_type()}]
+      <select ng-model="location.access" ng-options="i as name for (i, name) in location_access_types"></select>
+    </div>
+    <div class="detail-toggle-container">
+      <div class="detail-toggle-label">Unverified</div>
+      <div toggle="location.unverified" class="ng-switcher"></div>
+    </div>
+    <div ng-click="save_review()" class="detail-btn-dark btn-save">Save</div>
+  </div>
+  <div ng-show="detail_context=='view_reviews'" class="detail-container">
+    <div class="review-list-container"><a ng-repeat="r in reviews" ng-click="add_review(r.id)" class="list-item">
+        <div ng-style="r.style" class="list-item-image"></div>
+        <div class="list-item-info-container">
+          <div class="list-item-author"><span>by </span>[{::r.author}]</div>
+          <div class="list-item-name">[{::r.created_at | date : 'MMM dd, yyyy h:mm a'}]</div>
+          <div class="list-item-description">[{::r.comment}]</div>
+        </div></a>
+      <div ng-click="add_review()" class="detail-btn-dark review">Add a review</div>
+    </div>
+  </div>
+  <div ng-show="detail_context=='add_review'" class="detail-container">
+    <div class="detail-textarea-container">
+      <textarea ng-model="current_review.comment" placeholder="Add a comment..."></textarea>
+    </div>
+    <div class="detail-range-container">
+      <div class="detail-range-label-1">Quality </div>
+      <div class="detail-range-label-2">[{current_review.quality_rating}]</div>
+      <div class="detail-range-control">
+        <input type="range" ng-model="current_review.quality_rating" min="0" max="5" step="1"/>
+      </div>
+    </div>
+    <div class="detail-range-container">
+      <div class="detail-range-label-1">Yield</div>
+      <div class="detail-range-label-2">[{current_review.yield_rating}]</div>
+      <div class="detail-range-control">
+        <input type="range" ng-model="current_review.yield_rating" min="0" max="5" step="1"/>
+      </div>
+    </div>
+    <div class="detail-range-container">
+      <div class="detail-range-label-1">Ripeness</div>
+      <div class="detail-range-label-2">[{current_review.fruiting}]</div>
+      <div class="detail-range-control">
+        <input type="range" ng-model="current_review.fruiting" min="0" max="5" step="1"/>
+      </div>
+    </div>
+    <div class="detail-btn btn-photo">Take a photo
+      <input type="file" capture="camera" accept="image/*" onchange="angular.element(this).scope().update_photo_list(this.files)"/>
+    </div>
+    <div class="detail-btn-dark btn-save">Save</div>
   </div>
 </div>

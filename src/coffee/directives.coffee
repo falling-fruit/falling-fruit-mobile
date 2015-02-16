@@ -6,7 +6,7 @@ directives.mapContainer = ()->
   scope:
     stoplist: "="
     directionstype: "="
-  controller: ($scope, $element,$http)->
+  controller: ($scope, $element,$http,$rootScope)->
     #console.log "Welcome to Google Maps directive"
     container_elem = $element[0]
     window.FFApp.map_initialized = false
@@ -71,6 +71,12 @@ directives.mapContainer = ()->
             title: mdata[i]["title"]
             draggable: false
           )
+          
+          google.maps.event.addListener m, "click", ()->
+            window.FFApp.openMarkerId = lid
+            window.FFApp.openMarker = m  
+            $rootScope.$broadcast "SHOW-DETAIL", lid
+            
         window.FFApp.markersArray.push
           marker: m
           id: mdata[i]["location_id"]
