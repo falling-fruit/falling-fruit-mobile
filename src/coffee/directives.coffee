@@ -48,6 +48,8 @@ directives.mapContainer = ()->
       i = 0
       while i < len
         lid = mdata[i]["location_id"]
+        if find_marker lid isnt `undefined`
+          continue
         w = 36
         h = 36
         wo = parseInt(w / 2, 10)
@@ -98,6 +100,10 @@ directives.mapContainer = ()->
         
         google.maps.event.addListenerOnce window.FFApp.map_obj, "tilesloaded", (event) ->
           console.log "ADDING MARKERS"
+          do_markers true
+          
+        google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
+          console.log "UPDATING MARKERS"
           do_markers true
 
       window.FFApp.map_initialized = true
