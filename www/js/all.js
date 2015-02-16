@@ -320,7 +320,7 @@ directives.mapContainer = function() {
       stoplist: "=",
       directionstype: "="
     },
-    controller: function($scope, $element, $http) {
+    controller: function($scope, $element, $http, $rootScope) {
       var add_markers_from_json, container_elem, do_markers, find_marker, initialize;
       container_elem = $element[0];
       window.FFApp.map_initialized = false;
@@ -397,6 +397,11 @@ directives.mapContainer = function() {
               map: window.FFApp.map_obj,
               title: mdata[i]["title"],
               draggable: false
+            });
+            google.maps.event.addListener(m, "click", function() {
+              window.FFApp.openMarkerId = lid;
+              window.FFApp.openMarker = m;
+              return $rootScope.$broadcast("SHOW-DETAIL", lid);
             });
           }
           window.FFApp.markersArray.push({
