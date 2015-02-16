@@ -8,7 +8,7 @@ directives.mapContainer = function() {
       stoplist: "=",
       directionstype: "="
     },
-    controller: function($scope, $element) {
+    controller: function($scope, $element, $http) {
       var add_markers_from_json, container_elem, do_markers, find_marker, initialize;
       container_elem = $element[0];
       window.FFApp.map_initialized = false;
@@ -57,19 +57,13 @@ directives.mapContainer = function() {
         }
         return undefined;
       };
-      add_markers_from_json = function(mdata, skip_ids) {
+      add_markers_from_json = function(mdata) {
         var h, ho, i, len, lid, m, w, wo, _results;
         len = mdata.length;
         i = 0;
         _results = [];
         while (i < len) {
           lid = mdata[i]["location_id"];
-          if ((skip_ids !== undefined) && (skip_ids.indexOf(parseInt(lid)) >= 0)) {
-            continue;
-          }
-          if ((lid !== undefined) && (find_marker(lid) !== undefined)) {
-            continue;
-          }
           w = 36;
           h = 36;
           wo = parseInt(w / 2, 10);

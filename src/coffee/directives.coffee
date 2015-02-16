@@ -6,7 +6,7 @@ directives.mapContainer = ()->
   scope:
     stoplist: "="
     directionstype: "="
-  controller: ($scope, $element)->
+  controller: ($scope, $element,$http)->
     #console.log "Welcome to Google Maps directive"
     container_elem = $element[0]
     window.FFApp.map_initialized = false
@@ -43,13 +43,11 @@ directives.mapContainer = ()->
         i++
       `undefined`
           
-    add_markers_from_json = (mdata, skip_ids) ->
+    add_markers_from_json = (mdata) ->
       len = mdata.length
       i = 0
       while i < len
         lid = mdata[i]["location_id"]
-        continue  if (skip_ids isnt `undefined`) and (skip_ids.indexOf(parseInt(lid)) >= 0)
-        continue  if (lid isnt `undefined`) and (find_marker(lid) isnt `undefined`)
         w = 36
         h = 36
         wo = parseInt(w / 2, 10)
