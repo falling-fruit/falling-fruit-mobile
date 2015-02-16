@@ -10,30 +10,85 @@ directives.mapContainer = ()->
     #console.log "Welcome to Google Maps directive"
     container_elem = $element[0]
     window.FFApp.map_initialized = false
+    window.FFApp.markersArray = []
+    window.FFApp.openMarker = null
+    window.FFApp.openMarkerId = null
+    window.FFApp.markersMax = 5000
+  
+    do_markers = (muni, type_filter, cats) ->
+      bounds = window.FFApp.map_obj.getBounds()
+      return  if window.FFApp.markersArray.length >= window.FFApp.markersMax
+      list_params =
+        nelat: bounds.getNorthEast().lat()
+        nelng: bounds.getNorthEast().lng()
+        swlat: bounds.getSouthWest().lat()
+        swlng: bounds.getSouthWest().lng()
+        api_key: "***REMOVED***"
 
-    clear_all_markers_and_directions = ()->
-      FFApp.map_old_directions.setMap(null) if FFApp.map_old_directions isnt undefined
-      window.FFApp.dir_elem.innerHTML = "" if FFApp.dir_elem isnt undefined
-      if FFApp.map_old_markers isnt undefined
-        for marker, i in FFApp.map_old_markers
-          marker.setMap(null)
+      if muni
+        list_params.muni = 1
+      else
+        list_params.muni = 0
+      list_params.c = cats  unless cats is `undefined`
+      list_params.t = type_filter  unless type_filter is `undefined`
+      $http.get(urls.markers,
+        params: list_params
+      ).success (json) ->
+        add_markers_from_json json
+    
+    find_marker = (lid) ->
+      i = 0
+      while i < window.FFApp.markersArray.length
+        return i  if window.FFApp.markersArray[i].id is lid
+        i++
+      `undefined`
+          
+    add_markers_from_json = (mdata, skip_ids) ->
+      len = mdata.length
+      i = 0
+      while i < len
+        lid = mdata[i]["location_id"]
+        continue  if (skip_ids isnt `undefined`) and (skip_ids.indexOf(parseInt(lid)) >= 0)
+        continue  if (lid isnt `undefined`) and (find_marker(lid) isnt `undefined`)
+        w = 36
+        h = 36
+        wo = parseInt(w / 2, 10)
+        ho = parseInt(h / 2, 10)
+        if window.FFApp.openMarkerId is lid
+          m = window.FFApp.openMarker
+        else
+          m = new google.maps.Marker(
+            icon:
+              url: "img/png/map-location-dot.png"
+              size: new google.maps.Size(w, h)
+              origin: new google.maps.Point(0, 0)
+          
+              # by convention, icon center is at ~40%
+              anchor: new google.maps.Point(w * 0.4, h * 0.4)
+
+            position: new google.maps.LatLng(mdata[i]["lat"], mdata[i]["lng"])
+            map: window.FFApp.map_obj
+            title: mdata[i]["title"]
+            draggable: false
+          )
+        window.FFApp.markersArray.push
+          marker: m
+          id: mdata[i]["location_id"]
+          type: "point"
+          types: mdata[i]["types"]
+          parent_types: mdata[i]["parent_types"]
+
+        i++
 
     initialize = ()->
       return if window.FFApp.map_initialized == true
       $scope.$emit("loading-start", "Loading maps...")
       if window.FFApp.map_elem isnt undefined
         container_elem.appendChild(window.FFApp.map_elem)
-        #dir_container_elem.appendChild(window.FFApp.dir_elem)
-        #console.log "appendedchild"
       else
         window.FFApp.map_elem = document.createElement("div")
         window.FFApp.map_elem.className = "map"
         container_elem.appendChild(window.FFApp.map_elem)
-        #container_elem.appendChild(switch_elem)
-
-        #window.FFApp.dir_elem = document.createElement("div")
-        #window.FFApp.dir_elem.className = "directions"
-        #dir_container_elem.appendChild(window.FFApp.dir_elem)
         chicago = new google.maps.LatLng(41.850033, -87.6500523)
 
         map_options =
@@ -42,18 +97,12 @@ directives.mapContainer = ()->
           mapTypeId: google.maps.MapTypeId.ROADMAP
 
         window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
+        
+        google.maps.event.addListenerOnce window.FFApp.map_obj, "tilesloaded", (event) ->
+          console.log "ADDING MARKERS"
+          do_markers true
 
-        ###
-        marker = new google.maps.Marker
-          position: new google.maps.LatLng(43.069452, -89.411373),
-          map: map
-          title: "This is a marker!"
-          animation: google.maps.Animation.DROP
-        ###
       window.FFApp.map_initialized = true
-
-      clear_all_markers_and_directions()
-
 
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
     initialize()
