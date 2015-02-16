@@ -376,6 +376,9 @@ directives.mapContainer = function() {
         _results = [];
         while (i < len) {
           lid = mdata[i]["location_id"];
+          if (find_marker(lid !== undefined)) {
+            continue;
+          }
           w = 36;
           h = 36;
           wo = parseInt(w / 2, 10);
@@ -428,6 +431,10 @@ directives.mapContainer = function() {
           window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
           google.maps.event.addListenerOnce(window.FFApp.map_obj, "tilesloaded", function(event) {
             console.log("ADDING MARKERS");
+            return do_markers(true);
+          });
+          google.maps.event.addListener(window.FFApp.map_obj, "idle", function() {
+            console.log("UPDATING MARKERS");
             return do_markers(true);
           });
         }
