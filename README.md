@@ -13,6 +13,7 @@ echo "source ~/.nvm/nvm.sh" >> ~/.bashrc
 . ~/.bashrc
 nvm install 0.10
 npm install -g cordova
+npm install -g grunt-cli
 cd bin
 npm install
 cd ..
@@ -67,3 +68,28 @@ If you want to debug with Chrome, go to: chrome://inspect/#devices
 Seemingly you can only build iOS applications on a Mac. Here are the instructions to setup X-Code:
 
 http://cordova.apache.org/docs/en/4.0.0/guide_platforms_ios_index.md.html
+
+### Develop with Grunt
+
+Grunt is used to compile things in src into www. To do this, you:
+
+```
+cd bin
+grunt jade
+grunt coffee
+grunt less
+```
+
+If you want to start a watcher that will automatically recompile things when they are saved do:
+
+```
+grunt watch
+```
+
+If you want to start the local grunt server so you can run the app like a webapp (without compiling a device package or starting the emulator):
+
+```
+grunt devserver
+```
+
+Then browse to http://localhost:9001
