@@ -62,6 +62,7 @@ urls =
   forgot_password: auth_host + "users.json"
 
   nearby: host + "locations/nearby.json"
+  markers: host + "locations/markers.json"
 
   location: host + "locations/"
   add_location: host + "locations.json"
