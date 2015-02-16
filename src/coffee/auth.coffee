@@ -39,8 +39,7 @@ factories.AuthFactory = ($rootScope)->
 
     needsAuth: (url)->
       return url.indexOf(".html") == -1 and url.indexOf("/users/") == -1
-
-
+      
   return props
 
 controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
