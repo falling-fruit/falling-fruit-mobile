@@ -41,17 +41,21 @@ directives.mapContainer = ()->
     find_marker = (lid) ->
       i = 0
       while i < window.FFApp.markersArray.length
-        return i  if window.FFApp.markersArray[i].id is lid
+        return i if parseInt(window.FFApp.markersArray[i].id) is parseInt(lid)
         i++
       `undefined`
           
     add_markers_from_json = (mdata) ->
+      n_found = mdata.shift()
+      n_limit = mdata.shift()
       len = mdata.length
       i = 0
       while i < len
         lid = mdata[i]["location_id"]
-        if find_marker lid isnt `undefined`
+        if find_marker(lid) isnt `undefined`
+          i++
           continue
+          
         w = 36
         h = 36
         wo = parseInt(w / 2, 10)
@@ -74,19 +78,22 @@ directives.mapContainer = ()->
             draggable: false
           )
           
-          google.maps.event.addListener m, "click", ()->
-            window.FFApp.openMarkerId = lid
-            window.FFApp.openMarker = m  
-            $rootScope.$broadcast "SHOW-DETAIL", lid
+          setup_marker m, lid
             
-        window.FFApp.markersArray.push
-          marker: m
-          id: mdata[i]["location_id"]
-          type: "point"
-          types: mdata[i]["types"]
-          parent_types: mdata[i]["parent_types"]
+          window.FFApp.markersArray.push
+            marker: m
+            id: mdata[i]["location_id"]
+            type: "point"
+            types: mdata[i]["types"]
+            parent_types: mdata[i]["parent_types"]
 
         i++
+
+    setup_marker = (marker,lid)->
+      google.maps.event.addListener marker, "click", ()->
+        window.FFApp.openMarkerId = lid
+        window.FFApp.openMarker = marker
+        $rootScope.$broadcast "SHOW-DETAIL", lid
 
     update_position = ()->
       navigator.geolocation.getCurrentPosition ((position)-> 
