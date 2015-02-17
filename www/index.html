@@ -15,7 +15,7 @@
         <div ng-class="show_menu == true ? 'show': ''" class="search-inner-container">
           <div class="search-container">
             <div class="search-menu">
-              <div class="current-location"></div>
+              <div ng-click="update_position()" class="current-location"></div>
               <div class="search-input-container">
                 <input type="text" placeholder="Enter a location..." ng-model="search_text">
               </div>
