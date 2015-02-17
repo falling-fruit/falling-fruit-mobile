@@ -321,7 +321,7 @@ directives.mapContainer = function() {
       directionstype: "="
     },
     controller: function($scope, $element, $http, $rootScope) {
-      var add_markers_from_json, container_elem, do_markers, find_marker, initialize, update_position;
+      var add_markers_from_json, container_elem, do_markers, find_marker, initialize, setup_marker, update_position;
       container_elem = $element[0];
       window.FFApp.map_initialized = false;
       window.FFApp.markersArray = [];
@@ -364,7 +364,7 @@ directives.mapContainer = function() {
         var i;
         i = 0;
         while (i < window.FFApp.markersArray.length) {
-          if (window.FFApp.markersArray[i].id === lid) {
+          if (parseInt(window.FFApp.markersArray[i].id) === parseInt(lid)) {
             return i;
           }
           i++;
@@ -372,13 +372,16 @@ directives.mapContainer = function() {
         return undefined;
       };
       add_markers_from_json = function(mdata) {
-        var h, ho, i, len, lid, m, w, wo, _results;
+        var h, ho, i, len, lid, m, n_found, n_limit, w, wo, _results;
+        n_found = mdata.shift();
+        n_limit = mdata.shift();
         len = mdata.length;
         i = 0;
         _results = [];
         while (i < len) {
           lid = mdata[i]["location_id"];
-          if (find_marker(lid !== undefined)) {
+          if (find_marker(lid) !== undefined) {
+            i++;
             continue;
           }
           w = 36;
@@ -400,22 +403,25 @@ directives.mapContainer = function() {
               title: mdata[i]["title"],
               draggable: false
             });
-            google.maps.event.addListener(m, "click", function() {
-              window.FFApp.openMarkerId = lid;
-              window.FFApp.openMarker = m;
-              return $rootScope.$broadcast("SHOW-DETAIL", lid);
+            setup_marker(m, lid);
+            window.FFApp.markersArray.push({
+              marker: m,
+              id: mdata[i]["location_id"],
+              type: "point",
+              types: mdata[i]["types"],
+              parent_types: mdata[i]["parent_types"]
             });
           }
-          window.FFApp.markersArray.push({
-            marker: m,
-            id: mdata[i]["location_id"],
-            type: "point",
-            types: mdata[i]["types"],
-            parent_types: mdata[i]["parent_types"]
-          });
           _results.push(i++);
         }
         return _results;
+      };
+      setup_marker = function(marker, lid) {
+        return google.maps.event.addListener(marker, "click", function() {
+          window.FFApp.openMarkerId = lid;
+          window.FFApp.openMarker = marker;
+          return $rootScope.$broadcast("SHOW-DETAIL", lid);
+        });
       };
       update_position = function() {
         return navigator.geolocation.getCurrentPosition((function(position) {
