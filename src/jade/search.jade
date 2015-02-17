@@ -3,12 +3,10 @@
   .search-inner-container(ng-class="show_menu == true ? 'show': ''")
     .search-container
       .search-menu
-        .current-location
+        .current-location(ng-click="update_position()")
 
         .search-input-container
           input(type="text", placeholder="Enter a location...", ng-model="search_text")
-
-
 
       .search-view-container
         .map-container(directionstype="directions_type", stoplist="stopList")
@@ -23,5 +21,4 @@
             .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="current_view = 'list'") List
         .add(ng-click="show_detail()")
 
-    //- ui-gmap-google-map(center='map.center' zoom='map.zoom')
     include partials/search_side_menu

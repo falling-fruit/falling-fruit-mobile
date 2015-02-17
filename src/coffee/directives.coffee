@@ -7,18 +7,32 @@ directives.mapContainer = ()->
     stoplist: "="
     directionstype: "="
   controller: ($scope, $element,$http,$rootScope)->
-    #console.log "Welcome to Google Maps directive"
     container_elem = $element[0]
     window.FFApp.map_initialized = false
     window.FFApp.markersArray = []
     window.FFApp.openMarker = null
     window.FFApp.openMarkerId = null
-    window.FFApp.markersMax = 5000
+    window.FFApp.markersMax = 100
+    window.FFApp.defaultZoom = 14
     window.FFApp.current_position = null
     window.FFApp.position_marker = `undefined`
-  
+ 
+    clear_offscreen_markers = () ->
+      b = window.FFApp.map_obj.getBounds()
+      i = 0
+      newMarkers = []
+      while i < window.FFApp.markersArray.length
+        p = window.FFApp.markersArray[i].marker.getPosition()
+        if !b.contains(p)
+          window.FFApp.markersArray[i].marker.setMap(null)
+        else
+          newMarkers.push(window.FFApp.markersArray[i])
+        i++ 
+      window.FFApp.markersArray = newMarkers
+           
     do_markers = (muni, type_filter, cats) ->
       bounds = window.FFApp.map_obj.getBounds()
+      clear_offscreen_markers(bounds)
       return  if window.FFApp.markersArray.length >= window.FFApp.markersMax
       list_params =
         nelat: bounds.getNorthEast().lat()
@@ -55,7 +69,8 @@ directives.mapContainer = ()->
         if find_marker(lid) isnt `undefined`
           i++
           continue
-          
+        if window.FFApp.markersArray.length > window.FFApp.markersMax 
+          break
         w = 36
         h = 36
         wo = parseInt(w / 2, 10)
@@ -95,33 +110,6 @@ directives.mapContainer = ()->
         window.FFApp.openMarker = marker
         $rootScope.$broadcast "SHOW-DETAIL", lid
 
-    update_position = ()->
-      navigator.geolocation.getCurrentPosition ((position)-> 
-        console.log("position obtained!")
-        window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude,position.coords.longitude) 
-        w = 69
-        h = 69
-        if window.FFApp.position_marker is `undefined`
-          window.FFApp.position_marker = new google.maps.Marker(
-            icon:
-              url: "img/png/control-me.png"
-              size: new google.maps.Size(w, h)
-              origin: new google.maps.Point(0, 0)
-      
-              # by convention, icon center is at ~40%
-              anchor: new google.maps.Point(w * 0.4, h * 0.4)
-
-            position: window.FFApp.current_position
-            map: window.FFApp.map_obj
-            title: mdata[i]["title"]
-            draggable: false
-          )
-        else
-          window.FFApp.position_marker.setPosition window.FFApp.current_position
-          window.FFApp.map_obj.panTo window.FFApp.current_position
-      ), ()->
-        console.log("Failed to get position")
-
     initialize = ()->
       return if window.FFApp.map_initialized == true
       $scope.$emit("loading-start", "Loading maps...")
@@ -131,20 +119,20 @@ directives.mapContainer = ()->
         window.FFApp.map_elem = document.createElement("div")
         window.FFApp.map_elem.className = "map"
         container_elem.appendChild(window.FFApp.map_elem)
-        map_options =
-          center: new google.maps.LatLng(41.850033, -87.6500523)
-          zoom: 12
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+        # FIXME: currently map won't load if we cannot get a position
+        navigator.geolocation.getCurrentPosition (position)->  
+          map_options =
+            center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude) 
+            zoom: window.FFApp.defaultZoom
+            mapTypeId: google.maps.MapTypeId.ROADMAP
             
-        window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
+          window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
                   
-        google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
-          console.log "UPDATING POSITION"
-          update_position
-          console.log "UPDATING MARKERS"
-          do_markers true
+          google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
+            console.log "UPDATING MARKERS"
+            do_markers true
         
-      window.FFApp.map_initialized = true
+          window.FFApp.map_initialized = true
 
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
     initialize()

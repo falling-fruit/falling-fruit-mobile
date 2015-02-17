@@ -321,18 +321,36 @@ directives.mapContainer = function() {
       directionstype: "="
     },
     controller: function($scope, $element, $http, $rootScope) {
-      var add_markers_from_json, container_elem, do_markers, find_marker, initialize, setup_marker, update_position;
+      var add_markers_from_json, clear_offscreen_markers, container_elem, do_markers, find_marker, initialize, setup_marker;
       container_elem = $element[0];
       window.FFApp.map_initialized = false;
       window.FFApp.markersArray = [];
       window.FFApp.openMarker = null;
       window.FFApp.openMarkerId = null;
-      window.FFApp.markersMax = 5000;
+      window.FFApp.markersMax = 100;
+      window.FFApp.defaultZoom = 14;
       window.FFApp.current_position = null;
       window.FFApp.position_marker = undefined;
+      clear_offscreen_markers = function() {
+        var b, i, newMarkers, p;
+        b = window.FFApp.map_obj.getBounds();
+        i = 0;
+        newMarkers = [];
+        while (i < window.FFApp.markersArray.length) {
+          p = window.FFApp.markersArray[i].marker.getPosition();
+          if (!b.contains(p)) {
+            window.FFApp.markersArray[i].marker.setMap(null);
+          } else {
+            newMarkers.push(window.FFApp.markersArray[i]);
+          }
+          i++;
+        }
+        return window.FFApp.markersArray = newMarkers;
+      };
       do_markers = function(muni, type_filter, cats) {
         var bounds, list_params;
         bounds = window.FFApp.map_obj.getBounds();
+        clear_offscreen_markers(bounds);
         if (window.FFApp.markersArray.length >= window.FFApp.markersMax) {
           return;
         }
@@ -384,6 +402,9 @@ directives.mapContainer = function() {
             i++;
             continue;
           }
+          if (window.FFApp.markersArray.length > window.FFApp.markersMax) {
+            break;
+          }
           w = 36;
           h = 36;
           wo = parseInt(w / 2, 10);
@@ -423,60 +444,32 @@ directives.mapContainer = function() {
           return $rootScope.$broadcast("SHOW-DETAIL", lid);
         });
       };
-      update_position = function() {
-        return navigator.geolocation.getCurrentPosition((function(position) {
-          var h, w;
-          console.log("position obtained!");
-          window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          w = 69;
-          h = 69;
-          if (window.FFApp.position_marker === undefined) {
-            return window.FFApp.position_marker = new google.maps.Marker({
-              icon: {
-                url: "img/png/control-me.png",
-                size: new google.maps.Size(w, h),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(w * 0.4, h * 0.4)
-              },
-              position: window.FFApp.current_position,
-              map: window.FFApp.map_obj,
-              title: mdata[i]["title"],
-              draggable: false
-            });
-          } else {
-            window.FFApp.position_marker.setPosition(window.FFApp.current_position);
-            return window.FFApp.map_obj.panTo(window.FFApp.current_position);
-          }
-        }), function() {
-          return console.log("Failed to get position");
-        });
-      };
       initialize = function() {
-        var map_options;
         if (window.FFApp.map_initialized === true) {
           return;
         }
         $scope.$emit("loading-start", "Loading maps...");
         if (window.FFApp.map_elem !== void 0) {
-          container_elem.appendChild(window.FFApp.map_elem);
+          return container_elem.appendChild(window.FFApp.map_elem);
         } else {
           window.FFApp.map_elem = document.createElement("div");
           window.FFApp.map_elem.className = "map";
           container_elem.appendChild(window.FFApp.map_elem);
-          map_options = {
-            center: new google.maps.LatLng(41.850033, -87.6500523),
-            zoom: 12,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-          window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
-          google.maps.event.addListener(window.FFApp.map_obj, "idle", function() {
-            console.log("UPDATING POSITION");
-            update_position;
-            console.log("UPDATING MARKERS");
-            return do_markers(true);
+          return navigator.geolocation.getCurrentPosition(function(position) {
+            var map_options;
+            map_options = {
+              center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+              zoom: window.FFApp.defaultZoom,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
+            google.maps.event.addListener(window.FFApp.map_obj, "idle", function() {
+              console.log("UPDATING MARKERS");
+              return do_markers(true);
+            });
+            return window.FFApp.map_initialized = true;
           });
         }
-        return window.FFApp.map_initialized = true;
       };
       console.log("LOADING MAP DIRECTIVE, STOPS NOT LOADED YET");
       return initialize();
@@ -626,6 +619,35 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
   if (AuthFactory.is_logged_in()) {
     load_view();
   }
+  $scope.update_position = function() {
+    return navigator.geolocation.getCurrentPosition((function(position) {
+      var h, w;
+      console.log("position obtained!");
+      window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      w = 69;
+      h = 69;
+      if (window.FFApp.position_marker === undefined) {
+        return window.FFApp.position_marker = new google.maps.Marker({
+          icon: {
+            url: "img/png/control-me.png",
+            size: new google.maps.Size(w, h),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(w * 0.4, h * 0.4)
+          },
+          position: window.FFApp.current_position,
+          map: window.FFApp.map_obj,
+          title: "Current Position",
+          draggable: false
+        });
+      } else {
+        window.FFApp.position_marker.setPosition(window.FFApp.current_position);
+        window.FFApp.map_obj.panTo(window.FFApp.current_position);
+        return window.FFApp.map_obj.setZoom(window.FFApp.defaultZoom);
+      }
+    }), function() {
+      return console.log("Failed to get position");
+    });
+  };
   $scope.show_detail = function(location_id) {
     return $rootScope.$broadcast("SHOW-DETAIL", location_id);
   };
