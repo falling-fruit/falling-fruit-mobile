@@ -56,6 +56,10 @@ grunt devserver
 
 Then browse to http://localhost:9001
 
+You'll need to start your web-browser in insecure mode so that you don't get CORS warnings:
+
+  * Chrome on OSX: https://coderwall.com/p/grtshg/chrome-insecure-mode
+
 ### Download the Android SDK
 
 If you want to see how the app looks in an emulator or on a phone, you'll need to install the Android or iOS SDKs. Here are the instructions for Android:
