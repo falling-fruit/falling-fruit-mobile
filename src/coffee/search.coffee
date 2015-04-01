@@ -5,18 +5,15 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   $scope.show_menu = false
   $scope.search_text = ''
 
-  $scope.map =
-    center: 
-      latitude: 45
-      longitude: -73
-    zoom: 8
-
-
-  list_params = 
-    lat: "39.991106"
-    lng: "-105.247455"
-
-  load_list = ()->
+  $scope.load_list = ()->
+    # FIXME: currently a bit of lag while this loads, could add a spinner or re-use
+    # data from the map's update markers call
+    if window.FFApp.map_obj == undefined
+      return
+    latlng = window.FFApp.map_obj.getCenter()
+    list_params = 
+      lat: latlng.lat()
+      lng: latlng.lng()
     $http.get urls.nearby , params: list_params
     .success (data)->   
       for item in data
@@ -28,15 +25,12 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         item.style = 
           "background-image": background_url
 
-      
       $scope.list_items = data
+      $scope.current_view = "list"
 
-  load_view = ()->
-    load_list()
-
-  $rootScope.$on "LOGGED-IN", load_view
-
-  load_view() if AuthFactory.is_logged_in()
+  $rootScope.$on "MAP-LOADED", $scope.update_position
+  #$rootScope.$on "LOGGED-IN", load_view
+  #load_view() if AuthFactory.is_logged_in()
 
   $scope.location_search = ()->
     # If it looks like a lat/lng just go there  
@@ -54,21 +48,20 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         bounds = results[0].geometry.viewport
         latlng = results[0].geometry.location
         window.FFApp.map_obj.fitBounds bounds
-      #  return
-      #else
-        #alert I18n.t('locations.errors.geocode_failed') + status
-      #return
+      else
+        console.log("Failed to do geocode") # FIXME: replace with common error handling
+    $scope.current_view = "map"
 
   $scope.update_position = ()->
     navigator.geolocation.getCurrentPosition ((position)-> 
       console.log("position obtained!")
       window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude,position.coords.longitude) 
-      w = 69
-      h = 69
+      w = 40
+      h = 40
       if window.FFApp.position_marker is `undefined`
         window.FFApp.position_marker = new google.maps.Marker(
           icon:
-            url: "img/png/control-me.png"
+            url: "img/png/map-me-40.png"
             size: new google.maps.Size(w, h)
             origin: new google.maps.Point(0, 0)
     
@@ -87,7 +80,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       window.FFApp.map_obj.setZoom 15
       
     ), ()->
-      console.log("Failed to get position")
+      console.log("Failed to get position") # FIXME: replace with common error handling
 
   $scope.show_detail = (location_id)-> 
     $rootScope.$broadcast "SHOW-DETAIL", location_id
