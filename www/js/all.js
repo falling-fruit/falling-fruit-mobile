@@ -454,7 +454,8 @@ directives.mapContainer = function() {
               console.log("UPDATING MARKERS");
               return do_markers(true);
             });
-            return window.FFApp.map_initialized = true;
+            window.FFApp.map_initialized = true;
+            return $rootScope.$broadcast("MAP-LOADED");
           });
         }
       };
@@ -565,23 +566,20 @@ controllers.MenuCtrl = function($scope, $rootScope, $http, $location) {
 };
 
 controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFactory) {
-  var list_params, load_list, load_view;
   console.log("Search Ctrl");
   $scope.current_view = "map";
   $scope.show_menu = false;
   $scope.search_text = '';
-  $scope.map = {
-    center: {
-      latitude: 45,
-      longitude: -73
-    },
-    zoom: 8
-  };
-  list_params = {
-    lat: "39.991106",
-    lng: "-105.247455"
-  };
-  load_list = function() {
+  $scope.load_list = function() {
+    var latlng, list_params;
+    if (window.FFApp.map_obj === void 0) {
+      return;
+    }
+    latlng = window.FFApp.map_obj.getCenter();
+    list_params = {
+      lat: latlng.lat(),
+      lng: latlng.lng()
+    };
     return $http.get(urls.nearby, {
       params: list_params
     }).success(function(data) {
@@ -597,16 +595,11 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
           "background-image": background_url
         };
       }
-      return $scope.list_items = data;
+      $scope.list_items = data;
+      return $scope.current_view = "list";
     });
   };
-  load_view = function() {
-    return load_list();
-  };
-  $rootScope.$on("LOGGED-IN", load_view);
-  if (AuthFactory.is_logged_in()) {
-    load_view();
-  }
+  $rootScope.$on("MAP-LOADED", $scope.update_position);
   $scope.location_search = function() {
     var lat, latlng, lng, strsplit;
     strsplit = $scope.search_text.split(/[\s,]+/);
@@ -619,7 +612,7 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
         window.FFApp.map_obj.panTo(latlng);
       }
     }
-    return window.FFApp.geocoder.geocode({
+    window.FFApp.geocoder.geocode({
       'address': $scope.search_text
     }, function(results, status) {
       var bounds;
@@ -627,20 +620,23 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
         bounds = results[0].geometry.viewport;
         latlng = results[0].geometry.location;
         return window.FFApp.map_obj.fitBounds(bounds);
+      } else {
+        return console.log("Failed to do geocode");
       }
     });
+    return $scope.current_view = "map";
   };
   $scope.update_position = function() {
     return navigator.geolocation.getCurrentPosition((function(position) {
       var h, w;
       console.log("position obtained!");
       window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      w = 69;
-      h = 69;
+      w = 40;
+      h = 40;
       if (window.FFApp.position_marker === undefined) {
         window.FFApp.position_marker = new google.maps.Marker({
           icon: {
-            url: "img/png/control-me.png",
+            url: "img/png/map-me-40.png",
             size: new google.maps.Size(w, h),
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(w * 0.4, h * 0.4)

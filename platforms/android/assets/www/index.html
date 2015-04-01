@@ -37,7 +37,7 @@
               <div class="btn-group-container">
                 <div class="btn-group">
                   <div ng-class="current_view == 'map' ? 'active' : ''" ng-click="current_view = 'map'" class="btn-map">Map</div>
-                  <div ng-class="current_view == 'list' ? 'active' : ''" ng-click="current_view = 'list'" class="btn-list">List</div>
+                  <div ng-class="current_view == 'list' ? 'active' : ''" ng-click="load_list()" class="btn-list">List</div>
                 </div>
               </div>
               <div ng-click="show_detail()" class="add"></div>

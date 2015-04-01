@@ -19,7 +19,7 @@
         .btn-group-container
           .btn-group
             .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="current_view = 'map'") Map
-            .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="current_view = 'list'") List
+            .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="load_list()") List
         .add(ng-click="show_detail()")
 
     include partials/search_side_menu

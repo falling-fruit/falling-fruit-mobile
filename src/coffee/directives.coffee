@@ -134,6 +134,7 @@ directives.mapContainer = ()->
             do_markers true
         
           window.FFApp.map_initialized = true
+          $rootScope.$broadcast "MAP-LOADED"
 
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
     initialize()
