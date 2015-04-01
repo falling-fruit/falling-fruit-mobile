@@ -34,20 +34,6 @@ FallingFruitApp.config([
   }
 ]);
 
-
-/*
-FallingFruitApp.config (uiGmapGoogleMapApiProvider)->
-  params = 
-    client: "***REMOVED***"
-    channel: "ff-mobile"
-     *key: '***REMOVED***'
-    sensor: "false"
-    v: '3.17'
-    libraries: 'weather,geometry,visualization'
- 
-  uiGmapGoogleMapApiProvider.configure params
- */
-
 FallingFruitApp.config(function($routeProvider) {
   return $routeProvider.when('/search', {
     templateUrl: 'html/search.html',
@@ -463,6 +449,7 @@ directives.mapContainer = function() {
               mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
+            window.FFApp.geocoder = new google.maps.Geocoder();
             google.maps.event.addListener(window.FFApp.map_obj, "idle", function() {
               console.log("UPDATING MARKERS");
               return do_markers(true);
@@ -580,8 +567,9 @@ controllers.MenuCtrl = function($scope, $rootScope, $http, $location) {
 controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFactory) {
   var list_params, load_list, load_view;
   console.log("Search Ctrl");
-  $scope.current_view = "list";
+  $scope.current_view = "map";
   $scope.show_menu = false;
+  $scope.search_text = '';
   $scope.map = {
     center: {
       latitude: 45,
@@ -619,6 +607,29 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
   if (AuthFactory.is_logged_in()) {
     load_view();
   }
+  $scope.location_search = function() {
+    var lat, latlng, lng, strsplit;
+    strsplit = $scope.search_text.split(/[\s,]+/);
+    if (strsplit.length === 2) {
+      lat = parseFloat(strsplit[0]);
+      lng = parseFloat(strsplit[1]);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        latlng = new google.maps.LatLng(lat, lng);
+        window.FFApp.map_obj.setZoom(17);
+        window.FFApp.map_obj.panTo(latlng);
+      }
+    }
+    return window.FFApp.geocoder.geocode({
+      'address': $scope.search_text
+    }, function(results, status) {
+      var bounds;
+      if (status === google.maps.GeocoderStatus.OK) {
+        bounds = results[0].geometry.viewport;
+        latlng = results[0].geometry.location;
+        return window.FFApp.map_obj.fitBounds(bounds);
+      }
+    });
+  };
   $scope.update_position = function() {
     return navigator.geolocation.getCurrentPosition((function(position) {
       var h, w;
@@ -627,7 +638,7 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
       w = 69;
       h = 69;
       if (window.FFApp.position_marker === undefined) {
-        return window.FFApp.position_marker = new google.maps.Marker({
+        window.FFApp.position_marker = new google.maps.Marker({
           icon: {
             url: "img/png/control-me.png",
             size: new google.maps.Size(w, h),
@@ -641,9 +652,9 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
         });
       } else {
         window.FFApp.position_marker.setPosition(window.FFApp.current_position);
-        window.FFApp.map_obj.panTo(window.FFApp.current_position);
-        return window.FFApp.map_obj.setZoom(window.FFApp.defaultZoom);
       }
+      window.FFApp.map_obj.panTo(window.FFApp.current_position);
+      return window.FFApp.map_obj.setZoom(15);
     }), function() {
       return console.log("Failed to get position");
     });

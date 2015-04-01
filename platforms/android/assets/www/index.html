@@ -17,7 +17,9 @@
             <div class="search-menu">
               <div ng-click="update_position()" class="current-location"></div>
               <div class="search-input-container">
-                <input type="text" placeholder="Enter a location..." ng-model="search_text">
+                <form ng-submit="location_search()">
+                  <input type="text" placeholder="Enter a location..." ng-model="search_text">
+                </form>
               </div>
             </div>
             <div class="search-view-container">
