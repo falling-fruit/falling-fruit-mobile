@@ -1,4 +1,5 @@
-window.FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch'])
+window.FallingFruitApp = angular.module('FallingFruitApp', 
+  ['ngRoute', 'ngAnimate', 'ngTouch'])
 
 FallingFruitApp.config ($interpolateProvider)->
   $interpolateProvider.startSymbol('[{')
@@ -25,20 +26,6 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
         return rejection || $q.reject(rejection)
 
 ]
-
-
-###
-FallingFruitApp.config (uiGmapGoogleMapApiProvider)->
-  params = 
-    client: "gme-fallingfruit"
-    channel: "ff-mobile"
-    #key: 'AIzaSyDm7gTRTOlOIsum_KOwfM-X13RYexMW41M'
-    sensor: "false"
-    v: '3.17'
-    libraries: 'weather,geometry,visualization'
- 
-  uiGmapGoogleMapApiProvider.configure params
-###
 
 FallingFruitApp.config ($routeProvider)->
   $routeProvider

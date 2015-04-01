@@ -127,7 +127,8 @@ directives.mapContainer = ()->
             mapTypeId: google.maps.MapTypeId.ROADMAP
             
           window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
-                  
+          window.FFApp.geocoder = new google.maps.Geocoder()
+                            
           google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
             console.log "UPDATING MARKERS"
             do_markers true

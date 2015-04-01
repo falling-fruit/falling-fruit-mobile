@@ -54,13 +54,13 @@ If you want to start the local grunt server so you can run the app like a webapp
 grunt devserver
 ```
 
+You'll need to make sure to disable CORS warnings in your browser. The easiest way to do that is to install [this plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi/related?hl=en).
+
 Then browse to http://localhost:9001
 
-You'll need to start your web-browser in insecure mode so that you don't get CORS warnings:
+### Develop with the Emulators
 
-  * Chrome on OSX: https://coderwall.com/p/grtshg/chrome-insecure-mode
-
-### Download the Android SDK
+#### Download the Android SDK
 
 If you want to see how the app looks in an emulator or on a phone, you'll need to install the Android or iOS SDKs. Here are the instructions for Android:
 
@@ -106,7 +106,7 @@ cordova emulate android
 
 If you want to debug with Chrome, go to: chrome://inspect/#devices
 
-### Setup XCode (iOS SDK)
+#### Setup XCode (iOS SDK)
 
 Seemingly you can only build iOS applications on a Mac. Here are the instructions to setup X-Code:
 
