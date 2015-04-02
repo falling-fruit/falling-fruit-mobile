@@ -599,7 +599,6 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
       return $scope.current_view = "list";
     });
   };
-  $rootScope.$on("MAP-LOADED", $scope.update_position);
   $scope.location_search = function() {
     var lat, latlng, lng, strsplit;
     strsplit = $scope.search_text.split(/[\s,]+/);

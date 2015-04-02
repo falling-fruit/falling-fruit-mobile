@@ -28,7 +28,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       $scope.list_items = data
       $scope.current_view = "list"
 
-  $rootScope.$on "MAP-LOADED", $scope.update_position
+  #$rootScope.$on "MAP-LOADED", $scope.update_position
   #$rootScope.$on "LOGGED-IN", load_view
   #load_view() if AuthFactory.is_logged_in()
 
