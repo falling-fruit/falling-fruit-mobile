@@ -84,14 +84,14 @@
           </div>
         </div>
         <div ng-show="detail_context=='add_location'" class="detail-container"> 
-          <div class="detail-select-container">[{selected_location_source_type()}]
-            <select ng-model="location.types" ng-options="i as name for (i, name) in location_access_types"></select>
+          <div class="detail-select-container">[{location.types == undefined ? "Source Type" : location.types}]
+            <select ng-model="location.types" ng-options="item.name as item.name for item in source_types"></select>
           </div>
           <div class="detail-textarea-container location">
             <textarea ng-model="location.description"></textarea>
           </div>
-          <div class="detail-select-container">[{selected_review_source_type()}]
-            <select ng-model="location.access" ng-options="i as name for (i, name) in location_access_types"></select>
+          <div class="detail-select-container">[{location.access == undefined ? "Access" : location_access_types[location.access]}]
+            <select ng-model="location.access" ng-options="i as access for (i,access) in location_access_types"></select>
           </div>
           <div class="detail-toggle-container">
             <div class="detail-toggle-label">Unverified</div>

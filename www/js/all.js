@@ -180,37 +180,19 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
   }
 };
 
-factories.DetailFactory = function($http) {
-  var props;
-  props = {
-    get_new_location_model: function() {
-      return {};
-    },
-    get_new_review_model: function() {
-      return {};
-    },
-    source_types: [],
-    last_source_type_refresh: null,
-    get_source_types: function() {
-      return $http.get(urls.source_types).success(function(data) {
-        return this.source_types = data;
-      });
-    }
-  };
-  return props;
-};
-
-controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, DetailFactory) {
-  var load_location, reset, source_types;
+controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
+  var load_location, reset;
   console.log("Detail Ctrl");
   reset = function() {
     $scope.location = null;
     $scope.current_location = null;
     $scope.current_review = null;
-    return $scope.reviews = [];
+    $scope.reviews = [];
+    return $http.get(urls.source_types).success(function(data) {
+      return $scope.source_types = data;
+    });
   };
   reset();
-  source_types = DetailFactory.get_source_types();
   load_location = function(id) {
     return $http.get(urls.location + id + ".json").success(function(data) {
       $scope.location = data;
@@ -222,6 +204,9 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, DetailFac
     return "Source Type";
   };
   $scope.selected_review_access_type = function() {
+    return "Access Type";
+  };
+  $scope.selected_location_access_type = function() {
     return "Access Type";
   };
   $scope.selected_location_source_type = function() {
