@@ -1,4 +1,4 @@
-window.FFApp = {}
+window.FFApp = {}  
 
 directives.mapContainer = ()->
   restrict: "C"

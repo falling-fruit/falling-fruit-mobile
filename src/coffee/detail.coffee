@@ -1,24 +1,4 @@
-factories.DetailFactory = ($http)->
-  props = 
-    get_new_location_model: ()->
-      return {}
-
-    get_new_review_model: ()->
-      return {}
-
-    source_types: []
-
-    last_source_type_refresh: null
-
-    get_source_types: ()->      
-      $http.get urls.source_types
-      .success (data)-> @source_types = data       
-
-
-  return props
-
-
-controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, DetailFactory)->
+controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
   console.log "Detail Ctrl"
 
   reset = ()->
@@ -26,11 +6,12 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, DetailFactory)->
     $scope.current_location = null
     $scope.current_review = null
     $scope.reviews = []
+    $http.get urls.source_types
+    .success (data)-> 
+      $scope.source_types = data 
 
   reset()
-
-  source_types = DetailFactory.get_source_types()
-
+  
   load_location = (id)->
     $http.get urls.location + id + ".json"
     .success (data)->
@@ -51,9 +32,11 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, DetailFactory)->
   $scope.selected_review_access_type = ()->
     return "Access Type"
 
+  $scope.selected_location_access_type = ()->
+    return "Access Type"  
+
   $scope.selected_location_source_type = ()->
     return "Source Type"
-
 
   $rootScope.$on "SHOW-DETAIL", (event, id)->
     console.log "SHOW-DETAIL", id
@@ -82,9 +65,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, DetailFactory)->
         item.style = 
           "background-image": background_url
 
-      $scope.reviews = data
-      
-
+      $scope.reviews = data      
 
   $scope.add_review = (id)->
     if id isnt undefined
