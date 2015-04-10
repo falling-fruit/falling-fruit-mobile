@@ -4,6 +4,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   $scope.current_view = "map" # or map
   $scope.show_menu = false
   $scope.search_text = ''
+  $scope.targeted = false
 
   $scope.load_list = ()->
     # FIXME: currently a bit of lag while this loads, could add a spinner or re-use
@@ -83,7 +84,31 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       console.log("Failed to get position") # FIXME: replace with common error handling
 
   $scope.show_detail = (location_id)-> 
-    $rootScope.$broadcast "SHOW-DETAIL", location_id
+    if $scope.targeted
+      if window.FFApp.target_marker != null
+         window.FFApp.target_marker.setMap(null)
+         window.FFApp.target_marker = null
+         $scope.targeted = false
+      $rootScope.$broadcast "SHOW-DETAIL", location_id
+    else
+      # show target
+      if window.FFApp.target_marker is `undefined`
+        window.FFApp.target_marker = new google.maps.Marker(
+          icon:
+            url: "img/png/control-add.png"
+            size: new google.maps.Size(58, 75)
+            origin: new google.maps.Point(0, 0)
+    
+            # by convention, icon center is at ~40%
+            anchor: new google.maps.Point(58 * 0.4, 75 * 0.4)
+
+          position: window.FFApp.map_obj.getCenter()
+          map: window.FFApp.map_obj
+          title: "Target New Point"
+          draggable: false
+        )
+        window.FFApp.target_marker.bindTo('position', window.FFApp.map_obj, 'center');
+      $scope.targeted = true
 
   $scope.logout = -> 
     $rootScope.$broadcast "LOGGED-OUT"

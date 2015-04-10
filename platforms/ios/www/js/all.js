@@ -184,7 +184,7 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
   var load_location, reset;
   console.log("Detail Ctrl");
   reset = function() {
-    $scope.location = null;
+    $scope.location = {};
     $scope.current_location = null;
     $scope.current_review = null;
     $scope.reviews = [];
@@ -213,11 +213,17 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
     return "Source Type";
   };
   $rootScope.$on("SHOW-DETAIL", function(event, id) {
+    var center;
     console.log("SHOW-DETAIL", id);
     $scope.show_detail = true;
     if (id === void 0) {
       $scope.detail_context = "add_location";
-      return $scope.menu_title = "Add";
+      $scope.menu_title = "Add";
+      if (window.FFApp.map_initialized === true) {
+        center = window.FFApp.map_obj.getCenter();
+        $scope.location.lat = center.lat();
+        return $scope.location.lng = center.lng();
+      }
     } else {
       $scope.location_id = id;
       load_location(id);
@@ -555,6 +561,7 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
   $scope.current_view = "map";
   $scope.show_menu = false;
   $scope.search_text = '';
+  $scope.targeted = false;
   $scope.load_list = function() {
     var latlng, list_params;
     if (window.FFApp.map_obj === void 0) {
@@ -640,7 +647,31 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
     });
   };
   $scope.show_detail = function(location_id) {
-    return $rootScope.$broadcast("SHOW-DETAIL", location_id);
+    if ($scope.targeted) {
+      if (window.FFApp.target_marker !== null) {
+        window.FFApp.target_marker.setMap(null);
+        window.FFApp.target_marker = null;
+        $scope.targeted = false;
+      }
+      return $rootScope.$broadcast("SHOW-DETAIL", location_id);
+    } else {
+      if (window.FFApp.target_marker === undefined) {
+        window.FFApp.target_marker = new google.maps.Marker({
+          icon: {
+            url: "img/png/control-add.png",
+            size: new google.maps.Size(58, 75),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(58 * 0.4, 75 * 0.4)
+          },
+          position: window.FFApp.map_obj.getCenter(),
+          map: window.FFApp.map_obj,
+          title: "Target New Point",
+          draggable: false
+        });
+        window.FFApp.target_marker.bindTo('position', window.FFApp.map_obj, 'center');
+      }
+      return $scope.targeted = true;
+    }
   };
   return $scope.logout = function() {
     $rootScope.$broadcast("LOGGED-OUT");

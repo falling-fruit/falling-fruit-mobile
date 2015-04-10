@@ -3,8 +3,10 @@
     | [{location.types == undefined ? "Source Type" : location.types}]
     select(ng-model="location.types", ng-options="item.name as item.name for item in source_types")
 
-  //-.detail-input-container
-    input(type="text", placeholder="Title...", ng-model="current_review.title")    
+  .detail-input-container
+    input(type="text", placeholder="?", ng-model="location.lat")
+  .detail-input-container
+    input(type="text", placeholder="?", ng-model="location.lng")                
   
   .detail-textarea-container.location
     textarea(ng-model="location.description")
