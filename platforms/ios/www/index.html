@@ -78,21 +78,18 @@
           </div>
           <div class="location-description">[{location.description}]</div>
           <div class="location-author">by: [{location.author}]</div><a ng-click="show_reviews()" ng-show="location.num_reviews &gt; 0" class="btn-location-reviews">All Reviews ([{location.num_reviews}])</a>
-          <div class="btn-detail-location-container">
-            <div ng-click="detail_context='add_location'; menu_title='Edit Location';" class="detail-btn-dark">Edit</div>
-            <div ng-click="show_reviews()" class="detail-btn-dark">Review</div>
-          </div>
+          <!--.btn-detail-location-container-->
+          <!--  .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit Location';") Edit-->
+          <!--  .detail-btn-dark(ng-click="show_reviews()") Review-->
         </div>
         <div ng-show="detail_context=='add_location'" class="detail-container"> 
           <div class="detail-select-container">[{location.types == undefined ? "Source Type" : location.types}]
             <select ng-model="location.types" ng-options="item.name as item.name for item in source_types"></select>
           </div>
-          <div class="detail-input-container">
-            <input type="text" placeholder="?" ng-model="location.lat">
-          </div>
-          <div class="detail-input-container">
-            <input type="text" placeholder="?" ng-model="location.lng">
-          </div>
+          <!--.detail-input-container-->
+          <!--  input(type="text", placeholder="?", ng-model="location.lat")-->
+          <!--.detail-input-container-->
+          <!--  input(type="text", placeholder="?", ng-model="location.lng")                -->
           <div class="detail-textarea-container location">
             <textarea ng-model="location.description"></textarea>
           </div>
@@ -103,7 +100,7 @@
             <div class="detail-toggle-label">Unverified</div>
             <div toggle="location.unverified" class="ng-switcher"></div>
           </div>
-          <div ng-click="save_review()" class="detail-btn-dark btn-save">Save</div>
+          <div ng-click="save_location()" class="detail-btn-dark btn-save">Save</div>
         </div>
         <div ng-show="detail_context=='view_reviews'" class="detail-container">
           <div class="review-list-container"><a ng-repeat="r in reviews" ng-click="add_review(r.id)" class="list-item">

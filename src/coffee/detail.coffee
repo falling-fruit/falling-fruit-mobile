@@ -71,6 +71,21 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
 
       $scope.reviews = data      
 
+  $scope.save_location = ()->
+    # turn types string into an array if needed
+    #if $scope.location.types != null and $scope.location.types.constructor == String
+    #  $scope.location.types = [$scope.location.types]
+    $http.post urls.add_location, location: $scope.location
+    .success (data)->
+      console.log("ADDED")
+      $scope.location_id = data.id
+      load_location(data.id)
+      $scope.detail_context = "view_location"  
+    .failure (data)->
+      console.log("ADD FAILED")
+      console.log(data)
+      $rootScope.$broadcast "SHOW-MAP"
+
   $scope.add_review = (id)->
     if id isnt undefined
       $scope.current_review = _.findWhere($scope.reviews, id: id)
