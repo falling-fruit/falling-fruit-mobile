@@ -2,7 +2,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
   console.log "Detail Ctrl"
 
   reset = ()->
-    $scope.location = null
+    $scope.location = {}
     $scope.current_location = null
     $scope.current_review = null
     $scope.reviews = []
@@ -44,6 +44,10 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
     if id is undefined       
       $scope.detail_context = "add_location"
       $scope.menu_title = "Add"
+      if window.FFApp.map_initialized == true
+        center = window.FFApp.map_obj.getCenter()
+        $scope.location.lat = center.lat()
+        $scope.location.lng = center.lng()
     else
       $scope.location_id = id
       load_location(id)
