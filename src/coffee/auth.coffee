@@ -56,7 +56,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
     $http.post urls.login, user: $scope.login_user
     .success (data)->
       if data.hasOwnProperty("auth_token") and data.auth_token isnt null
-        AuthFactory.save($scope.login_user.email, data.access_token)
+        AuthFactory.save($scope.login_user.email, data.auth_token)
         $scope.login_user = AuthFactory.get_login_user_model()
         $scope.show_auth = false
         $rootScope.$broadcast("LOGGED-IN")

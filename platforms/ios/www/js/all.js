@@ -145,7 +145,7 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
       user: $scope.login_user
     }).success(function(data) {
       if (data.hasOwnProperty("auth_token") && data.auth_token !== null) {
-        AuthFactory.save($scope.login_user.email, data.access_token);
+        AuthFactory.save($scope.login_user.email, data.auth_token);
         $scope.login_user = AuthFactory.get_login_user_model();
         $scope.show_auth = false;
         return $rootScope.$broadcast("LOGGED-IN");
@@ -249,6 +249,20 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
         };
       }
       return $scope.reviews = data;
+    });
+  };
+  $scope.save_location = function() {
+    return $http.post(urls.add_location, {
+      location: $scope.location
+    }).success(function(data) {
+      console.log("ADDED");
+      $scope.location_id = data.id;
+      load_location(data.id);
+      return $scope.detail_context = "view_location";
+    }).failure(function(data) {
+      console.log("ADD FAILED");
+      console.log(data);
+      return $rootScope.$broadcast("SHOW-MAP");
     });
   };
   $scope.add_review = function(id) {
