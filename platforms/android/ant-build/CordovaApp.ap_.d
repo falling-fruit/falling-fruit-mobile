@@ -92,6 +92,7 @@
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-ThinItalic.ttf \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-Black.ttf \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-Light.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-Bold.ttf \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-Regular.ttf \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-LightItalic.ttf \
@@ -101,6 +102,97 @@
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-Italic.ttf \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-BlackItalic.ttf \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto-BoldItalic.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/Paratype PT Sans Free Font License.txt \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/How_to_use_webfonts.html \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/PTN57F-webfont.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/specimen_files \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/PTN57F-webfont.eot \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/PTN57F-webfont.woff \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/PTN57F-webfont.svg \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/specimen_files/specimen_stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/specimen_files/easytabs.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/specimen_files/PTN57F-cleartype.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_regular/specimen_files/grid_12-825-55-15.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/specimen_files \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/PTS75F-webfont.woff \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/PTS75F-webfont.eot \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/PTS75F-webfont.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/PTS75F-webfont.svg \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/specimen_files/specimen_stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/specimen_files/easytabs.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/specimen_files/PTS75F-cleartype.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bold/specimen_files/grid_12-825-55-15.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/PTC75F-webfont.woff \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/PTC75F-webfont.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/specimen_files \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/PTC75F-webfont.eot \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/PTC75F-webfont.svg \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/specimen_files/specimen_stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/specimen_files/easytabs.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/specimen_files/PTC75F-cleartype.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_bold/specimen_files/grid_12-825-55-15.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/PTN77F-webfont.eot \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/PTN77F-webfont.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/specimen_files \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/PTN77F-webfont.svg \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/PTN77F-webfont.woff \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/specimen_files/specimen_stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/specimen_files/PTN77F-cleartype.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/specimen_files/easytabs.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsansnarrow_bold/specimen_files/grid_12-825-55-15.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/specimen_files \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/PTS56F-webfont.svg \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/PTS56F-webfont.eot \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/PTS56F-webfont.woff \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/PTS56F-webfont.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/specimen_files/specimen_stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/specimen_files/easytabs.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/specimen_files/PTS56F-cleartype.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_italic/specimen_files/grid_12-825-55-15.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/PTS76F-webfont.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/PTS76F-webfont.svg \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/specimen_files \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/PTS76F-webfont.eot \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/PTS76F-webfont.woff \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/specimen_files/specimen_stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/specimen_files/easytabs.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/specimen_files/PTS76F-cleartype.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_bolditalic/specimen_files/grid_12-825-55-15.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/PTC55F-webfont.svg \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/specimen_files \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/PTC55F-webfont.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/PTC55F-webfont.woff \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/PTC55F-webfont.eot \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/specimen_files/specimen_stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/specimen_files/easytabs.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/specimen_files/PTC55F-cleartype.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsanscaption_regular/specimen_files/grid_12-825-55-15.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/PTS55F-webfont.woff \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/PTS55F-webfont.eot \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/PTS55F-webfont.svg \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/specimen_files \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/PTS55F-webfont.ttf \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/specimen_files/specimen_stylesheet.css \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/specimen_files/easytabs.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/specimen_files/PTS55F-cleartype.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans/web fonts/ptsans_regular/specimen_files/grid_12-825-55-15.css \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/title.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/login-bg.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png \
@@ -112,6 +204,7 @@
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/control-add.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/control-settings.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/logo-pear-on.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/map-me-40.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/logo-full.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/input-password1.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/input-photo.png \
@@ -125,6 +218,7 @@
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/input-email.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/map-location-dot.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/control-toggle-off.png \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/map-me-30.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/no-image.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/input-password2.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/img/png/control-radio-off.png \
@@ -232,8 +326,15 @@
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/res/icon/bada-wac/icon-50-type3.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/res/icon/bada-wac/icon-80-type4.png \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/lib \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/directives.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/detail.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/app.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/menu.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/auth.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/index.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/search.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/all.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/zen.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/lib/angular-google-maps.min.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/lib/angular-touch.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/js/lib/angular.js \
