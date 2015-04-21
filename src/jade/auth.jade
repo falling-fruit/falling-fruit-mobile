@@ -1,8 +1,8 @@
 .auth-overlay(ng-controller="AuthCtrl", ng-class="show_auth == true ? 'show': ''")
-  
+
   .auth-container.login(ng-show="auth_context == 'login'")
     .auth-login-logo
-    .auth-input-container.email      
+    .auth-input-container.email
       input(type="text", placeholder="Email", ng-model="login_user.email")
       .auth-error-text
     .auth-input-container.password
@@ -15,8 +15,8 @@
       a.auth-btn-cell(ng-click="login()") Login
       a.auth-btn-cell(ng-click="auth_context = 'register'") Register
 
-    .auth-btn-container
-      a.auth-btn-dark(ng-click="anonymous_login()") Use Anonymously
+    //- .auth-btn-container
+    //-   a.auth-btn-dark(ng-click="anonymous_login()") Use Anonymously
 
   .auth-container.register(ng-show="auth_context == 'register'")
     .auth-default-logo
