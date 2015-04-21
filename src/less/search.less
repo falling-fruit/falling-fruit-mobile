@@ -1,4 +1,4 @@
-.angular-google-map-container { 
+.angular-google-map-container {
   position: absolute;
   top: @map-menu-height;
   bottom: @map-footer-height;
@@ -22,7 +22,7 @@
   top: 0;
   left: -100%;
   overflow: hidden;
-  .transition(300ms);  
+  .transition(300ms);
 }
 
 .search-inner-container.show {
@@ -64,9 +64,9 @@
   top: @ios7-offset;
 }
 
-.ios7 .angular-google-map-container {  
+.ios7 .angular-google-map-container {
   top: @map-menu-height + @ios7-offset;
-} 
+}
 
 .search-view-container {
   position: absolute;
@@ -80,7 +80,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;    
+  width: 50%;
   height: 100%;
 }
 
@@ -90,7 +90,7 @@
   z-index: @zindex-map;
 }
 
-.list-container {  
+.list-container {
   .content-container();
   .vertical-scroll();
   background-color: white;
@@ -120,7 +120,7 @@
   width: @map-footer-height;
   height: @map-footer-height;
   background: url("../img/svg/control-settings.svg") no-repeat center center;
-  background-size: 30px;  
+  background-size: 30px;
 }
 
 .search-footer .btn-group-container {
@@ -137,7 +137,7 @@
 }
 
 .btn-group-btn() {
-  display: table-cell;   
+  display: table-cell;
   height: @map-footer-height - 20px;
   width: 50%;
   text-align: center;
@@ -198,10 +198,11 @@
 
 //MAP
 .map {
+  background: url('../img/loader.gif') no-repeat center center;
+  overflow: hidden;
+  position: absolute;
   height: 100%;
   width: 100%;
-  position: absolute;
-  overflow: hidden;
 }
 
 

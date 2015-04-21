@@ -629,10 +629,11 @@ li {
   width: 100%;
 }
 .map {
+  background: url('../img/loader.gif') no-repeat center center;
+  overflow: hidden;
+  position: absolute;
   height: 100%;
   width: 100%;
-  position: absolute;
-  overflow: hidden;
 }
 .search-side-menu-container {
   position: absolute;
