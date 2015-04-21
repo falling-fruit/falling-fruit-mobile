@@ -15,6 +15,8 @@ directives.mapContainer = ()->
     window.FFApp.markersMax = 100
     window.FFApp.defaultZoom = 14
     window.FFApp.current_position = null
+    window.FFApp.latitude = 40.015 #Boulder, CO
+    window.FFApp.longitude = -105.27
     window.FFApp.position_marker = `undefined`
 
     clear_offscreen_markers = () ->
@@ -110,31 +112,44 @@ directives.mapContainer = ()->
         window.FFApp.openMarker = marker
         $rootScope.$broadcast "SHOW-DETAIL", lid
 
+    load_map = (lat, long) ->
+      map_options =
+        center: new google.maps.LatLng(lat, long)
+        zoom: window.FFApp.defaultZoom
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+
+      window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
+      window.FFApp.geocoder = new google.maps.Geocoder()
+
+      google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
+        console.log "UPDATING MARKERS"
+        do_markers true
+
+      window.FFApp.map_initialized = true
+      $rootScope.$broadcast "MAP-LOADED"
+
     initialize = ()->
       return if window.FFApp.map_initialized == true
+
       $scope.$emit("loading-start", "Loading maps...")
+
       if window.FFApp.map_elem isnt undefined
         container_elem.appendChild(window.FFApp.map_elem)
       else
         window.FFApp.map_elem = document.createElement("div")
         window.FFApp.map_elem.className = "map"
         container_elem.appendChild(window.FFApp.map_elem)
-        # FIXME: currently map won't load if we cannot get a position
-        navigator.geolocation.getCurrentPosition (position)->
-          map_options =
-            center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude)
-            zoom: window.FFApp.defaultZoom
-            mapTypeId: google.maps.MapTypeId.ROADMAP
 
-          window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
-          window.FFApp.geocoder = new google.maps.Geocoder()
+        lat = window.FFApp.latitude
+        long = window.FFApp.longitude
 
-          google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
-            console.log "UPDATING MARKERS"
-            do_markers true
-
-          window.FFApp.map_initialized = true
-          $rootScope.$broadcast "MAP-LOADED"
+        navigator.geolocation.getCurrentPosition (position) ->
+          lat = position.coords.latitude
+          long = position.coords.longitude
+          load_map(lat, long)
+        , ->
+          #Error Handler Function (We can't get their location)
+          load_map(lat, long) #Call with defaults (Boulder)
 
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
     initialize()
