@@ -312,7 +312,7 @@ directives.mapContainer = function() {
       directionstype: "="
     },
     controller: function($scope, $element, $http, $rootScope) {
-      var add_markers_from_json, clear_offscreen_markers, container_elem, do_markers, find_marker, initialize, setup_marker;
+      var add_markers_from_json, clear_offscreen_markers, container_elem, do_markers, find_marker, initialize, load_map, setup_marker;
       container_elem = $element[0];
       window.FFApp.map_initialized = false;
       window.FFApp.markersArray = [];
@@ -321,6 +321,8 @@ directives.mapContainer = function() {
       window.FFApp.markersMax = 100;
       window.FFApp.defaultZoom = 14;
       window.FFApp.current_position = null;
+      window.FFApp.latitude = 40.015;
+      window.FFApp.longitude = -105.27;
       window.FFApp.position_marker = undefined;
       clear_offscreen_markers = function() {
         var b, i, newMarkers, p;
@@ -435,7 +437,24 @@ directives.mapContainer = function() {
           return $rootScope.$broadcast("SHOW-DETAIL", lid);
         });
       };
+      load_map = function(lat, long) {
+        var map_options;
+        map_options = {
+          center: new google.maps.LatLng(lat, long),
+          zoom: window.FFApp.defaultZoom,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
+        window.FFApp.geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(window.FFApp.map_obj, "idle", function() {
+          console.log("UPDATING MARKERS");
+          return do_markers(true);
+        });
+        window.FFApp.map_initialized = true;
+        return $rootScope.$broadcast("MAP-LOADED");
+      };
       initialize = function() {
+        var lat, long;
         if (window.FFApp.map_initialized === true) {
           return;
         }
@@ -446,21 +465,14 @@ directives.mapContainer = function() {
           window.FFApp.map_elem = document.createElement("div");
           window.FFApp.map_elem.className = "map";
           container_elem.appendChild(window.FFApp.map_elem);
+          lat = window.FFApp.latitude;
+          long = window.FFApp.longitude;
           return navigator.geolocation.getCurrentPosition(function(position) {
-            var map_options;
-            map_options = {
-              center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
-              zoom: window.FFApp.defaultZoom,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
-            window.FFApp.geocoder = new google.maps.Geocoder();
-            google.maps.event.addListener(window.FFApp.map_obj, "idle", function() {
-              console.log("UPDATING MARKERS");
-              return do_markers(true);
-            });
-            window.FFApp.map_initialized = true;
-            return $rootScope.$broadcast("MAP-LOADED");
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
+            return load_map(lat, long);
+          }, function() {
+            return load_map(lat, long);
           });
         }
       };
