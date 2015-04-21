@@ -1,33 +1,40 @@
 @font-face {
-  font-family: "Roboto";
-  src: url("../font/Roboto-Regular.ttf");
+  font-family: "PT-Sans";
+  src: url('../font/PT-Sans/PTS55F-webfont.eot');
+  src: url('../font/PT-Sans/PTS55F-webfont.eot?#iefix') format('embedded-opentype'), url('../font/PT-Sans/PTS55F-webfont.woff') format('woff'), url('../font/PT-Sans/PTS55F-webfont.ttf') format('truetype'), url('../font/PT-Sans/PTS55F-webfont.svg#pt_sansregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
-  font-family: "Roboto-Italic";
-  font-style: italic;
-  src: url("../font/Roboto-Italic.ttf");
+  font-family: "PT-Sans-Italic";
+  src: url('../font/PT-Sans/PTS56F-webfont.eot');
+  src: url('../font/PT-Sans/PTS56F-webfont.eot?#iefix') format('embedded-opentype'), url('../font/PT-Sans/PTS56F-webfont.woff') format('woff'), url('../font/PT-Sans/PTS56F-webfont.ttf') format('truetype'), url('../font/PT-Sans/PTS56F-webfont.svg#pt_sansitalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
-  font-family: "Roboto-Bold";
-  font-style: bold;
-  src: url("../font/Roboto-Bold.ttf");
+  font-family: "PT-Sans-Bold";
+  src: url('../font/PT-Sans/PTS75F-webfont.eot');
+  src: url('../font/PT-Sans/PTS75F-webfont.eot?#iefix') format('embedded-opentype'), url('../font/PT-Sans/PTS75F-webfont.woff') format('woff'), url('../font/PT-Sans/PTS75F-webfont.ttf') format('truetype'), url('../font/PT-Sans/PTS75F-webfont.svg#pt_sansbold') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
-  font-family: "Roboto-Bold-Italic";
-  font-style: italic bold;
-  src: url("../font/Roboto-BoldItalic.ttf");
+  font-family: "PT-Sans-Bold-Italic";
+  src: url('../font/PT-Sans/PTS76F-webfont.eot');
+  src: url('../font/PT-Sans/PTS76F-webfont.eot?#iefix') format('embedded-opentype'), url('../font/PT-Sans/PTS76F-webfont.woff') format('woff'), url('../font/PT-Sans/PTS76F-webfont.ttf') format('truetype'), url('../font/PT-Sans/PTS76F-webfont.svg#pt_sansbold_italic') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 @font-face {
-  font-family: "Roboto-Light";
-  src: url("../font/Roboto-Light.ttf");
-}
-@font-face {
-  font-family: "Roboto-Light";
-  font-style: italic;
-  src: url("../font/Roboto-LightItalic.ttf");
+  font-family: "PT-Sans-Narrow";
+  src: url('../font/PT-Sans/PTN57F-webfont.eot');
+  src: url('../font/PT-Sans/PTN57F-webfont.eot?#iefix') format('embedded-opentype'), url('../font/PT-Sans/PTN57F-webfont.woff') format('woff'), url('../font/PT-Sans/PTN57F-webfont.ttf') format('truetype'), url('../font/PT-Sans/PTN57F-webfont.svg#pt_sans_narrowregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 body {
-  font-family: "Roboto";
+  font-family: "PT-Sans", Arial, sans-serif;
   overflow: hidden;
 }
 body,
@@ -38,7 +45,7 @@ ul {
 input,
 textarea,
 a {
-  font-family: "Roboto";
+  font-family: "PT-Sans", Arial, sans-serif;
   font-size: 16px;
 }
 a {
@@ -58,12 +65,12 @@ li {
   box-sizing: border-box;
 }
 .main-container {
+  height: 100%;
+  left: 0;
+  overflow: hidden;
   position: absolute;
   top: 0;
-  left: 0;
-  height: 100%;
   width: 100%;
-  overflow: hidden;
 }
 .ng-view-container.ltr.ng-enter {
   position: absolute;
@@ -687,7 +694,7 @@ li {
   border-radius: 5px;
 }
 .search-param-header {
-  font-family: "Roboto-Bold";
+  font-family: "PT-Sans-Bold";
   padding: 10px 0 10px 25px;
   border-bottom: solid 1px #5a5f64;
 }
