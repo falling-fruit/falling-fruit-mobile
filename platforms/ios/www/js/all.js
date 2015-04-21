@@ -396,8 +396,8 @@ directives.mapContainer = function() {
           if (window.FFApp.markersArray.length > window.FFApp.markersMax) {
             break;
           }
-          w = 36;
-          h = 36;
+          w = 25;
+          h = 25;
           wo = parseInt(w / 2, 10);
           ho = parseInt(h / 2, 10);
           if (window.FFApp.openMarkerId === lid) {

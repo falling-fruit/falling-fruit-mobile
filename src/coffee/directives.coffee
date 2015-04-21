@@ -1,4 +1,4 @@
-window.FFApp = {}  
+window.FFApp = {}
 
 directives.mapContainer = ()->
   restrict: "C"
@@ -16,7 +16,7 @@ directives.mapContainer = ()->
     window.FFApp.defaultZoom = 14
     window.FFApp.current_position = null
     window.FFApp.position_marker = `undefined`
- 
+
     clear_offscreen_markers = () ->
       b = window.FFApp.map_obj.getBounds()
       i = 0
@@ -27,9 +27,9 @@ directives.mapContainer = ()->
           window.FFApp.markersArray[i].marker.setMap(null)
         else
           newMarkers.push(window.FFApp.markersArray[i])
-        i++ 
+        i++
       window.FFApp.markersArray = newMarkers
-           
+
     do_markers = (muni, type_filter, cats) ->
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
@@ -51,14 +51,14 @@ directives.mapContainer = ()->
         params: list_params
       ).success (json) ->
         add_markers_from_json json
-    
+
     find_marker = (lid) ->
       i = 0
       while i < window.FFApp.markersArray.length
         return i if parseInt(window.FFApp.markersArray[i].id) is parseInt(lid)
         i++
       `undefined`
-          
+
     add_markers_from_json = (mdata) ->
       n_found = mdata.shift()
       n_limit = mdata.shift()
@@ -69,10 +69,10 @@ directives.mapContainer = ()->
         if find_marker(lid) isnt `undefined`
           i++
           continue
-        if window.FFApp.markersArray.length > window.FFApp.markersMax 
+        if window.FFApp.markersArray.length > window.FFApp.markersMax
           break
-        w = 36
-        h = 36
+        w = 25
+        h = 25
         wo = parseInt(w / 2, 10)
         ho = parseInt(h / 2, 10)
         if window.FFApp.openMarkerId is lid
@@ -83,7 +83,7 @@ directives.mapContainer = ()->
               url: "img/png/map-location-dot.png"
               size: new google.maps.Size(w, h)
               origin: new google.maps.Point(0, 0)
-          
+
               # by convention, icon center is at ~40%
               anchor: new google.maps.Point(w * 0.4, h * 0.4)
 
@@ -92,9 +92,9 @@ directives.mapContainer = ()->
             title: mdata[i]["title"]
             draggable: false
           )
-          
+
           setup_marker m, lid
-            
+
           window.FFApp.markersArray.push
             marker: m
             id: mdata[i]["location_id"]
@@ -120,19 +120,19 @@ directives.mapContainer = ()->
         window.FFApp.map_elem.className = "map"
         container_elem.appendChild(window.FFApp.map_elem)
         # FIXME: currently map won't load if we cannot get a position
-        navigator.geolocation.getCurrentPosition (position)->  
+        navigator.geolocation.getCurrentPosition (position)->
           map_options =
-            center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude) 
+            center: new google.maps.LatLng(position.coords.latitude,position.coords.longitude)
             zoom: window.FFApp.defaultZoom
             mapTypeId: google.maps.MapTypeId.ROADMAP
-            
+
           window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
           window.FFApp.geocoder = new google.maps.Geocoder()
-                            
+
           google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
             console.log "UPDATING MARKERS"
             do_markers true
-        
+
           window.FFApp.map_initialized = true
           $rootScope.$broadcast "MAP-LOADED"
 
