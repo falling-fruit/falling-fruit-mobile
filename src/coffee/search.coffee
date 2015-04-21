@@ -12,18 +12,18 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
     if window.FFApp.map_obj == undefined
       return
     latlng = window.FFApp.map_obj.getCenter()
-    list_params = 
+    list_params =
       lat: latlng.lat()
       lng: latlng.lng()
     $http.get urls.nearby , params: list_params
-    .success (data)->   
+    .success (data)->
       for item in data
         if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
           background_url = "url('#{item.photos[0][0].thumbnail}')"
         else
           background_url = "url('../img/png/no-image.png')"
 
-        item.style = 
+        item.style =
           "background-image": background_url
 
       $scope.list_items = data
@@ -34,7 +34,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   #load_view() if AuthFactory.is_logged_in()
 
   $scope.location_search = ()->
-    # If it looks like a lat/lng just go there  
+    # If it looks like a lat/lng just go there
     strsplit = $scope.search_text.split(/[\s,]+/)
     if strsplit.length == 2
       lat = parseFloat(strsplit[0])
@@ -54,9 +54,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
     $scope.current_view = "map"
 
   $scope.update_position = ()->
-    navigator.geolocation.getCurrentPosition ((position)-> 
+    navigator.geolocation.getCurrentPosition ((position)->
       console.log("position obtained!")
-      window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude,position.coords.longitude) 
+      window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude,position.coords.longitude)
       w = 40
       h = 40
       if window.FFApp.position_marker is `undefined`
@@ -65,7 +65,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
             url: "img/png/map-me-40.png"
             size: new google.maps.Size(w, h)
             origin: new google.maps.Point(0, 0)
-    
+
             # by convention, icon center is at ~40%
             anchor: new google.maps.Point(w * 0.4, h * 0.4)
 
@@ -76,14 +76,14 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         )
       else
         window.FFApp.position_marker.setPosition window.FFApp.current_position
-      
+
       window.FFApp.map_obj.panTo window.FFApp.current_position
-      window.FFApp.map_obj.setZoom 15
-      
+      window.FFApp.map_obj.setZoom window.FFApp.defaultZoom
+
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
 
-  $scope.show_detail = (location_id)-> 
+  $scope.show_detail = (location_id)->
     if $scope.targeted
       if window.FFApp.target_marker != null
          window.FFApp.target_marker.setMap(null)
@@ -98,7 +98,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
             url: "img/png/control-add.png"
             size: new google.maps.Size(58, 75)
             origin: new google.maps.Point(0, 0)
-    
+
             # by convention, icon center is at ~40%
             anchor: new google.maps.Point(58 * 0.4, 75 * 0.4)
 
@@ -110,8 +110,8 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         window.FFApp.target_marker.bindTo('position', window.FFApp.map_obj, 'center');
       $scope.targeted = true
 
-  $scope.logout = -> 
+  $scope.logout = ->
     $rootScope.$broadcast "LOGGED-OUT"
     $scope.show_menu = false
-    
+
 

@@ -667,7 +667,7 @@ controllers.SearchCtrl = function($scope, $rootScope, $http, $location, AuthFact
         window.FFApp.position_marker.setPosition(window.FFApp.current_position);
       }
       window.FFApp.map_obj.panTo(window.FFApp.current_position);
-      return window.FFApp.map_obj.setZoom(15);
+      return window.FFApp.map_obj.setZoom(window.FFApp.defaultZoom);
     }), function() {
       return console.log("Failed to get position");
     });
