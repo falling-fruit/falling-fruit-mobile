@@ -6,19 +6,19 @@ directives.mapContainer = ()->
   scope:
     stoplist: "="
     directionstype: "="
-  controller: ($scope, $element,$http,$rootScope)->
+  controller: ($scope, $element, $http, $rootScope)->
     container_elem = $element[0]
     window.FFApp.map_initialized = false
+    window.FFApp.defaultZoom = 14
+    window.FFApp.defaultMapTypeId = google.maps.MapTypeId.ROADMAP
+    window.FFApp.defaultCenter = new google.maps.LatLng(40.015, -105.27)
     window.FFApp.markersArray = []
     window.FFApp.openMarker = null
     window.FFApp.openMarkerId = null
     window.FFApp.markersMax = 100
-    window.FFApp.defaultZoom = 14
     window.FFApp.current_position = null
-    window.FFApp.latitude = 40.015 #Boulder, CO
-    window.FFApp.longitude = -105.27
     window.FFApp.position_marker = `undefined`
-
+    
     clear_offscreen_markers = () ->
       b = window.FFApp.map_obj.getBounds()
       i = 0
@@ -113,17 +113,17 @@ directives.mapContainer = ()->
         window.FFApp.openMarker = marker
         $rootScope.$broadcast "SHOW-DETAIL", lid
 
-    load_map = (lat, lng) ->
+    load_map = (center) ->
       map_options =
-        center: new google.maps.LatLng(lat, lng)
+        center: center
         zoom: window.FFApp.defaultZoom
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: window.FFApp.defaultMapTypeId
         mapTypeControl: false
         streetViewControl: false
         zoomControl: false
         rotateControl: false
         panControl: false
-
+  
       window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
       window.FFApp.geocoder = new google.maps.Geocoder()
 
@@ -146,16 +146,14 @@ directives.mapContainer = ()->
         window.FFApp.map_elem.className = "map"
         container_elem.appendChild(window.FFApp.map_elem)
 
-        lat = window.FFApp.latitude
-        lng = window.FFApp.longitude
-
         navigator.geolocation.getCurrentPosition (position) ->
           lat = position.coords.latitude
           lng = position.coords.longitude
-          load_map(lat, lng)
+          center = new google.maps.LatLng(lat, lng)
+          load_map(center)
         , ->
           #Error Handler Function (We can't get their location)
-          load_map(lat, lng) #Call with defaults (Boulder)
+          load_map(window.FFApp.defaultCenter)
 
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
     initialize()

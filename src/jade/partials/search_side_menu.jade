@@ -1,18 +1,32 @@
-.search-side-menu-container
+.search-side-menu-container(ng-controller="MenuCtrl")
   .search-side-menu
     .search-params-container
       .search-param-header Map
-      a.search-param-radio
+      a.search-param-radio(ng-click="mapTypeId = 'roadmap'")
         | Street
         .search-radio-container
-          .search-radio-active(ng-click="map_options.type='street'")
-      a.search-param-radio
+          .search-radio-active(ng-show="mapTypeId == 'roadmap'")
+      a.search-param-radio(ng-click="mapTypeId = 'terrain'")
+        | Terrain
+        .search-radio-container
+          .search-radio-active(ng-show="mapTypeId == 'terrain'")
+      a.search-param-radio(ng-click="mapTypeId = 'hybrid'")
         | Satellite
         .search-radio-container
-          .search-radio-active(ng-click="map_options.type='satellite'")
-
-      
+          .search-radio-active(ng-show="mapTypeId == 'hybrid'")
+      .search-param-header Layers
+      a.search-param-radio(ng-click="toggle_bicycle()")
+        | Bicycle
+        .search-radio-container
+          .search-radio-active(ng-show="bicycle")
+      a.search-param-radio(ng-click="toggle_transit()")
+        | Transit
+        .search-radio-container
+          .search-radio-active(ng-show="transit")
+      a.search-param-radio(ng-click="toggle_traffic()")
+        | Traffic
+        .search-radio-container
+          .search-radio-active(ng-show="traffic")
 
     a.btn-logout-container(ng-click="logout()")
       .btn-logout Sign out
-
