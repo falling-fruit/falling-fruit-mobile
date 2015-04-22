@@ -7,7 +7,7 @@
 
         .search-input-container
           form(ng-submit="location_search()")
-            input(type="submit")
+            input(type="submit", value="")
             input(type="text", placeholder="Enter a location...", ng-model="search_text")
 
       .search-view-container
@@ -19,8 +19,8 @@
         .settings(ng-click="show_menu = !show_menu")
         .btn-group-container
           .btn-group
-            .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="current_view = 'map'") Map
-            .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="load_list()") List
+            .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
+            .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()") List
         .add(ng-click="show_detail()")
 
     include partials/search_side_menu

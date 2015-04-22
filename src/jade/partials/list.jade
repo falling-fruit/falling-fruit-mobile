@@ -1,4 +1,4 @@
-.list-container(ng-class="current_view == 'map' ? '' : 'show'")
+.list-container(ng-class="current_view == 'list' ? 'show' : ''")
   a.list-item(ng-repeat="li in list_items track by li.location_id", ng-click="show_detail(li.location_id)")
     .list-item-image(ng-style="li.style")
 

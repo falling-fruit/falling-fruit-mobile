@@ -93,6 +93,7 @@ directives.mapContainer = ()->
             map: window.FFApp.map_obj
             title: mdata[i]["title"]
             draggable: false
+            zIndex: 0
           )
 
           setup_marker m, lid
@@ -112,11 +113,16 @@ directives.mapContainer = ()->
         window.FFApp.openMarker = marker
         $rootScope.$broadcast "SHOW-DETAIL", lid
 
-    load_map = (lat, long) ->
+    load_map = (lat, lng) ->
       map_options =
-        center: new google.maps.LatLng(lat, long)
+        center: new google.maps.LatLng(lat, lng)
         zoom: window.FFApp.defaultZoom
         mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeControl: false
+        streetViewControl: false
+        zoomControl: false
+        rotateControl: false
+        panControl: false
 
       window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
       window.FFApp.geocoder = new google.maps.Geocoder()
@@ -141,15 +147,15 @@ directives.mapContainer = ()->
         container_elem.appendChild(window.FFApp.map_elem)
 
         lat = window.FFApp.latitude
-        long = window.FFApp.longitude
+        lng = window.FFApp.longitude
 
         navigator.geolocation.getCurrentPosition (position) ->
           lat = position.coords.latitude
-          long = position.coords.longitude
-          load_map(lat, long)
+          lng = position.coords.longitude
+          load_map(lat, lng)
         , ->
           #Error Handler Function (We can't get their location)
-          load_map(lat, long) #Call with defaults (Boulder)
+          load_map(lat, lng) #Call with defaults (Boulder)
 
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
     initialize()
