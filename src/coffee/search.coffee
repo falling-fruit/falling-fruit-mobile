@@ -1,17 +1,28 @@
 controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   console.log "Search Ctrl"
 
-  $scope.current_view = "map" # or map
+  $scope.current_view = "map"
   $scope.show_menu = false
   $scope.search_text = ''
   $scope.targeted = false
+  $scope.list_center = null
 
-  $scope.load_list = ()->
+  $scope.show_map = ()->
+    if $scope.current_view == "list"
+      $scope.current_view = "map"
+  
+  $scope.show_list = ()->
+    if $scope.current_view == "map"
+      $scope.load_list(window.FFApp.map_obj.getCenter())
+      $scope.current_view = "list" # FIXME: Wait for list to load (promise?)
+    
+  $scope.load_list = (latlng)->
     # FIXME: currently a bit of lag while this loads, could add a spinner or re-use
     # data from the map's update markers call
-    if window.FFApp.map_obj == undefined
+    if !latlng
       return
-    latlng = window.FFApp.map_obj.getCenter()
+    if $scope.list_center and $scope.list_center.equals(latlng)
+      return
     list_params =
       lat: latlng.lat()
       lng: latlng.lng()
@@ -27,7 +38,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
           "background-image": background_url
 
       $scope.list_items = data
-      $scope.current_view = "list"
+      $scope.list_center = latlng
 
   #$rootScope.$on "MAP-LOADED", $scope.update_position
   #$rootScope.$on "LOGGED-IN", load_view
@@ -43,15 +54,18 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         latlng = new (google.maps.LatLng)(lat, lng)
         window.FFApp.map_obj.setZoom 17
         window.FFApp.map_obj.panTo latlng
+        if $scope.current_view == "list"
+          $scope.load_list(latlng)
     # Run geocoder for everything else
     window.FFApp.geocoder.geocode { 'address': $scope.search_text }, (results, status) ->
       if status == google.maps.GeocoderStatus.OK
         bounds = results[0].geometry.viewport
         latlng = results[0].geometry.location
         window.FFApp.map_obj.fitBounds bounds
+        if $scope.current_view == "list"
+          $scope.load_list(latlng)
       else
         console.log("Failed to do geocode") # FIXME: replace with common error handling
-    $scope.current_view = "map"
 
   $scope.update_position = ()->
     navigator.geolocation.getCurrentPosition ((position)->
@@ -73,12 +87,15 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
           map: window.FFApp.map_obj
           title: "Current Position"
           draggable: false
+          zIndex: 100
         )
       else
         window.FFApp.position_marker.setPosition window.FFApp.current_position
 
       window.FFApp.map_obj.panTo window.FFApp.current_position
       window.FFApp.map_obj.setZoom window.FFApp.map_obj.getZoom()
+      if $scope.current_view == "list"
+        $scope.load_list(window.FFApp.current_position)
 
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling

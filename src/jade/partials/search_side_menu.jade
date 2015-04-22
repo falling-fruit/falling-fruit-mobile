@@ -3,13 +3,13 @@
     .search-params-container
       .search-param-header Map
       a.search-param-radio
-        | Street Map
+        | Street
         .search-radio-container
-          .search-radio-active(ng-show="map_options.type='street'")
+          .search-radio-active(ng-click="map_options.type='street'")
       a.search-param-radio
         | Satellite
         .search-radio-container
-          .search-radio-active(ng-show="map_options.type='satellite'")
+          .search-radio-active(ng-click="map_options.type='satellite'")
 
       
 
