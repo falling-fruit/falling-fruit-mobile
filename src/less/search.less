@@ -168,7 +168,6 @@
   background-size: 30px;
 }
 
-
 .search-input-container {
   position: relative;
   background-color: @light-gray;
@@ -177,13 +176,15 @@
   .border-radius(5px);
 }
 
-.search-input-container:before {
+.search-input-container input[type=submit] {
   .auth-input-container-bg(38px);
   background: url('../img/svg/input-search.svg') no-repeat center center;
   background-size: 20px;
+  border: none;
+  outline: none;
 }
 
-.search-input-container input {
+.search-input-container input[type=text] {
   background-color: transparent;
   display: block;
   overflow: hidden;
