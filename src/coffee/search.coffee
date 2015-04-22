@@ -78,7 +78,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         window.FFApp.position_marker.setPosition window.FFApp.current_position
 
       window.FFApp.map_obj.panTo window.FFApp.current_position
-      window.FFApp.map_obj.setZoom window.FFApp.defaultZoom
+      window.FFApp.map_obj.setZoom window.FFApp.map_obj.getZoom()
 
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
