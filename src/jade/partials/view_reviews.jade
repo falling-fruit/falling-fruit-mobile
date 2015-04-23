@@ -1,6 +1,9 @@
 .detail-container(ng-show="detail_context=='view_reviews'")
   .review-list-container
-    a.list-item(ng-repeat="r in reviews", ng-click="add_review(r.id)")
+    // FIXME: Once supported by API, enable users to edit their own reviews?
+    // a.list-item(ng-repeat="r in reviews", ng-click="add_review(r.id)")
+    a.list-item(ng-repeat="r in reviews")
+
       .list-item-image(ng-style="r.style")
 
       .list-item-info-container

@@ -18,6 +18,8 @@ directives.mapContainer = ()->
     window.FFApp.markersMax = 100
     window.FFApp.current_position = null
     window.FFApp.position_marker = `undefined`
+    window.FFApp.muni = true
+    window.FFApp.metric = true
     
     clear_offscreen_markers = () ->
       b = window.FFApp.map_obj.getBounds()
@@ -31,8 +33,14 @@ directives.mapContainer = ()->
           newMarkers.push(window.FFApp.markersArray[i])
         i++
       window.FFApp.markersArray = newMarkers
-
-    do_markers = (muni, type_filter, cats) ->
+      
+    window.clear_markers = () ->
+      for marker in window.FFApp.markersArray
+        marker.marker.setMap(null)
+      window.FFApp.markersArray = []
+    
+    window.do_markers = (type_filter, cats) ->
+      console.log "UPDATING MARKERS"
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
       return  if window.FFApp.markersArray.length >= window.FFApp.markersMax
@@ -43,12 +51,12 @@ directives.mapContainer = ()->
         swlng: bounds.getSouthWest().lng()
         api_key: "BJBNKMWM"
 
-      if muni
+      if window.FFApp.muni
         list_params.muni = 1
       else
         list_params.muni = 0
-      list_params.c = cats  unless cats is `undefined`
-      list_params.t = type_filter  unless type_filter is `undefined`
+      list_params.c = cats unless cats is `undefined`
+      list_params.t = type_filter unless type_filter is `undefined`
       $http.get(urls.markers,
         params: list_params
       ).success (json) ->
@@ -128,8 +136,7 @@ directives.mapContainer = ()->
       window.FFApp.geocoder = new google.maps.Geocoder()
 
       google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
-        console.log "UPDATING MARKERS"
-        do_markers true
+        window.do_markers()
 
       window.FFApp.map_initialized = true
       $rootScope.$broadcast "MAP-LOADED"
