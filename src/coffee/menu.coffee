@@ -1,42 +1,70 @@
 controllers.MenuCtrl = ($scope, $rootScope, $http, $location)->
   console.log "Menu Ctrl"
   
-  # Map type
+  ## Map type
   $scope.mapTypeId = window.FFApp.defaultMapTypeId
-  $scope.$watch("mapTypeId", (newValue, oldValue)->
-    if newValue != oldValue
-      switch $scope.mapTypeId
-        when 'roadmap' then window.FFApp.map_obj.setMapTypeId('roadmap')
-        when 'terrain' then window.FFApp.map_obj.setMapTypeId('terrain')
-        when 'hybrid' then window.FFApp.map_obj.setMapTypeId('hybrid')
-        else console.log('Unknown mapTypeId selected')
-  )
   
-  # Map layers
-  # FIXME: Change to radio selector (since can't really work together)
+  # Terrain
+  $scope.toggle_terrain = ()->
+    if $scope.mapTypeId == 'terrain'
+      $scope.mapTypeId = 'roadmap'
+    else
+      $scope.mapTypeId = 'terrain'
+    window.FFApp.map_obj.setMapTypeId($scope.mapTypeId)
+  
+  # Satellite
+  $scope.toggle_hybrid = ()->
+    if $scope.mapTypeId == 'hybrid'
+      $scope.mapTypeId = 'roadmap'
+    else
+      $scope.mapTypeId = 'hybrid'
+    window.FFApp.map_obj.setMapTypeId($scope.mapTypeId)
+  
+  ## Map layers
+  $scope.layer = null
+  
+  # Bicycle
   bicycleLayer = new google.maps.BicyclingLayer()
-  transitLayer = new google.maps.TransitLayer()
-  trafficLayer = new google.maps.TrafficLayer()
-  $scope.bicycle = false
-  $scope.transit = false
-  $scope.traffic = false
   $scope.toggle_bicycle = ()->
-    if $scope.bicycle
+    if $scope.layer == 'bicycle'
       bicycleLayer.setMap(null)
+      $scope.layer = null
     else
       bicycleLayer.setMap(window.FFApp.map_obj)
-    $scope.bicycle = not $scope.bicycle
-    
+      $scope.layer = 'bicycle'
+    transitLayer.setMap(null)
+  
+  # Transit    
+  transitLayer = new google.maps.TransitLayer()
   $scope.toggle_transit = ()->
-    if $scope.transit
+    if $scope.layer == 'transit'
       transitLayer.setMap(null)
+      $scope.layer = null
     else
-      transitLayer.setMap(window.FFApp.map_obj)  
-    $scope.transit = not $scope.transit
-    
-  $scope.toggle_traffic = ()->
-    if $scope.traffic
-      trafficLayer.setMap(null)
+      transitLayer.setMap(window.FFApp.map_obj)
+      $scope.layer = 'transit'
+    bicycleLayer.setMap(null)
+  
+  ## Filters
+  # FIXME: Share fun/var with map directive in a cleaner fashion that using window...
+  
+  $scope.muni = window.FFApp.muni
+  $scope.toggle_muni = ()->
+    window.FFApp.muni = not window.FFApp.muni
+    $scope.muni = window.FFApp.muni
+    window.clear_markers()
+    window.do_markers()
+    if $scope.current_view == "list"
+      $scope.load_list()
     else
-      trafficLayer.setMap(window.FFApp.map_obj)
-    $scope.traffic = not $scope.traffic
+      $scope.list_center = null
+  
+  $scope.metric = window.FFApp.metric
+  $scope.toggle_metric = ()->
+    window.FFApp.metric = not window.FFApp.metric
+    $scope.metric = window.FFApp.metric
+      
+  # Logout
+  $scope.logout = ->
+    $rootScope.$broadcast "LOGGED-OUT"
+    $scope.show_menu = false

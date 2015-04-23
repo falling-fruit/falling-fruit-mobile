@@ -1,21 +1,22 @@
 @list-item-image-width: 70px;
-@list-item-image-gutter: 10px;
+@list-item-image-padding: 10px;
 
 .list-item {
   position: relative;
   display: block;
   border-bottom: solid 1px @light-gray;
-  height: @list-item-image-width + @list-item-image-gutter*2;
+  height: @list-item-image-width + @list-item-image-padding * 2;
   overflow: hidden;
+  padding: @list-item-image-padding;
 }
 
 .list-item-image {
   position: absolute;
   width: @list-item-image-width;
-  top: 10px;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;  
+  top: @list-item-image-padding;
+  bottom: @list-item-image-padding;
+  left: @list-item-image-padding;
+  right: @list-item-image-padding;  
   overflow: hidden;
   background-position: center center;
   background-size: cover;
@@ -26,29 +27,25 @@
 
 .list-item-info-container {
   margin-left: @list-item-image-width + 20px;
-  overflow: hidden;
 }
 
 .list-item-distance {
   color: black;
-  padding: 14px 0 5px 0;
-}
-
-.list-item-auth span {
-  color: @light-gray;
+  line-height: @font-size-default + 4px;
+  margin: 0 0 4px 0;
 }
 
 .list-item-name {
   color: @orange;
-  padding: 0 0 5px 0;
+  font-size: @font-size-large;
+  .text-overflow-ellipsis;
 }
 
 .list-item-description {
-  font-size: @font-size-smaller;
+  margin: 5px 0 0 0;
+  font-size: @font-size-small;
+  height: @font-size-small + 2px;
+  line-height: @font-size-small + 2px;
   color: @gray;
-  height: @font-size-smaller + 4px;
-  line-height: @font-size-smaller + 4px;
-  padding-right: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  .text-overflow-ellipsis;
 }

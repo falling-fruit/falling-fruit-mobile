@@ -5,28 +5,41 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   $scope.show_menu = false
   $scope.search_text = ''
   $scope.targeted = false
-  $scope.list_center = null
-
+  
+  ## Map
+  
   $scope.show_map = ()->
-    if $scope.current_view == "list"
+    if $scope.current_view != "map"
       $scope.current_view = "map"
   
+  ## List
+  
+  $scope.list_center = null
+  $scope.$watch("list_center", (newValue, oldValue)->
+    if newValue != oldValue
+      if $scope.current_view == "list"
+        $scope.load_list($scope.list_center)
+  )
+  
   $scope.show_list = ()->
-    if $scope.current_view == "map"
-      $scope.load_list(window.FFApp.map_obj.getCenter())
-      $scope.current_view = "list" # FIXME: Wait for list to load (promise?)
-    
-  $scope.load_list = (latlng)->
-    # FIXME: currently a bit of lag while this loads, could add a spinner or re-use
-    # data from the map's update markers call
-    if !latlng
-      return
-    if $scope.list_center and $scope.list_center.equals(latlng)
-      return
+    if $scope.current_view != "list"
+      $scope.current_view = "list"
+      $scope.list_center = window.FFApp.map_obj.getCenter()
+      # FIXME: show loading gif
+  
+  $scope.load_list = (center)->
+    # FIXME: Slow. Re-use data from map update markers call (weighted towards map center?)
+    if !center
+      center = window.FFApp.map_obj.getCenter()
+    if window.FFApp.muni
+      muni = 1
+    else
+      muni = 0
     list_params =
-      lat: latlng.lat()
-      lng: latlng.lng()
-    $http.get urls.nearby , params: list_params
+      lat: center.lat()
+      lng: center.lng()
+      muni: muni
+    $http.get urls.nearby, params: list_params
     .success (data)->
       for item in data
         if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
@@ -38,8 +51,22 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
           "background-image": background_url
 
       $scope.list_items = data
-      $scope.list_center = latlng
-
+      
+  $scope.distance_string = (meters)->
+    if window.FFApp.metric
+      if meters < 1000
+        return parseFloat((meters).toPrecision(2)) + " m"
+      else
+        return parseFloat((meters / 1000).toPrecision(2)) + " km"
+    else
+      feet = Math.round(meters / 0.3048)
+      if feet < 1000
+        return parseFloat((feet).toPrecision(2)) + " ft"
+      else
+        return parseFloat((feet / 5280).toPrecision(2)) + " mi"
+  
+  ## Position
+  
   #$rootScope.$on "MAP-LOADED", $scope.update_position
   #$rootScope.$on "LOGGED-IN", load_view
   #load_view() if AuthFactory.is_logged_in()
@@ -54,16 +81,14 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         latlng = new (google.maps.LatLng)(lat, lng)
         window.FFApp.map_obj.setZoom 17
         window.FFApp.map_obj.panTo latlng
-        if $scope.current_view == "list"
-          $scope.load_list(latlng)
+        $scope.list_center = latlng
     # Run geocoder for everything else
     window.FFApp.geocoder.geocode { 'address': $scope.search_text }, (results, status) ->
       if status == google.maps.GeocoderStatus.OK
         bounds = results[0].geometry.viewport
         latlng = results[0].geometry.location
         window.FFApp.map_obj.fitBounds bounds
-        if $scope.current_view == "list"
-          $scope.load_list(latlng)
+        $scope.list_center = latlng
       else
         console.log("Failed to do geocode") # FIXME: replace with common error handling
 
@@ -94,12 +119,13 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
 
       window.FFApp.map_obj.panTo window.FFApp.current_position
       window.FFApp.map_obj.setZoom window.FFApp.map_obj.getZoom()
-      if $scope.current_view == "list"
-        $scope.load_list(window.FFApp.current_position)
+      $scope.list_center = window.FFApp.current_position
 
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
 
+  ## Infowindow
+  
   $scope.show_detail = (location_id)->
     if $scope.targeted
       if window.FFApp.target_marker != null
@@ -126,9 +152,3 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         )
         window.FFApp.target_marker.bindTo('position', window.FFApp.map_obj, 'center');
       $scope.targeted = true
-
-  $scope.logout = ->
-    $rootScope.$broadcast "LOGGED-OUT"
-    $scope.show_menu = false
-
-
