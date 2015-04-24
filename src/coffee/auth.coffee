@@ -1,5 +1,5 @@
 factories.AuthFactory = ($rootScope)->
-  props = 
+  props =
     email: null
     access_token: null
 
@@ -15,7 +15,7 @@ factories.AuthFactory = ($rootScope)->
 
       if not @email or not @access_token
         return false
-      else 
+      else
         return true
 
     clear: ()->
@@ -35,16 +35,16 @@ factories.AuthFactory = ($rootScope)->
       return email: @email, password: null
 
     get_register_user_model: ()->
-      return name: null, email: null, password: null
+      return name: null, email: @email, password: null
 
     needsAuth: (url)->
       return url.indexOf(".html") == -1 and url.indexOf("/users/") == -1
-      
+
   return props
 
 controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   console.log "Auth Ctrl"
-  
+
   $rootScope.$on "LOGGED-OUT", ()->
     AuthFactory.clear()
     $scope.login_user = AuthFactory.get_login_user_model()
@@ -66,22 +66,22 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       $scope.login_user.password = null
 
   $scope.register = ()->
-    user = 
-      name: $scope.register_user.name
-      email: $scope.register_user.email
-      password: $scope.register_user.password
-
-    $http.post urls.register, user: user
-    .success (data)->
-      $scope.auth_context = "login"
-      $scope.login_user.email = $scope.register_user.email
-    .error ()->
+    $http.post urls.register, user: $scope.login_user
+    .success (data) ->
       $scope.register_user = AuthFactory.get_register_user_model()
+      $rootScope.$broadcast("REGISTERED")
+      alert("You've been registered! Please confirm your email address, then come back and login.")
+    .error (data) ->
+      console.log "Register DATA isnt as expected", data
+      error_text = "Please check "
+      error_text += "email as it is: " + data.errors.email if data.errors.email?
+      error_text += " Password is " + data.errors.password if data.errors.password?
+      alert("There was a registration error: " + error_text )
 
   $scope.forgot_password = ()->
 
 
   if not AuthFactory.is_logged_in()
-    $rootScope.$broadcast "LOGGED-OUT" 
+    $rootScope.$broadcast "LOGGED-OUT"
   else
     $rootScope.$broadcast "SHOW-MAP"

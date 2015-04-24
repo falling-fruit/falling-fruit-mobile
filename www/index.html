@@ -18,16 +18,17 @@
               <div ng-click="update_position()" class="current-location"></div>
               <div class="search-input-container">
                 <form ng-submit="location_search()">
+                  <input type="submit" value="">
                   <input type="text" placeholder="Enter a location..." ng-model="search_text">
                 </form>
               </div>
             </div>
             <div class="search-view-container">
               <div directionstype="directions_type" stoplist="stopList" class="map-container"></div>
-              <div ng-class="current_view == 'map' ? '' : 'show'" class="list-container"><a ng-repeat="li in list_items track by li.location_id" ng-click="show_detail(li.location_id)" class="list-item">
+              <div ng-class="current_view == 'list' ? 'show' : ''" class="list-container"><a ng-repeat="li in list_items track by li.location_id" ng-click="show_detail(li.location_id)" class="list-item">
                   <div ng-style="li.style" class="list-item-image"></div>
                   <div class="list-item-info-container">
-                    <div class="list-item-distance">[{::li.distance}]m</div>
+                    <div class="list-item-distance">[{distance_string(li.distance)}]</div>
                     <div class="list-item-name">[{::li.title}]</div>
                     <div class="list-item-description">[{::li.description}]</div>
                   </div></a></div>
@@ -36,22 +37,36 @@
               <div ng-click="show_menu = !show_menu" class="settings"></div>
               <div class="btn-group-container">
                 <div class="btn-group">
-                  <div ng-class="current_view == 'map' ? 'active' : ''" ng-click="current_view = 'map'" class="btn-map">Map</div>
-                  <div ng-class="current_view == 'list' ? 'active' : ''" ng-click="load_list()" class="btn-list">List</div>
+                  <div ng-class="current_view == 'map' ? 'active' : ''" ng-click="show_map()" class="btn-map">Map</div>
+                  <div ng-class="current_view == 'list' ? 'active' : ''" ng-click="show_list()" class="btn-list">List</div>
                 </div>
               </div>
               <div ng-click="show_detail()" class="add"></div>
             </div>
           </div>
-          <div class="search-side-menu-container">
+          <div ng-controller="MenuCtrl" class="search-side-menu-container">
             <div class="search-side-menu">
               <div class="search-params-container">
-                <div class="search-param-header">Map</div><a class="search-param-radio">Street Map
+                <div class="search-param-header">Map</div><a ng-click="toggle_terrain()" class="search-param-radio">Terrain
                   <div class="search-radio-container">
-                    <div ng-show="map_options.type='street'" class="search-radio-active"></div>
-                  </div></a><a class="search-param-radio">Satellite
+                    <div ng-show="mapTypeId == 'terrain'" class="search-radio-active"></div>
+                  </div></a><a ng-click="toggle_hybrid()" class="search-param-radio">Satellite
                   <div class="search-radio-container">
-                    <div ng-show="map_options.type='satellite'" class="search-radio-active"></div>
+                    <div ng-show="mapTypeId == 'hybrid'" class="search-radio-active"></div>
+                  </div></a><a ng-click="toggle_bicycle()" class="search-param-radio">Bicycle
+                  <div class="search-radio-container">
+                    <div ng-show="layer == 'bicycle'" class="search-radio-active"></div>
+                  </div></a><a ng-click="toggle_transit()" class="search-param-radio">Transit
+                  <div class="search-radio-container">
+                    <div ng-show="layer == 'transit'" class="search-radio-active"></div>
+                  </div></a>
+                <div class="search-param-header">Filters</div><a ng-click="toggle_muni()" class="search-param-radio">Municipal
+                  <div class="search-radio-container">
+                    <div ng-show="muni" class="search-radio-active"></div>
+                  </div></a>
+                <div class="search-param-header">Regional</div><a ng-click="toggle_metric()" class="search-param-radio">Metric
+                  <div class="search-radio-container">
+                    <div ng-show="metric" class="search-radio-active"></div>
                   </div></a>
               </div><a ng-click="logout()" class="btn-logout-container">
                 <div class="btn-logout">Sign out</div></a>
@@ -103,7 +118,9 @@
           <div ng-click="save_location()" class="detail-btn-dark btn-save">Save</div>
         </div>
         <div ng-show="detail_context=='view_reviews'" class="detail-container">
-          <div class="review-list-container"><a ng-repeat="r in reviews" ng-click="add_review(r.id)" class="list-item">
+          <div class="review-list-container">
+            <!-- FIXME: Once supported by API, enable users to edit their own reviews?-->
+            <!-- a.list-item(ng-repeat="r in reviews", ng-click="add_review(r.id)")--><a ng-repeat="r in reviews" class="list-item">
               <div ng-style="r.style" class="list-item-image"></div>
               <div class="list-item-info-container">
                 <div class="list-item-author"><span>by </span>[{::r.author}]</div>
@@ -155,7 +172,7 @@
             <input type="password" placeholder="Password" ng-model="login_user.password">
             <div class="auth-error-text"></div>
           </div><a ng-click="auth_context='forgot_password'" class="auth-text">Forgot Password?</a>
-          <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Login</a><a ng-click="auth_context = 'register'" class="auth-btn-cell">Register</a></div>
+          <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Login</a><a ng-click="register()" class="auth-btn-cell">Register</a></div>
         </div>
         <div ng-show="auth_context == 'register'" class="auth-container register">
           <div class="auth-default-logo"></div>
