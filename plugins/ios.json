@@ -65,6 +65,10 @@
                         {
                             "xml": "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -92,6 +96,9 @@
             "PACKAGE_NAME": "uh.fallingfruit.app"
         },
         "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "uh.fallingfruit.app"
+        },
+        "com.ionic.keyboard": {
             "PACKAGE_NAME": "uh.fallingfruit.app"
         }
     },
