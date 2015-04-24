@@ -87,12 +87,17 @@
             </ul>
           </div>
           <div class="location-info">
-            <div>[{location.title}]</div>
-            <div ng-show="location.distance">Distance: [{location.distance}]m</div>
-            <div ng-hide="location.no_season">Seasonality: [{location.season_start}] - [{location.season_stop}]</div>
+            <div class="location-types">[{location.title}]</div>
+            <div ng-show="location.map_distance">Distance (map): [{location.map_distance}]</div>
+            <div ng-show="location.current_distance">Distance (me): [{location.current_distance}]</div>
+            <div ng-show="location.distance_from_center">Distance (map center): [{location.distance_from_center}]</div>
+            <div ng-show="location.season_string">Season: [{location.season_string}]</div>
+            <div ng-show="location.updated_at">Updated: [{location.updated_at}]</div>
+            <div ng-show="location.access">Access: [{short_access_types[location.access]}]</div>
+            <div ng-show="location.unverified">Unverified: [{location.unverified}]</div>
           </div>
           <div class="location-description">[{location.description}]</div>
-          <div class="location-author">by: [{location.author}]</div><a ng-click="show_reviews()" ng-show="location.num_reviews &gt; 0" class="btn-location-reviews">All Reviews ([{location.num_reviews}])</a>
+          <div class="location-author">added by [{location.author}]</div><a ng-click="show_reviews()" ng-show="location.num_reviews &gt; 0" class="btn-location-reviews">Reviews ([{location.num_reviews}])</a>
           <!--.btn-detail-location-container-->
           <!--  .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit Location';") Edit-->
           <!--  .detail-btn-dark(ng-click="show_reviews()") Review-->
@@ -172,7 +177,7 @@
             <input type="password" placeholder="Password" ng-model="login_user.password">
             <div class="auth-error-text"></div>
           </div><a ng-click="auth_context='forgot_password'" class="auth-text">Forgot Password?</a>
-          <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Login</a><a ng-click="register()" class="auth-btn-cell">Register</a></div>
+          <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Login</a><a ng-click="auth_context = 'register'" class="auth-btn-cell">Register</a></div>
         </div>
         <div ng-show="auth_context == 'register'" class="auth-container register">
           <div class="auth-default-logo"></div>
@@ -204,7 +209,7 @@
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/lib/lodash.min.js"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=***REMOVED***"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=***REMOVED***&amp;libraries=geometry"></script>
     <script type="text/javascript" src="js/lib/angular.js"></script>
     <script type="text/javascript" src="js/lib/angular-route.js"></script>
     <script type="text/javascript" src="js/lib/angular-touch.js"></script>
