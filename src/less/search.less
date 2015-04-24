@@ -104,28 +104,36 @@
 }
 
 .search-footer {
-  position: absolute;
-  bottom : 0;
-  left: 0;
-  width: 100%;
-  height: @map-footer-height;
   background-color: @ff-white;
   border-top: solid 1px @light-gray;
-}
-
-.search-footer .settings {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: @map-footer-height;
+  bottom : 0;
   height: @map-footer-height;
-  background: url("../img/svg/control-settings.svg") no-repeat center center;
-  background-size: 30px;
-}
+  left: 0;
+  position: absolute;
+  width: 100%;
 
-.search-footer .btn-group-container {
-  display: block;
-  margin: 0 @map-footer-height;
+  .settings {
+    background: url("../img/svg/control-settings.svg") no-repeat center center;
+    background-size: 30px;
+    height: @map-footer-height;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: @map-footer-height;
+  }
+  .btn-group-container {
+    display: block;
+    margin: 0 @map-footer-height;
+  }
+  .add-location {
+    background: url("../img/svg/control-add.svg") no-repeat center center;
+    background-size: 30px;
+    height: @map-footer-height;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: @map-footer-height;
+  }
 }
 
 .btn-group {
@@ -156,16 +164,6 @@
 .btn-group .active {
   background-color: @green;
   color: white;
-}
-
-.search-footer .add {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: @map-footer-height;
-  width: @map-footer-height;
-  background: url("../img/svg/control-add.svg") no-repeat center center;
-  background-size: 30px;
 }
 
 .search-input-container {
