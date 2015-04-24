@@ -1,21 +1,46 @@
-.detail-btn-dark.review {
-  margin-top: 20px; 
-  margin-bottom: 20px;
-}
-
 .review-list-container .list-item {
-  padding: 10px 20px;
-  border-bottom: none;
+  overflow: visible;
 }
 
-.review-list-container .list-item-image {
-  left: 30px;
+.small {
+  font-size: @font-size-small;
 }
 
-.list-item-author {
-  font-size: @font-size-small;  
+.gray {
+  color: @gray;
 }
 
-.list-item-auth span {
-  color: @light-gray;
+.i {
+  font-style: italic;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.review-author {
+  font-size: @font-size-small;
+  color: @gray;
+  font-style: italic;
+}
+
+.review-tag-list {
+  font-size: @font-size-small;
+  
+  span.tag {
+    white-space: nowrap;
+    padding: 1px 4px;
+    margin: 2px 4px 2px 0;
+    background: @lighter-gray;
+    /* avoids weird text clipping bug in Chrome */
+    float: left;
+    
+    span.label {
+      color: @gray;
+    }
+  }
+}
+
+.review-tag-list + div {
+  clear: left;
 }

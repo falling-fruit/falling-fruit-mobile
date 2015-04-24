@@ -12,7 +12,7 @@
     textarea(ng-model="location.description")
 
   .detail-select-container 
-    | [{location.access == undefined ? "Access" : location_access_types[location.access]}]
+    | [{location.access == undefined ? "Access" : short_access_types[location.access]}]
     select(ng-model="location.access", ng-options="i as access for (i,access) in location_access_types")
 
   .detail-toggle-container

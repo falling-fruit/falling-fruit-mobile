@@ -22,13 +22,13 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
       data.season_string = $scope.season_string(data.season_start, data.season_stop, data.no_season)
       $scope.location = data
       console.log "DATA", data
-      
+  
   $scope.season_string = (season_start, season_stop, no_season)->
     if no_season
       season_start = 0
       season_stop = 11
-    if season_start or season_stop
-      return (if season_start.blank then $scope.months[season_start] else "?") + " - " + (if season_stop then $scope.months[season_stop] else "?")
+    if season_start != null or season_stop != null
+      return (if season_start != null then $scope.months[season_start] else "?") + " - " + (if season_stop != null then $scope.months[season_stop] else "?")
     else
       return null
   
@@ -40,8 +40,33 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
     "Private"
   ]
   
+  $scope.ratings = [
+    "Poor"
+    "Fair"
+    "Good"
+    "Very good"
+    "Excellent"
+  ]
+  
+  $scope.fruiting_status = [
+    "Flowering"
+    "Unripe fruit"
+    "Ripe fruit"
+  ]
+  
   $scope.months = [
-    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+    "January"
+    "February"
+    "March"
+    "April"
+    "May"
+    "June"
+    "July"
+    "August"
+    "September"
+    "October"
+    "November"
+    "December"
   ]
   
   # Degrees to radians
@@ -124,10 +149,11 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
     if id isnt undefined
       $scope.current_review = _.findWhere($scope.reviews, id: id)
       console.log "CR", $scope.current_review      
-      $scope.menu_title = "Edit Review"
+      $scope.menu_title = "Edit review"
     else
+      # FIXME: Not implemented
       $scope.current_review = DetailFactory.get_new_review_model()
-      $scope.menu_title = "Add Review"
+      $scope.menu_title = "Add review"
 
     $scope.detail_context = "add_review"
       
