@@ -5,28 +5,28 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   $scope.show_menu = false
   $scope.search_text = ''
   $scope.targeted = false
-  
+
   ## Map
-  
+
   $scope.show_map = ()->
     if $scope.current_view != "map"
       $scope.current_view = "map"
-  
+
   ## List
-  
+
   $scope.list_center = null
   $scope.$watch("list_center", (newValue, oldValue)->
     if newValue != oldValue
       if $scope.current_view == "list"
         $scope.load_list($scope.list_center)
   )
-  
+
   $scope.show_list = ()->
     if $scope.current_view != "list"
       $scope.current_view = "list"
       $scope.list_center = window.FFApp.map_obj.getCenter()
       # FIXME: show loading gif
-  
+
   $scope.load_list = (center)->
     # FIXME: Slow. Re-use data from map update markers call (weighted towards map center?)
     if !center
@@ -51,7 +51,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
           "background-image": background_url
 
       $scope.list_items = data
-      
+
   $scope.distance_string = (meters)->
     if window.FFApp.metric
       if meters < 1000
@@ -64,9 +64,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         return parseFloat((feet).toPrecision(2)) + " ft"
       else
         return parseFloat((feet / 5280).toPrecision(2)) + " mi"
-  
+
   ## Position
-  
+
   #$rootScope.$on "MAP-LOADED", $scope.update_position
   #$rootScope.$on "LOGGED-IN", load_view
   #load_view() if AuthFactory.is_logged_in()
@@ -125,13 +125,15 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       console.log("Failed to get position") # FIXME: replace with common error handling
 
   ## Infowindow
-  
+
   $scope.show_detail = (location_id)->
     if $scope.targeted
+
       if window.FFApp.target_marker != null
          window.FFApp.target_marker.setMap(null)
          window.FFApp.target_marker = null
          $scope.targeted = false
+
       $rootScope.$broadcast "SHOW-DETAIL", location_id
     else
       # show target
