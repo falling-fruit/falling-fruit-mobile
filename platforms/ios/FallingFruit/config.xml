@@ -45,4 +45,7 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <feature name="Keyboard">
+        <param name="ios-package" onload="true" value="IonicKeyboard" />
+    </feature>
 </widget>
