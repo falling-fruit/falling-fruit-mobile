@@ -5,15 +5,20 @@
       li(ng-repeat="photo in location.photos")
 
   .location-info
-    div [{location.title}]
-    div(ng-show="location.distance") Distance: [{location.distance}]m
-    div(ng-hide="location.no_season") Seasonality: [{location.season_start}] - [{location.season_stop}]
+    .location-types [{location.title}]
+    div(ng-show="location.map_distance") Distance (map): [{location.map_distance}]
+    div(ng-show="location.current_distance") Distance (me): [{location.current_distance}]
+    div(ng-show="location.distance_from_center") Distance (map center): [{location.distance_from_center}]
+    div(ng-show="location.season_string") Season: [{location.season_string}]
+    div(ng-show="location.updated_at") Updated: [{location.updated_at}]
+    div(ng-show="location.access") Access: [{short_access_types[location.access]}]
+    div(ng-show="location.unverified") Unverified: [{location.unverified}]
 
   .location-description [{location.description}]
   
-  .location-author by: [{location.author}]
+  .location-author added by [{location.author}]
 
-  a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") All Reviews ([{location.num_reviews}])
+  a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Reviews ([{location.num_reviews}])
 
   //.btn-detail-location-container
   //  .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit Location';") Edit
