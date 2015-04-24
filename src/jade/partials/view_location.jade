@@ -11,7 +11,7 @@
     div(ng-show="location.map_distance") Distance (map): [{location.map_distance}]
     div(ng-show="location.current_distance") Distance (me): [{location.current_distance}]
     div(ng-show="location.season_string") Season: [{location.season_string}]
-    div Created: [{location.created_at | date : 'MMMM d, yyyy'}]
+    div Added: [{location.created_at | date : 'MMMM d, yyyy'}]
     div Updated: [{location.updated_at | date : 'MMMM d, yyyy'}]
     div(ng-show="location.access != null") Access: [{short_access_types[location.access]}]
     div Unverified: [{location.unverified}]
