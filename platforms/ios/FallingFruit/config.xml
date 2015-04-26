@@ -36,6 +36,9 @@
     <feature name="FileTransfer">
         <param name="ios-package" value="CDVFileTransfer" />
     </feature>
+    <feature name="Keyboard">
+        <param name="ios-package" onload="true" value="IonicKeyboard" />
+    </feature>
     <name>FallingFruit</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -45,7 +48,4 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <feature name="Keyboard">
-        <param name="ios-package" onload="true" value="IonicKeyboard" />
-    </feature>
 </widget>
