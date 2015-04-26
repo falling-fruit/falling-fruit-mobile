@@ -157,14 +157,22 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
     });
   };
   $scope.register = function() {
+    var user;
+    user = {
+      name: $scope.register_user.name,
+      email: $scope.register_user.email,
+      password: $scope.register_user.password
+    };
     return $http.post(urls.register, {
-      user: $scope.login_user
+      user: user
     }).success(function(data) {
-      $scope.register_user = AuthFactory.get_register_user_model();
       $rootScope.$broadcast("REGISTERED");
-      return alert("You've been registered! Please confirm your email address, then come back and login.");
+      alert("You've been registered! Please confirm your email address, then come back and login.");
+      $scope.auth_context = "login";
+      return $scope.login_user.email = $scope.register_user.email;
     }).error(function(data) {
       var error_text;
+      $scope.register_user = AuthFactory.get_register_user_model();
       console.log("Register DATA isnt as expected", data);
       error_text = "Please check ";
       if (data.errors.email != null) {
@@ -185,7 +193,7 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
 };
 
 controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
-  var load_location, reset;
+  var distance, load_location, rad, reset;
   console.log("Detail Ctrl");
   reset = function() {
     $scope.location = {};
@@ -199,11 +207,45 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
   reset();
   load_location = function(id) {
     return $http.get(urls.location + id + ".json").success(function(data) {
+      var latlng;
+      latlng = new google.maps.LatLng(data.lat, data.lng);
+      data.map_distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.map_obj.getCenter());
+      if (window.FFApp.current_position) {
+        data.current_distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position);
+      }
+      data.season_string = $scope.season_string(data.season_start, data.season_stop, data.no_season);
       $scope.location = data;
       return console.log("DATA", data);
     });
   };
-  $scope.location_access_types = ["Added by owner", "Permitted by owner", "Public", "Private but overhanging", "Private"];
+  $scope.season_string = function(season_start, season_stop, no_season) {
+    if (no_season) {
+      season_start = 0;
+      season_stop = 11;
+    }
+    if (season_start !== null || season_stop !== null) {
+      return (season_start !== null ? $scope.months[season_start] : "?") + " - " + (season_stop !== null ? $scope.months[season_stop] : "?");
+    } else {
+      return null;
+    }
+  };
+  $scope.short_access_types = ["Added by owner", "Permitted by owner", "Public", "Private but overhanging", "Private"];
+  $scope.ratings = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  $scope.fruiting_status = ["Flowering", "Unripe fruit", "Ripe fruit"];
+  $scope.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  rad = function(x) {
+    return x * Math.PI / 180;
+  };
+  distance = function(p1, p2) {
+    var R, a, c, d, dlat, dlng;
+    R = 6378137;
+    dlat = rad(p2.lat() - p1.lat());
+    dlng = rad(p2.lng() - p1.lng());
+    a = Math.sin(dlat / 2) * Math.sin(dlat / 2) + Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) * Math.sin(dlng / 2) * Math.sin(dlng / 2);
+    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    d = R * c;
+    return d;
+  };
   $scope.selected_review_source_type = function() {
     return "Source Type";
   };
@@ -275,10 +317,10 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
         id: id
       });
       console.log("CR", $scope.current_review);
-      $scope.menu_title = "Edit Review";
+      $scope.menu_title = "Edit review";
     } else {
       $scope.current_review = DetailFactory.get_new_review_model();
-      $scope.menu_title = "Add Review";
+      $scope.menu_title = "Add review";
     }
     return $scope.detail_context = "add_review";
   };

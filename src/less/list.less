@@ -1,22 +1,20 @@
 @list-item-image-width: 70px;
-@list-item-image-padding: 10px;
+@list-item-padding: 10px;
 
 .list-item {
   position: relative;
   display: block;
   border-bottom: solid 1px @light-gray;
-  height: @list-item-image-width + @list-item-image-padding * 2;
+  min-height: @list-item-image-width + @list-item-padding * 2;
   overflow: hidden;
-  padding: @list-item-image-padding;
+  padding: @list-item-padding;
 }
 
 .list-item-image {
   position: absolute;
   width: @list-item-image-width;
-  top: @list-item-image-padding;
-  bottom: @list-item-image-padding;
-  left: @list-item-image-padding;
-  right: @list-item-image-padding;  
+  top: @list-item-padding;
+  height: @list-item-image-width;
   overflow: hidden;
   background-position: center center;
   background-size: cover;
@@ -26,7 +24,7 @@
 }
 
 .list-item-info-container {
-  margin-left: @list-item-image-width + 20px;
+  margin-left: @list-item-image-width + @list-item-padding;
 }
 
 .list-item-distance {

@@ -66,12 +66,19 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       $scope.login_user.password = null
 
   $scope.register = ()->
-    $http.post urls.register, user: $scope.login_user
+    user =
+      name: $scope.register_user.name
+      email: $scope.register_user.email
+      password: $scope.register_user.password
+
+    $http.post urls.register, user: user
     .success (data) ->
-      $scope.register_user = AuthFactory.get_register_user_model()
       $rootScope.$broadcast("REGISTERED")
       alert("You've been registered! Please confirm your email address, then come back and login.")
+      $scope.auth_context = "login"
+      $scope.login_user.email = $scope.register_user.email
     .error (data) ->
+      $scope.register_user = AuthFactory.get_register_user_model()
       console.log "Register DATA isnt as expected", data
       error_text = "Please check "
       error_text += "email as it is: " + data.errors.email if data.errors.email?
