@@ -69,4 +69,8 @@
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/ant-build/classes/uh/fallingfruit/app/R$drawable.class \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/ant-build/classes/uh/fallingfruit/app/BuildConfig.class \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/ant-build/classes/uh/fallingfruit/app/CordovaApp.class \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/ant-build/classes/com/ionic/keyboard/IonicKeyboard$1.class \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/ant-build/classes/com/ionic/keyboard/IonicKeyboard$2.class \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/ant-build/classes/com/ionic/keyboard/IonicKeyboard.class \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/ant-build/classes/com/ionic/keyboard/IonicKeyboard$3.class \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/ant-build/dexedLibs/classes-8becc513f03bb4ead338c91145e72b7e.jar \
