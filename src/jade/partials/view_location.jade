@@ -5,16 +5,24 @@
       li(ng-repeat="photo in location.photos")
 
   .location-info
-    div [{location.title}]
-    div(ng-show="location.distance") Distance: [{location.distance}]m
-    div(ng-hide="location.no_season") Seasonality: [{location.season_start}] - [{location.season_stop}]
+    .location-types [{location.title}]
+    div Type ids: [{location.type_ids}]
+    div Lat, Lng: [{location.lat}], [{location.lng}]
+    div(ng-show="location.map_distance") Distance (map): [{location.map_distance}]
+    div(ng-show="location.current_distance") Distance (me): [{location.current_distance}]
+    div(ng-show="location.season_string") Season: [{location.season_string}]
+    div Added: [{location.created_at | date : 'MMMM d, yyyy'}]
+    div Updated: [{location.updated_at | date : 'MMMM d, yyyy'}]
+    div(ng-show="location.access != null") Access: [{short_access_types[location.access]}]
+    div Unverified: [{location.unverified}]
 
   .location-description [{location.description}]
   
-  .location-author by: [{location.author}]
+  .location-author added by [{location.author}]
 
-  a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") All Reviews ([{location.num_reviews}])
-
-  //.btn-detail-location-container
-  //  .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit Location';") Edit
-  //  .detail-btn-dark(ng-click="show_reviews()") Review
+  //-a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ([{location.num_reviews}])
+  .detail-btn-container
+    .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit';") Edit
+    .detail-btn-dark(ng-click="add_review()") Review
+  .detail-btn-container
+    .detail-btn-dark(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ([{location.num_reviews}])

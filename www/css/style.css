@@ -549,26 +549,35 @@ li {
   transform: translate3d(100%, 0, 0);
 }
 .search-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 56px;
   background-color: #faf9f9;
   border-top: solid 1px #dce1e6;
+  bottom: 0;
+  height: 56px;
+  left: 0;
+  position: absolute;
+  width: 100%;
 }
 .search-footer .settings {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 56px;
-  height: 56px;
   background: url("../img/svg/control-settings.svg") no-repeat center center;
   background-size: 30px;
+  height: 56px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 56px;
 }
 .search-footer .btn-group-container {
   display: block;
   margin: 0 56px;
+}
+.search-footer .add-location {
+  background: url("../img/svg/control-add.svg") no-repeat center center;
+  background-size: 30px;
+  height: 56px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 56px;
 }
 .btn-group {
   display: table;
@@ -598,15 +607,6 @@ li {
 .btn-group .active {
   background-color: #29a858;
   color: white;
-}
-.search-footer .add {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 56px;
-  width: 56px;
-  background: url("../img/svg/control-add.svg") no-repeat center center;
-  background-size: 30px;
 }
 .search-input-container {
   position: relative;
@@ -742,7 +742,7 @@ li {
   position: relative;
   display: block;
   border-bottom: solid 1px #dce1e6;
-  height: 90px;
+  min-height: 90px;
   overflow: hidden;
   padding: 10px;
 }
@@ -750,9 +750,7 @@ li {
   position: absolute;
   width: 70px;
   top: 10px;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;
+  height: 70px;
   overflow: hidden;
   background-position: center center;
   background-size: cover;
@@ -764,7 +762,7 @@ li {
   border-radius: 5px;
 }
 .list-item-info-container {
-  margin-left: 90px;
+  margin-left: 80px;
 }
 .list-item-distance {
   color: black;
@@ -818,6 +816,8 @@ li {
   right: 52px;
   line-height: 52px;
   text-align: center;
+  font-size: 18px;
+  color: #5a5f64;
 }
 .menu-right-btn {
   position: absolute;
@@ -905,6 +905,10 @@ li {
 .location-info div {
   padding: 5px 0;
 }
+.location-types {
+  color: #ff8100;
+  font-size: 18px;
+}
 .location-description {
   line-height: 20px;
   padding: 10px 20px;
@@ -912,20 +916,21 @@ li {
 .location-author {
   font-size: 14px;
   padding: 0 20px;
+  font-style: italic;
 }
 .btn-location-reviews {
   display: block;
   padding: 20px 0 10px 0;
   text-align: center;
 }
-.btn-detail-location-container {
+.detail-btn-container {
   display: table;
   width: 80%;
-  margin: auto;
+  margin: 20px auto 0px auto;
   table-layout: fixed;
-  border-spacing: 20px;
+  border-spacing: 20px 0px;
 }
-.btn-detail-location-container .detail-btn-dark {
+.detail-btn-container .detail-btn-dark {
   display: table-cell;
   width: 49%;
 }
@@ -1084,20 +1089,40 @@ li {
 .btn-save {
   margin-bottom: 20px;
 }
-.detail-btn-dark.review {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
 .review-list-container .list-item {
-  padding: 10px 20px;
-  border-bottom: none;
+  overflow: visible;
 }
-.review-list-container .list-item-image {
-  left: 30px;
-}
-.list-item-author {
+.small {
   font-size: 14px;
 }
-.list-item-auth span {
-  color: #dce1e6;
+.gray {
+  color: #5a5f64;
+}
+.i {
+  font-style: italic;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.review-author {
+  font-size: 14px;
+  color: #5a5f64;
+  font-style: italic;
+}
+.review-tag-list {
+  font-size: 14px;
+}
+.review-tag-list span.tag {
+  white-space: nowrap;
+  padding: 1px 4px;
+  margin: 2px 4px 2px 0;
+  background: #eef0f2;
+  /* avoids weird text clipping bug in Chrome */
+  float: left;
+}
+.review-tag-list span.tag span.label {
+  color: #5a5f64;
+}
+.review-tag-list + div {
+  clear: left;
 }
