@@ -69,7 +69,7 @@ wget http://dl.google.com/android/android-sdk_r24.0.2-linux.tgz
 tar xvzf android-sdk_r24.0.2-linux.tgz
 mv android-sdk-linux ~/android-sdk
 
-export PATH=$PATH:~/android-sdk/tools 
+export PATH=$PATH:~/android-sdk/tools
 export ANDROID_HOME=~/android-sdk
 ```
 
@@ -108,6 +108,17 @@ If you want to debug with Chrome, go to: chrome://inspect/#devices
 
 #### Setup XCode (iOS SDK)
 
-Seemingly you can only build iOS applications on a Mac. Here are the instructions to setup X-Code:
+You can only build iOS applications on a Mac. Here are the instructions to setup X-Code:
 
-http://cordova.apache.org/docs/en/4.0.0/guide_platforms_ios_index.md.html
+	http://cordova.apache.org/docs/en/4.0.0/guide_platforms_ios_index.md.html
+
+- You may need to run cordova build from the falling-fruit-mobile folder before opening
+- From within Xcode open the falling-fruit-mobile/platforms/ios/FallingFruit.xcodeproj file.
+- Make sure the .xcodeproj file is selected in the left panel.
+- Select the hello app in the panel immediately to the right.
+- Select the intended device from the toolbar's Scheme menu, such as the iPhone 6.0 Simulator as highlighted here:
+- Press the Run button that appears in the same toolbar to the left of the Scheme. That builds, deploys and runs the application in the emulator. A separate emulator application opens to display the app:
+
+```
+Only one emulator may run at a time, so if you want to test the app in a different emulator, you need to quit the emulator application and run a different target within Xcode.
+```
