@@ -1,12 +1,17 @@
-# CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# http://guides.cocoapods.org/using/using-cocoapods.html#should-i-ignore-the-pods-directory-in-source-control?
-#
-# Pods/
+*~
+npm-debug.log
 node_modules/
 tmp/
+
+# Cordova built stuff
+platforms/android/ant-build
+
+# Grunt built stuff
+platforms/ios/www/
+platforms/android/assets/www/
+www/js/all.js
+www/css/style.css
+www/css/index.css
 
 # Xcode
 .DS_Store

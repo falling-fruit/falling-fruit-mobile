@@ -1,3 +1,0 @@
-# view AndroidManifest.xml #generated:6
--keep class uh.fallingfruit.app.CordovaApp { <init>(...); }
-
