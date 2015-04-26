@@ -223,13 +223,15 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
       season_start = 0;
       season_stop = 11;
     }
-    if (season_start || season_stop) {
-      return (season_start.blank ? $scope.months[season_start] : "?") + " - " + (season_stop ? $scope.months[season_stop] : "?");
+    if (season_start !== null || season_stop !== null) {
+      return (season_start !== null ? $scope.months[season_start] : "?") + " - " + (season_stop !== null ? $scope.months[season_stop] : "?");
     } else {
       return null;
     }
   };
   $scope.short_access_types = ["Added by owner", "Permitted by owner", "Public", "Private but overhanging", "Private"];
+  $scope.ratings = ["Poor", "Fair", "Good", "Very good", "Excellent"];
+  $scope.fruiting_status = ["Flowering", "Unripe fruit", "Ripe fruit"];
   $scope.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   rad = function(x) {
     return x * Math.PI / 180;
@@ -315,10 +317,10 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout) {
         id: id
       });
       console.log("CR", $scope.current_review);
-      $scope.menu_title = "Edit Review";
+      $scope.menu_title = "Edit review";
     } else {
       $scope.current_review = DetailFactory.get_new_review_model();
-      $scope.menu_title = "Add Review";
+      $scope.menu_title = "Add review";
     }
     return $scope.detail_context = "add_review";
   };
