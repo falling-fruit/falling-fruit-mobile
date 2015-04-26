@@ -1,3 +1,8 @@
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 @font-face {
   font-family: "PT-Sans";
   src: url('../font/PT-Sans/PTS55F-webfont.eot');
@@ -613,7 +618,7 @@ li {
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
-.search-input-container:before {
+.search-input-container input[type=submit] {
   content: " ";
   position: absolute;
   top: 0;
@@ -622,8 +627,10 @@ li {
   height: 100%;
   background: url('../img/svg/input-search.svg') no-repeat center center;
   background-size: 20px;
+  border: none;
+  outline: none;
 }
-.search-input-container input {
+.search-input-container input[type=text] {
   background-color: transparent;
   display: block;
   overflow: hidden;
@@ -695,15 +702,15 @@ li {
 }
 .search-param-header {
   font-family: "PT-Sans-Bold";
-  padding: 10px 0 10px 25px;
+  padding: 10px 0 10px 15px;
   border-bottom: solid 1px #5a5f64;
 }
 .search-param-radio {
   position: relative;
   display: block;
-  padding-left: 50px;
-  height: 50px;
-  line-height: 50px;
+  padding-left: 30px;
+  height: 45px;
+  line-height: 45px;
 }
 .search-radio-container {
   position: absolute;
@@ -737,6 +744,7 @@ li {
   border-bottom: solid 1px #dce1e6;
   height: 90px;
   overflow: hidden;
+  padding: 10px;
 }
 .list-item-image {
   position: absolute;
@@ -757,27 +765,28 @@ li {
 }
 .list-item-info-container {
   margin-left: 90px;
-  overflow: hidden;
 }
 .list-item-distance {
   color: black;
-  padding: 14px 0 5px 0;
-}
-.list-item-auth span {
-  color: #dce1e6;
+  line-height: 20px;
+  margin: 0 0 4px 0;
 }
 .list-item-name {
   color: #ff8100;
-  padding: 0 0 5px 0;
+  font-size: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .list-item-description {
-  font-size: 12px;
-  color: #5a5f64;
+  margin: 5px 0 0 0;
+  font-size: 14px;
   height: 16px;
   line-height: 16px;
-  padding-right: 10px;
-  overflow: hidden;
+  color: #5a5f64;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .menu {
   position: absolute;
