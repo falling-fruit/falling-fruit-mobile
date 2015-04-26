@@ -50,6 +50,7 @@
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.file-transfer \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.camera \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.media-capture \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/com.ionic.keyboard \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.file/www \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.file/www/fileSystems.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.file/www/Entry.js \
@@ -89,6 +90,8 @@
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.media-capture/www/CaptureVideoOptions.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.media-capture/www/CaptureAudioOptions.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/org.apache.cordova.media-capture/www/MediaFileData.js \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/com.ionic.keyboard/www \
+/home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/plugins/com.ionic.keyboard/www/keyboard.js \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/PT-Sans \
 /home/caleb/Checkouts/falling-fruit-mobile/platforms/android/assets/www/font/Roboto/Roboto-ThinItalic.ttf \
