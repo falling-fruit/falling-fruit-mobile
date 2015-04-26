@@ -58,7 +58,6 @@ urls =
 
   reviews: (id)-> host + "locations/#{id}/reviews.json"
 
-
 controllers = {}
 factories = {}
 directives = {}

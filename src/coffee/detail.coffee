@@ -1,6 +1,8 @@
 controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
   console.log "Detail Ctrl"
 
+  document.addEventListener("backbutton", $scope.menu_left_btn_click, false)
+
   reset = ()->
     $scope.location = {}
     $scope.current_location = null
@@ -175,10 +177,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
       $timeout reset, 500        
       $scope.show_detail = false
       $scope.location_id = undefined
-
-
-
-
 
     
     
