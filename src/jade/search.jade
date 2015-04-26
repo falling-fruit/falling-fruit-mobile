@@ -12,7 +12,7 @@
 
       .search-view-container
         .map-container(directionstype="directions_type", stoplist="stopList")
-        
+
         include partials/list
 
       .search-footer
@@ -21,6 +21,6 @@
           .btn-group
             .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
             .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()") List
-        .add(ng-click="show_detail()")
+        .add-location(ng-click="show_detail()")
 
     include partials/search_side_menu
