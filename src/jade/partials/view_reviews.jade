@@ -7,10 +7,20 @@
       .list-item-image(ng-style="r.style")
 
       .list-item-info-container
-        .list-item-author 
-          span by 
-          | [{::r.author}]
-        .list-item-name [{::r.created_at | date : 'MMM dd, yyyy h:mm a'}]
-        .list-item-description [{::r.comment}]
-
-    .detail-btn-dark.review(ng-click="add_review()") Add a review
+        div.review-author by [{::r.author? r.author : "Anonymous"}]
+        div Visited [{::r.observed_on | date : 'MMMM d, yyyy'}]
+        .review-tag-list
+          span.tag(ng-show="r.fruiting != null")
+            span.label Status&nbsp;
+            [{::fruiting_status[r.fruiting]}]
+          span.tag(ng-show="r.quality_rating != null")
+            span.label Quality&nbsp;
+            [{::ratings[r.quality_rating]}]
+          span.tag(ng-show="r.yield_rating != null")
+            span.label Yield&nbsp;
+            [{::ratings[r.yield_rating]}]
+        div(ng-show="r.comment") [{::r.comment}]
+                  
+          
+    .detail-btn-container
+      .detail-btn-dark(ng-click="add_review()") Add a review

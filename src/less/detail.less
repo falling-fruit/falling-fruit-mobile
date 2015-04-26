@@ -14,7 +14,7 @@
 
 .detail-btn-dark {
   .detail-btn-mixin();  
-  background-color: @dark-blue;
+  background-color: @dark-green;
 }
 
 .detail-container {
@@ -71,6 +71,11 @@
   padding: 5px 0;
 }
 
+.location-types {
+  color: @orange;
+  font-size: @font-size-large;
+}
+
 .location-description {
   line-height: @font-size-default + 4px;
   padding: 10px 20px;
@@ -79,6 +84,7 @@
 .location-author {
   font-size: @font-size-small;  
   padding: 0 20px;
+  font-style: italic;
 }
 
 .btn-location-reviews {
@@ -87,19 +93,18 @@
   text-align: center;    
 }
 
-.btn-detail-location-container {
+.detail-btn-container {
   display: table;
   width: 80%;
-  margin: auto;
+  margin: 20px auto 0px auto;
   table-layout: fixed;
-  border-spacing: 20px;
+  border-spacing: 20px 0px;
 }
 
-.btn-detail-location-container .detail-btn-dark {
+.detail-btn-container .detail-btn-dark {
   display: table-cell;
   width: 49%;
 }
-
 
 .detail-input-container-mixin() {
   position: relative;
