@@ -41,7 +41,7 @@
     </feature>
     <name>FallingFruit</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        An Apache Cordova application that responds to the deviceready event for Falling Fruit. http://fallingfruit.org.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
