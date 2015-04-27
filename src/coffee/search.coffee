@@ -35,9 +35,14 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       muni = 1
     else
       muni = 0
+    bounds = window.FFApp.map_obj.getBounds()
     list_params =
       lat: center.lat()
       lng: center.lng()
+      nelat: bounds.getNorthEast().lat()
+      nelng: bounds.getNorthEast().lng()
+      swlat: bounds.getSouthWest().lat()
+      swlng: bounds.getSouthWest().lng()
       muni: muni
     $http.get urls.nearby, params: list_params
     .success (data)->
