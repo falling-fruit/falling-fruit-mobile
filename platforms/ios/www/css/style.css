@@ -526,6 +526,7 @@ li {
   z-index: 11;
 }
 .list-container {
+  background: url('../img/loader.gif') no-repeat center center #faf9f9;
   position: absolute;
   top: 0;
   left: 0;
@@ -739,6 +740,7 @@ li {
   border-radius: 10px;
 }
 .list-item {
+  background-color: #faf9f9;
   position: relative;
   display: block;
   border-bottom: solid 1px #dce1e6;
