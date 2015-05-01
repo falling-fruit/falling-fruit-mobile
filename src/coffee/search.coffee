@@ -3,6 +3,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
 
   $scope.current_view = "map"
   $scope.show_menu = false
+  $scope.show_add_location = false
   $scope.search_text = ''
   $scope.targeted = false
 
@@ -129,7 +130,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
 
-  ## Infowindow
+  ## Info Window / Add Location
 
   $scope.show_detail = (location_id)->
     if $scope.targeted
@@ -137,15 +138,17 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       if window.FFApp.target_marker != null
          window.FFApp.target_marker.setMap(null)
          window.FFApp.target_marker = null
-         $scope.targeted = false
+         $scope.targeted = false #reset targeted
+         $scope.show_add_location = false
 
       $rootScope.$broadcast "SHOW-DETAIL", location_id
     else
       # show target
-      if window.FFApp.target_marker is `undefined`
+      if !window.FFApp.target_marker? #is `undefined`
+        $scope.show_add_location = true
         window.FFApp.target_marker = new google.maps.Marker(
           icon:
-            url: "img/png/control-add.png"
+            url: "img/png/transparent.png"
             size: new google.maps.Size(58, 75)
             origin: new google.maps.Point(0, 0)
 
@@ -155,7 +158,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
           position: window.FFApp.map_obj.getCenter()
           map: window.FFApp.map_obj
           title: "Target New Point"
-          draggable: false
+          draggable: true
         )
         window.FFApp.target_marker.bindTo('position', window.FFApp.map_obj, 'center');
       $scope.targeted = true
