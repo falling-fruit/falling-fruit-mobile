@@ -516,6 +516,24 @@ li {
   width: 200%;
   background-color: white;
 }
+.map-add-location {
+  display: none;
+  position: absolute;
+}
+.map-add-location.active {
+  background: rgba(0, 0, 0, 0.15);
+  display: block;
+  height: 95px;
+  left: 25%;
+  padding: 10px;
+  margin: -41px 0 0 -34px;
+  top: 50%;
+  width: 78px;
+  z-index: 99999;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
 .map-container {
   position: absolute;
   top: 0;
@@ -579,6 +597,9 @@ li {
   top: 0;
   right: 0;
   width: 56px;
+}
+.search-footer .add-location.active {
+  background: url("../img/svg/map-location-full.svg") no-repeat center center;
 }
 .btn-group {
   display: table;

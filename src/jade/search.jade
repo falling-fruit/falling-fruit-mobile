@@ -11,6 +11,8 @@
             input(type="text", placeholder="Enter a location...", ng-model="search_text")
 
       .search-view-container
+        .map-add-location(ng-class="show_add_location == true ? 'active': ''")
+          img(src="img/png/control-add.png" alt="Add Location")
         .map-container(directionstype="directions_type", stoplist="stopList")
 
         include partials/list
@@ -21,6 +23,6 @@
           .btn-group
             .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
             .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()") List
-        .add-location(ng-click="show_detail()")
+        .add-location(ng-click="show_detail()", ng-class="show_add_location == true ? 'active': ''")
 
     include partials/search_side_menu
