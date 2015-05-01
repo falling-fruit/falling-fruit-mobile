@@ -10,7 +10,10 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
     $scope.reviews = []
     $http.get urls.source_types
     .success (data)-> 
-      $scope.source_types = data 
+      $scope.source_types = data
+      $scope.source_types_by_id = {}
+      for row in data
+        $scope.source_types_by_id[row.id]  = row
 
   reset()
   
@@ -33,7 +36,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
       return (if season_start != null then $scope.months[season_start] else "?") + " - " + (if season_stop != null then $scope.months[season_stop] else "?")
     else
       return null
-  
+
   $scope.short_access_types = [
     "Added by owner"
     "Permitted by owner"
@@ -51,7 +54,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
   ]
   
   $scope.fruiting_status = [
-    "Flowering"
+    "Flowers"
     "Unripe fruit"
     "Ripe fruit"
   ]

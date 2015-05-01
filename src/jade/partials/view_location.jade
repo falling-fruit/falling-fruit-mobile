@@ -5,8 +5,9 @@
       li(ng-repeat="photo in location.photos")
 
   .location-info
-    .location-types [{location.title}]
-    div Type ids: [{location.type_ids}]
+    .location-types
+      span(ng-repeat="id in location.type_ids")
+        [{source_types_by_id[id].name}][{$last ? '' : ', '}]
     div Lat, Lng: [{location.lat}], [{location.lng}]
     div(ng-show="location.map_distance") Distance (map): [{location.map_distance}]
     div(ng-show="location.current_distance") Distance (me): [{location.current_distance}]
