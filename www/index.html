@@ -7,6 +7,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=0, maximum-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" type="text/css" href="css/angular-csp.css">
+    <link rel="stylesheet" type="text/css" href="css/angular-slider.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
@@ -126,6 +127,7 @@
             <div class="detail-toggle-label">Unverified</div>
             <div toggle="location.unverified" class="ng-switcher"></div>
           </div>
+          <slider floor="100" ceiling="1000" step="50" precision="2" ng-model="item.cost" translate="currencyFormatting"></slider>
           <div ng-click="save_location()" class="detail-btn-dark btn-save">Save</div>
         </div>
         <div ng-show="detail_context=='view_reviews'" class="detail-container">
@@ -223,6 +225,7 @@
     <script type="text/javascript" src="js/lib/angular-route.js"></script>
     <script type="text/javascript" src="js/lib/angular-touch.js"></script>
     <script type="text/javascript" src="js/lib/angular-animate.js"></script>
+    <script type="text/javascript" src="js/lib/angular-slider.js"></script>
     <script type="text/javascript" src="js/all.js"></script>
   </body>
 </html>
