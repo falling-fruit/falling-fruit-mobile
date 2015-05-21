@@ -1,4 +1,5 @@
 factories.AuthFactory = ($rootScope)->
+
   props =
     email: null
     access_token: null

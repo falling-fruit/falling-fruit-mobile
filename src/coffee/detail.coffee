@@ -83,9 +83,11 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     # turn types string into an array if needed
     #if $scope.location.types != null and $scope.location.types.constructor == String
     #  $scope.location.types = [$scope.location.types]
+    console.log($scope.location)
     $http.post urls.add_location, location: $scope.location
     .success (data)->
       console.log("ADDED")
+      console.log(data)
       $scope.location_id = data.id
       load_location(data.id)
       $scope.detail_context = "view_location"  

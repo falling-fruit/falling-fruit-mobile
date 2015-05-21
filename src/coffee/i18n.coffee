@@ -31,9 +31,10 @@ factories.I18nFactory = ($rootScope)->
     ]
   
     fruiting_status: [
-      "Flowers"
-      "Unripe fruit"
-      "Ripe fruit"
+      "Bare"
+      "Flowering"
+      "Fruiting"
+      "Ripe"
     ]
   
     months: [
