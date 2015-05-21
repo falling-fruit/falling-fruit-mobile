@@ -14,4 +14,50 @@ factories.I18nFactory = ($rootScope)->
         else
           return parseFloat((feet / 5280).toPrecision(2)) + " mi"
 
+    short_access_types: [
+      "Added by owner"
+      "Permitted by owner"
+      "Public"
+      "Private but overhanging"
+      "Private"
+    ]
+  
+    ratings: [
+      "Poor"
+      "Fair"
+      "Good"
+      "Very good"
+      "Excellent"
+    ]
+  
+    fruiting_status: [
+      "Flowers"
+      "Unripe fruit"
+      "Ripe fruit"
+    ]
+  
+    months: [
+      "January"
+      "February"
+      "March"
+      "April"
+      "May"
+      "June"
+      "July"
+      "August"
+      "September"
+      "October"
+      "November"
+      "December"
+    ]
+
+    season_string: (season_start, season_stop, no_season)->
+      if no_season
+        season_start = 0
+        season_stop = 11
+      if season_start != null or season_stop != null
+        return (if season_start != null then props.months[season_start] else "?") + " - " + (if season_stop != null then props.months[season_stop] else "?")
+      else
+        return null
+
   return props

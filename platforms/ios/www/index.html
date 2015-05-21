@@ -95,7 +95,7 @@
             <div ng-show="location.season_string">Season: [{location.season_string}]</div>
             <div>Added: [{location.created_at | date : 'MMMM d, yyyy'}]</div>
             <div>Updated: [{location.updated_at | date : 'MMMM d, yyyy'}]</div>
-            <div ng-show="location.access != null">Access: [{short_access_types[location.access]}]</div>
+            <div ng-show="location.access != null">Access: [{location.access_string}]</div>
             <div>Unverified: [{location.unverified}]</div>
           </div>
           <div class="location-description">[{location.description}]</div>

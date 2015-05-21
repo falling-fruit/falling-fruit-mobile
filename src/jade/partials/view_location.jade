@@ -14,7 +14,7 @@
     div(ng-show="location.season_string") Season: [{location.season_string}]
     div Added: [{location.created_at | date : 'MMMM d, yyyy'}]
     div Updated: [{location.updated_at | date : 'MMMM d, yyyy'}]
-    div(ng-show="location.access != null") Access: [{short_access_types[location.access]}]
+    div(ng-show="location.access != null") Access: [{location.access_string}]
     div Unverified: [{location.unverified}]
 
   .location-description [{location.description}]
