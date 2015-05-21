@@ -977,6 +977,25 @@ li {
   padding: 10px 0 10px 10px;
   width: 100%;
 }
+.detail-slider-container {
+  position: relative;
+  background-color: #dce1e6;
+  margin: 20px 10%;
+  overflow: hidden;
+  -webkit-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding-right: 20px;
+  padding-left: 15px;
+}
+.detail-slider-container .detail-slider-text {
+  text-align: center;
+  height: 1em;
+  padding-top: 10px;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
 .detail-select-container {
   position: relative;
   background-color: #dce1e6;

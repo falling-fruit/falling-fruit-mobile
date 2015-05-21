@@ -118,7 +118,7 @@
           <!--.detail-input-container-->
           <!--  input(type="text", placeholder="?", ng-model="location.lng")                -->
           <div class="detail-textarea-container location">
-            <textarea ng-model="location.description"></textarea>
+            <textarea placeholder="Description..." ng-model="location.description"></textarea>
           </div>
           <div class="detail-select-container">[{location.access == undefined ? "Access" : short_access_types[location.access]}]
             <select ng-model="location.access" ng-options="i as access for (i,access) in short_access_types"></select>
@@ -127,7 +127,18 @@
             <div class="detail-toggle-label">Unverified</div>
             <div toggle="location.unverified" class="ng-switcher"></div>
           </div>
-          <div floor="100" ceiling="1000" step="50" precision="2" ng-model="item.cost" translate="currencyFormatting" class="slider"></div>
+          <div class="detail-slider-container">
+            <div class="detail-slider-text">[{location.observation.quality_rating == undefined ? "Quality" : ratings[location.observation.quality_rating]}]</div>
+            <slider floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.quality_rating"></slider>
+          </div>
+          <div class="detail-slider-container">
+            <div class="detail-slider-text">[{location.observation.yield_rating == undefined ? "Yield" : ratings[location.observation.yield_rating]}]</div>
+            <slider floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.yield_rating"></slider>
+          </div>
+          <div class="detail-slider-container">
+            <div class="detail-slider-text">[{location.observation.fruiting == undefined ? "Fruiting" : fruiting_status[location.observation.fruiting]}]</div>
+            <slider floor="0" ceiling="3" step="1" precision="0" ng-model="location.observation.fruiting"></slider>
+          </div>
           <div ng-click="save_location()" class="detail-btn-dark btn-save">Save</div>
         </div>
         <div ng-show="detail_context=='view_reviews'" class="detail-container">

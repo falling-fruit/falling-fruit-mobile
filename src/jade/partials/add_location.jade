@@ -5,11 +5,12 @@
 
   //.detail-input-container
   //  input(type="text", placeholder="?", ng-model="location.lat")
+
   //.detail-input-container
   //  input(type="text", placeholder="?", ng-model="location.lng")                
   
   .detail-textarea-container.location
-    textarea(ng-model="location.description")
+    textarea(placeholder="Description...", ng-model="location.description")
 
   .detail-select-container 
     | [{location.access == undefined ? "Access" : short_access_types[location.access]}]
@@ -19,8 +20,21 @@
     .detail-toggle-label Unverified
     .ng-switcher(toggle="location.unverified")
 
-  slider(floor="100" ceiling="1000" step="50" precision="2" ng-model="item.cost" translate="currencyFormatting")
+  //-OBSERVATION
 
-  //-SEASONALITY
+  .detail-slider-container
+    .detail-slider-text
+      [{location.observation.quality_rating == undefined ? "Quality" : ratings[location.observation.quality_rating]}]
+    slider(floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.quality_rating")
+    
+  .detail-slider-container
+    .detail-slider-text
+      [{location.observation.yield_rating == undefined ? "Yield" : ratings[location.observation.yield_rating]}]
+    slider(floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.yield_rating") 
+
+  .detail-slider-container
+    .detail-slider-text
+      [{location.observation.fruiting == undefined ? "Fruiting" : fruiting_status[location.observation.fruiting]}]
+    slider(floor="0" ceiling="3" step="1" precision="0" ng-model="location.observation.fruiting") 
 
   .detail-btn-dark.btn-save(ng-click="save_location()") Save
