@@ -24,72 +24,16 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       data.map_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.map_obj.getCenter()))
       if window.FFApp.current_position
         data.current_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position))
-      data.season_string = $scope.season_string(data.season_start, data.season_stop, data.no_season)
+      data.season_string = I18nFactory.season_string(data.season_start, data.season_stop, data.no_season)
+      data.access_string = I18nFactory.short_access_types[data.access]
       $scope.location = data
       console.log "DATA", data
-  
-  $scope.season_string = (season_start, season_stop, no_season)->
-    if no_season
-      season_start = 0
-      season_stop = 11
-    if season_start != null or season_stop != null
-      return (if season_start != null then $scope.months[season_start] else "?") + " - " + (if season_stop != null then $scope.months[season_stop] else "?")
-    else
-      return null
 
-  $scope.short_access_types = [
-    "Added by owner"
-    "Permitted by owner"
-    "Public"
-    "Private but overhanging"
-    "Private"
-  ]
-  
-  $scope.ratings = [
-    "Poor"
-    "Fair"
-    "Good"
-    "Very good"
-    "Excellent"
-  ]
-  
-  $scope.fruiting_status = [
-    "Flowers"
-    "Unripe fruit"
-    "Ripe fruit"
-  ]
-  
-  $scope.months = [
-    "January"
-    "February"
-    "March"
-    "April"
-    "May"
-    "June"
-    "July"
-    "August"
-    "September"
-    "October"
-    "November"
-    "December"
-  ]
-  
-  # Degrees to radians
-  rad = (x)->
-    return x * Math.PI / 180
-  
-  # Distance between points (meters)
-  distance = (p1, p2)->
-    R = 6378137;
-    dlat = rad(p2.lat() - p1.lat())
-    dlng = rad(p2.lng() - p1.lng())
-    a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
-      Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
-      Math.sin(dlng / 2) * Math.sin(dlng / 2)
-    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    d = R * c
-    return d
-  
+  # Pull in useful things from i18n factory
+  $scope.short_access_types = I18nFactory.short_access_types
+  $scope.ratings = I18nFactory.ratings
+  $scope.fruiting_status = I18nFactory.fruiting_status
+
   $scope.selected_review_source_type = ()->
     return "Source Type"
 
