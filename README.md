@@ -3,6 +3,10 @@ Falling Fruit Mobile
 
 This is a phonegap/cordova companion application for Falling Fruit.
 
+It is an singular page angular app that uses the jade, less, and coffee preprocessors.
+
+The backend is accessed over a RESTful JSON API served up at fallingfruit.org/api/
+
 ## Directory Layout
 
   * bin - grunt and npm configuration
@@ -14,6 +18,19 @@ This is a phonegap/cordova companion application for Falling Fruit.
   * plugins - downloaded cordova plugins
   * www - app code compiled by grunt from stuff in the src directory along with static things like images and js libraries
   * platforms - app code for various platforms (android, ios) compiled by grunt and/or cordova
+
+## Code Layout
+
+  * Factories (reusable code)
+    * misc.coffee - miscellaneous functions
+    * i18n.coffee - things pertaining to i18n
+    * auth.coffee - things pertaining to and controlling authentication
+  * Controllers (do stuff all the time!!!)
+    * detail.coffee - display/edit a single location
+    * search.coffee - the main map and list view
+    * menu.coffee - the settings/filters sidebar
+  * Directives (compartmentalized code)
+    * directives.coffee - map, spinner, etc
 
 ## Build instructions
 
