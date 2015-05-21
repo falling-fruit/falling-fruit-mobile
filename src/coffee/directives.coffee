@@ -237,7 +237,6 @@ directives.confirmDialog = ()->
     oktxt: "@"
     canceltxt: "@"
 
-
 directives.ngSwitcher = ()->
   props =
     restrict: "C"

@@ -1,4 +1,4 @@
-controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
+controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
   console.log "Detail Ctrl"
 
   document.addEventListener("backbutton", $scope.menu_left_btn_click, false)
@@ -21,9 +21,9 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
     $http.get urls.location + id + ".json"
     .success (data)->
       latlng = new google.maps.LatLng(data.lat, data.lng)
-      data.map_distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.map_obj.getCenter())
+      data.map_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.map_obj.getCenter()))
       if window.FFApp.current_position
-        data.current_distance = google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position)
+        data.current_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position))
       data.season_string = $scope.season_string(data.season_start, data.season_stop, data.no_season)
       $scope.location = data
       console.log "DATA", data
@@ -180,8 +180,3 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout)->
       $timeout reset, 500        
       $scope.show_detail = false
       $scope.location_id = undefined
-
-    
-    
-
-
