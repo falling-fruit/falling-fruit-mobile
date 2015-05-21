@@ -1,4 +1,4 @@
-controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
+controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18nFactory)->
   console.log "Search Ctrl"
 
   $scope.current_view = "map"
@@ -29,7 +29,6 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       # FIXME: show loading gif
 
   $scope.load_list = (center)->
-    # FIXME: Slow. Re-use data from map update markers call (weighted towards map center?)
     if !center
       center = window.FFApp.map_obj.getCenter()
     if window.FFApp.muni
@@ -53,23 +52,12 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         else
           background_url = "url('../img/png/no-image.png')"
 
+        item.distance_string = I18nFactory.distance_string(item.distance)
+
         item.style =
           "background-image": background_url
 
       $scope.list_items = data
-
-  $scope.distance_string = (meters)->
-    if window.FFApp.metric
-      if meters < 1000
-        return parseFloat((meters).toPrecision(2)) + " m"
-      else
-        return parseFloat((meters / 1000).toPrecision(2)) + " km"
-    else
-      feet = Math.round(meters / 0.3048)
-      if feet < 1000
-        return parseFloat((feet).toPrecision(2)) + " ft"
-      else
-        return parseFloat((feet / 5280).toPrecision(2)) + " mi"
 
   ## Position
 

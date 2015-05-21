@@ -29,7 +29,7 @@
               <div ng-class="current_view == 'list' ? 'show' : ''" class="list-container"><a ng-repeat="li in list_items track by li.location_id" ng-click="show_detail(li.location_id)" class="list-item">
                   <div ng-style="li.style" class="list-item-image"></div>
                   <div class="list-item-info-container">
-                    <div class="list-item-distance">[{distance_string(li.distance)}]</div>
+                    <div class="list-item-distance">[{li.distance_string}]</div>
                     <div class="list-item-name">[{::li.title}]</div>
                     <div class="list-item-description">[{::li.description}]</div>
                   </div></a></div>
@@ -88,8 +88,7 @@
             </ul>
           </div>
           <div class="location-info">
-            <div class="location-types">[{location.title}]</div>
-            <div>Type ids: [{location.type_ids}]</div>
+            <div class="location-types"><span ng-repeat="id in location.type_ids">[{source_types_by_id[id].name}][{$last ? '' : ', '}]</span></div>
             <div>Lat, Lng: [{location.lat}], [{location.lng}]</div>
             <div ng-show="location.map_distance">Distance (map): [{location.map_distance}]</div>
             <div ng-show="location.current_distance">Distance (me): [{location.current_distance}]</div>
@@ -110,8 +109,8 @@
           </div>
         </div>
         <div ng-show="detail_context=='add_location'" class="detail-container"> 
-          <div class="detail-select-container">[{location.types == undefined ? "Source Type" : location.types}]
-            <select ng-model="location.types" ng-options="item.name as item.name for item in source_types"></select>
+          <div class="detail-select-container">[{location.type_ids == undefined ? "Source type" : source_types_by_id[location.type_ids[0]].name}]
+            <select ng-model="location.type_ids[0]" ng-options="type.id as type.name for type in source_types"></select>
           </div>
           <!--.detail-input-container-->
           <!--  input(type="text", placeholder="?", ng-model="location.lat")-->
