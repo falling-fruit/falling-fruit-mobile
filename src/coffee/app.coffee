@@ -1,5 +1,5 @@
 window.FallingFruitApp = angular.module('FallingFruitApp', 
-  ['ngRoute', 'ngAnimate', 'ngTouch'])
+  ['ngRoute', 'ngAnimate', 'ngTouch','uiSlider'])
 
 FallingFruitApp.config ($interpolateProvider)->
   $interpolateProvider.startSymbol('[{')
