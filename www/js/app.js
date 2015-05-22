@@ -60,7 +60,8 @@ FallingFruitApp.config(function($routeProvider) {
   });
 });
 
-auth_host = "https://fallingfruit.org/";
+//auth_host = "https://fallingfruit.org/"; 
+auth_host = "http://localhost:3000/";
 
 host = auth_host + "api/";
 
@@ -71,6 +72,7 @@ urls = {
   nearby: host + "locations/nearby.json",
   location: host + "locations/",
   add_location: host + "locations.json",
+  edit_location: host + "locations.json",
   source_types: host + "locations/types.json",
   reviews: function(id) {
     return host + ("locations/" + id + "/reviews.json");
