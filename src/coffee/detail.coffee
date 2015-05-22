@@ -83,18 +83,32 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     # turn types string into an array if needed
     #if $scope.location.types != null and $scope.location.types.constructor == String
     #  $scope.location.types = [$scope.location.types]
-    console.log($scope.location)
-    $http.post urls.add_location, location: $scope.location
-    .success (data)->
-      console.log("ADDED")
-      console.log(data)
-      $scope.location_id = data.id
-      load_location(data.id)
-      $scope.detail_context = "view_location"  
-    .failure (data)->
-      console.log("ADD FAILED")
-      console.log(data)
-      $rootScope.$broadcast "SHOW-MAP"
+    console.log($scope.location)   
+    if $scope.location.id isnt defined
+      $http.post urls.add_location, location: $scope.location
+        .success (data)->
+          console.log("ADDED")
+          console.log(data)
+          $scope.location_id = data.id
+          load_location(data.id)
+          $scope.detail_context = "view_location"  
+        .failure (data)->
+          console.log("ADD FAILED")
+          console.log(data)
+          $rootScope.$broadcast "SHOW-MAP"
+    else
+      $http.put urls.edit_location, location: $scope.location
+        .success (data)->
+          console.log("UPDATED")
+          console.log(data)
+          $scope.location_id = data.id
+          load_location(data.id)
+          $scope.detail_context = "view_location"  
+        .failure (data)->
+          console.log("UPDATE FAILED")
+          console.log(data)
+          $rootScope.$broadcast "SHOW-MAP"
+  
 
   $scope.add_review = (id)->
     if id isnt undefined

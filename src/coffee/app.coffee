@@ -40,7 +40,8 @@ FallingFruitApp.config ($routeProvider)->
     .otherwise
       redirectTo: '/search'
 
-auth_host = "https://fallingfruit.org/"
+#auth_host = "https://fallingfruit.org/"
+auth_host = "http://localhost:3000/"
 host = auth_host + "api/"
 
 urls = 
