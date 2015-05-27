@@ -484,6 +484,27 @@ li {
   width: 50%;
   overflow: hidden;
 }
+.search-container .loading {
+  background: url('../img/loader-2.gif') no-repeat 20% center rgba(250, 249, 249, 0.8);
+  display: none;
+  height: 40px;
+  left: 25%;
+  padding: 10px 0 0 30px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 50%;
+  z-index: 800;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+  -webkit-transition: top 0.1s ease-in-out;
+  transition: top 0.1s ease-in-out;
+  box-shadow: 0px 2px 5px #555;
+}
+.search-container .loading.show {
+  display: block;
+  top: 51px;
+}
 .search-menu {
   position: absolute;
   top: 0;
@@ -544,7 +565,6 @@ li {
   z-index: 11;
 }
 .list-container {
-  background: url('../img/loader.gif') no-repeat center center #faf9f9;
   position: absolute;
   top: 0;
   left: 0;
@@ -665,7 +685,6 @@ li {
   width: 100%;
 }
 .map {
-  background: url('../img/loader.gif') no-repeat center center;
   overflow: hidden;
   position: absolute;
   height: 100%;

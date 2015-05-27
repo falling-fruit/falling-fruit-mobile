@@ -15,6 +15,7 @@
       <div ng-controller="SearchCtrl" class="search-outer-container">
         <div ng-class="show_menu == true ? 'show': ''" class="search-inner-container">
           <div class="search-container">
+            <div ng-class="show_loading == true ? 'show': ''" class="loading">Loading...</div>
             <div class="search-menu">
               <div ng-click="update_position()" class="current-location"></div>
               <div class="search-input-container">
