@@ -37,6 +37,27 @@
   width: 50%;
   overflow: hidden;
 }
+.search-container .loading{
+  background: url('../img/loader-2.gif') no-repeat 20% center rgba(250, 249, 249, .8);
+  display: none;
+  height: 40px;
+  left: 25%;
+  padding: 10px 0 0 30px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 50%;
+  z-index: 800;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+  -webkit-transition: top .1s ease-in-out;
+  transition: top .1s ease-in-out;
+  box-shadow: 0px 2px 5px #555;
+  &.show {
+    display: block;
+    top: 51px;
+  }
+}
 
 .search-menu {
   position: absolute;
@@ -109,7 +130,6 @@
 }
 
 .list-container {
-  background: url('../img/loader.gif') no-repeat center center @ff-white;
   .content-container();
   .vertical-scroll();
   background-color: white;
@@ -219,7 +239,6 @@
 
 //MAP
 .map {
-  background: url('../img/loader.gif') no-repeat center center;
   overflow: hidden;
   position: absolute;
   height: 100%;

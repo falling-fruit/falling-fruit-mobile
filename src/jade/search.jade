@@ -2,6 +2,7 @@
   //-.loading-indicator
   .search-inner-container(ng-class="show_menu == true ? 'show': ''")
     .search-container
+      .loading(ng-class="show_loading == true ? 'show': ''") Loading...
       .search-menu
         .current-location(ng-click="update_position()")
 
