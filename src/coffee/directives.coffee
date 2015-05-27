@@ -20,7 +20,7 @@ directives.mapContainer = ()->
     window.FFApp.position_marker = `undefined`
     window.FFApp.muni = true
     window.FFApp.metric = true
-    
+
     clear_offscreen_markers = () ->
       b = window.FFApp.map_obj.getBounds()
       i = 0
@@ -33,12 +33,12 @@ directives.mapContainer = ()->
           newMarkers.push(window.FFApp.markersArray[i])
         i++
       window.FFApp.markersArray = newMarkers
-      
+
     window.clear_markers = () ->
       for marker in window.FFApp.markersArray
         marker.marker.setMap(null)
       window.FFApp.markersArray = []
-    
+
     window.do_markers = (type_filter, cats) ->
       console.log "UPDATING MARKERS"
       bounds = window.FFApp.map_obj.getBounds()
@@ -131,7 +131,7 @@ directives.mapContainer = ()->
         zoomControl: false
         rotateControl: false
         panControl: false
-  
+
       window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
       window.FFApp.geocoder = new google.maps.Geocoder()
 
@@ -171,7 +171,7 @@ directives.loadingIndicator = ()->
   template: "<div class='loading-image'></div><div class='loading-text'></div>"
   controller: ($scope, $element)->
     console.log "Loading indicator init"
-    default_text = "Please wait.."
+    default_text = "Please wait..."
     loadingElem = $element[0]
     loadingImageElem = loadingElem.getElementsByClassName('loading-image')[0]
     loadingTextElem = loadingElem.getElementsByClassName('loading-text')[0]
@@ -202,8 +202,6 @@ directives.loadingIndicator = ()->
         loadingElem.classList.remove("show")
         reset()
       , 750
-
-
 
     $scope.$on "loading-stop-immly", (event, message)->
       console.log "Loading stop immly called"
