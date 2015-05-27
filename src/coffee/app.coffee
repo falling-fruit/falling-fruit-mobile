@@ -1,4 +1,4 @@
-window.FallingFruitApp = angular.module('FallingFruitApp', 
+window.FallingFruitApp = angular.module('FallingFruitApp',
   ['ngRoute', 'ngAnimate', 'ngTouch','uiSlider'])
 
 FallingFruitApp.config ($interpolateProvider)->
@@ -40,11 +40,11 @@ FallingFruitApp.config ($routeProvider)->
     .otherwise
       redirectTo: '/search'
 
-#auth_host = "https://fallingfruit.org/"
-auth_host = "http://localhost:3000/"
+auth_host = "https://fallingfruit.org/"
+#auth_host = "http://localhost:3000/"
 host = auth_host + "api/"
 
-urls = 
+urls =
   login: auth_host + "users/sign_in.json"
   register: auth_host + "users.json"
   forgot_password: auth_host + "users.json"
