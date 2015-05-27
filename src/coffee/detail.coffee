@@ -9,14 +9,14 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     $scope.current_review = null
     $scope.reviews = []
     $http.get urls.source_types
-    .success (data)-> 
+    .success (data)->
       $scope.source_types = data
       $scope.source_types_by_id = {}
       for row in data
         $scope.source_types_by_id[row.id]  = row
 
   reset()
-  
+
   load_location = (id)->
     $http.get urls.location + id + ".json"
     .success (data)->
@@ -41,7 +41,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     return "Access Type"
 
   $scope.selected_location_access_type = ()->
-    return "Access Type"  
+    return "Access Type"
 
   $scope.selected_location_source_type = ()->
     return "Source Type"
@@ -49,7 +49,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
   $rootScope.$on "SHOW-DETAIL", (event, id)->
     console.log "SHOW-DETAIL", id
     $scope.show_detail = true
-    if id is undefined       
+    if id is undefined
       $scope.detail_context = "add_location"
       $scope.menu_title = "Add"
       if window.FFApp.map_initialized == true
@@ -63,8 +63,8 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       $scope.menu_title = "Location"
 
   $scope.show_reviews = ()->
-    $scope.detail_context='view_reviews' 
-    $scope.menu_title='Reviews'
+    $scope.detail_context = 'view_reviews'
+    $scope.menu_title = 'Reviews'
     $http.get urls.reviews($scope.location.id)
     .success (data)->
       console.log "REVIEWS", data
@@ -74,16 +74,16 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
         else
           background_url = "url('../img/png/no-image.png')"
 
-        item.style = 
+        item.style =
           "background-image": background_url
 
-      $scope.reviews = data      
+      $scope.reviews = data
 
   $scope.save_location = ()->
     # turn types string into an array if needed
     #if $scope.location.types != null and $scope.location.types.constructor == String
     #  $scope.location.types = [$scope.location.types]
-    console.log($scope.location)   
+    console.log($scope.location)
     if $scope.location.id isnt defined
       $http.post urls.add_location, location: $scope.location
         .success (data)->
@@ -91,7 +91,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
           console.log(data)
           $scope.location_id = data.id
           load_location(data.id)
-          $scope.detail_context = "view_location"  
+          $scope.detail_context = "view_location"
         .failure (data)->
           console.log("ADD FAILED")
           console.log(data)
@@ -103,17 +103,17 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
           console.log(data)
           $scope.location_id = data.id
           load_location(data.id)
-          $scope.detail_context = "view_location"  
+          $scope.detail_context = "view_location"
         .failure (data)->
           console.log("UPDATE FAILED")
           console.log(data)
           $rootScope.$broadcast "SHOW-MAP"
-  
+
 
   $scope.add_review = (id)->
     if id isnt undefined
       $scope.current_review = _.findWhere($scope.reviews, id: id)
-      console.log "CR", $scope.current_review      
+      console.log "CR", $scope.current_review
       $scope.menu_title = "Edit review"
     else
       # FIXME: Not implemented
@@ -121,7 +121,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       $scope.menu_title = "Add review"
 
     $scope.detail_context = "add_review"
-      
+
   $scope.menu_left_btn_click = ()->
     if $scope.detail_context == "add_review"
       $scope.detail_context = "view_reviews"
@@ -132,11 +132,11 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     else if $scope.detail_context == "add_location"
       if $scope.location_id is undefined
         $scope.show_detail = false
-        $scope.location_id = undefined        
-      else        
+        $scope.location_id = undefined
+      else
         $scope.detail_context = "view_location"
         $scope.menu_title = "Location"
     else if $scope.detail_context == "view_location"
-      $timeout reset, 500        
+      $timeout reset, 500
       $scope.show_detail = false
       $scope.location_id = undefined

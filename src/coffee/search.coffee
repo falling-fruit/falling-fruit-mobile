@@ -8,13 +8,11 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.targeted = false
 
   ## Map
-
   $scope.show_map = ()->
     if $scope.current_view != "map"
       $scope.current_view = "map"
 
   ## List
-
   $scope.list_center = null
   $scope.$watch("list_center", (newValue, oldValue)->
     if newValue != oldValue
