@@ -47,8 +47,9 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     return "Source Type"
 
   $rootScope.$on "SHOW-DETAIL", (event, id)->
-    console.log "SHOW-DETAIL", id
+    console.log "SHOW-DETAIL Broadcast Event Handler", id
     $scope.show_detail = true
+    #This can be called from 'Add Location' or 'List View' to view Location. Be careful
     if id is undefined
       $scope.detail_context = "add_location"
       $scope.menu_title = "Add"

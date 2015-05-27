@@ -27,6 +27,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       # FIXME: show loading gif
 
   $scope.load_list = (center)->
+    console.log "Show Location List View"
+    $scope.targeted = false
+    $scope.show_add_location = false
     if !center
       center = window.FFApp.map_obj.getCenter()
     if window.FFApp.muni
@@ -117,11 +120,11 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       console.log("Failed to get position") # FIXME: replace with common error handling
 
   ## Info Window / Add Location
-
   $scope.show_detail = (location_id)->
-    if $scope.targeted
+    ## Has the '.add-location' btn been clicked or is this a view location_id call?
+    if $scope.targeted || location_id
 
-      if window.FFApp.target_marker != null
+      if window.FFApp.target_marker
          window.FFApp.target_marker.setMap(null)
          window.FFApp.target_marker = null
          $scope.targeted = false #reset targeted
@@ -129,7 +132,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
       $rootScope.$broadcast "SHOW-DETAIL", location_id
     else
-      # show target
+      # show target icon on map
       if !window.FFApp.target_marker? #is `undefined`
         $scope.show_add_location = true
         window.FFApp.target_marker = new google.maps.Marker(
