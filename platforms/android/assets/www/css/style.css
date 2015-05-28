@@ -519,14 +519,31 @@ li {
   height: 72px;
 }
 .current-location {
-  position: absolute;
-  width: 57px;
-  height: 52px;
   background: url("../img/svg/control-me.svg") no-repeat center center;
   background-size: 30px;
+  display: none;
+  height: 52px;
+  position: absolute;
+  width: 57px;
+}
+.current-location.show {
+  display: block;
 }
 .ios7 .current-location {
   top: 20px;
+}
+.close-add-location {
+  display: none;
+  color: #ff8100;
+  font-size: 30px;
+  height: 52px;
+  position: absolute;
+  text-align: center;
+  top: 7px;
+  width: 57px;
+}
+.close-add-location.show {
+  display: block;
 }
 .ios7 .angular-google-map-container {
   top: 72px;

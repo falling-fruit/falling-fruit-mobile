@@ -17,7 +17,8 @@
           <div class="search-container">
             <ff-loading-msg></ff-loading-msg>
             <div class="search-menu">
-              <div ng-click="update_position()" class="current-location"></div>
+              <div ng-click="update_position()" ng-class="{show: !show_add_location}" class="current-location"></div>
+              <div ng-click="close_add_location()" ng-class="{show: show_add_location}" class="close-add-location">X</div>
               <div class="search-input-container">
                 <form ng-submit="location_search()">
                   <input type="submit" value="">

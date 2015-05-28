@@ -5,7 +5,8 @@
       ff-loading-msg
 
       .search-menu
-        .current-location(ng-click="update_position()")
+        .current-location(ng-click="update_position()" ng-class="{show: !show_add_location}")
+        .close-add-location(ng-click="close_add_location()" ng-class="{show: show_add_location}") X
 
         .search-input-container
           form(ng-submit="location_search()")
