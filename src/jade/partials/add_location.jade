@@ -22,19 +22,26 @@
 
   //-OBSERVATION
 
-  .detail-slider-container
-    .detail-slider-text
-      [{location.observation.quality_rating == undefined ? "Quality" : ratings[location.observation.quality_rating]}]
-    slider(floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.quality_rating")
-    
-  .detail-slider-container
-    .detail-slider-text
-      [{location.observation.yield_rating == undefined ? "Yield" : ratings[location.observation.yield_rating]}]
-    slider(floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.yield_rating") 
+  .detail-range-container
+    .detail-range-label-1 Quality 
+    .detail-range-label-2 [{ratings[location.observation.quality_rating]}]
+    .detail-range-control 
+      input(type="range", ng-model="location.observation.quality_rating", min="0", max="4", step="1")
 
-  .detail-slider-container
-    .detail-slider-text
-      [{location.observation.fruiting == undefined ? "Fruiting" : fruiting_status[location.observation.fruiting]}]
-    slider(floor="0" ceiling="3" step="1" precision="0" ng-model="location.observation.fruiting") 
+  .detail-range-container
+    .detail-range-label-1 Yield
+    .detail-range-label-2 [{ratings[location.observation.yield_rating]}]
+    .detail-range-control 
+      input(type="range", ng-model="location.observation.yield_rating", min="0", max="4", step="1")
+
+  .detail-range-container
+    .detail-range-label-1 Ripeness
+    .detail-range-label-2 [{fruiting_status[location.observation.fruiting]}]
+    .detail-range-control 
+      input(type="range", ng-model="location.observation.fruiting", min="0", max="3", step="1")
+
+  .detail-btn.btn-photo 
+    | Take a photo
+    input(type="file", capture="camera", accept="image/*", onchange="angular.element(this).scope().update_photo_list(this.files)")
 
   .detail-btn-dark.btn-save(ng-click="save_location()") Save

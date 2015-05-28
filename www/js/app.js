@@ -1,6 +1,6 @@
 var auth_host, controllers, directives, factories, host, urls;
 
-window.FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch']);
+window.FallingFruitApp = angular.module('FallingFruitApp', ['ngRoute', 'ngAnimate', 'ngTouch', 'uiSlider']);
 
 FallingFruitApp.config(function($interpolateProvider) {
   $interpolateProvider.startSymbol('[{');
@@ -34,20 +34,6 @@ FallingFruitApp.config([
   }
 ]);
 
-
-/*
-FallingFruitApp.config (uiGmapGoogleMapApiProvider)->
-  params = 
-    client: "gme-fallingfruit"
-    channel: "ff-mobile"
-     *key: 'AIzaSyDm7gTRTOlOIsum_KOwfM-X13RYexMW41M'
-    sensor: "false"
-    v: '3.17'
-    libraries: 'weather,geometry,visualization'
- 
-  uiGmapGoogleMapApiProvider.configure params
- */
-
 FallingFruitApp.config(function($routeProvider) {
   return $routeProvider.when('/search', {
     templateUrl: 'html/search.html',
@@ -60,8 +46,7 @@ FallingFruitApp.config(function($routeProvider) {
   });
 });
 
-//auth_host = "https://fallingfruit.org/"; 
-auth_host = "http://localhost:3000/";
+auth_host = "https://fallingfruit.org/";
 
 host = auth_host + "api/";
 
@@ -70,9 +55,9 @@ urls = {
   register: auth_host + "users.json",
   forgot_password: auth_host + "users.json",
   nearby: host + "locations/nearby.json",
+  markers: host + "locations/markers.json",
   location: host + "locations/",
   add_location: host + "locations.json",
-  edit_location: host + "locations.json",
   source_types: host + "locations/types.json",
   reviews: function(id) {
     return host + ("locations/" + id + "/reviews.json");
