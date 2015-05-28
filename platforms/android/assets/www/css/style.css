@@ -484,14 +484,36 @@ li {
   width: 50%;
   overflow: hidden;
 }
+.search-container .loading {
+  background: url('../img/loader-2.gif') no-repeat 8% center rgba(250, 249, 249, 0.8);
+  height: 40px;
+  left: 25%;
+  opacity: 0;
+  padding: 10px 0 0 30px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 50%;
+  z-index: 80;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+  -webkit-transition: top 0.25s ease-in-out, opacity 0.25s ease-in-out;
+  transition: top 0.25s ease-in-out, opacity 0.25s ease-in-out;
+  box-shadow: 0px 2px 5px #555;
+}
+.search-container .loading.show {
+  opacity: 1;
+  top: 51px;
+}
 .search-menu {
+  background-color: #faf9f9;
+  border-bottom: solid 1px #dce1e6;
+  height: 52px;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
   width: 100%;
-  background-color: #faf9f9;
-  height: 52px;
-  border-bottom: solid 1px #dce1e6;
+  z-index: 90;
 }
 .ios7 .search-menu {
   height: 72px;
@@ -544,7 +566,6 @@ li {
   z-index: 11;
 }
 .list-container {
-  background: url('../img/loader.gif') no-repeat center center #faf9f9;
   position: absolute;
   top: 0;
   left: 0;
@@ -665,7 +686,6 @@ li {
   width: 100%;
 }
 .map {
-  background: url('../img/loader.gif') no-repeat center center;
   overflow: hidden;
   position: absolute;
   height: 100%;
