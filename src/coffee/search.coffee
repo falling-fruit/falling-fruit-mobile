@@ -91,6 +91,14 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       else
         console.log("Failed to do geocode") # FIXME: replace with common error handling
 
+  $scope.close_add_location = ()->
+    #Instead of pullin up the add location dialog to stop just close this
+    console.log "Close Add Location"
+    window.FFApp.target_marker.setMap(null)
+    window.FFApp.target_marker = null
+    $scope.targeted = false #reset targeted
+    $scope.show_add_location = false
+
   $scope.update_position = ()->
     navigator.geolocation.getCurrentPosition ((position)->
       console.log("position obtained!")

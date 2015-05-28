@@ -75,15 +75,33 @@
 }
 
 .current-location {
-  position: absolute;
-  width: @map-menu-height + 5px;
-  height: @map-menu-height;
   background: url("../img/svg/control-me.svg") no-repeat center center;
   background-size: 30px;
+  display: none;
+  height: @map-menu-height;
+  position: absolute;
+  width: @map-menu-height + 5px;
+  &.show {
+    display: block;
+  }
 }
 
 .ios7 .current-location {
   top: @ios7-offset;
+}
+
+.close-add-location {
+  display: none;
+  color: @orange;
+  font-size: 30px;
+  height: 52px;
+  position: absolute;
+  text-align: center;
+  top: 7px;
+  width: 57px;
+  &.show {
+    display: block;
+  }
 }
 
 .ios7 .angular-google-map-container {
