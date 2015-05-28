@@ -6,7 +6,7 @@ directives.mapContainer = ()->
   scope:
     stoplist: "="
     directionstype: "="
-  controller: ($scope, $element, $http, $rootScope)->
+  controller: ($scope, $element, $http, $rootScope, mapStateService)->
     container_elem = $element[0]
     window.FFApp.map_initialized = false
     window.FFApp.defaultZoom = 14
@@ -41,6 +41,7 @@ directives.mapContainer = ()->
 
     window.do_markers = (type_filter, cats) ->
       console.log "UPDATING MARKERS"
+      mapStateService.setLoading("Loading Markers...")
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
       return  if window.FFApp.markersArray.length >= window.FFApp.markersMax
@@ -61,6 +62,7 @@ directives.mapContainer = ()->
         params: list_params
       ).success (json) ->
         add_markers_from_json json
+        mapStateService.removeLoading()
 
     find_marker = (lid) ->
       i = 0
@@ -144,7 +146,7 @@ directives.mapContainer = ()->
     initialize = ()->
       return if window.FFApp.map_initialized == true
 
-      $scope.$emit("loading-start", "Loading maps...")
+      mapStateService.setLoading("Loading Map...")
 
       if window.FFApp.map_elem isnt undefined
         container_elem.appendChild(window.FFApp.map_elem)
@@ -165,65 +167,12 @@ directives.mapContainer = ()->
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
     initialize()
 
-
-directives.loadingIndicator = ()->
-  restrict: "C"
-  template: "<div class='loading-image'></div><div class='loading-text'></div>"
-  controller: ($scope, $element)->
-    console.log "Loading indicator init"
-    default_text = "Please wait..."
-    loadingElem = $element[0]
-    loadingImageElem = loadingElem.getElementsByClassName('loading-image')[0]
-    loadingTextElem = loadingElem.getElementsByClassName('loading-text')[0]
-
-    reset = (timeOut)->
-      timeOut = 300 if timeOut is null
-      setTimeout ()->
-        loadingTextElem.innerHTML = "Please wait..."
-        loadingImageElem.className = "loading-image"
-      , timeOut
-
-    loadingElem.onclick = ()->
-      loadingElem.classList.remove("show")
-      reset()
-
-    $scope.$on "loading-start", (event, message)->
-      console.log "Loading start called"
-      loadingTextElem.innerHTML = if message isnt null then message else "Please wait.."
-      loadingElem.classList.add("show")
-
-
-    $scope.$on "loading-stop", (event, message)->
-      console.log "Loading stop called"
-      loadingTextElem.innerHTML = if message isnt null then message else "Done"
-      loadingImageElem.classList.add("completed")
-
-      setTimeout ()->
-        loadingElem.classList.remove("show")
-        reset()
-      , 750
-
-    $scope.$on "loading-stop-immly", (event, message)->
-      console.log "Loading stop immly called"
-      loadingTextElem.innerHTML = if message isnt null then message else "Done"
-      loadingImageElem.classList.add("completed")
-      loadingElem.classList.remove("show")
-      #loadingElem.classList.add("hidden")
-      #setTimeout ()->
-      #  loadingElem.classList.remove("hidden")
-      #, 500
-      reset()
-
-    $scope.$on "loading-error", (event, message)->
-      console.log "Loading Error called"
-      loadingTextElem.innerHTML = if message isnt null then message else "Please try again."
-      loadingElem.classList.add("show") #if not loadingElem.contains("show")
-      loadingImageElem.classList.add("error")
-
-      setTimeout ()->
-        loadingElem.classList.remove("show")
-        reset()
-      , 1000
+directives.ffLoadingMsg = (mapStateService)->
+  restrict : "E"
+  template: "<div class='loading' ng-class='{show: mapStateData.isLoading}'><div class='loading-message'>[{mapStateData.message || 'Loading...'}]</div></div>"
+  replace: true
+  link: ($scope, elem, attrs)->
+    $scope.mapStateData = mapStateService.data
 
 directives.confirmDialog = ()->
   restrict: "C"

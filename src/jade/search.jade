@@ -1,8 +1,9 @@
 .search-outer-container(ng-controller="SearchCtrl")
   //-.loading-indicator
-  .search-inner-container(ng-class="show_menu == true ? 'show': ''")
+  .search-inner-container(ng-class="{show: show_menu}")
     .search-container
-      .loading(ng-class="show_loading == true ? 'show': ''") Loading...
+      ff-loading-msg
+
       .search-menu
         .current-location(ng-click="update_position()")
 
@@ -12,7 +13,7 @@
             input(type="text", placeholder="Enter a location...", ng-model="search_text")
 
       .search-view-container
-        .map-add-location(ng-class="show_add_location == true ? 'active': ''")
+        .map-add-location(ng-class="{active: show_add_location}")
           img(src="img/png/control-add.png" alt="Add Location")
         .map-container(directionstype="directions_type", stoplist="stopList")
 
