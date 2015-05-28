@@ -129,17 +129,29 @@
             <div class="detail-toggle-label">Unverified</div>
             <div toggle="location.unverified" class="ng-switcher"></div>
           </div>
-          <div class="detail-slider-container">
-            <div class="detail-slider-text">[{location.observation.quality_rating == undefined ? "Quality" : ratings[location.observation.quality_rating]}]</div>
-            <slider floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.quality_rating"></slider>
+          <div class="detail-range-container">
+            <div class="detail-range-label-1">Quality </div>
+            <div class="detail-range-label-2">[{ratings[location.observation.quality_rating]}]</div>
+            <div class="detail-range-control">
+              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1">
+            </div>
           </div>
-          <div class="detail-slider-container">
-            <div class="detail-slider-text">[{location.observation.yield_rating == undefined ? "Yield" : ratings[location.observation.yield_rating]}]</div>
-            <slider floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.yield_rating"></slider>
+          <div class="detail-range-container">
+            <div class="detail-range-label-1">Yield</div>
+            <div class="detail-range-label-2">[{ratings[location.observation.yield_rating]}]</div>
+            <div class="detail-range-control">
+              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1">
+            </div>
           </div>
-          <div class="detail-slider-container">
-            <div class="detail-slider-text">[{location.observation.fruiting == undefined ? "Fruiting" : fruiting_status[location.observation.fruiting]}]</div>
-            <slider floor="0" ceiling="3" step="1" precision="0" ng-model="location.observation.fruiting"></slider>
+          <div class="detail-range-container">
+            <div class="detail-range-label-1">Ripeness</div>
+            <div class="detail-range-label-2">[{fruiting_status[location.observation.fruiting]}]</div>
+            <div class="detail-range-control">
+              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1">
+            </div>
+          </div>
+          <div class="detail-btn btn-photo">Take a photo
+            <input type="file" capture="camera" accept="image/*" onchange="angular.element(this).scope().update_photo_list(this.files)">
           </div>
           <div ng-click="save_location()" class="detail-btn-dark btn-save">Save</div>
         </div>
@@ -161,31 +173,34 @@
         </div>
         <div ng-show="detail_context=='add_review'" class="detail-container">
           <div class="detail-textarea-container">
-            <textarea ng-model="current_review.comment" placeholder="Add a comment..."></textarea>
+            <textarea ng-model="location.observation.comment" placeholder="Add a comment..."></textarea>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Quality </div>
-            <div class="detail-range-label-2">[{current_review.quality_rating}]</div>
+            <div class="detail-range-label-2">[{ratings[location.observation.quality_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="current_review.quality_rating" min="0" max="5" step="1">
+              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Yield</div>
-            <div class="detail-range-label-2">[{current_review.yield_rating}]</div>
+            <div class="detail-range-label-2">[{ratings[location.observation.yield_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="current_review.yield_rating" min="0" max="5" step="1">
+              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Ripeness</div>
-            <div class="detail-range-label-2">[{current_review.fruiting}]</div>
+            <div class="detail-range-label-2">[{fruiting_status[location.observation.fruiting]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="current_review.fruiting" min="0" max="5" step="1">
+              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1">
             </div>
           </div>
           <div class="detail-btn btn-photo">Take a photo
             <input type="file" capture="camera" accept="image/*" onchange="angular.element(this).scope().update_photo_list(this.files)">
+          </div>
+          <div class="detail-textarea-container">
+            <textarea ng-model="location.observation.photo_caption" placeholder="Add a caption..."></textarea>
           </div>
           <div class="detail-btn-dark btn-save">Save</div>
         </div>

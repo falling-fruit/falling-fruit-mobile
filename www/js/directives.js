@@ -8,17 +8,52 @@ directives.mapContainer = function() {
       stoplist: "=",
       directionstype: "="
     },
-    controller: function($scope, $element, $http) {
-      var add_markers_from_json, container_elem, do_markers, find_marker, initialize;
+    controller: function($scope, $element, $http, $rootScope, mapStateService) {
+      var add_markers_from_json, clear_offscreen_markers, container_elem, find_marker, initialize, load_map, setup_marker;
       container_elem = $element[0];
       window.FFApp.map_initialized = false;
+      window.FFApp.defaultZoom = 14;
+      window.FFApp.defaultMapTypeId = google.maps.MapTypeId.ROADMAP;
+      window.FFApp.defaultCenter = new google.maps.LatLng(40.015, -105.27);
       window.FFApp.markersArray = [];
       window.FFApp.openMarker = null;
       window.FFApp.openMarkerId = null;
-      window.FFApp.markersMax = 5000;
-      do_markers = function(muni, type_filter, cats) {
+      window.FFApp.markersMax = 100;
+      window.FFApp.current_position = null;
+      window.FFApp.position_marker = undefined;
+      window.FFApp.muni = true;
+      window.FFApp.metric = true;
+      clear_offscreen_markers = function() {
+        var b, i, newMarkers, p;
+        b = window.FFApp.map_obj.getBounds();
+        i = 0;
+        newMarkers = [];
+        while (i < window.FFApp.markersArray.length) {
+          p = window.FFApp.markersArray[i].marker.getPosition();
+          if (!b.contains(p)) {
+            window.FFApp.markersArray[i].marker.setMap(null);
+          } else {
+            newMarkers.push(window.FFApp.markersArray[i]);
+          }
+          i++;
+        }
+        return window.FFApp.markersArray = newMarkers;
+      };
+      window.clear_markers = function() {
+        var marker, _i, _len, _ref;
+        _ref = window.FFApp.markersArray;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          marker = _ref[_i];
+          marker.marker.setMap(null);
+        }
+        return window.FFApp.markersArray = [];
+      };
+      window.do_markers = function(type_filter, cats) {
         var bounds, list_params;
+        console.log("UPDATING MARKERS");
+        mapStateService.setLoading("Loading Markers...");
         bounds = window.FFApp.map_obj.getBounds();
+        clear_offscreen_markers(bounds);
         if (window.FFApp.markersArray.length >= window.FFApp.markersMax) {
           return;
         }
@@ -29,7 +64,7 @@ directives.mapContainer = function() {
           swlng: bounds.getSouthWest().lng(),
           api_key: "***REMOVED***"
         };
-        if (muni) {
+        if (window.FFApp.muni) {
           list_params.muni = 1;
         } else {
           list_params.muni = 0;
@@ -43,14 +78,15 @@ directives.mapContainer = function() {
         return $http.get(urls.markers, {
           params: list_params
         }).success(function(json) {
-          return add_markers_from_json(json);
+          add_markers_from_json(json);
+          return mapStateService.removeLoading();
         });
       };
       find_marker = function(lid) {
         var i;
         i = 0;
         while (i < window.FFApp.markersArray.length) {
-          if (window.FFApp.markersArray[i].id === lid) {
+          if (parseInt(window.FFApp.markersArray[i].id) === parseInt(lid)) {
             return i;
           }
           i++;
@@ -58,14 +94,23 @@ directives.mapContainer = function() {
         return undefined;
       };
       add_markers_from_json = function(mdata) {
-        var h, ho, i, len, lid, m, w, wo, _results;
+        var h, ho, i, len, lid, m, n_found, n_limit, w, wo, _results;
+        n_found = mdata.shift();
+        n_limit = mdata.shift();
         len = mdata.length;
         i = 0;
         _results = [];
         while (i < len) {
           lid = mdata[i]["location_id"];
-          w = 36;
-          h = 36;
+          if (find_marker(lid) !== undefined) {
+            i++;
+            continue;
+          }
+          if (window.FFApp.markersArray.length > window.FFApp.markersMax) {
+            break;
+          }
+          w = 25;
+          h = 25;
           wo = parseInt(w / 2, 10);
           ho = parseInt(h / 2, 10);
           if (window.FFApp.openMarkerId === lid) {
@@ -81,45 +126,70 @@ directives.mapContainer = function() {
               position: new google.maps.LatLng(mdata[i]["lat"], mdata[i]["lng"]),
               map: window.FFApp.map_obj,
               title: mdata[i]["title"],
-              draggable: false
+              draggable: false,
+              zIndex: 0
+            });
+            setup_marker(m, lid);
+            window.FFApp.markersArray.push({
+              marker: m,
+              id: mdata[i]["location_id"],
+              type: "point",
+              types: mdata[i]["types"],
+              parent_types: mdata[i]["parent_types"]
             });
           }
-          window.FFApp.markersArray.push({
-            marker: m,
-            id: mdata[i]["location_id"],
-            type: "point",
-            types: mdata[i]["types"],
-            parent_types: mdata[i]["parent_types"]
-          });
           _results.push(i++);
         }
         return _results;
       };
+      setup_marker = function(marker, lid) {
+        return google.maps.event.addListener(marker, "click", function() {
+          window.FFApp.openMarkerId = lid;
+          window.FFApp.openMarker = marker;
+          return $rootScope.$broadcast("SHOW-DETAIL", lid);
+        });
+      };
+      load_map = function(center) {
+        var map_options;
+        map_options = {
+          center: center,
+          zoom: window.FFApp.defaultZoom,
+          mapTypeId: window.FFApp.defaultMapTypeId,
+          mapTypeControl: false,
+          streetViewControl: false,
+          zoomControl: false,
+          rotateControl: false,
+          panControl: false
+        };
+        window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
+        window.FFApp.geocoder = new google.maps.Geocoder();
+        google.maps.event.addListener(window.FFApp.map_obj, "idle", function() {
+          return window.do_markers();
+        });
+        window.FFApp.map_initialized = true;
+        return $rootScope.$broadcast("MAP-LOADED");
+      };
       initialize = function() {
-        var chicago, map_options;
         if (window.FFApp.map_initialized === true) {
           return;
         }
-        $scope.$emit("loading-start", "Loading maps...");
+        mapStateService.setLoading("Loading Map...");
         if (window.FFApp.map_elem !== void 0) {
-          container_elem.appendChild(window.FFApp.map_elem);
+          return container_elem.appendChild(window.FFApp.map_elem);
         } else {
           window.FFApp.map_elem = document.createElement("div");
           window.FFApp.map_elem.className = "map";
           container_elem.appendChild(window.FFApp.map_elem);
-          chicago = new google.maps.LatLng(41.850033, -87.6500523);
-          map_options = {
-            center: chicago,
-            zoom: 10,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
-          window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options);
-          google.maps.event.addListenerOnce(window.FFApp.map_obj, "tilesloaded", function(event) {
-            console.log("ADDING MARKERS");
-            return do_markers(true);
+          return navigator.geolocation.getCurrentPosition(function(position) {
+            var center, lat, lng;
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+            center = new google.maps.LatLng(lat, lng);
+            return load_map(center);
+          }, function() {
+            return load_map(window.FFApp.defaultCenter);
           });
         }
-        return window.FFApp.map_initialized = true;
       };
       console.log("LOADING MAP DIRECTIVE, STOPS NOT LOADED YET");
       return initialize();
@@ -127,61 +197,13 @@ directives.mapContainer = function() {
   };
 };
 
-directives.loadingIndicator = function() {
+directives.ffLoadingMsg = function(mapStateService) {
   return {
-    restrict: "C",
-    template: "<div class='loading-image'></div><div class='loading-text'></div>",
-    controller: function($scope, $element) {
-      var default_text, loadingElem, loadingImageElem, loadingTextElem, reset;
-      console.log("Loading indicator init");
-      default_text = "Please wait..";
-      loadingElem = $element[0];
-      loadingImageElem = loadingElem.getElementsByClassName('loading-image')[0];
-      loadingTextElem = loadingElem.getElementsByClassName('loading-text')[0];
-      reset = function(timeOut) {
-        if (timeOut === null) {
-          timeOut = 300;
-        }
-        return setTimeout(function() {
-          loadingTextElem.innerHTML = "Please wait...";
-          return loadingImageElem.className = "loading-image";
-        }, timeOut);
-      };
-      loadingElem.onclick = function() {
-        loadingElem.classList.remove("show");
-        return reset();
-      };
-      $scope.$on("loading-start", function(event, message) {
-        console.log("Loading start called");
-        loadingTextElem.innerHTML = message !== null ? message : "Please wait..";
-        return loadingElem.classList.add("show");
-      });
-      $scope.$on("loading-stop", function(event, message) {
-        console.log("Loading stop called");
-        loadingTextElem.innerHTML = message !== null ? message : "Done";
-        loadingImageElem.classList.add("completed");
-        return setTimeout(function() {
-          loadingElem.classList.remove("show");
-          return reset();
-        }, 750);
-      });
-      $scope.$on("loading-stop-immly", function(event, message) {
-        console.log("Loading stop immly called");
-        loadingTextElem.innerHTML = message !== null ? message : "Done";
-        loadingImageElem.classList.add("completed");
-        loadingElem.classList.remove("show");
-        return reset();
-      });
-      return $scope.$on("loading-error", function(event, message) {
-        console.log("Loading Error called");
-        loadingTextElem.innerHTML = message !== null ? message : "Please try again.";
-        loadingElem.classList.add("show");
-        loadingImageElem.classList.add("error");
-        return setTimeout(function() {
-          loadingElem.classList.remove("show");
-          return reset();
-        }, 1000);
-      });
+    restrict: "E",
+    template: "<div class='loading' ng-class='{show: mapStateData.isLoading}'><div class='loading-message'>[{mapStateData.message || 'Loading...'}]</div></div>",
+    replace: true,
+    link: function($scope, elem, attrs) {
+      return $scope.mapStateData = mapStateService.data;
     }
   };
 };

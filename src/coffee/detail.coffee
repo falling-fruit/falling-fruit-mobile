@@ -108,21 +108,12 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
         .failure (data)->
           console.log("UPDATE FAILED")
           console.log(data)
-          $rootScope.$broadcast "SHOW-MAP"
-
+          $rootScope.$broadcast "SHOW-MAP" 
 
   $scope.add_review = (id)->
-    if id isnt undefined
-      $scope.current_review = _.findWhere($scope.reviews, id: id)
-      console.log "CR", $scope.current_review
-      $scope.menu_title = "Edit review"
-    else
-      # FIXME: Not implemented
-      $scope.current_review = DetailFactory.get_new_review_model()
-      $scope.menu_title = "Add review"
-
-    $scope.detail_context = "add_review"
-
+    $scope.detail_context = 'add_review'
+    $scope.menu_title = 'Add Review'
+    
   $scope.menu_left_btn_click = ()->
     if $scope.detail_context == "add_review"
       $scope.detail_context = "view_reviews"
