@@ -13,8 +13,9 @@
   <body>
     <div class="main-container">
       <div ng-controller="SearchCtrl" class="search-outer-container">
-        <div ng-class="show_menu == true ? 'show': ''" class="search-inner-container">
+        <div ng-class="{show: show_menu}" class="search-inner-container">
           <div class="search-container">
+            <ff-loading-msg></ff-loading-msg>
             <div class="search-menu">
               <div ng-click="update_position()" class="current-location"></div>
               <div class="search-input-container">
@@ -25,7 +26,7 @@
               </div>
             </div>
             <div class="search-view-container">
-              <div ng-class="show_add_location == true ? 'active': ''" class="map-add-location"><img src="img/png/control-add.png" alt="Add Location"></div>
+              <div ng-class="{active: show_add_location}" class="map-add-location"><img src="img/png/control-add.png" alt="Add Location"></div>
               <div directionstype="directions_type" stoplist="stopList" class="map-container"></div>
               <div ng-class="current_view == 'list' ? 'show' : ''" class="list-container"><a ng-repeat="li in list_items track by li.location_id" ng-click="show_detail(li.location_id)" class="list-item">
                   <div ng-style="li.style" class="list-item-image"></div>

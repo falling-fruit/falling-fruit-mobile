@@ -1,4 +1,4 @@
-controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18nFactory)->
+controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18nFactory, mapStateService)->
   console.log "Search Ctrl"
 
   $scope.current_view = "map"
@@ -6,6 +6,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.show_add_location = false
   $scope.search_text = ''
   $scope.targeted = false
+  $scope.mapStateData = mapStateService.data
 
   ## Map
   $scope.show_map = ()->
@@ -24,18 +25,20 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     if $scope.current_view != "list"
       $scope.current_view = "list"
       $scope.list_center = window.FFApp.map_obj.getCenter()
-      # FIXME: show loading gif
 
   $scope.load_list = (center)->
-    console.log "Show Location List View"
+    mapStateService.setLoading("Loading List...")
     $scope.targeted = false
     $scope.show_add_location = false
+
     if !center
       center = window.FFApp.map_obj.getCenter()
+
     if window.FFApp.muni
       muni = 1
     else
       muni = 0
+
     bounds = window.FFApp.map_obj.getBounds()
     list_params =
       lat: center.lat()
@@ -45,6 +48,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       swlat: bounds.getSouthWest().lat()
       swlng: bounds.getSouthWest().lng()
       muni: muni
+
     $http.get urls.nearby, params: list_params
     .success (data)->
       for item in data
@@ -59,9 +63,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
           "background-image": background_url
 
       $scope.list_items = data
+      mapStateService.removeLoading()
 
   ## Position
-
   #$rootScope.$on "MAP-LOADED", $scope.update_position
   #$rootScope.$on "LOGGED-IN", load_view
   #load_view() if AuthFactory.is_logged_in()
