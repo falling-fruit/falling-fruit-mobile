@@ -54,6 +54,7 @@ urls =
 
   location: host + "locations/"
   add_location: host + "locations.json"
+  edit_location: (id) -> host + "locations/#{id}.json"
 
   source_types: host + "locations/types.json"
 

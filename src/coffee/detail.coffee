@@ -46,11 +46,24 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
   $scope.selected_location_source_type = ()->
     return "Source Type"
 
+  $scope.update_photo_list = (photos)->
+    photo = photos[0]
+    reader = new FileReader()
+    
+    reader.onloadend = ()->
+      $scope.location.observation.photo_data =
+        data: reader.result
+        name: photo.name
+        type: photo.type
+      console.log("Processed")
+        
+    reader.readAsDataURL photo
+
   $rootScope.$on "SHOW-DETAIL", (event, id)->
     console.log "SHOW-DETAIL Broadcast Event Handler", id
     $scope.show_detail = true
-    #This can be called from 'Add Location' or 'List View' to view Location. Be careful
-    if id is undefined
+    # This can be called from 'Add Location' or 'List View' to view Location. Be careful
+    if !id?
       $scope.detail_context = "add_location"
       $scope.menu_title = "Add"
       if window.FFApp.map_initialized == true
@@ -85,34 +98,37 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     #if $scope.location.types != null and $scope.location.types.constructor == String
     #  $scope.location.types = [$scope.location.types]
     console.log($scope.location)
-    if $scope.location.id isnt defined
+    if !$scope.location.id?
       $http.post urls.add_location, location: $scope.location
-        .success (data)->
-          console.log("ADDED")
-          console.log(data)
-          $scope.location_id = data.id
-          load_location(data.id)
-          $scope.detail_context = "view_location"
-        .failure (data)->
-          console.log("ADD FAILED")
-          console.log(data)
-          $rootScope.$broadcast "SHOW-MAP"
+      .success (data)->
+        console.log("ADDED")
+        console.log(data)
+        $scope.location_id = data.id
+        load_location(data.id)
+        $scope.detail_context = "view_location"
+      .error (data)->
+        console.log("ADD FAILED")
+        console.log(data)
+        $rootScope.$broadcast "SHOW-MAP"
     else
-      $http.put urls.edit_location, location: $scope.location
-        .success (data)->
-          console.log("UPDATED")
-          console.log(data)
-          $scope.location_id = data.id
-          load_location(data.id)
-          $scope.detail_context = "view_location"
-        .failure (data)->
-          console.log("UPDATE FAILED")
-          console.log(data)
-          $rootScope.$broadcast "SHOW-MAP" 
+      $http.put urls.edit_location($scope.location.id), location: $scope.location
+      .success (data)->
+        console.log("UPDATED")
+        console.log(data)
+        $scope.location_id = data.id
+        load_location(data.id)
+        $scope.detail_context = "view_location"
+      .error (data)->
+        console.log("UPDATE FAILED")
+        console.log(data)
+        $rootScope.$broadcast "SHOW-MAP" 
 
   $scope.add_review = (id)->
     $scope.detail_context = 'add_review'
     $scope.menu_title = 'Add Review'
+    $scope.location = {}
+    $scope.location.observation = {}
+    $scope.location.id = id
     
   $scope.menu_left_btn_click = ()->
     if $scope.detail_context == "add_review"
@@ -122,7 +138,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       $scope.detail_context = "view_location"
       $scope.menu_title = "Location"
     else if $scope.detail_context == "add_location"
-      if $scope.location_id is undefined
+      if !$scope.location_id?
         $scope.show_detail = false
         $scope.location_id = undefined
       else
