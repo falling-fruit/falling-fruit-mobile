@@ -93,6 +93,20 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
 
       $scope.reviews = data
 
+  $scope.save_review = ()->
+    console.log($scope.location)
+    $http.post urls.add_review($scope.location.id), observation: $scope.location.observation
+    .success (data)->
+      console.log("ADDED")
+      console.log(data)
+      $scope.location_id = $scope.location.id
+      load_location($scope.location.id)
+      $scope.detail_context = "view_location"
+    .error (data)->
+      console.log("ADD FAILED")
+      console.log(data)
+      $rootScope.$broadcast "SHOW-MAP"
+      
   $scope.save_location = ()->
     # turn types string into an array if needed
     #if $scope.location.types != null and $scope.location.types.constructor == String
