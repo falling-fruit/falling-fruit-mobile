@@ -7,25 +7,25 @@
     .detail-range-label-1 Quality 
     .detail-range-label-2 [{ratings[location.observation.quality_rating]}]
     .detail-range-control 
-      input(type="range", ng-model="location.observation.quality_rating", min="0", max="4", step="1")
+      input(type="range", ng-model="location.observation.quality_rating", min="0", max="4", step="1", value="0")
 
   .detail-range-container
     .detail-range-label-1 Yield
     .detail-range-label-2 [{ratings[location.observation.yield_rating]}]
     .detail-range-control 
-      input(type="range", ng-model="location.observation.yield_rating", min="0", max="4", step="1")
+      input(type="range", ng-model="location.observation.yield_rating", min="0", max="4", step="1", value="0")
 
   .detail-range-container
     .detail-range-label-1 Ripeness
     .detail-range-label-2 [{fruiting_status[location.observation.fruiting]}]
     .detail-range-control 
-      input(type="range", ng-model="location.observation.fruiting", min="0", max="3", step="1")
+      input(type="range", ng-model="location.observation.fruiting", min="0", max="3", step="1", value="0")
 
   .detail-btn.btn-photo 
     | Take a photo
-    input(type="file", capture="camera", accept="image/*", onchange="angular.element(this).scope().update_photo_list(this.files)")
+    input(type="file", capture="camera", accept="image/*", onchange="angular.element(this).scope().update_photo_list(this.files)", id="photo_button")
 
   .detail-textarea-container
     textarea(ng-model="location.observation.photo_caption", placeholder="Add a caption...")
 
-  .detail-btn-dark.btn-save Save
+  .detail-btn-dark.btn-save(ng-click="save_location()") Save

@@ -105,7 +105,7 @@
           <div class="location-author">added by [{location.author}]</div>
           <div class="detail-btn-container">
             <div ng-click="detail_context='add_location'; menu_title='Edit';" class="detail-btn-dark">Edit</div>
-            <div ng-click="add_review()" class="detail-btn-dark">Review</div>
+            <div ng-click="add_review(location.id)" class="detail-btn-dark">Review</div>
           </div>
           <div class="detail-btn-container">
             <div ng-click="show_reviews()" ng-show="location.num_reviews &gt; 0" class="detail-btn-dark">Read reviews ([{location.num_reviews}])</div>
@@ -133,21 +133,21 @@
             <div class="detail-range-label-1">Quality </div>
             <div class="detail-range-label-2">[{ratings[location.observation.quality_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1">
+              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1" value="0">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Yield</div>
             <div class="detail-range-label-2">[{ratings[location.observation.yield_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1">
+              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1" value="0">
             </div>
           </div>
           <div class="detail-range-container">
-            <div class="detail-range-label-1">Ripeness</div>
+            <div class="detail-range-label-1">Ripeness </div>
             <div class="detail-range-label-2">[{fruiting_status[location.observation.fruiting]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1">
+              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1" value="0">
             </div>
           </div>
           <div class="detail-btn btn-photo">Take a photo
@@ -167,7 +167,7 @@
                 <div ng-show="r.comment">[{::r.comment}]</div>
               </div></a>
             <div class="detail-btn-container">
-              <div ng-click="add_review()" class="detail-btn-dark">Add a review</div>
+              <div ng-click="add_review(location.id)" class="detail-btn-dark">Add a review</div>
             </div>
           </div>
         </div>
@@ -179,30 +179,30 @@
             <div class="detail-range-label-1">Quality </div>
             <div class="detail-range-label-2">[{ratings[location.observation.quality_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1">
+              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1" value="0">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Yield</div>
             <div class="detail-range-label-2">[{ratings[location.observation.yield_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1">
+              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1" value="0">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Ripeness</div>
             <div class="detail-range-label-2">[{fruiting_status[location.observation.fruiting]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1">
+              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1" value="0">
             </div>
           </div>
           <div class="detail-btn btn-photo">Take a photo
-            <input type="file" capture="camera" accept="image/*" onchange="angular.element(this).scope().update_photo_list(this.files)">
+            <input type="file" capture="camera" accept="image/*" onchange="angular.element(this).scope().update_photo_list(this.files)" id="photo_button">
           </div>
           <div class="detail-textarea-container">
             <textarea ng-model="location.observation.photo_caption" placeholder="Add a caption..."></textarea>
           </div>
-          <div class="detail-btn-dark btn-save">Save</div>
+          <div ng-click="save_location()" class="detail-btn-dark btn-save">Save</div>
         </div>
       </div>
       <div ng-controller="AuthCtrl" ng-class="show_auth == true ? 'show': ''" class="auth-overlay">

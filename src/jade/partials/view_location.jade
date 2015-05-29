@@ -24,6 +24,6 @@
   //-a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ([{location.num_reviews}])
   .detail-btn-container
     .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit';") Edit
-    .detail-btn-dark(ng-click="add_review()") Review
+    .detail-btn-dark(ng-click="add_review(location.id)") Review
   .detail-btn-container
     .detail-btn-dark(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ([{location.num_reviews}])
