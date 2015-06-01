@@ -139,3 +139,13 @@ You can only build iOS applications on a Mac. Here are the instructions to setup
 ```
 Only one emulator may run at a time, so if you want to test the app in a different emulator, you need to quit the emulator application and run a different target within Xcode.
 ```
+
+## Icons and Splash Screens
+	http://ionicframework.com/docs/cli/icon-splashscreen.html
+
+- ionic cli must be installed like comes with a new app (http://ionicframework.com/getting-started/)
+
+- Save an icon.png, icon.psd or icon.ai file within the resources directory at the root of the Cordova project. The icon image's minimum dimensions should be 192x192 px, and should have no rounded corners.
+- Save a splash.png, splash.psd or splash.ai file within the resources directory at the root of the Cordova project. Splash screen dimensions vary for each platform, device and orientation, so a square source image is required the generate each of various sizes. The source image's minimum dimensions should be 2208x2208 px, and its artwork should be centered within the square, knowning that each generated image will be center cropped into landscape and portait images. The splash screen's artwork should roughly fit within a center square (1200x1200 px).
+- Run ionic resources in terminal
+- Move new images to the icons folder as this seems to be an older version of cordova/ionic
