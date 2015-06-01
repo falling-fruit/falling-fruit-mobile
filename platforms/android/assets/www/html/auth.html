@@ -2,7 +2,7 @@
 <div ng-controller="AuthCtrl" ng-class="show_auth == true ? 'show': ''" class="auth-overlay">
   <div ng-show="auth_context == 'login'" class="auth-container login">
     <div class="auth-login-logo"></div>
-    <div class="auth-input-container email">     
+    <div class="auth-input-container email">
       <input type="text" placeholder="Email" ng-model="login_user.email"/>
       <div class="auth-error-text"></div>
     </div>
@@ -11,7 +11,6 @@
       <div class="auth-error-text"></div>
     </div><a ng-click="auth_context='forgot_password'" class="auth-text">Forgot Password?</a>
     <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Login</a><a ng-click="auth_context = 'register'" class="auth-btn-cell">Register</a></div>
-    <div class="auth-btn-container"><a ng-click="anonymous_login()" class="auth-btn-dark">Use Anonymously</a></div>
   </div>
   <div ng-show="auth_context == 'register'" class="auth-container register">
     <div class="auth-default-logo"></div>

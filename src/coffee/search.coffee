@@ -3,9 +3,8 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
   $scope.current_view = "map"
   $scope.show_menu = false
-  $scope.show_add_location = false
+  $scope.add_location = false
   $scope.search_text = ''
-  $scope.targeted = false
   $scope.mapStateData = mapStateService.data
 
   ## Map
@@ -27,9 +26,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       $scope.list_center = window.FFApp.map_obj.getCenter()
 
   $scope.load_list = (center)->
-    mapStateService.setLoading("Loading List...")
+    mapStateService.setLoading("Loading...")
     $scope.targeted = false
-    $scope.show_add_location = false
+    $scope.add_location = false
 
     if !center
       center = window.FFApp.map_obj.getCenter()
@@ -55,10 +54,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
           background_url = "url('#{item.photos[0][0].thumbnail}')"
         else
-          background_url = "url('../img/png/no-image.png')"
+          background_url = "url('img/png/no-image.png')"
 
         item.distance_string = I18nFactory.distance_string(item.distance)
-
         item.style =
           "background-image": background_url
 
@@ -91,75 +89,83 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       else
         console.log("Failed to do geocode") # FIXME: replace with common error handling
 
-  $scope.close_add_location = ()->
-    #Instead of pullin up the add location dialog to stop just close this
-    console.log "Close Add Location"
-    window.FFApp.target_marker.setMap(null)
-    window.FFApp.target_marker = null
-    $scope.targeted = false #reset targeted
-    $scope.show_add_location = false
+  $scope.begin_add_location = ()->
+    console.log "Begin add location"
+    $scope.add_location = true
+    $scope.current_view = "map"
+  
+  $scope.cancel_add_location = ()->
+    console.log "Cancel add location"
+    $scope.add_location = false
 
   $scope.update_position = ()->
+  
+    # Position
     navigator.geolocation.getCurrentPosition ((position)->
-      console.log("position obtained!")
-      window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude,position.coords.longitude)
-      w = 40
-      h = 40
-      if window.FFApp.position_marker is `undefined`
+      console.log("Position obtained")
+      window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+      window.FFApp.position_accuracy = position.coords.accuracy
+      if !window.FFApp.position_marker
         window.FFApp.position_marker = new google.maps.Marker(
           icon:
-            url: "img/png/map-me-40.png"
-            size: new google.maps.Size(w, h)
-            origin: new google.maps.Point(0, 0)
-
-            # by convention, icon center is at ~40%
-            anchor: new google.maps.Point(w * 0.4, h * 0.4)
-
+            path: google.maps.SymbolPath.CIRCLE
+            strokeColor: '#1C95F2'
+            fillColor: '#FF8A22'
+            fillOpacity: 1
+            strokeWeight: 8
+            scale: 8
           position: window.FFApp.current_position
           map: window.FFApp.map_obj
-          title: "Current Position"
           draggable: false
+          clickable: false
           zIndex: 100
         )
       else
-        window.FFApp.position_marker.setPosition window.FFApp.current_position
-
-      window.FFApp.map_obj.panTo window.FFApp.current_position
-      window.FFApp.map_obj.setZoom window.FFApp.map_obj.getZoom()
+        window.FFApp.position_marker.setPosition(window.FFApp.current_position)
+      window.FFApp.map_obj.panTo(window.FFApp.current_position)
       $scope.list_center = window.FFApp.current_position
-
+      
+      # Heading
+      # (degrees clockwise from North)
+      # FIXME: Actually retrieve heading
+      heading = Math.floor(Math.random() * 359)
+      if heading
+        if !window.FFApp.heading_marker
+          heading_icon_inner =
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+            fillColor: '#FF8A22'
+            fillOpacity: 1
+            strokeWeight: 0
+            scale: 4
+            rotation: heading
+            anchor: new google.maps.Point(0, 2.6)
+          heading_icon_outer =
+            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+            fillColor: '#1C95F2'
+            fillOpacity: 1
+            strokeWeight: 0
+            scale: 4
+            rotation: heading
+            anchor: new google.maps.Point(0, 7.75)
+          window.FFApp.heading_marker = new google.maps.Marker(
+            icon: heading_icon_outer
+            position: window.FFApp.current_position
+            map: window.FFApp.map_obj
+            draggable: false
+            clickable: false
+            zIndex: 100
+          )
+          window.FFApp.heading_marker.bindTo('position', window.FFApp.position_marker, 'position')
+        else
+          icon = window.FFApp.heading_marker.getIcon()
+          icon.rotation = heading
+          window.FFApp.heading_marker.setIcon(icon)
+        
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
-
+        
   ## Info Window / Add Location
   $scope.show_detail = (location_id)->
-    ## Has the '.add-location' btn been clicked or is this a view location_id call?
-    if $scope.targeted || location_id
-
-      if window.FFApp.target_marker
-         window.FFApp.target_marker.setMap(null)
-         window.FFApp.target_marker = null
-         $scope.targeted = false #reset targeted
-         $scope.show_add_location = false
-
+    if location_id or $scope.add_location
+      $scope.add_location = false
       $rootScope.$broadcast "SHOW-DETAIL", location_id
-    else
-      # show target icon on map
-      if !window.FFApp.target_marker? #is `undefined`
-        $scope.show_add_location = true
-        window.FFApp.target_marker = new google.maps.Marker(
-          icon:
-            url: "img/png/transparent.png"
-            size: new google.maps.Size(58, 75)
-            origin: new google.maps.Point(0, 0)
-
-            # by convention, icon center is at ~40%
-            anchor: new google.maps.Point(58 * 0.4, 75 * 0.4)
-
-          position: window.FFApp.map_obj.getCenter()
-          map: window.FFApp.map_obj
-          title: "Target New Point"
-          draggable: true
-        )
-        window.FFApp.target_marker.bindTo('position', window.FFApp.map_obj, 'center');
-      $scope.targeted = true

@@ -49,11 +49,25 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, I18nFacto
   $scope.selected_location_source_type = function() {
     return "Source Type";
   };
+  $scope.update_photo_list = function(photos) {
+    var photo, reader;
+    photo = photos[0];
+    reader = new FileReader();
+    reader.onloadend = function() {
+      $scope.location.observation.photo_data = {
+        data: reader.result,
+        name: photo.name,
+        type: photo.type
+      };
+      return console.log("Processed");
+    };
+    return reader.readAsDataURL(photo);
+  };
   $rootScope.$on("SHOW-DETAIL", function(event, id) {
     var center;
     console.log("SHOW-DETAIL Broadcast Event Handler", id);
     $scope.show_detail = true;
-    if (id === void 0) {
+    if (id == null) {
       $scope.detail_context = "add_location";
       $scope.menu_title = "Add";
       if (window.FFApp.map_initialized === true) {
@@ -88,9 +102,25 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, I18nFacto
       return $scope.reviews = data;
     });
   };
+  $scope.save_review = function() {
+    console.log($scope.location);
+    return $http.post(urls.add_review($scope.location.id), {
+      observation: $scope.location.observation
+    }).success(function(data) {
+      console.log("ADDED");
+      console.log(data);
+      $scope.location_id = $scope.location.id;
+      load_location($scope.location.id);
+      return $scope.detail_context = "view_location";
+    }).error(function(data) {
+      console.log("ADD FAILED");
+      console.log(data);
+      return $rootScope.$broadcast("SHOW-MAP");
+    });
+  };
   $scope.save_location = function() {
     console.log($scope.location);
-    if ($scope.location.id !== defined) {
+    if ($scope.location.id == null) {
       return $http.post(urls.add_location, {
         location: $scope.location
       }).success(function(data) {
@@ -99,13 +129,13 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, I18nFacto
         $scope.location_id = data.id;
         load_location(data.id);
         return $scope.detail_context = "view_location";
-      }).failure(function(data) {
+      }).error(function(data) {
         console.log("ADD FAILED");
         console.log(data);
         return $rootScope.$broadcast("SHOW-MAP");
       });
     } else {
-      return $http.put(urls.edit_location, {
+      return $http.put(urls.edit_location($scope.location.id), {
         location: $scope.location
       }).success(function(data) {
         console.log("UPDATED");
@@ -113,7 +143,7 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, I18nFacto
         $scope.location_id = data.id;
         load_location(data.id);
         return $scope.detail_context = "view_location";
-      }).failure(function(data) {
+      }).error(function(data) {
         console.log("UPDATE FAILED");
         console.log(data);
         return $rootScope.$broadcast("SHOW-MAP");
@@ -121,17 +151,11 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, I18nFacto
     }
   };
   $scope.add_review = function(id) {
-    if (id !== void 0) {
-      $scope.current_review = _.findWhere($scope.reviews, {
-        id: id
-      });
-      console.log("CR", $scope.current_review);
-      $scope.menu_title = "Edit review";
-    } else {
-      $scope.current_review = DetailFactory.get_new_review_model();
-      $scope.menu_title = "Add review";
-    }
-    return $scope.detail_context = "add_review";
+    $scope.detail_context = 'add_review';
+    $scope.menu_title = 'Add Review';
+    $scope.location = {};
+    $scope.location.observation = {};
+    return $scope.location.id = id;
   };
   return $scope.menu_left_btn_click = function() {
     if ($scope.detail_context === "add_review") {
@@ -141,7 +165,7 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, I18nFacto
       $scope.detail_context = "view_location";
       return $scope.menu_title = "Location";
     } else if ($scope.detail_context === "add_location") {
-      if ($scope.location_id === void 0) {
+      if ($scope.location_id == null) {
         $scope.show_detail = false;
         return $scope.location_id = void 0;
       } else {
