@@ -1,4 +1,4 @@
-controllers.MenuCtrl = ($scope, $rootScope, $http, $location)->
+controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
   console.log "Menu Ctrl"
   
   ## Map type
@@ -63,7 +63,11 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location)->
   $scope.toggle_metric = ()->
     window.FFApp.metric = not window.FFApp.metric
     $scope.metric = window.FFApp.metric
-      
+    # Force update distance strings in displayed list
+    if $scope.current_view == "list" and $scope.list_items
+      for item in $scope.list_items
+        item.distance_string = I18nFactory.distance_string(item.distance)
+  
   # Logout
   $scope.logout = ->
     $rootScope.$broadcast "LOGGED-OUT"

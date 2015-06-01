@@ -35,16 +35,16 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
   $scope.fruiting_status = I18nFactory.fruiting_status
 
   $scope.selected_review_source_type = ()->
-    return "Source Type"
+    return "Source type"
 
   $scope.selected_review_access_type = ()->
-    return "Access Type"
+    return "Access type"
 
   $scope.selected_location_access_type = ()->
-    return "Access Type"
+    return "Access type"
 
   $scope.selected_location_source_type = ()->
-    return "Source Type"
+    return "Source type"
 
   $scope.update_photo_list = (photos)->
     photo = photos[0]
@@ -55,7 +55,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
         data: reader.result
         name: photo.name
         type: photo.type
-      console.log("Processed")
+      console.log("Processed photo")
         
     reader.readAsDataURL photo
 
@@ -65,7 +65,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     # This can be called from 'Add Location' or 'List View' to view Location. Be careful
     if !id?
       $scope.detail_context = "add_location"
-      $scope.menu_title = "Add"
+      $scope.menu_title = "Add location"
       if window.FFApp.map_initialized == true
         center = window.FFApp.map_obj.getCenter()
         $scope.location.lat = center.lat()
@@ -86,7 +86,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
         if item.hasOwnProperty("photo_url") and item.photo_url isnt null and item.photo_url.indexOf("missing.png") == -1
           background_url = "url('#{item.photo_url}')"
         else
-          background_url = "url('../img/png/no-image.png')"
+          background_url = "url('img/png/no-image.png')"
 
         item.style =
           "background-image": background_url
@@ -139,7 +139,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
 
   $scope.add_review = (id)->
     $scope.detail_context = 'add_review'
-    $scope.menu_title = 'Add Review'
+    $scope.menu_title = 'Add review'
     $scope.location = {}
     $scope.location.observation = {}
     $scope.location.id = id

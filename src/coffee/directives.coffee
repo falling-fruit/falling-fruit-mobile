@@ -17,7 +17,10 @@ directives.mapContainer = ()->
     window.FFApp.openMarkerId = null
     window.FFApp.markersMax = 100
     window.FFApp.current_position = null
-    window.FFApp.position_marker = `undefined`
+    window.FFApp.position_accuracy = null
+    window.FFApp.position_marker = null
+    window.FFApp.heading_marker = null
+    window.FFApp.target_marker = null
     window.FFApp.muni = true
     window.FFApp.metric = true
 
@@ -41,7 +44,7 @@ directives.mapContainer = ()->
 
     window.do_markers = (type_filter, cats) ->
       console.log "UPDATING MARKERS"
-      mapStateService.setLoading("Loading Markers...")
+      mapStateService.setLoading("Loading...")
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
       return  if window.FFApp.markersArray.length >= window.FFApp.markersMax
@@ -133,6 +136,7 @@ directives.mapContainer = ()->
         zoomControl: false
         rotateControl: false
         panControl: false
+        tilt: 0
 
       window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
       window.FFApp.geocoder = new google.maps.Geocoder()
@@ -140,13 +144,22 @@ directives.mapContainer = ()->
       google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
         window.do_markers()
 
-      window.FFApp.map_initialized = true
+      # FIXME: Why use a marker instead of calling getCenter() when needed?
+      window.FFApp.target_marker = new google.maps.Marker(
+        position: window.FFApp.map_obj.getCenter()
+        map: window.FFApp.map_obj
+        clickable: false
+        visible: false
+      )
+      window.FFApp.target_marker.bindTo('position', window.FFApp.map_obj, 'center')
+      
+      window.FFApp.map_initialized = true  
       $rootScope.$broadcast "MAP-LOADED"
 
     initialize = ()->
       return if window.FFApp.map_initialized == true
 
-      mapStateService.setLoading("Loading Map...")
+      mapStateService.setLoading("Loading...")
 
       if window.FFApp.map_elem isnt undefined
         container_elem.appendChild(window.FFApp.map_elem)

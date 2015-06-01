@@ -1,5 +1,4 @@
-.transition(@duration, @type: cubic-bezier(.16, .70, .14, 1))
-{
+.transition(@duration, @type: cubic-bezier(.16, .70, .14, 1)) {
   -webkit-transition: all @duration @type;
   -moz-transition: all @duration @type;
   -ms-transition: all @duration @type;
@@ -19,8 +18,6 @@
   bottom: 0;
   right: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
 }
 
@@ -64,4 +61,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.opacity(@opacity: 1) {
+	-webkit-opacity: 	@opacity;
+	-moz-opacity: 		@opacity;
+	opacity: 		@opacity;
 }
