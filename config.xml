@@ -6,16 +6,25 @@
     </description>
   <author email="info@fallingfruit.org" href="http://fallingfruit.org">
         Falling Fruit
-    </author>
+  </author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="FadeSplashScreen" value="false"/>
+  <preference name="ShowSplashScreenSpinner" value="false"/>
+  <preference name="AutoHideSplashScreen" value="false"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
   <preference name="SplashMaintainAspectRatio" value="true"/>
   <preference name="SplashScreenBackgroundColor" value="#FAF9F9"/>
-  <preference name="FadeSplashScreen" value="false"/>
-  <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="Orientation" value="portrait"/>
-  <content src="index.html"/>
-  <access origin="*"/>
+  <platform name="browser">
+    <preference name="SplashScreen" value="img/browser/splash.png" />
+    <preference name="SplashScreenDelay" value="3000" /> <!-- defaults to "3000" -->
+    <preference name="SplashScreenBackgroundColor" value="#FAF9F9" />
+    <preference name="ShowSplashScreen" value="true" /> <!-- defaults to "true" -->
+    <preference name="SplashScreenWidth" value="320" /> <!-- defaults to "170" -->
+    <preference name="SplashScreenHeight" value="480" /> <!-- defaults to "200" -->
+  </platform>
   <platform name="ios">
     <icon src="resources/ios/icon/icon.png" width="57" height="57"/>
     <icon src="resources/ios/icon/icon@2x.png" width="114" height="114"/>
@@ -41,6 +50,7 @@
     <splash src="resources/ios/splash/Default@2x~iphone.png" width="640" height="960"/>
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
+
   <platform name="android">
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
