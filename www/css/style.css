@@ -79,10 +79,10 @@ li {
 }
 .ng-view-container.ltr.ng-enter {
   position: absolute;
-  -webkit-transition: all ease 300ms;
-  -moz-transition: all ease 300ms;
-  -ms-transition: all ease 300ms;
-  transition: all ease 300ms;
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -ms-transition: all 300ms ease;
+  transition: all 300ms ease;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
@@ -97,10 +97,10 @@ li {
 }
 .ng-view-container.ltr.ng-leave {
   position: absolute;
-  -webkit-transition: all ease 325ms;
-  -moz-transition: all ease 325ms;
-  -ms-transition: all ease 325ms;
-  transition: all ease 325ms;
+  -webkit-transition: all 325ms ease;
+  -moz-transition: all 325ms ease;
+  -ms-transition: all 325ms ease;
+  transition: all 325ms ease;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
@@ -115,10 +115,10 @@ li {
 }
 .ng-view-container.rtl.ng-enter {
   position: absolute;
-  -webkit-transition: all ease 300ms;
-  -moz-transition: all ease 300ms;
-  -ms-transition: all ease 300ms;
-  transition: all ease 300ms;
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -ms-transition: all 300ms ease;
+  transition: all 300ms ease;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
@@ -133,10 +133,10 @@ li {
 }
 .ng-view-container.rtl.ng-leave {
   position: absolute;
-  -webkit-transition: all ease 325ms;
-  -moz-transition: all ease 325ms;
-  -ms-transition: all ease 325ms;
-  transition: all ease 325ms;
+  -webkit-transition: all 325ms ease;
+  -moz-transition: all 325ms ease;
+  -ms-transition: all 325ms ease;
+  transition: all 325ms ease;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
@@ -151,10 +151,10 @@ li {
 }
 .auth-container.ng-hide-add {
   display: block !important;
-  -webkit-transition: all linear 300ms;
-  -moz-transition: all linear 300ms;
-  -ms-transition: all linear 300ms;
-  transition: all linear 300ms;
+  -webkit-transition: all 300ms linear;
+  -moz-transition: all 300ms linear;
+  -ms-transition: all 300ms linear;
+  transition: all 300ms linear;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
@@ -168,10 +168,10 @@ li {
 }
 .auth-container.ng-hide-remove {
   display: block !important;
-  -webkit-transition: all linear 275ms;
-  -moz-transition: all linear 275ms;
-  -ms-transition: all linear 275ms;
-  transition: all linear 275ms;
+  -webkit-transition: all 275ms linear;
+  -moz-transition: all 275ms linear;
+  -ms-transition: all 275ms linear;
+  transition: all 275ms linear;
   -webkit-transform: translate3d(0, -100%, 0);
   -moz-transform: translate3d(0, -100%, 0);
   -ms-transform: translate3d(0, -100%, 0);
@@ -186,10 +186,10 @@ li {
 }
 .detail-container.ng-hide-add {
   display: block !important;
-  -webkit-transition: all linear 275ms;
-  -moz-transition: all linear 275ms;
-  -ms-transition: all linear 275ms;
-  transition: all linear 275ms;
+  -webkit-transition: all 275ms linear;
+  -moz-transition: all 275ms linear;
+  -ms-transition: all 275ms linear;
+  transition: all 275ms linear;
   -webkit-transform: scale3d(1, 1, 1);
   -moz-transform: scale3d(1, 1, 1);
   -ms-transform: scale3d(1, 1, 1);
@@ -203,10 +203,10 @@ li {
 }
 .detail-container.ng-hide-remove {
   display: block !important;
-  -webkit-transition: all linear 300ms;
-  -moz-transition: all linear 300ms;
-  -ms-transition: all linear 300ms;
-  transition: all linear 300ms;
+  -webkit-transition: all 300ms linear;
+  -moz-transition: all 300ms linear;
+  -ms-transition: all 300ms linear;
+  transition: all 300ms linear;
   -webkit-transform: scale3d(0, 0, 0);
   -moz-transform: scale3d(0, 0, 0);
   -ms-transform: scale3d(0, 0, 0);
@@ -229,10 +229,10 @@ li {
   width: 60px;
   height: 30px;
   background-color: #dce1e6;
-  -webkit-transition: all ease 300ms;
-  -moz-transition: all ease 300ms;
-  -ms-transition: all ease 300ms;
-  transition: all ease 300ms;
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -ms-transition: all 300ms ease;
+  transition: all 300ms ease;
   -webkit-border-radius: 30px;
   -ms-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -249,10 +249,10 @@ li {
   top: 2px;
   background-color: white;
   border: solid 1px white;
-  -webkit-transition: all ease 325ms;
-  -moz-transition: all ease 325ms;
-  -ms-transition: all ease 325ms;
-  transition: all ease 325ms;
+  -webkit-transition: all 325ms ease;
+  -moz-transition: all 325ms ease;
+  -ms-transition: all 325ms ease;
+  transition: all 325ms ease;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   -ms-transform: translate3d(0, 0, 0);
@@ -291,7 +291,7 @@ li {
 }
 .auth-login-logo {
   height: 30%;
-  background: url('../img/login-bg.png') center center no-repeat;
+  background: url('../img/png/login-bg.png') center center no-repeat;
   background-size: auto 100%;
 }
 .auth-default-logo {
@@ -498,23 +498,33 @@ li {
   overflow: hidden;
 }
 .search-container .loading {
-  background: url('../www/img/loader-2.gif') no-repeat 8% center rgba(250, 249, 249, 0.8);
+  background: url('../img/gif/loader.gif') no-repeat 8% center / 40px rgba(250, 249, 249, 0.8);
+  position: absolute;
   height: 40px;
-  left: 25%;
+  width: 170px;
+  top: 0;
+  left: 0;
+  right: 0;
+  -webkit-opacity: 0;
+  -moz-opacity: 0;
   opacity: 0;
   padding: 10px 0 0 30px;
-  position: absolute;
+  margin: 0 auto;
   text-align: center;
-  top: 0;
-  width: 50%;
   z-index: 80;
   -webkit-border-radius: 0 0 10px 10px;
+  -ms-border-radius: 0 0 10px 10px;
+  -moz-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
-  -webkit-transition: top 0.25s ease-in-out, opacity 0.25s ease-in-out;
-  transition: top 0.25s ease-in-out, opacity 0.25s ease-in-out;
+  -webkit-transition: top 250ms ease-in-out, opacity 250ms ease-in-out;
+  -moz-transition: top 250ms ease-in-out, opacity 250ms ease-in-out;
+  -ms-transition: top 250ms ease-in-out, opacity 250ms ease-in-out;
+  transition: top 250ms ease-in-out, opacity 250ms ease-in-out;
   box-shadow: 0px 2px 5px #555;
 }
 .search-container .loading.show {
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
   opacity: 1;
   top: 51px;
 }
@@ -1057,7 +1067,7 @@ li {
   right: 0;
   height: 100%;
   width: 50px;
-  background: url("img/svg/control-arrow-downward.svg") no-repeat center center;
+  background: url("../img/svg/control-arrow-downward.svg") no-repeat center center;
   background-size: 20px;
 }
 .detail-select-container select {
