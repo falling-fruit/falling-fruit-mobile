@@ -1,4 +1,12 @@
-.transition(@duration, @type: cubic-bezier(.16, .70, .14, 1)) {
+.transition (@value1,@value2:X,...) {
+    @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+    -webkit-transition: @value;
+    -moz-transition: @value;
+    -ms-transition: @value;
+    transition: @value;
+}
+
+.transition-all(@duration, @type: cubic-bezier(.16, .70, .14, 1)) {
   -webkit-transition: all @duration @type;
   -moz-transition: all @duration @type;
   -ms-transition: all @duration @type;
