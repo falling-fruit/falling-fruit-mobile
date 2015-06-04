@@ -49,6 +49,8 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
   $scope.update_photo_list = (photos)->
     photo = photos[0]
     reader = new FileReader()
+    if !$scope.location.observation?
+      $scope.location.observation = {}
     
     reader.onloadend = ()->
       $scope.location.observation.photo_data =
@@ -129,8 +131,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       .success (data)->
         console.log("UPDATED")
         console.log(data)
-        $scope.location_id = data.id
-        load_location(data.id)
+        load_location($scope.location_id)
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("UPDATE FAILED")
