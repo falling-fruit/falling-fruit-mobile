@@ -18,13 +18,37 @@
         <param name="android-package" value="com.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
     </feature>
-    <name>FallingFruit</name>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
+    </feature>
+    <preference name="SplashMaintainAspectRatio" value="true" />
+    <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
+    <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
+    <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
+    <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png" />
+    <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
+    <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
+    <splash density="port-ldpi" src="resources/android/splash/drawable-port-ldpi-screen.png" />
+    <splash density="port-mdpi" src="resources/android/splash/drawable-port-mdpi-screen.png" />
+    <splash density="port-hdpi" src="resources/android/splash/drawable-port-hdpi-screen.png" />
+    <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
+    <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
+    <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+    <name>Falling Fruit</name>
     <description>
-        An Apache Cordova application that responds to the deviceready event for Falling Fruit. http://fallingfruit.org.
+        An Apache Cordova application that responds to the deviceready event for Falling Fruit (fallingfruit.org).
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="info@fallingfruit.org" href="http://fallingfruit.org">
+        Falling Fruit
     </author>
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
+    <preference name="SplashScreenBackgroundColor" value="#FAF9F9" />
+    <preference name="FadeSplashScreen" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
+    <preference name="Orientation" value="portrait" />
     <content src="index.html" />
     <access origin="*" />
+    <icon src="resources/android/icon.png" />
 </widget>

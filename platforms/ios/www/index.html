@@ -13,8 +13,9 @@
   <body>
     <div class="main-container">
       <div ng-controller="SearchCtrl" class="search-outer-container">
-        <div ng-class="show_menu == true ? 'show': ''" class="search-inner-container">
+        <div ng-class="{show: show_menu}" class="search-inner-container">
           <div class="search-container">
+            <ff-loading-msg></ff-loading-msg>
             <div class="search-menu">
               <div ng-click="update_position()" class="current-location"></div>
               <div class="search-input-container">
@@ -25,8 +26,9 @@
               </div>
             </div>
             <div class="search-view-container">
-              <div ng-class="show_add_location == true ? 'active': ''" class="map-add-location"><img src="img/png/control-add.png" alt="Add Location"></div>
-              <div directionstype="directions_type" stoplist="stopList" class="map-container"></div>
+              <div directionstype="directions_type" stoplist="stopList" class="map-container">
+                <div ng-class="{add: add_location}" class="crosshair"></div>
+              </div>
               <div ng-class="current_view == 'list' ? 'show' : ''" class="list-container"><a ng-repeat="li in list_items track by li.location_id" ng-click="show_detail(li.location_id)" class="list-item">
                   <div ng-style="li.style" class="list-item-image"></div>
                   <div class="list-item-info-container">
@@ -36,14 +38,18 @@
                   </div></a></div>
             </div>
             <div class="search-footer">
-              <div ng-click="show_menu = !show_menu" class="settings"></div>
+              <div ng-click="show_menu = !show_menu" class="settings controls"></div>
               <div class="btn-group-container">
                 <div class="btn-group">
                   <div ng-class="current_view == 'map' ? 'active' : ''" ng-click="show_map()" class="btn-map">Map</div>
                   <div ng-class="current_view == 'list' ? 'active' : ''" ng-click="show_list()" class="btn-list">List</div>
                 </div>
               </div>
-              <div ng-click="show_detail()" ng-class="show_add_location == true ? 'active': ''" class="add-location"></div>
+              <div ng-click="begin_add_location()" class="add-location controls"></div>
+              <div ng-class="{show: add_location}" class="add-location-controls">
+                <div ng-click="cancel_add_location()" class="cancel-add-location controls"></div>
+                <div ng-click="show_detail()" class="confirm-add-location controls"></div>
+              </div>
             </div>
           </div>
           <div ng-controller="MenuCtrl" class="search-side-menu-container">
@@ -83,27 +89,39 @@
           <div class="menu-right-btn"></div>
         </div>
         <div ng-show="detail_context=='view_location'" class="detail-container">
-          <div class="photo-list-container">
+          <!-- Photos-->
+          <div ng-show="location.photos.length &gt; 0" class="photo-list-container">
             <ul class="photo-list">
-              <li ng-repeat="photo in location.photos"></li>
+              <li ng-repeat="photo in location.photos"><img ng-src="[{photo.url}]"></li>
             </ul>
           </div>
+          <!-- Details-->
           <div class="location-info">
             <div class="location-types"><span ng-repeat="id in location.type_ids">[{source_types_by_id[id].name}][{$last ? '' : ', '}]</span></div>
-            <div>Lat, Lng: [{location.lat}], [{location.lng}]</div>
-            <div ng-show="location.map_distance">Distance (map): [{location.map_distance}]</div>
-            <div ng-show="location.current_distance">Distance (me): [{location.current_distance}]</div>
-            <div ng-show="location.season_string">Season: [{location.season_string}]</div>
-            <div>Added: [{location.created_at | date : 'MMMM d, yyyy'}]</div>
-            <div>Updated: [{location.updated_at | date : 'MMMM d, yyyy'}]</div>
-            <div ng-show="location.access != null">Access: [{location.access_string}]</div>
-            <div>Unverified: [{location.unverified}]</div>
+            <div ng-show="location.current_distance == location.map_distance">[{location.current_distance}]</div>
+            <div ng-show="location.current_distance != location.map_distance"><span ng-show="location.current_distance">[{location.current_distance}] (from me) &nbsp;/ &nbsp;</span><span>[{location.map_distance}] (from map center)</span></div>
+            <div class="tag-list">
+              <div ng-show="location.season_string" class="tag">
+                <div class="label">Season</div>&nbsp; [{location.season_string}]
+              </div>
+              <div ng-show="location.access != null" class="tag">
+                <div class="label">[{location.access_string}]</div>
+              </div>
+              <div ng-show="location.unverified" class="tag">
+                <div class="label">Unverified</div>
+              </div>
+            </div>
           </div>
+          <!-- Description-->
           <div class="location-description">[{location.description}]</div>
-          <div class="location-author">added by [{location.author}]</div>
+          <div class="location-author">
+            <div>Added [{location.created_at | date : 'MMMM d, yyyy'}] by [{location.author}]</div>
+            <div ng-show="location.updated_at.toDateString() != location.created_at.toDateString()">Updated [{location.updated_at | date : 'MMMM d, yyyy'}]</div>
+          </div>
+          <!-- Buttons-->
           <div class="detail-btn-container">
-            <div ng-click="detail_context='add_location'; menu_title='Edit';" class="detail-btn-dark">Edit</div>
-            <div ng-click="add_review()" class="detail-btn-dark">Review</div>
+            <div ng-click="detail_context='add_location'; menu_title='Edit location';" class="detail-btn-dark">Edit</div>
+            <div ng-click="add_review(location.id)" class="detail-btn-dark">Review</div>
           </div>
           <div class="detail-btn-container">
             <div ng-click="show_reviews()" ng-show="location.num_reviews &gt; 0" class="detail-btn-dark">Read reviews ([{location.num_reviews}])</div>
@@ -127,17 +145,29 @@
             <div class="detail-toggle-label">Unverified</div>
             <div toggle="location.unverified" class="ng-switcher"></div>
           </div>
-          <div class="detail-slider-container">
-            <div class="detail-slider-text">[{location.observation.quality_rating == undefined ? "Quality" : ratings[location.observation.quality_rating]}]</div>
-            <slider floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.quality_rating"></slider>
+          <div class="detail-range-container">
+            <div class="detail-range-label-1">Quality </div>
+            <div class="detail-range-label-2">[{ratings[location.observation.quality_rating]}]</div>
+            <div class="detail-range-control">
+              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1" value="0">
+            </div>
           </div>
-          <div class="detail-slider-container">
-            <div class="detail-slider-text">[{location.observation.yield_rating == undefined ? "Yield" : ratings[location.observation.yield_rating]}]</div>
-            <slider floor="0" ceiling="4" step="1" precision="0" ng-model="location.observation.yield_rating"></slider>
+          <div class="detail-range-container">
+            <div class="detail-range-label-1">Yield</div>
+            <div class="detail-range-label-2">[{ratings[location.observation.yield_rating]}]</div>
+            <div class="detail-range-control">
+              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1" value="0">
+            </div>
           </div>
-          <div class="detail-slider-container">
-            <div class="detail-slider-text">[{location.observation.fruiting == undefined ? "Fruiting" : fruiting_status[location.observation.fruiting]}]</div>
-            <slider floor="0" ceiling="3" step="1" precision="0" ng-model="location.observation.fruiting"></slider>
+          <div class="detail-range-container">
+            <div class="detail-range-label-1">Ripeness </div>
+            <div class="detail-range-label-2">[{fruiting_status[location.observation.fruiting]}]</div>
+            <div class="detail-range-control">
+              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1" value="0">
+            </div>
+          </div>
+          <div class="detail-btn btn-photo">Take a photo
+            <input type="file" capture="camera" accept="image/*" onchange="angular.element(this).scope().update_photo_list(this.files)">
           </div>
           <div ng-click="save_location()" class="detail-btn-dark btn-save">Save</div>
         </div>
@@ -148,44 +178,47 @@
               <div ng-style="r.style" class="list-item-image"></div>
               <div class="list-item-info-container">
                 <div class="review-author">by [{::r.author? r.author : "Anonymous"}]</div>
-                <div>Visited [{::r.observed_on | date : 'MMMM d, yyyy'}]</div>
-                <div class="review-tag-list"><span ng-show="r.fruiting != null" class="tag"><span class="label">Status&nbsp;</span>[{::fruiting_status[r.fruiting]}]</span><span ng-show="r.quality_rating != null" class="tag"><span class="label">Quality&nbsp;</span>[{::ratings[r.quality_rating]}]</span><span ng-show="r.yield_rating != null" class="tag"><span class="label">Yield&nbsp;</span>[{::ratings[r.yield_rating]}]</span></div>
+                <div><span ng-show="r.observed_on">Visited [{::r.observed_on | date : 'MMMM d, yyyy'}]</span><span ng-show="!r.observed_on">Posted [{::r.created_at | date : 'MMMM d, yyyy'}]</span></div>
+                <div class="tag-list"><span ng-show="r.fruiting != null" class="tag"><span class="label">Status&nbsp;</span>[{::fruiting_status[r.fruiting]}]</span><span ng-show="r.quality_rating != null" class="tag"><span class="label">Quality&nbsp;</span>[{::ratings[r.quality_rating]}]</span><span ng-show="r.yield_rating != null" class="tag"><span class="label">Yield&nbsp;</span>[{::ratings[r.yield_rating]}]</span></div>
                 <div ng-show="r.comment">[{::r.comment}]</div>
               </div></a>
             <div class="detail-btn-container">
-              <div ng-click="add_review()" class="detail-btn-dark">Add a review</div>
+              <div ng-click="add_review(location.id)" class="detail-btn-dark">Add a review</div>
             </div>
           </div>
         </div>
         <div ng-show="detail_context=='add_review'" class="detail-container">
           <div class="detail-textarea-container">
-            <textarea ng-model="current_review.comment" placeholder="Add a comment..."></textarea>
+            <textarea ng-model="location.observation.comment" placeholder="Add a comment..."></textarea>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Quality </div>
-            <div class="detail-range-label-2">[{current_review.quality_rating}]</div>
+            <div class="detail-range-label-2">[{ratings[location.observation.quality_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="current_review.quality_rating" min="0" max="5" step="1">
+              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1" value="0">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Yield</div>
-            <div class="detail-range-label-2">[{current_review.yield_rating}]</div>
+            <div class="detail-range-label-2">[{ratings[location.observation.yield_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="current_review.yield_rating" min="0" max="5" step="1">
+              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1" value="0">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Ripeness</div>
-            <div class="detail-range-label-2">[{current_review.fruiting}]</div>
+            <div class="detail-range-label-2">[{fruiting_status[location.observation.fruiting]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="current_review.fruiting" min="0" max="5" step="1">
+              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1" value="0">
             </div>
           </div>
           <div class="detail-btn btn-photo">Take a photo
-            <input type="file" capture="camera" accept="image/*" onchange="angular.element(this).scope().update_photo_list(this.files)">
+            <input type="file" capture="camera" accept="image/*" onchange="angular.element(this).scope().update_photo_list(this.files)" id="photo_button">
           </div>
-          <div class="detail-btn-dark btn-save">Save</div>
+          <div class="detail-textarea-container">
+            <textarea ng-model="location.observation.photo_caption" placeholder="Add a caption..."></textarea>
+          </div>
+          <div ng-click="save_review()" class="detail-btn-dark btn-save">Save</div>
         </div>
       </div>
       <div ng-controller="AuthCtrl" ng-class="show_auth == true ? 'show': ''" class="auth-overlay">
@@ -198,8 +231,8 @@
           <div class="auth-input-container password">
             <input type="password" placeholder="Password" ng-model="login_user.password">
             <div class="auth-error-text"></div>
-          </div><a ng-click="auth_context='forgot_password'" class="auth-text">Forgot Password?</a>
-          <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Login</a><a ng-click="auth_context = 'register'" class="auth-btn-cell">Register</a></div>
+          </div><a ng-click="auth_context='forgot_password'" class="auth-text">Forgot password?</a>
+          <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Sign in</a><a ng-click="auth_context = 'register'" class="auth-btn-cell">Register</a></div>
         </div>
         <div ng-show="auth_context == 'register'" class="auth-container register">
           <div class="auth-default-logo"></div>
@@ -216,7 +249,7 @@
             <div class="auth-error-text"></div>
           </div>
           <div class="auth-input-container password-2">
-            <input type="password" placeholder="Confirm Password" ng-model="register_user.password_confirmation">
+            <input type="password" placeholder="Confirm password" ng-model="register_user.password_confirmation">
             <div class="auth-error-text"></div>
           </div><a ng-click="register()" class="auth-btn">Send confirmation</a><a ng-click="auth_context = 'login'" class="auth-btn-dark">Login</a>
         </div>

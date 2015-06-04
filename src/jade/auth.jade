@@ -9,14 +9,14 @@
       input(type="password", placeholder="Password", ng-model="login_user.password")
       .auth-error-text
 
-    a.auth-text(ng-click="auth_context='forgot_password'") Forgot Password?
+    a.auth-text(ng-click="auth_context='forgot_password'") Forgot password?
 
     .auth-btn-container
-      a.auth-btn-cell(ng-click="login()") Login
+      a.auth-btn-cell(ng-click="login()") Sign in
       a.auth-btn-cell(ng-click="auth_context = 'register'") Register
 
     //- .auth-btn-container
-    //-   a.auth-btn-dark(ng-click="anonymous_login()") Use Anonymously
+    //-   a.auth-btn-dark(ng-click="anonymous_login()") Use anonymously
 
   .auth-container.register(ng-show="auth_context == 'register'")
     .auth-default-logo
@@ -30,7 +30,7 @@
       input(type="password", placeholder="Password", ng-model="register_user.password")
       .auth-error-text()
     .auth-input-container.password-2
-      input(type="password", placeholder="Confirm Password", ng-model="register_user.password_confirmation")
+      input(type="password", placeholder="Confirm password", ng-model="register_user.password_confirmation")
       .auth-error-text()
 
     a.auth-btn(ng-click="register()") Send confirmation

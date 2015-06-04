@@ -1,29 +1,39 @@
 .detail-container(ng-show="detail_context=='view_location'")
 
-  .photo-list-container
+  // Photos
+  .photo-list-container(ng-show="location.photos.length > 0")
     ul.photo-list
       li(ng-repeat="photo in location.photos")
-
+        img(ng-src="[{photo.url}]")
+  
+  // Details
   .location-info
     .location-types
-      span(ng-repeat="id in location.type_ids")
-        [{source_types_by_id[id].name}][{$last ? '' : ', '}]
-    div Lat, Lng: [{location.lat}], [{location.lng}]
-    div(ng-show="location.map_distance") Distance (map): [{location.map_distance}]
-    div(ng-show="location.current_distance") Distance (me): [{location.current_distance}]
-    div(ng-show="location.season_string") Season: [{location.season_string}]
-    div Added: [{location.created_at | date : 'MMMM d, yyyy'}]
-    div Updated: [{location.updated_at | date : 'MMMM d, yyyy'}]
-    div(ng-show="location.access != null") Access: [{location.access_string}]
-    div Unverified: [{location.unverified}]
-
-  .location-description [{location.description}]
+      span(ng-repeat="id in location.type_ids") [{source_types_by_id[id].name}][{$last ? '' : ', '}]
+    //-div [{location.lat.toFixed(5)}], [{location.lng.toFixed(5)}]
+    div(ng-show="location.current_distance == location.map_distance") [{location.current_distance}]
+    div(ng-show="location.current_distance != location.map_distance")
+        span(ng-show="location.current_distance") [{location.current_distance}] (from me) &nbsp;/ &nbsp;
+        span [{location.map_distance}] (from map center)
+    .tag-list
+      .tag(ng-show="location.season_string")
+        .label Season
+        | &nbsp; [{location.season_string}]
+      .tag(ng-show="location.access != null")
+        .label [{location.access_string}]
+      .tag(ng-show="location.unverified")
+        .label Unverified
   
-  .location-author added by [{location.author}]
-
+  // Description
+  .location-description [{location.description}]
+  .location-author 
+    div Added [{location.created_at | date : 'MMMM d, yyyy'}] by [{location.author}]
+    div(ng-show="location.updated_at.toDateString() != location.created_at.toDateString()") Updated [{location.updated_at | date : 'MMMM d, yyyy'}]
+  
+  // Buttons
   //-a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ([{location.num_reviews}])
   .detail-btn-container
-    .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit';") Edit
-    .detail-btn-dark(ng-click="add_review()") Review
+    .detail-btn-dark(ng-click="detail_context='add_location'; menu_title='Edit location';") Edit
+    .detail-btn-dark(ng-click="add_review(location.id)") Review
   .detail-btn-container
     .detail-btn-dark(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ([{location.num_reviews}])

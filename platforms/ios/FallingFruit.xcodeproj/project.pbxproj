@@ -50,6 +50,7 @@
 		9B21F411605545AE9F4823F4 /* CDVFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B9F8032745D4EF08B1EEF50 /* CDVFileTransfer.m */; };
 		4B7C3F347B934F7D832DD0A1 /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 863E5260A5BE4E37967CBB4E /* IonicKeyboard.m */; };
 		BF88C68AF2D744E6BC479289 /* UIWebViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB255D926541999BF5A1F9 /* UIWebViewExtension.m */; };
+		6873C16C01144F2BAD75EA66 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C555A2673FD44198FEF9414 /* CDVSplashScreen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,8 @@
 		5DAB255D926541999BF5A1F9 /* UIWebViewExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIWebViewExtension.m"; path = "com.ionic.keyboard/UIWebViewExtension.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		DBBEC02ED5BD4A3C874C71A6 /* IonicKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IonicKeyboard.h"; path = "com.ionic.keyboard/IonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		83FF15CBBD124B7B8745182A /* UIWebViewExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIWebViewExtension.h"; path = "com.ionic.keyboard/UIWebViewExtension.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		0C555A2673FD44198FEF9414 /* CDVSplashScreen.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVSplashScreen.m"; path = "cordova-plugin-splashscreen/CDVSplashScreen.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		F78D75A040044FD8A74F7D8C /* CDVSplashScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVSplashScreen.h"; path = "cordova-plugin-splashscreen/CDVSplashScreen.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +284,8 @@
 				5DAB255D926541999BF5A1F9 /* UIWebViewExtension.m */,
 				DBBEC02ED5BD4A3C874C71A6 /* IonicKeyboard.h */,
 				83FF15CBBD124B7B8745182A /* UIWebViewExtension.h */,
+				0C555A2673FD44198FEF9414 /* CDVSplashScreen.m */,
+				F78D75A040044FD8A74F7D8C /* CDVSplashScreen.h */,
 			);
 			name = Plugins;
 			path = "FallingFruit/Plugins";
@@ -486,6 +491,7 @@
 				9B21F411605545AE9F4823F4 /* CDVFileTransfer.m in Sources */,
 				4B7C3F347B934F7D832DD0A1 /* IonicKeyboard.m in Sources */,
 				BF88C68AF2D744E6BC479289 /* UIWebViewExtension.m in Sources */,
+				6873C16C01144F2BAD75EA66 /* CDVSplashScreen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

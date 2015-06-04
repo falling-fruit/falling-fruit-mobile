@@ -1,56 +1,80 @@
-factories.DetailFactory = function($http) {
-  var props;
-  props = {
-    get_new_location_model: function() {
-      return {};
-    },
-    get_new_review_model: function() {
-      return {};
-    },
-    source_types: [],
-    last_source_type_refresh: null,
-    get_source_types: function() {
-      return $http.get(urls.source_types).success(function(data) {
-        return this.source_types = data;
-      });
-    }
-  };
-  return props;
-};
-
-controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, DetailFactory) {
-  var load_location, reset, source_types;
+controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, I18nFactory) {
+  var load_location, reset;
   console.log("Detail Ctrl");
+  document.addEventListener("backbutton", $scope.menu_left_btn_click, false);
   reset = function() {
-    $scope.location = null;
+    $scope.location = {};
     $scope.current_location = null;
     $scope.current_review = null;
-    return $scope.reviews = [];
+    $scope.reviews = [];
+    return $http.get(urls.source_types).success(function(data) {
+      var row, _i, _len, _results;
+      $scope.source_types = data;
+      $scope.source_types_by_id = {};
+      _results = [];
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        row = data[_i];
+        _results.push($scope.source_types_by_id[row.id] = row);
+      }
+      return _results;
+    });
   };
   reset();
-  source_types = DetailFactory.get_source_types();
   load_location = function(id) {
     return $http.get(urls.location + id + ".json").success(function(data) {
+      var latlng;
+      latlng = new google.maps.LatLng(data.lat, data.lng);
+      data.map_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.map_obj.getCenter()));
+      if (window.FFApp.current_position) {
+        data.current_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position));
+      }
+      data.season_string = I18nFactory.season_string(data.season_start, data.season_stop, data.no_season);
+      data.access_string = I18nFactory.short_access_types[data.access];
       $scope.location = data;
       return console.log("DATA", data);
     });
   };
-  $scope.location_access_types = ["Added by owner", "Permitted by owner", "Public", "Private but overhanging", "Private"];
+  $scope.short_access_types = I18nFactory.short_access_types;
+  $scope.ratings = I18nFactory.ratings;
+  $scope.fruiting_status = I18nFactory.fruiting_status;
   $scope.selected_review_source_type = function() {
     return "Source Type";
   };
   $scope.selected_review_access_type = function() {
     return "Access Type";
   };
+  $scope.selected_location_access_type = function() {
+    return "Access Type";
+  };
   $scope.selected_location_source_type = function() {
     return "Source Type";
   };
+  $scope.update_photo_list = function(photos) {
+    var photo, reader;
+    photo = photos[0];
+    reader = new FileReader();
+    reader.onloadend = function() {
+      $scope.location.observation.photo_data = {
+        data: reader.result,
+        name: photo.name,
+        type: photo.type
+      };
+      return console.log("Processed");
+    };
+    return reader.readAsDataURL(photo);
+  };
   $rootScope.$on("SHOW-DETAIL", function(event, id) {
-    console.log("SHOW-DETAIL", id);
+    var center;
+    console.log("SHOW-DETAIL Broadcast Event Handler", id);
     $scope.show_detail = true;
-    if (id === void 0) {
+    if (id == null) {
       $scope.detail_context = "add_location";
-      return $scope.menu_title = "Add";
+      $scope.menu_title = "Add";
+      if (window.FFApp.map_initialized === true) {
+        center = window.FFApp.map_obj.getCenter();
+        $scope.location.lat = center.lat();
+        return $scope.location.lng = center.lng();
+      }
     } else {
       $scope.location_id = id;
       load_location(id);
@@ -78,18 +102,60 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, DetailFac
       return $scope.reviews = data;
     });
   };
-  $scope.add_review = function(id) {
-    if (id !== void 0) {
-      $scope.current_review = _.findWhere($scope.reviews, {
-        id: id
+  $scope.save_review = function() {
+    console.log($scope.location);
+    return $http.post(urls.add_review($scope.location.id), {
+      observation: $scope.location.observation
+    }).success(function(data) {
+      console.log("ADDED");
+      console.log(data);
+      $scope.location_id = $scope.location.id;
+      load_location($scope.location.id);
+      return $scope.detail_context = "view_location";
+    }).error(function(data) {
+      console.log("ADD FAILED");
+      console.log(data);
+      return $rootScope.$broadcast("SHOW-MAP");
+    });
+  };
+  $scope.save_location = function() {
+    console.log($scope.location);
+    if ($scope.location.id == null) {
+      return $http.post(urls.add_location, {
+        location: $scope.location
+      }).success(function(data) {
+        console.log("ADDED");
+        console.log(data);
+        $scope.location_id = data.id;
+        load_location(data.id);
+        return $scope.detail_context = "view_location";
+      }).error(function(data) {
+        console.log("ADD FAILED");
+        console.log(data);
+        return $rootScope.$broadcast("SHOW-MAP");
       });
-      console.log("CR", $scope.current_review);
-      $scope.menu_title = "Edit Review";
     } else {
-      $scope.current_review = DetailFactory.get_new_review_model();
-      $scope.menu_title = "Add Review";
+      return $http.put(urls.edit_location($scope.location.id), {
+        location: $scope.location
+      }).success(function(data) {
+        console.log("UPDATED");
+        console.log(data);
+        $scope.location_id = data.id;
+        load_location(data.id);
+        return $scope.detail_context = "view_location";
+      }).error(function(data) {
+        console.log("UPDATE FAILED");
+        console.log(data);
+        return $rootScope.$broadcast("SHOW-MAP");
+      });
     }
-    return $scope.detail_context = "add_review";
+  };
+  $scope.add_review = function(id) {
+    $scope.detail_context = 'add_review';
+    $scope.menu_title = 'Add Review';
+    $scope.location = {};
+    $scope.location.observation = {};
+    return $scope.location.id = id;
   };
   return $scope.menu_left_btn_click = function() {
     if ($scope.detail_context === "add_review") {
@@ -99,7 +165,7 @@ controllers.DetailCtrl = function($scope, $rootScope, $http, $timeout, DetailFac
       $scope.detail_context = "view_location";
       return $scope.menu_title = "Location";
     } else if ($scope.detail_context === "add_location") {
-      if ($scope.location_id === void 0) {
+      if ($scope.location_id == null) {
         $scope.show_detail = false;
         return $scope.location_id = void 0;
       } else {

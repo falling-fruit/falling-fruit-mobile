@@ -48,7 +48,7 @@ factories.AuthFactory = function($rootScope) {
     get_register_user_model: function() {
       return {
         name: null,
-        email: null,
+        email: this.email,
         password: null
       };
     },
@@ -73,7 +73,7 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
       user: $scope.login_user
     }).success(function(data) {
       if (data.hasOwnProperty("auth_token") && data.auth_token !== null) {
-        AuthFactory.save($scope.login_user.email, data.access_token);
+        AuthFactory.save($scope.login_user.email, data.auth_token);
         $scope.login_user = AuthFactory.get_login_user_model();
         $scope.show_auth = false;
         return $rootScope.$broadcast("LOGGED-IN");
@@ -94,10 +94,22 @@ controllers.AuthCtrl = function($scope, $rootScope, $http, $location, AuthFactor
     return $http.post(urls.register, {
       user: user
     }).success(function(data) {
+      $rootScope.$broadcast("REGISTERED");
+      alert("You've been registered! Please confirm your email address, then come back and login.");
       $scope.auth_context = "login";
       return $scope.login_user.email = $scope.register_user.email;
-    }).error(function() {
-      return $scope.register_user = AuthFactory.get_register_user_model();
+    }).error(function(data) {
+      var error_text;
+      $scope.register_user = AuthFactory.get_register_user_model();
+      console.log("Register DATA isnt as expected", data);
+      error_text = "Please check ";
+      if (data.errors.email != null) {
+        error_text += "email as it is: " + data.errors.email;
+      }
+      if (data.errors.password != null) {
+        error_text += " Password is " + data.errors.password;
+      }
+      return alert("There was a registration error: " + error_text);
     });
   };
   $scope.forgot_password = function() {};
