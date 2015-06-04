@@ -1,19 +1,25 @@
 
 <div ng-controller="SearchCtrl" class="search-outer-container">
-  <div ng-class="show_menu == true ? 'show': ''" class="search-inner-container">
+  <div ng-class="{show: show_menu}" class="search-inner-container">
     <div class="search-container">
+      <ff-loading-msg></ff-loading-msg>
       <div class="search-menu">
-        <div class="current-location"></div>
+        <div ng-click="update_position()" ng-class="{show: !show_add_location}" class="current-location"></div>
+        <div ng-click="close_add_location()" ng-class="{show: show_add_location}" class="close-add-location">X</div>
         <div class="search-input-container">
-          <input type="text" placeholder="Enter a location..." ng-model="search_text"/>
+          <form ng-submit="location_search()">
+            <input type="submit" value=""/>
+            <input type="text" placeholder="Enter a location..." ng-model="search_text"/>
+          </form>
         </div>
       </div>
       <div class="search-view-container">
+        <div ng-class="{active: show_add_location}" class="map-add-location"><img src="img/png/control-add.png" alt="Add Location"/></div>
         <div directionstype="directions_type" stoplist="stopList" class="map-container"></div>
-        <div ng-class="current_view == 'map' ? '' : 'show'" class="list-container"><a ng-repeat="li in list_items track by li.location_id" ng-click="show_detail(li.location_id)" class="list-item">
+        <div ng-class="current_view == 'list' ? 'show' : ''" class="list-container"><a ng-repeat="li in list_items track by li.location_id" ng-click="show_detail(li.location_id)" class="list-item">
             <div ng-style="li.style" class="list-item-image"></div>
             <div class="list-item-info-container">
-              <div class="list-item-distance">[{::li.distance}]m</div>
+              <div class="list-item-distance">[{li.distance_string}]</div>
               <div class="list-item-name">[{::li.title}]</div>
               <div class="list-item-description">[{::li.description}]</div>
             </div></a></div>
@@ -22,22 +28,36 @@
         <div ng-click="show_menu = !show_menu" class="settings"></div>
         <div class="btn-group-container">
           <div class="btn-group">
-            <div ng-class="current_view == 'map' ? 'active' : ''" ng-click="current_view = 'map'" class="btn-map">Map</div>
-            <div ng-class="current_view == 'list' ? 'active' : ''" ng-click="current_view = 'list'" class="btn-list">List</div>
+            <div ng-class="current_view == 'map' ? 'active' : ''" ng-click="show_map()" class="btn-map">Map</div>
+            <div ng-class="current_view == 'list' ? 'active' : ''" ng-click="show_list()" class="btn-list">List</div>
           </div>
         </div>
-        <div ng-click="show_detail()" class="add"></div>
+        <div ng-click="show_detail()" ng-class="show_add_location == true ? 'active': ''" class="add-location"></div>
       </div>
     </div>
-    <div class="search-side-menu-container">
+    <div ng-controller="MenuCtrl" class="search-side-menu-container">
       <div class="search-side-menu">
         <div class="search-params-container">
-          <div class="search-param-header">Map</div><a class="search-param-radio">Street Map
+          <div class="search-param-header">Map</div><a ng-click="toggle_terrain()" class="search-param-radio">Terrain
             <div class="search-radio-container">
-              <div ng-show="map_options.type='street'" class="search-radio-active"></div>
-            </div></a><a class="search-param-radio">Satellite
+              <div ng-show="mapTypeId == 'terrain'" class="search-radio-active"></div>
+            </div></a><a ng-click="toggle_hybrid()" class="search-param-radio">Satellite
             <div class="search-radio-container">
-              <div ng-show="map_options.type='satellite'" class="search-radio-active"></div>
+              <div ng-show="mapTypeId == 'hybrid'" class="search-radio-active"></div>
+            </div></a><a ng-click="toggle_bicycle()" class="search-param-radio">Bicycle
+            <div class="search-radio-container">
+              <div ng-show="layer == 'bicycle'" class="search-radio-active"></div>
+            </div></a><a ng-click="toggle_transit()" class="search-param-radio">Transit
+            <div class="search-radio-container">
+              <div ng-show="layer == 'transit'" class="search-radio-active"></div>
+            </div></a>
+          <div class="search-param-header">Filters</div><a ng-click="toggle_muni()" class="search-param-radio">Tree inventories
+            <div class="search-radio-container">
+              <div ng-show="muni" class="search-radio-active"></div>
+            </div></a>
+          <div class="search-param-header">Regional</div><a ng-click="toggle_metric()" class="search-param-radio">Metric units
+            <div class="search-radio-container">
+              <div ng-show="metric" class="search-radio-active"></div>
             </div></a>
         </div><a ng-click="logout()" class="btn-logout-container">
           <div class="btn-logout">Sign out</div></a>

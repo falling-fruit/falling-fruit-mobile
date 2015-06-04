@@ -14,7 +14,7 @@
   width: @switch-width;
   height: @switch-height;
   background-color: @light-gray;
-  .transition(ease, 300ms);
+  .transition-all(300ms, ease);
   .border-radius(@switch-height);
 }
 
@@ -30,7 +30,7 @@
   top: 2px;
   background-color: white;
   border: solid 1px white;
-  .transition(ease, 325ms);
+  .transition-all(325ms, ease);
   .transform-translate(0,0,0);
   .border-radius(@switch-handle-width);
 }

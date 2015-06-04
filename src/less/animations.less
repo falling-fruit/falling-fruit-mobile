@@ -1,7 +1,7 @@
 // ANIMATION LTE
 .ng-view-container.ltr.ng-enter {
   position:absolute;
-  .transition(ease, 300ms);
+  .transition-all(300ms, ease);
   .transform-translate(0,0,0);
   left: -100%;
 }
@@ -12,7 +12,7 @@
 
 .ng-view-container.ltr.ng-leave {
   position:absolute;
-  .transition(ease, 325ms);
+  .transition-all(325ms, ease);
   .transform-translate(0,0,0);
   left: 0;
 }
@@ -24,7 +24,7 @@
 //ANIMATION RTL
 .ng-view-container.rtl.ng-enter {
   position:absolute;
-  .transition(ease, 300ms);
+  .transition-all(300ms, ease);
   .transform-translate(0,0,0);
   left:100%;
 }
@@ -35,7 +35,7 @@
 
 .ng-view-container.rtl.ng-leave {
   position:absolute;
-  .transition(ease, 325ms);
+  .transition-all(325ms, ease);
   .transform-translate(0,0,0);
   left: 0;
 }
@@ -47,7 +47,7 @@
 //ANIMATIONS
 .auth-container.ng-hide-add {
   display: block !important;
-  .transition(linear, 300ms);
+  .transition-all(300ms, linear);
   .transform-translate(0,0,0);
 }
 
@@ -57,7 +57,7 @@
 
 .auth-container.ng-hide-remove {
   display: block !important;
-  .transition(linear, 275ms);
+  .transition-all(275ms, linear);
   .transform-translate(0,-100%,0);
   z-index: @zindex-auth-inner-incoming;
 }
@@ -71,7 +71,7 @@
 
 .detail-container.ng-hide-add {
   display: block !important;
-  .transition(linear, 275ms);
+  .transition-all(275ms, linear);
   //.transform-translate(0,0,0);
   .transform-scale(1,1,1);
 }
@@ -83,7 +83,7 @@
 
 .detail-container.ng-hide-remove {
   display: block !important;
-  .transition(linear, 300ms);
+  .transition-all(300ms, linear);
   //.transform-translate(100%,0,0);
   .transform-scale(0,0,0);
 }
