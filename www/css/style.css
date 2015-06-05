@@ -505,10 +505,10 @@ li {
   background: url('../img/gif/loader.gif') no-repeat 8% center / 40px rgba(250, 249, 249, 0.8);
   position: absolute;
   height: 40px;
-  width: 170px;
-  top: 0;
   left: 0;
   right: 0;
+  top: 0;
+  width: 170px;
   -webkit-opacity: 0;
   -moz-opacity: 0;
   opacity: 0;
@@ -1113,13 +1113,13 @@ li {
 .detail-range-label-1 {
   display: table-cell;
   vertical-align: middle;
-  width: 100px;
+  width: 75px;
 }
 .detail-range-label-2 {
   display: table-cell;
-  vertical-align: middle;
   padding: 0 10px;
-  width: 40px;
+  vertical-align: middle;
+  width: 65px;
 }
 .detail-range-control {
   display: table-cell;
