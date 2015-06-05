@@ -127,14 +127,14 @@
             <div ng-click="show_reviews()" ng-show="location.num_reviews &gt; 0" class="detail-btn-dark">Read reviews ([{location.num_reviews}])</div>
           </div>
         </div>
-        <div ng-show="detail_context=='add_location'" class="detail-container"> 
+        <div ng-show="detail_context=='add_location'" class="detail-container">
           <div class="detail-select-container">[{location.type_ids == undefined ? "Source type" : source_types_by_id[location.type_ids[0]].name}]
             <select ng-model="location.type_ids[0]" ng-options="type.id as type.name for type in source_types"></select>
           </div>
           <!--.detail-input-container-->
           <!--  input(type="text", placeholder="?", ng-model="location.lat")-->
           <!--.detail-input-container-->
-          <!--  input(type="text", placeholder="?", ng-model="location.lng")                -->
+          <!--  input(type="text", placeholder="?", ng-model="location.lng")-->
           <div class="detail-textarea-container location">
             <textarea placeholder="Description..." ng-model="location.description"></textarea>
           </div>
@@ -146,24 +146,24 @@
             <div toggle="location.unverified" class="ng-switcher"></div>
           </div>
           <div class="detail-range-container">
-            <div class="detail-range-label-1">Quality </div>
+            <div class="detail-range-label-1">Quality</div>
             <div class="detail-range-label-2">[{ratings[location.observation.quality_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1" value="0">
+              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Yield</div>
             <div class="detail-range-label-2">[{ratings[location.observation.yield_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1" value="0">
+              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1">
             </div>
           </div>
           <div class="detail-range-container">
-            <div class="detail-range-label-1">Ripeness </div>
+            <div class="detail-range-label-1">Ripeness</div>
             <div class="detail-range-label-2">[{fruiting_status[location.observation.fruiting]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1" value="0">
+              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1">
             </div>
           </div>
           <div class="detail-btn btn-photo">Take a photo
@@ -192,24 +192,24 @@
             <textarea ng-model="location.observation.comment" placeholder="Add a comment..."></textarea>
           </div>
           <div class="detail-range-container">
-            <div class="detail-range-label-1">Quality </div>
+            <div class="detail-range-label-1">Quality</div>
             <div class="detail-range-label-2">[{ratings[location.observation.quality_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1" value="0">
+              <input type="range" ng-model="location.observation.quality_rating" min="0" max="4" step="1">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Yield</div>
             <div class="detail-range-label-2">[{ratings[location.observation.yield_rating]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1" value="0">
+              <input type="range" ng-model="location.observation.yield_rating" min="0" max="4" step="1">
             </div>
           </div>
           <div class="detail-range-container">
             <div class="detail-range-label-1">Ripeness</div>
             <div class="detail-range-label-2">[{fruiting_status[location.observation.fruiting]}]</div>
             <div class="detail-range-control">
-              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1" value="0">
+              <input type="range" ng-model="location.observation.fruiting" min="0" max="3" step="1">
             </div>
           </div>
           <div class="detail-btn btn-photo">Take a photo
