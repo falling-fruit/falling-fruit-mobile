@@ -1,9 +1,9 @@
 controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
   console.log "Menu Ctrl"
-  
+
   ## Map type
   $scope.mapTypeId = window.FFApp.defaultMapTypeId
-  
+
   # Terrain
   $scope.toggle_terrain = ()->
     if $scope.mapTypeId == 'terrain'
@@ -11,7 +11,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
     else
       $scope.mapTypeId = 'terrain'
     window.FFApp.map_obj.setMapTypeId($scope.mapTypeId)
-  
+
   # Satellite
   $scope.toggle_hybrid = ()->
     if $scope.mapTypeId == 'hybrid'
@@ -19,10 +19,10 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
     else
       $scope.mapTypeId = 'hybrid'
     window.FFApp.map_obj.setMapTypeId($scope.mapTypeId)
-  
+
   ## Map layers
   $scope.layer = null
-  
+
   # Bicycle
   bicycleLayer = new google.maps.BicyclingLayer()
   $scope.toggle_bicycle = ()->
@@ -33,8 +33,8 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
       bicycleLayer.setMap(window.FFApp.map_obj)
       $scope.layer = 'bicycle'
     transitLayer.setMap(null)
-  
-  # Transit    
+
+  # Transit
   transitLayer = new google.maps.TransitLayer()
   $scope.toggle_transit = ()->
     if $scope.layer == 'transit'
@@ -44,10 +44,10 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
       transitLayer.setMap(window.FFApp.map_obj)
       $scope.layer = 'transit'
     bicycleLayer.setMap(null)
-  
+
   ## Filters
   # FIXME: Share fun/var with map directive in a cleaner fashion that using window...
-  
+
   $scope.muni = window.FFApp.muni
   $scope.toggle_muni = ()->
     window.FFApp.muni = not window.FFApp.muni
@@ -58,8 +58,9 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
       $scope.load_list()
     else
       $scope.list_center = null
-  
+
   $scope.metric = window.FFApp.metric
+
   $scope.toggle_metric = ()->
     window.FFApp.metric = not window.FFApp.metric
     $scope.metric = window.FFApp.metric
@@ -67,7 +68,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
     if $scope.current_view == "list" and $scope.list_items
       for item in $scope.list_items
         item.distance_string = I18nFactory.distance_string(item.distance)
-  
+
   # Logout
   $scope.logout = ->
     $rootScope.$broadcast "LOGGED-OUT"
