@@ -4,7 +4,9 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
   document.addEventListener("backbutton", $scope.menu_left_btn_click, false)
 
   reset = ()->
+    console.log "RESETTING LOCATION / REVIEW DATA"
     $scope.location = {}
+    $scope.location.observation = {quality_rating: 0, yield_rating: 0, fruiting: 0}
     $scope.current_location = null
     $scope.current_review = null
     $scope.reviews = []
@@ -51,14 +53,14 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     reader = new FileReader()
     if !$scope.location.observation?
       $scope.location.observation = {}
-    
+
     reader.onloadend = ()->
       $scope.location.observation.photo_data =
         data: reader.result
         name: photo.name
         type: photo.type
       console.log("Processed photo")
-        
+
     reader.readAsDataURL photo
 
   $rootScope.$on "SHOW-DETAIL", (event, id)->
@@ -108,7 +110,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       console.log("ADD FAILED")
       console.log(data)
       $rootScope.$broadcast "SHOW-MAP"
-      
+
   $scope.save_location = ()->
     # turn types string into an array if needed
     #if $scope.location.types != null and $scope.location.types.constructor == String
@@ -136,7 +138,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       .error (data)->
         console.log("UPDATE FAILED")
         console.log(data)
-        $rootScope.$broadcast "SHOW-MAP" 
+        $rootScope.$broadcast "SHOW-MAP"
 
   $scope.add_review = (id)->
     $scope.detail_context = 'add_review'
@@ -144,7 +146,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     $scope.location = {}
     $scope.location.observation = {}
     $scope.location.id = id
-    
+
   $scope.menu_left_btn_click = ()->
     if $scope.detail_context == "add_review"
       $scope.detail_context = "view_reviews"

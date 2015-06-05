@@ -1,7 +1,7 @@
 .search-side-menu-container(ng-controller="MenuCtrl")
   .search-side-menu
     .search-params-container
-      
+
       .search-param-header Map
       a.search-param-radio(ng-click="toggle_terrain()")
         | Terrain
@@ -19,13 +19,13 @@
         | Transit
         .search-radio-container
           .search-radio-active(ng-show="layer == 'transit'")
-      
+
       .search-param-header Filters
       a.search-param-radio(ng-click="toggle_muni()")
         | Tree inventories
         .search-radio-container
           .search-radio-active(ng-show="muni")
-          
+
       .search-param-header Regional
       a.search-param-radio(ng-click="toggle_metric()")
         | Metric units

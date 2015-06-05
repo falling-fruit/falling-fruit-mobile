@@ -9,11 +9,11 @@
 }
 
 .detail-btn {
-  .detail-btn-mixin();  
+  .detail-btn-mixin();
 }
 
 .detail-btn-dark {
-  .detail-btn-mixin();  
+  .detail-btn-mixin();
   background-color: @dark-green;
 }
 
@@ -44,7 +44,7 @@
 
 .photo-list-container {
   @height: 200px;
-  
+
   display: block;
   white-space: nowrap;
   height: @height;
@@ -52,13 +52,13 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   background: @lighter-gray;
-    
-  .photo-list {    
+
+  .photo-list {
     list-style-type: none;
-  
+
     li {
       display: inline-block;
-    
+
       img {
         height: @height;
         &:not(:last-child) {
@@ -89,7 +89,7 @@
 }
 
 .location-author {
-  font-size: @font-size-small;  
+  font-size: @font-size-small;
   padding: 0 20px;
   font-style: italic;
 }
@@ -97,7 +97,7 @@
 .btn-location-reviews {
   display: block;
   padding: 20px 0 10px 0;
-  text-align: center;    
+  text-align: center;
 }
 
 .detail-btn-container {
@@ -118,11 +118,11 @@
   background-color: @light-gray;
   margin: 20px 10%;
   overflow: hidden;
-  .border-radius(5px);  
+  .border-radius(5px);
 }
 
 .detail-input-container {
-  .detail-input-container-mixin();  
+  .detail-input-container-mixin();
 }
 
 .detail-input-container input {
@@ -137,7 +137,7 @@
 }
 
 .detail-slider-container {
-  .detail-input-container-mixin();  
+  .detail-input-container-mixin();
   padding-right: 20px;
   padding-left: 15px;
 }
@@ -154,7 +154,7 @@
 
 .detail-select-container {
   .detail-input-container-mixin();
-  text-align: center;  
+  text-align: center;
   padding: 10px;
   &:after {
     content: " ";
@@ -185,10 +185,10 @@
 
 .detail-textarea-container textarea {
   resize: none;
-  height: 100px;  
+  height: 100px;
   border: none;
   background-color: transparent;
-  width: 100%;  
+  width: 100%;
   font-size: @font-size-small;
 }
 
@@ -206,16 +206,15 @@
 .detail-range-label-1 {
   display: table-cell;
   vertical-align: middle;
-  width: 100px;
+  width: 75px;
 }
 
 .detail-range-label-2 {
   display: table-cell;
-  vertical-align: middle;
   padding: 0 10px;
-  width: 40px;  
+  vertical-align: middle;
+  width: 65px;
 }
-
 
 @input-range-dim: 28px;
 
@@ -232,7 +231,7 @@
 
   width: 100%;
   height: @input-range-dim + 2px;
-  margin: 10px 0;  
+  margin: 10px 0;
   background-color: @light-gray;
 
   padding: 2px;
@@ -263,7 +262,7 @@
 
 .detail-btn.btn-photo {
   position: relative;
-  overflow: hidden;  
+  overflow: hidden;
   margin-bottom: 20px;
   &:before {
     content: " ";
@@ -271,10 +270,10 @@
     top: 6px;
     left: 10px;
     background: @orange url("../img/svg/input-photo.svg") no-repeat center left;
-    background-size: 25px;   
-    height: 25px; 
+    background-size: 25px;
+    height: 25px;
     width: 25px;
-  }  
+  }
 }
 
 .btn-photo input {
@@ -292,14 +291,14 @@
 
 .tag-list {
   font-size: @font-size-small;
-  
+
   .tag {
     white-space: nowrap;
     padding: 1px 4px;
     margin: 5px 4px 5px 0;
     background: @lighter-gray;
     display: inline-block;
-    
+
     .label {
       color: @gray;
       display: inline;

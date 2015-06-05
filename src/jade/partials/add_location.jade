@@ -1,5 +1,5 @@
-.detail-container(ng-show="detail_context=='add_location'")  
-  .detail-select-container 
+.detail-container(ng-show="detail_context=='add_location'")
+  .detail-select-container
     | [{location.type_ids == undefined ? "Source type" : source_types_by_id[location.type_ids[0]].name}]
     select(ng-model="location.type_ids[0]", ng-options="type.id as type.name for type in source_types")
 
@@ -7,12 +7,12 @@
   //  input(type="text", placeholder="?", ng-model="location.lat")
 
   //.detail-input-container
-  //  input(type="text", placeholder="?", ng-model="location.lng")                
-  
+  //  input(type="text", placeholder="?", ng-model="location.lng")
+
   .detail-textarea-container.location
     textarea(placeholder="Description...", ng-model="location.description")
 
-  .detail-select-container 
+  .detail-select-container
     | [{location.access == undefined ? "Access" : short_access_types[location.access]}]
     select(ng-model="location.access", ng-options="i as access for (i,access) in short_access_types")
 
@@ -23,24 +23,24 @@
   //-OBSERVATION
 
   .detail-range-container
-    .detail-range-label-1 Quality 
+    .detail-range-label-1 Quality
     .detail-range-label-2 [{ratings[location.observation.quality_rating]}]
-    .detail-range-control 
-      input(type="range", ng-model="location.observation.quality_rating", min="0", max="4", step="1", value="0")
+    .detail-range-control
+      input(type="range", ng-model="location.observation.quality_rating", min="0", max="4", step="1")
 
   .detail-range-container
     .detail-range-label-1 Yield
     .detail-range-label-2 [{ratings[location.observation.yield_rating]}]
-    .detail-range-control 
-      input(type="range", ng-model="location.observation.yield_rating", min="0", max="4", step="1", value="0")
+    .detail-range-control
+      input(type="range", ng-model="location.observation.yield_rating", min="0", max="4", step="1")
 
   .detail-range-container
-    .detail-range-label-1 Ripeness 
+    .detail-range-label-1 Ripeness
     .detail-range-label-2 [{fruiting_status[location.observation.fruiting]}]
-    .detail-range-control 
-      input(type="range", ng-model="location.observation.fruiting", min="0", max="3", step="1", value="0")
+    .detail-range-control
+      input(type="range", ng-model="location.observation.fruiting", min="0", max="3", step="1")
 
-  .detail-btn.btn-photo 
+  .detail-btn.btn-photo
     | Take a photo
     input(type="file", capture="camera", accept="image/*", onchange="angular.element(this).scope().update_photo_list(this.files)")
 
