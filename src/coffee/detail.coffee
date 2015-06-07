@@ -1,4 +1,4 @@
-controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
+controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService)->
   console.log "Detail Ctrl"
 
   document.addEventListener("backbutton", $scope.menu_left_btn_click, false)
@@ -102,6 +102,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       $scope.reviews = data
 
   $scope.save_review = ()->
+    mapStateService.setLoading("Saving...")
     console.log($scope.location)
     $http.post urls.add_review($scope.location.id), observation: $scope.location.observation
     .success (data)->
@@ -109,6 +110,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       console.log(data)
       $scope.location_id = $scope.location.id
       load_location($scope.location.id)
+      mapStateService.removeLoading()
       $scope.detail_context = "view_location"
     .error (data)->
       console.log("ADD FAILED")
@@ -116,6 +118,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       $rootScope.$broadcast "SHOW-MAP"
 
   $scope.save_location = ()->
+    mapStateService.setLoading("Saving...")
     console.log($scope.location)
     # since index = 0 implies undefined, we need to unset these before saving
     if $scope.location.observation.quality_rating == 0
@@ -131,6 +134,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
         console.log(data)
         $scope.location_id = data.id
         load_location(data.id)
+        mapStateService.removeLoading()
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("ADD FAILED")
@@ -142,6 +146,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
         console.log("UPDATED")
         console.log(data)
         load_location($scope.location_id)
+        mapStateService.removeLoading()
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("UPDATE FAILED")
