@@ -1,5 +1,5 @@
-#This service runs the loading animation and updates text
-#services/factories
+# This service runs the loading animation and updates text
+# services/factories
 factories.mapStateService = ()->
 
   data =
