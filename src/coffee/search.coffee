@@ -166,6 +166,6 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         
   ## Info Window / Add Location
   $scope.show_detail = (location_id)->
-    if location_id or $scope.add_location
-      $scope.add_location = false
-      $rootScope.$broadcast "SHOW-DETAIL", location_id
+    $scope.add_location = false
+    #$rootScope.$broadcast "SHOW-DETAIL", location_id
+    $scope.$parent.$broadcast "SHOW-DETAIL", location_id
