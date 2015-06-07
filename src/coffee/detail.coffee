@@ -148,7 +148,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
     $scope.detail_context = 'add_review'
     $scope.menu_title = 'Add review'
     $scope.location = {}
-    $scope.location.observation = {}
+    $scope.location.observation = {quality_rating: 0, yield_rating: 0, fruiting: 0}
     $scope.location.id = id
 
   $scope.menu_left_btn_click = ()->
