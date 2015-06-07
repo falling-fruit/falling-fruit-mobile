@@ -19,14 +19,14 @@
         include partials/list
 
       .search-footer
-        .settings(class="controls" ng-click="show_menu = !show_menu")
+        .settings(class="controls", ng-click="show_menu = !show_menu")
         .btn-group-container
           .btn-group
             .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
             .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()") List
-        .add-location(class="controls" ng-click="begin_add_location()")
+        .add-location(class="controls", ng-click="begin_add_location()")
         .add-location-controls(ng-class="{show: add_location}")
-          .cancel-add-location(class="controls" ng-click="cancel_add_location()")
-          .confirm-add-location(class="controls" ng-click="show_detail()")
+          .cancel-add-location(class="controls", ng-click="cancel_add_location()")
+          .confirm-add-location(class="controls", ng-click="show_detail()")
 
     include partials/search_side_menu
