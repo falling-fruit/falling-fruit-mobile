@@ -112,10 +112,14 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory)->
       $rootScope.$broadcast "SHOW-MAP"
 
   $scope.save_location = ()->
-    # turn types string into an array if needed
-    #if $scope.location.types != null and $scope.location.types.constructor == String
-    #  $scope.location.types = [$scope.location.types]
     console.log($scope.location)
+    # since index = 0 implies undefined, we need to unset these before saving
+    if $scope.location.observation.quality_rating == 0
+      $scope.location.observation.quality_rating = null
+    if $scope.location.observation.yield_rating == 0
+      $scope.location.observation.yield_rating = null
+    if $scope.location.observation.fruiting == 0
+      $scope.location.observation.fruiting = null
     if !$scope.location.id?
       $http.post urls.add_location, location: $scope.location
       .success (data)->

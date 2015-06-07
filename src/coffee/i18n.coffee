@@ -23,6 +23,7 @@ factories.I18nFactory = ($rootScope)->
     ]
   
     ratings: [
+      ""
       "Poor"
       "Fair"
       "Good"
@@ -31,6 +32,7 @@ factories.I18nFactory = ($rootScope)->
     ]
   
     fruiting_status: [
+      ""
       "Bare"
       "Flowering"
       "Fruiting"
