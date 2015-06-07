@@ -86,39 +86,42 @@ directives.mapContainer = ()->
           continue
         if window.FFApp.markersArray.length > window.FFApp.markersMax
           break
-        w = 25
-        h = 25
-        wo = parseInt(w / 2, 10)
-        ho = parseInt(h / 2, 10)
-        if window.FFApp.openMarkerId is lid
-          m = window.FFApp.openMarker
-        else
-          m = new google.maps.Marker(
-            icon:
-              url: "img/png/map-location-dot.png"
-              size: new google.maps.Size(w, h)
-              origin: new google.maps.Point(0, 0)
-
-              # by convention, icon center is at ~40%
-              anchor: new google.maps.Point(w * 0.4, h * 0.4)
-
-            position: new google.maps.LatLng(mdata[i]["lat"], mdata[i]["lng"])
-            map: window.FFApp.map_obj
-            title: mdata[i]["title"]
-            draggable: false
-            zIndex: 0
-          )
-
-          setup_marker m, lid
-
-          window.FFApp.markersArray.push
-            marker: m
-            id: mdata[i]["location_id"]
-            type: "point"
-            types: mdata[i]["types"]
-            parent_types: mdata[i]["parent_types"]
-
+        window.add_marker(mdata[i])
         i++
+
+    window.add_marker = (mdata)->
+      w = 25
+      h = 25
+      wo = parseInt(w / 2, 10)
+      ho = parseInt(h / 2, 10)
+      lid = mdata["location_id"]
+      if window.FFApp.openMarkerId is lid
+        m = window.FFApp.openMarker
+      else
+        m = new google.maps.Marker(
+          icon:
+            url: "img/png/map-location-dot.png"
+            size: new google.maps.Size(w, h)
+            origin: new google.maps.Point(0, 0)
+
+            # by convention, icon center is at ~40%
+            anchor: new google.maps.Point(w * 0.4, h * 0.4)
+
+          position: new google.maps.LatLng(mdata["lat"], mdata["lng"])
+          map: window.FFApp.map_obj
+          title: mdata["title"]
+          draggable: false
+          zIndex: 0
+        )
+
+        setup_marker m, lid
+
+        window.FFApp.markersArray.push
+          marker: m
+          id: mdata["location_id"]
+          type: "point"
+          types: mdata["types"]
+          parent_types: mdata["parent_types"]
 
     setup_marker = (marker,lid)->
       google.maps.event.addListener marker, "click", ()->
