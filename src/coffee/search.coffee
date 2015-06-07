@@ -163,9 +163,11 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
-        
+  
+  $scope.$on "SHOW-DETAIL", (event, id)->
+    console.log "SHOW-DETAIL caught in search controller", id    
+    
   ## Info Window / Add Location
   $scope.show_detail = (location_id)->
     $scope.add_location = false
-    #$rootScope.$broadcast "SHOW-DETAIL", location_id
     $scope.$parent.$broadcast "SHOW-DETAIL", location_id
