@@ -40,7 +40,7 @@
   .auth-container.forgot-password(ng-show="authStateData.auth_context == 'forgot_password'")
     .auth-default-logo
     .auth-input-container.email
-      input(type="text", placeholder="Email")
+      input(type="text", placeholder="Email", ng-model="forgot_password_user.email")
       .auth-error-text()
 
     a.auth-btn(ng-click="forgot_password()") Send reset instructions
