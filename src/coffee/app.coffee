@@ -19,7 +19,7 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
       responseError: (rejection)->
         $rootScope.$broadcast "LOADING-STOP"
         if rejection.status == 401
-          $rootScope.$broadcast "LOGGED-OUT"
+          AuthFactory.handleLoggedOut()
         else
           $rootScope.$broadcast "LOADING-ERROR", "Please try again."
 
