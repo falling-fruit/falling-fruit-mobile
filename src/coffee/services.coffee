@@ -33,6 +33,9 @@ factories.AuthFactory = ($rootScope)->
       localStorage.setItem('EMAIL', email)
       localStorage.setItem('TOKEN', access_token)
 
+    forgot_password: (email)->
+      console.log "Forgot Password:", email
+
     is_logged_in: ()->
       @email = localStorage.getItem("EMAIL") if not @email
       @access_token = localStorage.getItem("TOKEN") if not @access_token
@@ -57,11 +60,11 @@ factories.AuthFactory = ($rootScope)->
       return @email
 
     get_login_user_model: ()->
-      console.log "get_login_user_model"
+      console.log "Called get_login_user_model"
       return email: @email, password: null
 
     get_register_user_model: ()->
-      console.log "get_register_user_model"
+      console.log "Called get_register_user_model"
       return name: null, email: @email, password: null
 
     needsAuth: (url)->
