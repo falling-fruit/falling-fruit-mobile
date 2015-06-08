@@ -47,10 +47,11 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   console.log "Auth Ctrl"
 
   $rootScope.$on "LOGGED-OUT", ()->
+    console.log "LOGGED-OUT ON", $scope.show_menu
     AuthFactory.clear()
+    $scope.show_auth = true
     $scope.login_user = AuthFactory.get_login_user_model()
     $scope.register_user = AuthFactory.get_register_user_model()
-    $scope.show_auth = true
     $scope.auth_context = "login"
 
   $scope.login = ()->
@@ -60,7 +61,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         AuthFactory.save($scope.login_user.email, data.auth_token)
         $scope.login_user = AuthFactory.get_login_user_model()
         $scope.show_auth = false
-        $rootScope.$broadcast("LOGGED-IN")
+        $rootScope.$broadcast "LOGGED-IN"
       else
         console.log "DATA isnt as expected", data
     .error ()->
@@ -87,7 +88,8 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       alert("There was a registration error: " + error_text )
 
   $scope.forgot_password = ()->
-
+    console.log "FORGOT PASSWORD"
+    #Does nothing?
 
   if not AuthFactory.is_logged_in()
     $rootScope.$broadcast "LOGGED-OUT"

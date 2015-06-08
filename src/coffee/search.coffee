@@ -93,18 +93,19 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     console.log "Begin add location"
     $scope.add_location = true
     $scope.current_view = "map"
-  
+
   $scope.cancel_add_location = ()->
     console.log "Cancel add location"
     $scope.add_location = false
 
   $scope.update_position = ()->
-  
+
     # Position
     navigator.geolocation.getCurrentPosition ((position)->
       console.log("Position obtained")
       window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
       window.FFApp.position_accuracy = position.coords.accuracy
+
       if !window.FFApp.position_marker
         window.FFApp.position_marker = new google.maps.Marker(
           icon:
@@ -122,9 +123,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         )
       else
         window.FFApp.position_marker.setPosition(window.FFApp.current_position)
+
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
       $scope.list_center = window.FFApp.current_position
-      
+
       # Heading
       # (degrees clockwise from North)
       # FIXME: Actually retrieve heading
@@ -160,7 +162,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
           icon = window.FFApp.heading_marker.getIcon()
           icon.rotation = heading
           window.FFApp.heading_marker.setIcon(icon)
-        
+
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
   
@@ -169,5 +171,6 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     
   ## Info Window / Add Location
   $scope.show_detail = (location_id)->
-    $scope.add_location = false
-    $rootScope.$broadcast "SHOW-DETAIL", location_id
+    if location_id or $scope.add_location
+      $scope.add_location = false
+      $rootScope.$broadcast "SHOW-DETAIL", location_id
