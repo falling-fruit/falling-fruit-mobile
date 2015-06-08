@@ -1,4 +1,4 @@
-controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
+controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthFactory)->
   console.log "Menu Ctrl"
 
   ## Map type
@@ -71,5 +71,4 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
 
   # Logout
   $scope.logout = ->
-    $rootScope.$broadcast "LOGGED-OUT"
-    $scope.show_menu = false
+    AuthFactory.handleLoggedOut() #Formerly Broadcast "LOGGED-OUT"

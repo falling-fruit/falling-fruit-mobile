@@ -1,13 +1,9 @@
 controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   console.log "Auth Ctrl"
 
-  $rootScope.$on "LOGGED-OUT", ()->
-    console.log "LOGGED-OUT ON", $scope.show_menu
-    AuthFactory.clear()
-    $scope.show_auth = true
-    $scope.login_user = AuthFactory.get_login_user_model()
-    $scope.register_user = AuthFactory.get_register_user_model()
-    $scope.auth_context = "login"
+  $scope.authStateData = AuthFactory.data
+  $scope.login_user = AuthFactory.get_login_user_model()
+  $scope.register_user = AuthFactory.get_register_user_model()
 
   $scope.login = ()->
     $http.post urls.login, user: $scope.login_user
@@ -47,6 +43,6 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
     #Does nothing?
 
   if not AuthFactory.is_logged_in()
-    $rootScope.$broadcast "LOGGED-OUT"
+    AuthFactory.handleLoggedOut()
   else
     $rootScope.$broadcast "SHOW-MAP"
