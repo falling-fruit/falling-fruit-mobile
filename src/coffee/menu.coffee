@@ -1,4 +1,4 @@
-controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
+controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthFactory)->
   console.log "Menu Ctrl"
 
   ## Map type
@@ -60,7 +60,6 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
       $scope.list_center = null
 
   $scope.metric = window.FFApp.metric
-
   $scope.toggle_metric = ()->
     window.FFApp.metric = not window.FFApp.metric
     $scope.metric = window.FFApp.metric
@@ -70,6 +69,5 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory)->
         item.distance_string = I18nFactory.distance_string(item.distance)
 
   # Logout
-  $scope.logout = ->
-    $rootScope.$broadcast "LOGGED-OUT"
-    $scope.show_menu = false
+  $scope.logout = ()->
+    AuthFactory.handleLoggedOut() #Formerly Broadcast "LOGGED-OUT"
