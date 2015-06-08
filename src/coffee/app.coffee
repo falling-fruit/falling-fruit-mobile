@@ -19,7 +19,7 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
       responseError: (rejection)->
         $rootScope.$broadcast "LOADING-STOP"
         if rejection.status == 401
-          $rootScope.$broadcast "LOGGED-OUT"
+          AuthFactory.handleLoggedOut()
         else
           $rootScope.$broadcast "LOADING-ERROR", "Please try again."
 
@@ -29,6 +29,7 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
 
 FallingFruitApp.config ($routeProvider)->
   $routeProvider
+    
     .when '/search',
       templateUrl: 'html/search.html'
       controller: 'SearchCtrl'
@@ -36,9 +37,13 @@ FallingFruitApp.config ($routeProvider)->
     .when '/detail',
       templateUrl: 'html/detail.html'
       controller: 'DetailCtrl'
-
+      
+    .when '/auth',
+      templateUrl: 'html/auth.html'
+      controller: 'AuthCtrl'
+    
     .otherwise
-      redirectTo: '/search'
+      redirectTo: '/auth'
 
 auth_host = "https://fallingfruit.org/"
 #auth_host = "http://localhost:3000/"

@@ -6,6 +6,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.add_location = false
   $scope.search_text = ''
   $scope.mapStateData = mapStateService.data
+  $scope.authStateData = AuthFactory.data
 
   ## Map
   $scope.show_map = ()->
@@ -19,6 +20,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       if $scope.current_view == "list"
         $scope.load_list($scope.list_center)
   )
+
+  $scope.toggleSideMenu = ()->
+    AuthFactory.toggleSideMenu()
 
   $scope.show_list = ()->
     if $scope.current_view != "list"
@@ -165,10 +169,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
-  
-  $scope.$on "SHOW-DETAIL", (event, id)->
-    console.log "SHOW-DETAIL caught in search controller", id    
-    
+
   ## Info Window / Add Location
   $scope.show_detail = (location_id)->
     if location_id or $scope.add_location
