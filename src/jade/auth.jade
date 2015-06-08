@@ -1,6 +1,6 @@
-.auth-overlay(ng-controller="AuthCtrl", ng-class="show_auth == true ? 'show': ''")
+.auth-overlay(ng-controller="AuthCtrl", ng-class="{show: authStateData.show_auth}")
 
-  .auth-container.login(ng-show="auth_context == 'login'")
+  .auth-container.login(ng-show="authStateData.auth_context == 'login'")
     .auth-login-logo
     .auth-input-container.email
       input(type="text", placeholder="Email", ng-model="login_user.email")
@@ -9,16 +9,16 @@
       input(type="password", placeholder="Password", ng-model="login_user.password")
       .auth-error-text
 
-    a.auth-text(ng-click="auth_context='forgot_password'") Forgot password?
+    a.auth-text(ng-click="setAuthContext('forgot_password')") Forgot password?
 
     .auth-btn-container
       a.auth-btn-cell(ng-click="login()") Sign in
-      a.auth-btn-cell(ng-click="auth_context = 'register'") Register
+      a.auth-btn-cell(ng-click="setAuthContext('register')") Register
 
     //- .auth-btn-container
     //-   a.auth-btn-dark(ng-click="anonymous_login()") Use anonymously
 
-  .auth-container.register(ng-show="auth_context == 'register'")
+  .auth-container.register(ng-show="authStateData.auth_context == 'register'")
     .auth-default-logo
     .auth-input-container.name
       input(type="text", placeholder="Name", ng-model="register_user.name")
@@ -35,9 +35,9 @@
 
     a.auth-btn(ng-click="register()") Send confirmation
 
-    a.auth-btn-dark(ng-click="auth_context = 'login'") Login
+    a.auth-btn-dark(ng-click="setAuthContext('login')") Login
 
-  .auth-container.forgot-password(ng-show="auth_context == 'forgot_password'")
+  .auth-container.forgot-password(ng-show="authStateData.auth_context == 'forgot_password'")
     .auth-default-logo
     .auth-input-container.email
       input(type="text", placeholder="Email")
@@ -45,4 +45,4 @@
 
     a.auth-btn(ng-click="forgot_password()") Send reset instructions
 
-    a.auth-btn-dark(ng-click="auth_context = 'login'") Login
+    a.auth-btn-dark(ng-click="setAuthContext('login')") Login

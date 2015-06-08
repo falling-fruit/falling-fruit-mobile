@@ -5,13 +5,17 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   $scope.login_user = AuthFactory.get_login_user_model()
   $scope.register_user = AuthFactory.get_register_user_model()
 
+  $scope.setAuthContext = (context)->
+    console.log "Setting Auth Context To:", context
+    AuthFactory.setAuthContext(context)
+
   $scope.login = ()->
     $http.post urls.login, user: $scope.login_user
     .success (data)->
       if data.hasOwnProperty("auth_token") and data.auth_token isnt null
         AuthFactory.save($scope.login_user.email, data.auth_token)
         $scope.login_user = AuthFactory.get_login_user_model()
-        $scope.show_auth = false
+        AuthFactory.hideAuth()
         $rootScope.$broadcast "LOGGED-IN"
       else
         console.log "DATA isnt as expected", data
@@ -26,9 +30,9 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
 
     $http.post urls.register, user: user
     .success (data) ->
-      $rootScope.$broadcast("REGISTERED")
+      #$rootScope.$broadcast("REGISTERED")
       alert("You've been registered! Please confirm your email address, then come back and login.")
-      $scope.auth_context = "login"
+      AuthFactory.setAuthContext("login")
       $scope.login_user.email = $scope.register_user.email
     .error (data) ->
       $scope.register_user = AuthFactory.get_register_user_model()
