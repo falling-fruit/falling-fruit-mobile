@@ -26,7 +26,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       data.map_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.map_obj.getCenter()))
       if window.FFApp.current_position
         data.current_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position))
-      
+
       data.season_string = I18nFactory.season_string(data.season_start, data.season_stop, data.no_season)
       data.access_string = I18nFactory.short_access_types[data.access]
       $scope.location = data
@@ -68,7 +68,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     reader.readAsDataURL photo
 
   $scope.$on "SHOW-DETAIL", (event, id)->
-    console.log "SHOW-DETAIL Broadcast Event Handler", id
+    console.log "SHOW-DETAIL Broadcast CAUGHT", id
     $scope.show_detail = true
     # This can be called from 'Add Location' or 'List View' to view Location. Be careful
     if !id?
@@ -103,7 +103,9 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
 
   $scope.save_review = ()->
     mapStateService.setLoading("Saving...")
-    console.log($scope.location)
+
+    console.log("Location: ", $scope.location)
+
     $http.post urls.add_review($scope.location.id), observation: $scope.location.observation
     .success (data)->
       console.log("ADDED")
