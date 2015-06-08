@@ -1,13 +1,16 @@
 # Cordova built stuff
-platforms/android/ant-build
+platforms/android/ant-build/
+platforms/android/CordovaLib/
 
 # Grunt built stuff
 platforms/ios/www/
 platforms/android/assets/www/
-www/js/all.js
-www/css/style.css
-www/css/index.css
 www/index.html
+www/css/index.css
+www/css/style.css
+www/html/*
+www/js/*
+!www/js/*/lib/
 
 # Xcode
 .DS_Store
