@@ -1,6 +1,6 @@
 controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   console.log "Auth Ctrl"
-
+  
   $scope.authStateData = AuthFactory.data
   $scope.login_user = AuthFactory.get_login_user_model()
   $scope.register_user = AuthFactory.get_register_user_model()
@@ -45,8 +45,3 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
   $scope.forgot_password = ()->
     console.log "FORGOT PASSWORD"
     #Does nothing?
-
-  if not AuthFactory.is_logged_in()
-    AuthFactory.handleLoggedOut()
-  else
-    $rootScope.$broadcast "SHOW-MAP"

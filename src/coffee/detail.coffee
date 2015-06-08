@@ -1,7 +1,7 @@
 controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService)->
   console.log "Detail Ctrl"
 
-  document.addEventListener("backbutton", $scope.menu_left_btn_click, false)
+  #document.addEventListener("backbutton", $scope.menu_left_btn_click, false)
 
   reset = ()->
     console.log "RESETTING LOCATION / REVIEW DATA"
