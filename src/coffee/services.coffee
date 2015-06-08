@@ -2,23 +2,20 @@
 # services/factories
 factories.mapStateService = ()->
 
-  data =
-    isLoading: false
-    message: ""
+  props =
+    data:
+      isLoading: false
+      message: ""
 
-  setLoading = (msg)->
-    data.isLoading = true
-    data.message = msg
+    setLoading: (msg)->
+      @data.isLoading = true
+      @data.message = msg
 
-  removeLoading = ()->
-    data.isLoading = false
-    data.message = ""
+    removeLoading: ()->
+      @data.isLoading = false
+      @data.message = ""
 
-  return {
-    data: data
-    setLoading: setLoading
-    removeLoading: removeLoading
-  }
+  return props
 
 factories.AuthFactory = ($rootScope)->
 
@@ -26,9 +23,9 @@ factories.AuthFactory = ($rootScope)->
     email: null
     access_token: null
     data:
-      show_side_menu: false
-      show_auth: false
+      show_auth: true
       auth_context: "login"
+      show_side_menu: false
 
     save: (email, access_token)->
       @email = email
@@ -47,7 +44,7 @@ factories.AuthFactory = ($rootScope)->
 
     clear: ()->
       console.log "Clearing Email / Token"
-      @email = @access_token =null
+      @email = @access_token = null
       localStorage.removeItem('EMAIL')
       localStorage.removeItem('TOKEN')
 

@@ -36,9 +36,13 @@ FallingFruitApp.config ($routeProvider)->
     .when '/detail',
       templateUrl: 'html/detail.html'
       controller: 'DetailCtrl'
-
+      
+    .when '/auth',
+      templateUrl: 'html/auth.html'
+      controller: 'AuthCtrl'
+    
     .otherwise
-      redirectTo: '/search'
+      redirectTo: '/auth'
 
 auth_host = "https://fallingfruit.org/"
 #auth_host = "http://localhost:3000/"

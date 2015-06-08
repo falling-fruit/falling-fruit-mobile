@@ -60,7 +60,6 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
       $scope.list_center = null
 
   $scope.metric = window.FFApp.metric
-
   $scope.toggle_metric = ()->
     window.FFApp.metric = not window.FFApp.metric
     $scope.metric = window.FFApp.metric
@@ -70,5 +69,5 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
         item.distance_string = I18nFactory.distance_string(item.distance)
 
   # Logout
-  $scope.logout = ->
+  $scope.logout = ()->
     AuthFactory.handleLoggedOut() #Formerly Broadcast "LOGGED-OUT"
