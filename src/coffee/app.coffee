@@ -29,6 +29,7 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
 
 FallingFruitApp.config ($routeProvider)->
   $routeProvider
+    
     .when '/search',
       templateUrl: 'html/search.html'
       controller: 'SearchCtrl'
