@@ -1,5 +1,6 @@
-# Cordova built stuff
-platforms/android/ant-build/
+# Cordova built stuff (except the apk)
+platforms/android/ant-build/*
+!platforms/android/ant-build/CordovaApp-debug.apk
 platforms/android/CordovaLib/
 
 # Grunt built stuff
