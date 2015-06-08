@@ -1,6 +1,7 @@
 controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService)->
   console.log "Detail Ctrl"
 
+  # WARNING: This line breaks the app on Android.
   #document.addEventListener("backbutton", $scope.menu_left_btn_click, false)
 
   reset = ()->
