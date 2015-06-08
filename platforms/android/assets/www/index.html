@@ -13,7 +13,7 @@
   <body>
     <div class="main-container">
       <div ng-controller="SearchCtrl" class="search-outer-container">
-        <div ng-class="{show: show_menu}" class="search-inner-container">
+        <div ng-class="{show: authStateData.show_side_menu}" class="search-inner-container">
           <div class="search-container">
             <ff-loading-msg></ff-loading-msg>
             <div class="search-menu">
@@ -38,7 +38,7 @@
                   </div></a></div>
             </div>
             <div class="search-footer">
-              <div ng-click="show_menu = !show_menu" class="settings controls"></div>
+              <div ng-click="toggleSideMenu()" class="settings controls"></div>
               <div class="btn-group-container">
                 <div class="btn-group">
                   <div ng-class="current_view == 'map' ? 'active' : ''" ng-click="show_map()" class="btn-map">Map</div>
@@ -222,8 +222,8 @@
           <div ng-click="save_review()" class="detail-btn-dark btn-save">Save</div>
         </div>
       </div>
-      <div ng-controller="AuthCtrl" ng-class="show_auth == true ? 'show': ''" class="auth-overlay">
-        <div ng-show="auth_context == 'login'" class="auth-container login">
+      <div ng-controller="AuthCtrl" ng-class="{show: authStateData.show_auth}" class="auth-overlay">
+        <div ng-show="authStateData.auth_context == 'login'" class="auth-container login">
           <div class="auth-login-logo"></div>
           <div class="auth-input-container email">
             <input type="text" placeholder="Email" ng-model="login_user.email">
@@ -232,10 +232,10 @@
           <div class="auth-input-container password">
             <input type="password" placeholder="Password" ng-model="login_user.password">
             <div class="auth-error-text"></div>
-          </div><a ng-click="auth_context='forgot_password'" class="auth-text">Forgot password?</a>
-          <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Sign in</a><a ng-click="auth_context = 'register'" class="auth-btn-cell">Register</a></div>
+          </div><a ng-click="setAuthContext('forgot_password')" class="auth-text">Forgot password?</a>
+          <div class="auth-btn-container"><a ng-click="login()" class="auth-btn-cell">Sign in</a><a ng-click="setAuthContext('register')" class="auth-btn-cell">Register</a></div>
         </div>
-        <div ng-show="auth_context == 'register'" class="auth-container register">
+        <div ng-show="authStateData.auth_context == 'register'" class="auth-container register">
           <div class="auth-default-logo"></div>
           <div class="auth-input-container name">
             <input type="text" placeholder="Name" ng-model="register_user.name">
@@ -252,14 +252,14 @@
           <div class="auth-input-container password-2">
             <input type="password" placeholder="Confirm password" ng-model="register_user.password_confirmation">
             <div class="auth-error-text"></div>
-          </div><a ng-click="register()" class="auth-btn">Send confirmation</a><a ng-click="auth_context = 'login'" class="auth-btn-dark">Login</a>
+          </div><a ng-click="register()" class="auth-btn">Send confirmation</a><a ng-click="setAuthContext('login')" class="auth-btn-dark">Login</a>
         </div>
-        <div ng-show="auth_context == 'forgot_password'" class="auth-container forgot-password">
+        <div ng-show="authStateData.auth_context == 'forgot_password'" class="auth-container forgot-password">
           <div class="auth-default-logo"></div>
           <div class="auth-input-container email">
             <input type="text" placeholder="Email">
             <div class="auth-error-text"></div>
-          </div><a ng-click="forgot_password()" class="auth-btn">Send reset instructions</a><a ng-click="auth_context = 'login'" class="auth-btn-dark">Login</a>
+          </div><a ng-click="forgot_password()" class="auth-btn">Send reset instructions</a><a ng-click="setAuthContext('login')" class="auth-btn-dark">Login</a>
         </div>
       </div>
     </div>
