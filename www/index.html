@@ -257,7 +257,7 @@
         <div ng-show="authStateData.auth_context == 'forgot_password'" class="auth-container forgot-password">
           <div class="auth-default-logo"></div>
           <div class="auth-input-container email">
-            <input type="text" placeholder="Email">
+            <input type="text" placeholder="Email" ng-model="forgot_password_user.email">
             <div class="auth-error-text"></div>
           </div><a ng-click="forgot_password()" class="auth-btn">Send reset instructions</a><a ng-click="setAuthContext('login')" class="auth-btn-dark">Login</a>
         </div>
