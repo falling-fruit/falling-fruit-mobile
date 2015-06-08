@@ -1,6 +1,6 @@
 .search-outer-container(ng-controller="SearchCtrl")
   //-.loading-indicator
-  .search-inner-container(ng-class="{show: show_menu}")
+  .search-inner-container(ng-class="{show: authStateData.show_side_menu}")
     .search-container
       ff-loading-msg
 
@@ -15,11 +15,11 @@
       .search-view-container
         .map-container(directionstype="directions_type", stoplist="stopList")
           .crosshair(ng-class="{add: add_location}")
-        
+
         include partials/list
 
       .search-footer
-        .settings(class="controls", ng-click="show_menu = !show_menu")
+        .settings(class="controls", ng-click="toggleSideMenu()")
         .btn-group-container
           .btn-group
             .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
