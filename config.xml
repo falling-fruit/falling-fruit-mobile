@@ -9,6 +9,7 @@
   </author>
   <content src="index.html"/>
   <access origin="*"/>
+  <preference name="KeyboardShrinksView" value="false"/>
   <preference name="FadeSplashScreen" value="false"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="AutoHideSplashScreen" value="false"/>
