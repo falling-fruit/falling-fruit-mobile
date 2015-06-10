@@ -1,7 +1,8 @@
 .auth-overlay(ng-controller="AuthCtrl", ng-class="{show: authStateData.show_auth}")
 
   .auth-container.login(ng-show="authStateData.auth_context == 'login'")
-    .auth-login-logo
+    .auth-splash-logo
+    .auth-default-logo
     .auth-input-container.email
       input(type="text", placeholder="Email", ng-model="login_user.email")
       .auth-error-text
