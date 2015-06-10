@@ -141,6 +141,26 @@ You can only build iOS applications on a Mac. Here are the instructions to setup
 Only one emulator may run at a time, so if you want to test the app in a different emulator, you need to quit the emulator application and run a different target within Xcode.
 ```
 
+### Develop with a device
+
+#### Android-based phone
+
+Plug your phone into your computer. Ensure that in the Phone's settings you've enabled USB Debugging (under Developer) and that you can install things from Untrusted sources (under Security).
+
+```
+sudo adb start-server
+adb devices
+```
+
+Should start the adb server with sufficient permissions and list your device. To build and install an APK on the device:
+
+```
+cordova build android
+adb -d install /path/to/thething.apk
+```
+
+(note that it cannot already be installed, so you have to uninstall it on each debug iteration)
+
 ## Icons and Splash Screens
 	http://ionicframework.com/docs/cli/icon-splashscreen.html
 
