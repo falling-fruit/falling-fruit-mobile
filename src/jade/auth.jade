@@ -10,7 +10,7 @@
       input(type="password", placeholder="Password", ng-model="login_user.password")
       .auth-error-text
 
-    a.auth-text(ng-click="setAuthContext('forgot_password')") Forgot password?
+    //a.auth-text(ng-click="setAuthContext('forgot_password')") Forgot password?
 
     .auth-btn-container
       a.auth-btn-cell(ng-click="login()") Sign in
@@ -38,12 +38,12 @@
 
     a.auth-btn-dark(ng-click="setAuthContext('login')") Login
 
-  .auth-container.forgot-password(ng-show="authStateData.auth_context == 'forgot_password'")
-    .auth-default-logo
-    .auth-input-container.email
-      input(type="text", placeholder="Email", ng-model="forgot_password_user.email")
-      .auth-error-text()
+  //.auth-container.forgot-password(ng-show="authStateData.auth_context == 'forgot_password'")
+  //  .auth-default-logo
+  //  .auth-input-container.email
+  //    input(type="text", placeholder="Email", ng-model="forgot_password_user.email")
+  //    .auth-error-text()
 
-    a.auth-btn(ng-click="forgot_password()") Send reset instructions
+  //  a.auth-btn(ng-click="forgot_password()") Send reset instructions
 
-    a.auth-btn-dark(ng-click="setAuthContext('login')") Login
+  //  a.auth-btn-dark(ng-click="setAuthContext('login')") Login
