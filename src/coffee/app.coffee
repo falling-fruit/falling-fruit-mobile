@@ -45,6 +45,18 @@ FallingFruitApp.config ($routeProvider)->
     .otherwise
       redirectTo: '/auth'
 
+# catch cordova events and do things with them
+FallingFruitApp.run ($rootScope) ->
+
+  onBack = ->
+    $rootScope.$broadcast "BACKBUTTON"
+
+  #document.addEventListener 'online', onOnline, false
+  #document.addEventListener 'offline', onOffline, false
+  document.addEventListener 'backbutton', onBack, false
+  return
+
+
 auth_host = "https://fallingfruit.org/"
 #auth_host = "http://localhost:3000/"
 host = auth_host + "api/"

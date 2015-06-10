@@ -46,4 +46,3 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
     console.log "FORGOT PASSWORD"
     email = $scope.forgot_password_user.email
     AuthFactory.forgot_password(email)
-
