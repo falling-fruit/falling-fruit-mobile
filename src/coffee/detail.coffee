@@ -53,20 +53,21 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.selected_location_source_type = ()->
     return "Source type"
 
-  $scope.update_photo_list = (photos)->
-    photo = photos[0]
-    reader = new FileReader()
-    if !$scope.location.observation?
-      $scope.location.observation = {}
-
-    reader.onloadend = ()->
-      $scope.location.observation.photo_data =
-        data: reader.result
-        name: photo.name
-        type: photo.type
-      console.log("Processed photo")
-
-    reader.readAsDataURL photo
+  $scope.update_photo_list = ()->
+    if navigator.camera?
+      navigator.camera.getPicture ((photo_data)->
+        $scope.location.observation.photo_data =
+          data: photo_data
+          #name: ?
+          #type: ?
+        console.log("Processed photo")
+      ), (->
+        console.log("Failed to get photo")
+      ),
+        quality: 50
+        destinationType: Camera.DestinationType.DATA_URL
+    else
+      console.log("No camera attached to this device...")
 
   $scope.$on "SHOW-DETAIL", (event, id)->
     console.log "SHOW-DETAIL Broadcast CAUGHT", id
