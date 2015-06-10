@@ -41,7 +41,8 @@
       input(type="range", ng-model="location.observation.fruiting", min="0", max="4", step="1")
 
   .detail-btn.btn-photo(ng-click="update_photo_list()") Take a Photo
-    //| Take a photo
-    //input(type="file", capture="camera", accept="image/*", onchange="angular.element(this).scope().update_photo_list(this.files)")
+
+  .detail-textarea-container
+    textarea(ng-model="location.observation.photo_caption", placeholder="Add a caption...")
 
   .detail-btn-dark.btn-save(ng-click="save_location()") Save

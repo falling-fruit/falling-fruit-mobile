@@ -1,9 +1,6 @@
 controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService)->
   console.log "Detail Ctrl"
 
-  # WARNING: This line breaks the app on Android.
-  #document.addEventListener("backbutton", $scope.menu_left_btn_click, false)
-
   reset = ()->
     console.log "RESETTING LOCATION / REVIEW DATA"
     $scope.location = {}
@@ -68,6 +65,12 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         destinationType: Camera.DestinationType.DATA_URL
     else
       console.log("No camera attached to this device...")
+
+  $scope.$on "BACKBUTTON", ()->    
+    if $scope.show_detail
+      $scope.menu_left_btn_click()
+    else
+      navigator.app.exitApp();
 
   $scope.$on "SHOW-DETAIL", (event, id)->
     console.log "SHOW-DETAIL Broadcast CAUGHT", id
