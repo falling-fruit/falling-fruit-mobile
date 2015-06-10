@@ -135,6 +135,7 @@ You can only build iOS applications on a Mac. Here are the instructions to setup
 - Select the hello app in the panel immediately to the right.
 - Select the intended device from the toolbar's Scheme menu, such as the iPhone 6.0 Simulator as highlighted here:
 - Press the Run button that appears in the same toolbar to the left of the Scheme. That builds, deploys and runs the application in the emulator. A separate emulator application opens to display the app:
+- http://stackoverflow.com/questions/8377970/xcode-ios-project-only-shows-my-mac-64-bit-but-not-simulator-or-device (If My Mac is only build option for Xcode)
 
 ```
 Only one emulator may run at a time, so if you want to test the app in a different emulator, you need to quit the emulator application and run a different target within Xcode.
