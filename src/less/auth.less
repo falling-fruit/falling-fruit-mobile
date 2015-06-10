@@ -10,16 +10,24 @@
   .transform-translate(0, -100%, 0);
 }
 
-.auth-login-logo {
-  height: 30%;
-  background: url('../img/png/login-bg.png') center center no-repeat;
-  background-size: auto 100%;
+.auth-splash-logo {
+  height: 10%;
+  min-height: 100px;
+  padding: 0 2%;
+  background: url('../img/png/pears-header.png') center top no-repeat;
+  background-size: contain;
+  background-origin: content-box;
 }
 
 .auth-default-logo {
-  height: 20%;
-  background: url('../img/svg/logo-full.svg') center center no-repeat;
-  background-size: 80% auto;
+  height: 10%;
+  min-height: 100px;
+  background: url('../img/svg/logo-full.svg') center bottom no-repeat;
+  background-size: 75% 100%;
+}
+
+div:not(.login) > .auth-default-logo {
+  margin-top: 10px;
 }
 
 .auth-container {

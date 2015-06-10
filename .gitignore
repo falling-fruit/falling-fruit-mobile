@@ -1,4 +1,4 @@
-# Cordova built stuff (except the apk)
+# Cordova build android (except the apk)
 platforms/android/ant-build/*
 !platforms/android/ant-build/CordovaApp-debug.apk
 platforms/android/CordovaLib/
@@ -13,9 +13,8 @@ www/html/*
 www/js/*
 !www/js/*/lib/
 
-# Xcode
+# XCode
 .DS_Store
-platforms/ios/build/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -34,6 +33,8 @@ DerivedData
 platforms/ios/wedeliver-lucy.xcodeproj/xcuserdata/*
 platforms/ios/wedeliver-lucy.xcodeproj/project.xcworkspace/xcuserdata/*
 *.xcuserstate
+
+# Cordova build ios (except the app) 
 
 # Miscellany
 npm-debug.log
