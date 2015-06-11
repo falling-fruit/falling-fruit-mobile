@@ -18,6 +18,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
         AuthFactory.hideAuth()
         $rootScope.$broadcast "LOGGED-IN"
       else
+        alert("Uh oh! " + data.error + " Please try again!")
         console.log "DATA isnt as expected", data
     .error ()->
       $scope.login_user.password = null
