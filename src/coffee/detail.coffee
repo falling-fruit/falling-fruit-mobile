@@ -67,9 +67,12 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       console.log("No camera attached to this device...")
 
   $scope.$on "BACKBUTTON", ()->
-    if $scope.show_detail
+    console.log "Caught BACKBUTTON event in controller"
+    if $scope.show_detail == true
+      console.log "In Detail so going back"
       $scope.menu_left_btn_click()
     else
+      console.log "Not in detail so exiting"
       navigator.app.exitApp();
 
   $scope.$on "SHOW-DETAIL", (event, id)->
