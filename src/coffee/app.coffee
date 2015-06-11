@@ -29,7 +29,7 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
 
 FallingFruitApp.config ($routeProvider)->
   $routeProvider
-    
+
     .when '/search',
       templateUrl: 'html/search.html'
       controller: 'SearchCtrl'
@@ -37,11 +37,11 @@ FallingFruitApp.config ($routeProvider)->
     .when '/detail',
       templateUrl: 'html/detail.html'
       controller: 'DetailCtrl'
-      
+
     .when '/auth',
       templateUrl: 'html/auth.html'
       controller: 'AuthCtrl'
-    
+
     .otherwise
       redirectTo: '/auth'
 
