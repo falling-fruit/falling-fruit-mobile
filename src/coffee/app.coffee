@@ -48,14 +48,18 @@ FallingFruitApp.config ($routeProvider)->
 # catch cordova events and do things with them
 FallingFruitApp.run ($rootScope) ->
 
-  onBack = ->
+  onBack = (event)->
+    console.log "Caught back button press"
+    event.preventDefault();
+    event.stopPropagation();
+    console.log "Broadcasting backbutton press to application"
     $rootScope.$broadcast "BACKBUTTON"
 
   #document.addEventListener 'online', onOnline, false
   #document.addEventListener 'offline', onOffline, false
   document.addEventListener 'backbutton', onBack, false
-  return
 
+  return
 
 auth_host = "https://fallingfruit.org/"
 #auth_host = "http://localhost:3000/"
