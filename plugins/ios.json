@@ -5,49 +5,15 @@
     },
     "config_munge": {
         "files": {
-            "framework": {
-                "parents": {
-                    "CoreLocation.framework": [
-                        {
-                            "xml": "false",
-                            "count": 2
-                        }
-                    ],
-                    "ImageIO.framework": [
-                        {
-                            "xml": "true",
-                            "count": 1
-                        }
-                    ],
-                    "CoreGraphics.framework": [
-                        {
-                            "xml": "false",
-                            "count": 3
-                        },
-                        {
-                            "xml": false,
-                            "count": 1
-                        }
-                    ],
-                    "AssetsLibrary.framework": [
-                        {
-                            "xml": "false",
-                            "count": 3
-                        }
-                    ],
-                    "MobileCoreServices.framework": [
-                        {
-                            "xml": "false",
-                            "count": 3
-                        }
-                    ]
-                }
-            },
             "config.xml": {
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
@@ -63,20 +29,50 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Capture\"><param name=\"ios-package\" value=\"CDVCapture\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"Capture\"><param name=\"ios-package\" value=\"CDVCapture\" /></feature>",
                             "count": 1
+                        }
+                    ]
+                }
+            },
+            "framework": {
+                "parents": {
+                    "CoreGraphics.framework": [
+                        {
+                            "xml": false,
+                            "count": 4
+                        }
+                    ],
+                    "ImageIO.framework": [
+                        {
+                            "xml": true,
+                            "count": 1
+                        }
+                    ],
+                    "CoreLocation.framework": [
+                        {
+                            "xml": false,
+                            "count": 2
+                        }
+                    ],
+                    "AssetsLibrary.framework": [
+                        {
+                            "xml": false,
+                            "count": 3
+                        }
+                    ],
+                    "MobileCoreServices.framework": [
+                        {
+                            "xml": false,
+                            "count": 3
                         }
                     ]
                 }
@@ -94,28 +90,27 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.geolocation": {
-            "PACKAGE_NAME": "uh.fallingfruit.app"
-        },
-        "org.apache.cordova.camera": {
-            "PACKAGE_NAME": "uh.fallingfruit.app"
-        },
-        "org.apache.cordova.media-capture": {
-            "PACKAGE_NAME": "uh.fallingfruit.app"
-        },
-        "org.apache.cordova.file-transfer": {
-            "PACKAGE_NAME": "uh.fallingfruit.app"
-        },
         "com.ionic.keyboard": {
             "PACKAGE_NAME": "uh.fallingfruit.app"
         },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "uh.fallingfruit.app"
-        }
-    },
-    "dependent_plugins": {
+        },
+        "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "uh.fallingfruit.app"
+        },
         "org.apache.cordova.file": {
             "PACKAGE_NAME": "uh.fallingfruit.app"
+        },
+        "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "uh.fallingfruit.app"
+        },
+        "org.apache.cordova.geolocation": {
+            "PACKAGE_NAME": "uh.fallingfruit.app"
+        },
+        "org.apache.cordova.media-capture": {
+            "PACKAGE_NAME": "uh.fallingfruit.app"
         }
-    }
+    },
+    "dependent_plugins": {}
 }

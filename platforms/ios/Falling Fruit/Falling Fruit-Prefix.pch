@@ -17,7 +17,7 @@
  under the License.
  */
 //
-// Prefix header for all source files of the 'FallingFruit' target in the 'FallingFruit' project
+// Prefix header for all source files of the 'Falling Fruit' target in the 'Falling Fruit' project
 //
 
 #ifdef __OBJC__
