@@ -34,16 +34,17 @@ factories.AuthFactory = ($rootScope)->
       localStorage.setItem('TOKEN', access_token)
 
     forgot_password: (email)->
-      console.log "Forgot Password:", email
+      alert("Sorry! Feature Coming Soon.")
 
     is_logged_in: ()->
       @email = localStorage.getItem("EMAIL") if not @email
       @access_token = localStorage.getItem("TOKEN") if not @access_token
 
-      if not @email or not @access_token
-        return false
-      else
+      if @email? and @access_token?
+        @data.show_auth = false
         return true
+      else
+        return false
 
     clear: ()->
       console.log "Clearing Email / Token"

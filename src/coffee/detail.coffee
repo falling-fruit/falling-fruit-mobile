@@ -66,7 +66,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     else
       console.log("No camera attached to this device...")
 
-  $scope.$on "BACKBUTTON", ()->    
+  $scope.$on "BACKBUTTON", ()->
     if $scope.show_detail
       $scope.menu_left_btn_click()
     else
