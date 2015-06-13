@@ -27,7 +27,7 @@
   // Description
   .location-description [{location.description}]
   .location-author 
-    div Added [{location.created_at | date : 'MMMM d, yyyy'}] by [{location.author}]
+    div Added [{location.created_at | date : 'MMMM d, yyyy'}] by [{location.author? location.author : "Anonymous"}]
     div(ng-show="location.updated_at.toDateString() != location.created_at.toDateString()") Updated [{location.updated_at | date : 'MMMM d, yyyy'}]
   
   // Buttons

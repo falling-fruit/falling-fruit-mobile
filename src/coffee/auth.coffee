@@ -46,6 +46,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
     email = $scope.forgot_password_user.email
     AuthFactory.forgot_password(email)
 
+  # Shows map if already logged in
   if AuthFactory.is_logged_in()
     $rootScope.$broadcast "SHOW-MAP"
   else
