@@ -6,15 +6,17 @@
 
       .search-menu
         .current-location(ng-click="update_position()")
-
         .search-input-container
           form(ng-submit="location_search()")
             input(type="submit", value="")
             input(type="text", placeholder="Enter a location...", ng-model="search_text")
-
+        //-.zoom-controls
+            .zoom-in(class="controls", ng-click="window.FFApp.setZoom(window.FFApp.getZoom() + 1)")
+            .zoom-out(class="controls", ng-click="zoom_map(-1)")
+          
       .search-view-container
         .map-container(directionstype="directions_type", stoplist="stopList")
-          .crosshair(ng-class="{add: add_location}")
+          .crosshair(ng-class="{add: add_location_controls}")
 
         include partials/list
 
@@ -25,8 +27,8 @@
             .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
             .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()") List
         .add-location(class="controls", ng-click="begin_add_location()")
-        .add-location-controls(ng-class="{show: add_location}")
+        .add-location-controls(ng-class="{show: add_location_controls}")
           .cancel-add-location(class="controls", ng-click="cancel_add_location()")
-          .confirm-add-location(class="controls", ng-click="show_detail()")
+          .confirm-add-location(class="controls", ng-click="confirm_add_location()")
 
     include partials/search_side_menu

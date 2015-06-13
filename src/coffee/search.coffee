@@ -3,7 +3,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
   $scope.current_view = "map"
   $scope.show_menu = false
-  $scope.add_location = false
+  $scope.add_location_controls = false
   $scope.search_text = ''
   $scope.mapStateData = mapStateService.data
   $scope.authStateData = AuthFactory.data
@@ -32,7 +32,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.load_list = (center)->
     mapStateService.setLoading("Loading...")
     $scope.targeted = false
-    $scope.add_location = false
+    $scope.add_location_controls = false
 
     if !center
       center = window.FFApp.map_obj.getCenter()
@@ -95,13 +95,18 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
   $scope.begin_add_location = ()->
     console.log "Begin add location"
-    $scope.add_location = true
+    $scope.add_location_controls = true
     $scope.current_view = "map"
 
   $scope.cancel_add_location = ()->
     console.log "Cancel add location"
-    $scope.add_location = false
-
+    $scope.add_location_controls = false
+    
+  $scope.confirm_add_location = ()->
+    console.log "Confirm add location"
+    $scope.add_location_controls = false
+    $rootScope.$broadcast "ADD-LOCATION"
+    
   $scope.update_position = ()->
 
     # Position
@@ -134,7 +139,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       # Heading
       # (degrees clockwise from North)
       # FIXME: Actually retrieve heading
-      heading = Math.floor(Math.random() * 359)
+      #heading = Math.floor(Math.random() * 359)
       if heading
         if !window.FFApp.heading_marker
           heading_icon_inner =
@@ -171,7 +176,5 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       console.log("Failed to get position") # FIXME: replace with common error handling
 
   ## Info Window / Add Location
-  $scope.show_detail = (location_id)->
-    if location_id or $scope.add_location
-      $scope.add_location = false
-      $rootScope.$broadcast "SHOW-DETAIL", location_id
+  $scope.show_location = (location_id)->
+    $rootScope.$broadcast "SHOW-LOCATION", location_id
