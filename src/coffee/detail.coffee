@@ -7,6 +7,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     $scope.location.observation = {quality_rating: 0, yield_rating: 0, fruiting: 0}
     $scope.current_location = null
     $scope.current_review = null
+    $scope.location_id = null
     $scope.reviews = []
     $http.get urls.source_types
     .success (data)->
@@ -28,6 +29,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       data.season_string = I18nFactory.season_string(data.season_start, data.season_stop, data.no_season)
       data.access_string = I18nFactory.short_access_types[data.access]
       $scope.location = data
+      $scope.location_id = data.id
       # this is sort of hacky--manually call the map directive function with just one location worth of data
       console.log "Adding marker to map"
       window.add_marker({title: data["title"], lat: data["lat"], lng: data["lng"], location_id: data["id"], types: data["type_ids"]})
@@ -82,6 +84,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     if !id?
       $scope.detail_context = "add_location"
       $scope.menu_title = "Add location"
+      $scope.location_id = null
       if window.FFApp.map_initialized == true
         center = window.FFApp.map_obj.getCenter()
         $scope.location.lat = center.lat()
@@ -145,6 +148,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         $scope.location_id = data.id
         load_location(data.id)
         mapStateService.removeLoading()
+        $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("ADD FAILED")
@@ -157,6 +161,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         console.log(data)
         load_location($scope.location_id)
         mapStateService.removeLoading()
+        $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("UPDATE FAILED")
@@ -166,25 +171,17 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.add_review = (id)->
     $scope.detail_context = 'add_review'
     $scope.menu_title = 'Add review'
-    $scope.location = {}
-    $scope.location.observation = {quality_rating: 0, yield_rating: 0, fruiting: 0}
-    $scope.location.id = id
 
   $scope.menu_left_btn_click = ()->
-    if $scope.detail_context == "add_review"
-      $scope.detail_context = "view_reviews"
-      $scope.menu_title = "Reviews"
-    else if $scope.detail_context == "view_reviews"
-      $scope.detail_context = "view_location"
-      $scope.menu_title = "Location"
-    else if $scope.detail_context == "add_location"
+    if $scope.detail_context == "add_location" or $scope.detail_context == "add_review" or $scope.detail_context == "view_reviews"
       if !$scope.location_id?
+        $timeout reset, 500
         $scope.show_detail = false
         $scope.location_id = undefined
       else
-        $scope.detail_context = "view_location"
         $scope.menu_title = "Location"
-    else if $scope.detail_context == "view_location"
+        $scope.detail_context = "view_location"
+    else
       $timeout reset, 500
       $scope.show_detail = false
       $scope.location_id = undefined
