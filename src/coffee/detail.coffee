@@ -21,18 +21,25 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   load_location = (id)->
     $http.get urls.location + id + ".json"
     .success (data)->
+      # Distance
       latlng = new google.maps.LatLng(data.lat, data.lng)
       data.map_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.map_obj.getCenter()))
       if window.FFApp.current_position
         data.current_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position))
-
+      
+      # Tags
       data.season_string = I18nFactory.season_string(data.season_start, data.season_stop, data.no_season)
       data.access_string = I18nFactory.short_access_types[data.access]
+      
+      # Types (unique)
+      data.type_ids = _.uniq(data.type_ids)
       $scope.location = data
       $scope.location_id = data.id
-      # this is sort of hacky--manually call the map directive function with just one location worth of data
-      console.log "Adding marker to map"
+      
+      # Refresh map
+      # sort of hacky--manually call the map directive function with just one location worth of data
       window.add_marker({title: data["title"], lat: data["lat"], lng: data["lng"], location_id: data["id"], types: data["type_ids"]})
+      console.log "Added marker to map"
       console.log "DATA", data
 
   # Pull in useful things from i18n factory
