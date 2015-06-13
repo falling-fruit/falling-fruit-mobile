@@ -148,6 +148,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         $scope.location_id = data.id
         load_location(data.id)
         mapStateService.removeLoading()
+        $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("ADD FAILED")
@@ -160,6 +161,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         console.log(data)
         load_location($scope.location_id)
         mapStateService.removeLoading()
+        $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("UPDATE FAILED")
@@ -173,11 +175,12 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.menu_left_btn_click = ()->
     if $scope.detail_context == "add_location" or $scope.detail_context == "add_review" or $scope.detail_context == "view_reviews"
       if !$scope.location_id?
+        $timeout reset, 500
         $scope.show_detail = false
         $scope.location_id = undefined
       else
-        $scope.detail_context = "view_location"
         $scope.menu_title = "Location"
+        $scope.detail_context = "view_location"
     else
       $timeout reset, 500
       $scope.show_detail = false
