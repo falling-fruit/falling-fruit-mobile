@@ -68,7 +68,9 @@
   overflow: hidden;
 
   .loading {
-    background: url('../img/gif/loader.gif') no-repeat 8% center / 40px rgba(250, 249, 249, .8);
+    background: url('../img/gif/loader.gif') no-repeat 8% center;
+    background-size: 40px;
+    background-color: rgba(250, 249, 249, .8);
     position: absolute;
     height: 40px;
     left: 0;
@@ -168,7 +170,8 @@
   .opacity(0.8);
 
   &.add {
-    background: url("../img/svg/crosshair-large-green.svg") no-repeat center center / 100%;
+    background: url("../img/svg/crosshair-large-green.svg") no-repeat center center;
+    background-size: 100%;
     .opacity(1);
   }
 }
@@ -204,13 +207,15 @@
     width: @map-footer-height;
   }
   .settings {
-    background: url("../img/svg/control-settings.svg") no-repeat center center / 30px;
+    background: url("../img/svg/control-settings.svg") no-repeat center center;
+    background-size: 30px;
     position: absolute;
     left: 0;
     top: 0;
   }
   .add-location {
-    background: url("../img/svg/control-add.svg") no-repeat center center / 30px;
+    background: url("../img/svg/control-add.svg") no-repeat center center;
+    background-size: 30px;
     position: absolute;
     top: 0;
     right: 0;
@@ -240,11 +245,13 @@
 }
 
 .cancel-add-location {
-  background: url("../img/svg/cross.svg") no-repeat center center / 30px;
+  background: url("../img/svg/cross.svg") no-repeat center center;
+  background-size: 30px;
 }
 
 .confirm-add-location {
-  background: url("../img/svg/check.svg") no-repeat center center / 30px;
+  background: url("../img/svg/check.svg") no-repeat center center;
+  background-size: 30px;
 }
 
 .btn-group {
