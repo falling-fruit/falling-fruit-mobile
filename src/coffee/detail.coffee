@@ -2,20 +2,22 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   console.log "Detail Ctrl"
 
   reset = ()->
-    console.log "RESETTING LOCATION / REVIEW DATA"
+    console.log "RESETTING LOCATION"
     $scope.location = {}
-    $scope.location.observation = {quality_rating: 0, yield_rating: 0, fruiting: 0}
-    $scope.current_location = null
-    $scope.current_review = null
     $scope.location_id = null
     $scope.reviews = []
+    reset_review()
     $http.get urls.source_types
     .success (data)->
+      # FIXME: Are we really calling this every time?
       $scope.source_types = data
       $scope.source_types_by_id = {}
       for row in data
         $scope.source_types_by_id[row.id]  = row
-
+  
+  reset_review = ()->
+    $scope.location.observation = {quality_rating: "-1", yield_rating: "-1", fruiting: "-1"}
+  
   reset()
 
   load_location = (id)->
@@ -80,28 +82,28 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     if $scope.show_detail == true
       console.log "In Detail so going back"
       $scope.menu_left_btn_click()
-    else
-      console.log "Not in detail so exiting"
-      navigator.app.exitApp();
 
-  $scope.$on "SHOW-DETAIL", (event, id)->
-    console.log "SHOW-DETAIL Broadcast CAUGHT", id
+  $scope.$on "SHOW-LOCATION", (event, id)->
+    console.log "SHOW-LOCATION Broadcast CAUGHT", id
     $scope.show_detail = true
-    # This can be called from 'Add Location' or 'List View' to view Location. Be careful
-    if !id?
-      $scope.detail_context = "add_location"
-      $scope.menu_title = "Add location"
-      $scope.location_id = null
-      if window.FFApp.map_initialized == true
-        center = window.FFApp.map_obj.getCenter()
-        $scope.location.lat = center.lat()
-        $scope.location.lng = center.lng()
-    else
-      $scope.location_id = id
-      load_location(id)
-      $scope.detail_context = "view_location"
-      $scope.menu_title = "Location"
+    $scope.location_id = id
+    load_location(id)
+    $scope.detail_context = "view_location"
+    $scope.menu_title = "Location"
 
+  $scope.$on "ADD-LOCATION", (event)->
+    console.log "ADD-LOCATION Broadcast CAUGHT"
+    $scope.show_detail = true
+    $scope.detail_context = "add_location"
+    $scope.menu_title = "Add location"
+    $scope.location_id = null
+    if window.FFApp.map_initialized == true
+      center = window.FFApp.map_obj.getCenter()
+      $scope.location.lat = center.lat()
+      $scope.location.lng = center.lng()
+    else
+      console.log "ERROR: Map not initialized!"
+  
   $scope.show_reviews = ()->
     $scope.detail_context = 'view_reviews'
     $scope.menu_title = 'Reviews'
@@ -121,10 +123,18 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
 
   $scope.save_review = ()->
     mapStateService.setLoading("Saving...")
-
     console.log("Location: ", $scope.location)
-
-    $http.post urls.add_review($scope.location.id), observation: $scope.location.observation
+    # Since index = -1 implies undefined, we need to unset these before saving
+    # Edit copy of observation to avoid changing view
+    observation = angular.copy($scope.location.observation)
+    if observation.quality_rating == "-1"
+      observation.quality_rating = null
+    if observation.yield_rating == "-1"
+      observation.yield_rating = null
+    if observation.fruiting == "-1"
+      observation.fruiting = null
+      
+    $http.post urls.add_review($scope.location.id), observation: observation
     .success (data)->
       console.log("ADDED")
       console.log(data)
@@ -135,18 +145,22 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     .error (data)->
       console.log("ADD FAILED")
       console.log(data)
-      $rootScope.$broadcast "SHOW-MAP"
+      $scope.detail_context = "view_location"
 
   $scope.save_location = ()->
     mapStateService.setLoading("Saving...")
-    console.log($scope.location)
-    # since index = 0 implies undefined, we need to unset these before saving
-    if $scope.location.observation.quality_rating == 0
-      $scope.location.observation.quality_rating = null
-    if $scope.location.observation.yield_rating == 0
-      $scope.location.observation.yield_rating = null
-    if $scope.location.observation.fruiting == 0
-      $scope.location.observation.fruiting = null
+    console.log("Location: ", $scope.location)
+    # Since index = -1 implies undefined, we need to unset these before saving
+    # Edit copy of observation to avoid changing view
+    observation = angular.copy($scope.location.observation)
+    if observation.quality_rating == "-1"
+      observation.quality_rating = null
+    if $scope.location.observation.yield_rating == "-1"
+      observation.yield_rating = null
+    if $scope.location.observation.fruiting == "-1"
+      observation.fruiting = null
+    $scope.location.observation = observation
+    
     if !$scope.location.id?
       $http.post urls.add_location, location: $scope.location
       .success (data)->
@@ -176,19 +190,20 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         $rootScope.$broadcast "SHOW-MAP"
 
   $scope.add_review = (id)->
+    reset_review() # Ensures that sliders are in left-most (null) position
     $scope.detail_context = 'add_review'
-    $scope.menu_title = 'Add review'
-
+    $scope.menu_title = "Add review"
+  
   $scope.menu_left_btn_click = ()->
-    if $scope.detail_context == "add_location" or $scope.detail_context == "add_review" or $scope.detail_context == "view_reviews"
-      if !$scope.location_id?
-        $timeout reset, 500
-        $scope.show_detail = false
-        $scope.location_id = undefined
-      else
-        $scope.menu_title = "Location"
-        $scope.detail_context = "view_location"
+    # FIXME: add_review can be reached from view_location and view_reviews
+    if $scope.detail_context == "edit_location" or $scope.detail_context == "add_review" or $scope.detail_context == "view_reviews"
+      $scope.menu_title = "Location"
+      $scope.detail_context = "view_location"
     else
-      $timeout reset, 500
       $scope.show_detail = false
       $scope.location_id = undefined
+      $timeout reset, 500 # Smoother animation
+    # For Android backbutton: wait until next digest loop, then update view
+    $timeout(()->
+      $scope.$apply()
+    )

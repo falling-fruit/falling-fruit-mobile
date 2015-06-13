@@ -1,4 +1,4 @@
-controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
+controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFactory)->
   console.log "Auth Ctrl"
 
   $scope.authStateData = AuthFactory.data
@@ -41,11 +41,24 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $location, AuthFactory)->
       error_text += " Password is " + data.errors.password if data.errors.password?
       alert("There was a registration error: " + error_text )
 
+  # FIXME: Currently unused
   $scope.forgot_password = ()->
     console.log "FORGOT PASSWORD"
     email = $scope.forgot_password_user.email
     AuthFactory.forgot_password(email)
 
+  $scope.$on "BACKBUTTON", ()->
+    console.log "Caught BACKBUTTON event in controller"
+    if $scope.authStateData.show_auth == true
+      if $scope.authStateData.auth_context == 'login'
+        navigator.app.exitApp();
+      else
+        AuthFactory.setAuthContext('login')
+        # Wait until next digest loop, then update view
+        $timeout(()->
+          $scope.$apply()
+        )
+  
   # Shows map if already logged in
   if AuthFactory.is_logged_in()
     $rootScope.$broadcast "SHOW-MAP"

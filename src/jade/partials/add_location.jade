@@ -1,4 +1,4 @@
-.detail-container(ng-show="detail_context=='add_location'")
+.detail-container(ng-show="detail_context=='add_location' || detail_context=='edit_location'")
   .detail-select-container
     | [{location.type_ids == undefined ? "Source type" : source_types_by_id[location.type_ids[0]].name}]
     select(ng-model="location.type_ids[0]", ng-options="type.id as type.name for type in source_types")
@@ -22,27 +22,6 @@
 
   //-OBSERVATION
 
-  .detail-range-container
-    .detail-range-label-1 Quality
-    .detail-range-label-2 [{ratings[location.observation.quality_rating]}]
-    .detail-range-control
-      input(type="range", ng-model="location.observation.quality_rating", min="0", max="5", step="1")
-
-  .detail-range-container
-    .detail-range-label-1 Yield
-    .detail-range-label-2 [{ratings[location.observation.yield_rating]}]
-    .detail-range-control
-      input(type="range", ng-model="location.observation.yield_rating", min="0", max="5", step="1")
-
-  .detail-range-container
-    .detail-range-label-1 Ripeness
-    .detail-range-label-2 [{fruiting_status[location.observation.fruiting]}]
-    .detail-range-control
-      input(type="range", ng-model="location.observation.fruiting", min="0", max="4", step="1")
-
-  .detail-btn.btn-photo(ng-click="update_photo_list()") Take a Photo
-
-  //.detail-textarea-container
-  //  textarea(ng-model="location.observation.photo_caption", placeholder="Add a caption...")
+  include repeated_review_fields
 
   .detail-btn-dark.btn-save(ng-click="save_location()") Save

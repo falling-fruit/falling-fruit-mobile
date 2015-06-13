@@ -123,11 +123,11 @@ directives.mapContainer = ()->
           types: mdata["types"]
           parent_types: mdata["parent_types"]
 
-    setup_marker = (marker,lid)->
+    setup_marker = (marker,location_id)->
       google.maps.event.addListener marker, "click", ()->
-        window.FFApp.openMarkerId = lid
+        window.FFApp.openMarkerId = location_id
         window.FFApp.openMarker = marker
-        $rootScope.$broadcast "SHOW-DETAIL", lid
+        $rootScope.$broadcast "SHOW-LOCATION", location_id
 
     load_map = (center) ->
       map_options =

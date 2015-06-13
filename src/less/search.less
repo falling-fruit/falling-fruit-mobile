@@ -129,6 +129,32 @@
   width: 100%;
 }
 
+.zoom-controls {
+  position: absolute;
+  left: 0;
+  top: @map-menu-height;
+  width: @map-menu-height;
+  height: 2 * @map-menu-height;
+  z-index: @zindex-map + 1;
+  background-color: @ff-white;
+  .opacity(0.75);
+  div {
+    border-bottom: solid 1px @light-gray;
+    height: @map-menu-height;
+    width: @map-menu-height;
+  }
+}
+
+.zoom-in {
+  background: url("../img/svg/cross.svg") no-repeat center center;
+  background-size: 30px;
+}
+
+.zoom-out {
+  background: url("../img/svg/check.svg") no-repeat center center;
+  background-size: 30px;
+}
+
 // MAP
 
 .map-container {
@@ -235,7 +261,7 @@
   width: @map-footer-height;
   z-index: @zindex-map + 1;
   background-color: @ff-white;
-  display: none;
+  display: none; // avoid controls flashing on and off
   &.show {
     display: block;
   }

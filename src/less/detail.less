@@ -128,7 +128,7 @@
 .detail-btn-container {
   display: table;
   width: 80%;
-  margin: 20px auto 0px auto;
+  margin: 20px auto;
   table-layout: fixed;
   border-spacing: 20px 0px;
 }
@@ -231,14 +231,13 @@
 .detail-range-label-1 {
   display: table-cell;
   vertical-align: middle;
-  width: 75px;
+  width: 60px;
 }
 
 .detail-range-label-2 {
   display: table-cell;
-  padding: 0 10px;
   vertical-align: middle;
-  width: 65px;
+  width: 80px;
 }
 
 @input-range-dim: 28px;
@@ -253,14 +252,11 @@
   -webkit-appearance: none !important;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
   display: block;
-
   width: 100%;
   height: @input-range-dim + 2px;
   margin: 10px 0;
   background-color: @light-gray;
-
   padding: 2px;
-
   .border-radius(@input-range-dim);
 }
 
@@ -288,6 +284,7 @@
 .detail-btn.btn-photo {
   position: relative;
   overflow: hidden;
+  margin-top: 20px;
   margin-bottom: 20px;
   &:before {
     content: " ";
