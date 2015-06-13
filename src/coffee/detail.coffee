@@ -168,6 +168,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         console.log(data)
         $scope.location_id = data.id
         load_location(data.id)
+        $scope.location.map_distance = 0
         mapStateService.removeLoading()
         $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
