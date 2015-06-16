@@ -20,9 +20,10 @@ directives.mapContainer = ()->
     window.FFApp.position_accuracy = null
     window.FFApp.position_marker = null
     window.FFApp.heading_marker = null
-    window.FFApp.target_marker = null
     window.FFApp.muni = true
     window.FFApp.metric = true
+    window.FFApp.selectedType = null
+    window.FFApp.cats = null
 
     clear_offscreen_markers = () ->
       b = window.FFApp.map_obj.getBounds()
@@ -42,7 +43,7 @@ directives.mapContainer = ()->
         marker.marker.setMap(null)
       window.FFApp.markersArray = []
 
-    window.do_markers = (type_filter, cats) ->
+    window.do_markers = () ->
       console.log "UPDATING MARKERS"
       mapStateService.setLoading("Loading...")
       bounds = window.FFApp.map_obj.getBounds()
@@ -53,14 +54,12 @@ directives.mapContainer = ()->
         nelng: bounds.getNorthEast().lng()
         swlat: bounds.getSouthWest().lat()
         swlng: bounds.getSouthWest().lng()
-        api_key: "BJBNKMWM"
-
       if window.FFApp.muni
         list_params.muni = 1
       else
         list_params.muni = 0
-      list_params.c = cats unless cats is `undefined`
-      list_params.t = type_filter unless type_filter is `undefined`
+      list_params.c = window.FFApp.cats unless window.FFApp.cats is null
+      list_params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
       $http.get(urls.markers,
         params: list_params
       ).success (json) ->
@@ -146,15 +145,6 @@ directives.mapContainer = ()->
 
       google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
         window.do_markers()
-
-      # FIXME: Why use a marker instead of calling getCenter() when needed?
-      window.FFApp.target_marker = new google.maps.Marker(
-        position: window.FFApp.map_obj.getCenter()
-        map: window.FFApp.map_obj
-        clickable: false
-        visible: false
-      )
-      window.FFApp.target_marker.bindTo('position', window.FFApp.map_obj, 'center')
       
       window.FFApp.map_initialized = true  
       $rootScope.$broadcast "MAP-LOADED"

@@ -1,23 +1,28 @@
+<!-- http://cordova.apache.org/docs/en/5.0.0/config_ref_index.md.html#The%20config.xml%20File -->
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="uh.fallingfruit.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.fallingfruit" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Falling Fruit</name>
   <description>
-        An Apache Cordova application that responds to the deviceready event for Falling Fruit (fallingfruit.org).
-    </description>
+    A mobile application for Falling Fruit (fallingfruit.org).
+  </description>
   <author email="info@fallingfruit.org" href="http://fallingfruit.org">
-        Falling Fruit
+    Falling Fruit
   </author>
   <content src="index.html"/>
   <access origin="*"/>
+  <preference name="Fullscreen" value="false" />
+  <preference name="Orientation" value="portrait"/>
+  <preference name="DisallowOverscroll" value="true"/>
   <preference name="KeyboardShrinksView" value="false"/>
-  <preference name="FadeSplashScreen" value="false"/>
-  <preference name="ShowSplashScreenSpinner" value="false"/>
-  <preference name="AutoHideSplashScreen" value="true"/>
+  
+  <!-- Splashscreen -->
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="2000"/>
+  <preference name="AutoHideSplashScreen" value="true"/>
+  <preference name="FadeSplashScreen" value="false"/>
+  <preference name="ShowSplashScreenSpinner" value="false"/>
   <preference name="SplashMaintainAspectRatio" value="true"/>
   <preference name="SplashScreenBackgroundColor" value="#FAF9F9"/>
-  <preference name="Orientation" value="portrait"/>
   <platform name="browser">
     <preference name="SplashScreen" value="img/browser/splash.png" />
     <preference name="SplashScreenDelay" value="3000" />
@@ -26,7 +31,13 @@
     <preference name="SplashScreenWidth" value="320" />
     <preference name="SplashScreenHeight" value="480" />
   </platform>
+  
   <platform name="ios">
+    <preference name="EnableViewportScale" value="true"/>
+    <preference name="target-device" value="universal" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="deployment-target" value="6.1" />
     <icon src="resources/ios/icon/icon.png" width="57" height="57"/>
     <icon src="resources/ios/icon/icon@2x.png" width="114" height="114"/>
     <icon src="resources/ios/icon/icon-40.png" width="40" height="40"/>
@@ -52,6 +63,7 @@
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
   <platform name="android">
+    <preference name="android-targetSdkVersion" value="19" />
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
     <icon src="resources/android/icon/drawable-mdpi-icon.png" density="mdpi"/>
     <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi"/>

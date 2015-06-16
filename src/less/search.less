@@ -52,6 +52,7 @@
   top: 0;
   left: -100%;
   overflow: hidden;
+  .transform-translate(0, 0, 0);
   .transition-all(300ms);
 
   &.show {
@@ -192,7 +193,8 @@
   margin: -(@height/2) 0 0 -(@height/2); /* margins are all relative to item width */
   z-index: 99999;
   pointer-events: none;
-  background: url("../img/svg/crosshair-small-green.svg") no-repeat center center/ 100%;
+  background: url("../img/svg/crosshair-small-green.svg") no-repeat center center;
+  background-size: 100%;
   .opacity(0.8);
 
   &.add {
@@ -206,9 +208,10 @@
 
 .list-container {
   .content-container();
-  .vertical-scroll();
+  .vertical-scroll-fast();
   background-color: white;
   z-index: @zindex-list;
+  .transform-translate(0, 0, 0);
   .transition-all(300ms, linear);
   left: -50%;
 

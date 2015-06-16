@@ -90,3 +90,47 @@
   background-color: red;
   .border-radius(10px);
 }
+
+.search-param-select {
+  position: relative;
+  overflow: hidden;
+  padding-left: 30px;
+  
+  .down-arrow {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    height: 100%;
+    width: 50px;
+    background: url("../img/svg/control-arrow-downward.svg") no-repeat center center;
+    background-size: 20px;
+  }
+    
+  .reset {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    height: 100%;
+    width: 50px;
+    background: url("../img/svg/cross.svg") no-repeat center center;
+    background-size: 20px;
+    background-color: @side-menu-bg-color;
+  }
+  
+  .label {
+    line-height: 45px;
+    overflow: hidden;
+    margin-right: 60px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  select {
+    position: absolute;
+    height: 100%;
+    width: @search-side-menu-width - 200px;
+    top: 0;
+    left: 0;
+    .opacity(0);
+  }
+}
