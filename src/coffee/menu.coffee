@@ -58,7 +58,28 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
       $scope.load_list()
     else
       $scope.list_center = null
-
+  
+  $scope.selectedType = window.FFApp.selectedType
+  $http.get urls.source_types
+  .success (data)->
+    $scope.source_types = data
+    $scope.source_types_by_id = {}
+    for row in data
+      $scope.source_types_by_id[row.id]  = row
+  $scope.filter_types = ()->
+    window.FFApp.selectedType = $scope.selectedType
+    window.clear_markers()
+    window.do_markers()
+    if $scope.current_view == "list"
+      $scope.load_list()
+    else
+      $scope.list_center = null
+  $scope.reset_filter_types = () ->
+    $scope.selectedType = null
+    $scope.filter_types()
+    
+  ## Regional
+  
   $scope.metric = window.FFApp.metric
   $scope.toggle_metric = ()->
     window.FFApp.metric = not window.FFApp.metric
@@ -67,6 +88,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     if $scope.current_view == "list" and $scope.list_items
       for item in $scope.list_items
         item.distance_string = I18nFactory.distance_string(item.distance)
+
 
   # Logout
   $scope.logout = ()->

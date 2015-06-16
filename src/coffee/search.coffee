@@ -7,7 +7,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.search_text = ''
   $scope.mapStateData = mapStateService.data
   $scope.authStateData = AuthFactory.data
-
+  
   ## Map
   $scope.show_map = ()->
     if $scope.current_view != "map"
@@ -36,12 +36,6 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
     if !center
       center = window.FFApp.map_obj.getCenter()
-
-    if window.FFApp.muni
-      muni = 1
-    else
-      muni = 0
-
     bounds = window.FFApp.map_obj.getBounds()
     list_params =
       lat: center.lat()
@@ -50,8 +44,12 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       nelng: bounds.getNorthEast().lng()
       swlat: bounds.getSouthWest().lat()
       swlng: bounds.getSouthWest().lng()
-      muni: muni
-
+    if window.FFApp.muni
+      list_params.muni = 1
+    else
+      list_params.muni = 0
+    list_params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
+    list_params.c = window.FFApp.cats unless window.FFApp.cats is null
     $http.get urls.nearby, params: list_params
     .success (data)->
       for item in data
@@ -92,7 +90,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         $scope.list_center = latlng
       else
         console.log("Failed to do geocode") # FIXME: replace with common error handling
-
+  
+  ## Add location
+  
   $scope.begin_add_location = ()->
     console.log "Begin add location"
     $scope.add_location_controls = true
@@ -106,15 +106,16 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     console.log "Confirm add location"
     $scope.add_location_controls = false
     $rootScope.$broadcast "ADD-LOCATION"
-    
+  
+  ## Current position (update once)
+  
   $scope.update_position = ()->
 
-    # Position
+    # position
     navigator.geolocation.getCurrentPosition ((position)->
       console.log("Position obtained")
       window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
       window.FFApp.position_accuracy = position.coords.accuracy
-
       if !window.FFApp.position_marker
         window.FFApp.position_marker = new google.maps.Marker(
           icon:
@@ -132,49 +133,104 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         )
       else
         window.FFApp.position_marker.setPosition(window.FFApp.current_position)
-
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
       $scope.list_center = window.FFApp.current_position
-
-      # Heading
-      # (degrees clockwise from North)
-      # FIXME: Actually retrieve heading
-      #heading = Math.floor(Math.random() * 359)
-      if heading
-        if !window.FFApp.heading_marker
-          heading_icon_inner =
-            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-            fillColor: '#FF8A22'
-            fillOpacity: 1
-            strokeWeight: 0
-            scale: 4
-            rotation: heading
-            anchor: new google.maps.Point(0, 2.6)
-          heading_icon_outer =
-            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-            fillColor: '#1C95F2'
-            fillOpacity: 1
-            strokeWeight: 0
-            scale: 4
-            rotation: heading
-            anchor: new google.maps.Point(0, 7.75)
-          window.FFApp.heading_marker = new google.maps.Marker(
-            icon: heading_icon_outer
-            position: window.FFApp.current_position
-            map: window.FFApp.map_obj
-            draggable: false
-            clickable: false
-            zIndex: 100
-          )
-          window.FFApp.heading_marker.bindTo('position', window.FFApp.position_marker, 'position')
-        else
-          icon = window.FFApp.heading_marker.getIcon()
-          icon.rotation = heading
-          window.FFApp.heading_marker.setIcon(icon)
-
+      
+      # heading
+      # FIXME: Always returns zero?
+#       navigator.compass.getCurrentHeading ((heading)->
+#         console.log("Heading obtained")
+#         if !window.FFApp.heading_marker
+#           heading_icon_inner =
+#             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+#             fillColor: '#FF8A22'
+#             fillOpacity: 1
+#             strokeWeight: 0
+#             scale: 4
+#             rotation: heading.trueHeading
+#             anchor: new google.maps.Point(0, 2.6)
+#           heading_icon_outer =
+#             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+#             fillColor: '#1C95F2'
+#             fillOpacity: 1
+#             strokeWeight: 0
+#             scale: 4
+#             rotation: heading.trueHeading
+#             anchor: new google.maps.Point(0, 7.75)
+#           window.FFApp.heading_marker = new google.maps.Marker(
+#             icon: heading_icon_outer
+#             position: window.FFApp.current_position
+#             map: window.FFApp.map_obj
+#             draggable: false
+#             clickable: false
+#             zIndex: 100
+#           )
+#           window.FFApp.heading_marker.bindTo('position', window.FFApp.position_marker, 'position')
+#         else
+#           icon = window.FFApp.heading_marker.getIcon()
+#           icon.rotation = heading.trueHeading
+#           window.FFApp.heading_marker.setIcon(icon)
+#       ), ()->
+#         console.log("Failed to get heading") # FIXME: replace with common error handling
+      
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
-
+  
+  
+  ## Current position (watch - unused)
+  
+  $scope.ignoreCenterChange = false
+  # FIXME: Can't be called here (idea is to turn tracking off if map center is moved manually
+#   google.maps.event.addListener window.FFApp.map_obj, "center_changed", ()->
+#     if $scope.ignoreCenterChange
+#       $scope.ignoreCenterChange = false
+#     else if $scope.watchPositionID
+#       navigator.geolocation.clearWatch($scope.watchPositionID)
+#       $scope.watchPositionID = null
+  
+  $scope.watchPositionID = null
+  watchPositionOptions =
+    enableHighAccuracy: true
+    timeout: 10000
+    maximumAge: 3000
+  
+  $scope.toggle_position_tracking = ()->
+    if $scope.watchPositionID
+      navigator.geolocation.clearWatch($scope.watchPositionID)
+      $scope.watchPositionID = null
+    else
+      $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
+        console.log("Failed to watch position")
+      ), watchPositionOptions)
+  
+  watch_position = (position)->
+    
+    # position
+    console.log("Position updated")
+    window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+    window.FFApp.position_accuracy = position.coords.accuracy
+    if !window.FFApp.position_marker
+      window.FFApp.position_marker = new google.maps.Marker(
+        icon:
+          path: google.maps.SymbolPath.CIRCLE
+          strokeColor: '#1C95F2'
+          fillColor: '#FF8A22'
+          fillOpacity: 1
+          strokeWeight: 8
+          scale: 8
+        position: window.FFApp.current_position
+        map: window.FFApp.map_obj
+        draggable: false
+        clickable: false
+        zIndex: 100
+      )
+    else
+      window.FFApp.position_marker.setPosition(window.FFApp.current_position)
+    window.FFApp.ignoreCenterChange = true
+    window.FFApp.map_obj.panTo(window.FFApp.current_position)
+    $scope.list_center = window.FFApp.current_position
+  
+  
   ## Info Window / Add Location
   $scope.show_location = (location_id)->
     $rootScope.$broadcast "SHOW-LOCATION", location_id

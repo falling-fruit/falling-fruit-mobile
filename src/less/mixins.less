@@ -35,7 +35,17 @@
 .vertical-scroll() {
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-over-scrolling: touch;
+}
+
+.vertical-scroll-fast() {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-scroll() {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .border-radius(@radius) {

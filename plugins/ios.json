@@ -39,6 +39,10 @@
                         {
                             "xml": "<feature name=\"Capture\"><param name=\"ios-package\" value=\"CDVCapture\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Compass\"><param name=\"ios-package\" value=\"CDVCompass\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -60,7 +64,7 @@
                     "CoreLocation.framework": [
                         {
                             "xml": false,
-                            "count": 2
+                            "count": 3
                         }
                     ],
                     "AssetsLibrary.framework": [
@@ -110,6 +114,9 @@
         },
         "org.apache.cordova.media-capture": {
             "PACKAGE_NAME": "uh.fallingfruit.app"
+        },
+        "cordova-plugin-device-orientation": {
+            "PACKAGE_NAME": "org.fallingfruit"
         }
     },
     "dependent_plugins": {}

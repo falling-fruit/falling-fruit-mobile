@@ -58,7 +58,9 @@ FallingFruitApp.run ($rootScope) ->
   #document.addEventListener 'online', onOnline, false
   #document.addEventListener 'offline', onOffline, false
   document.addEventListener 'backbutton', onBack, false
-
+  
+  FastClick.attach(document.body)
+  
   return
 
 auth_host = "https://fallingfruit.org/"

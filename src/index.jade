@@ -4,10 +4,8 @@ html(lang="en", ng-app="FallingFruitApp")
     title Falling Fruit App v1.0
 
     meta(name="apple-mobile-web-app-capable", content="yes")
-    meta(name="apple-touch-fullscreen", content="yes")
-    meta(name="viewport", content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0")
-    meta(name="format-detection", content="telephone=no")
-
+    meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=no")
+      
     link(rel="stylesheet", type="text/css", href="css/angular-csp.css")
     link(rel="stylesheet", type="text/css", href="css/angular-slider.css")
     link(rel="stylesheet", type="text/css", href="css/style.css")
@@ -18,6 +16,7 @@ html(lang="en", ng-app="FallingFruitApp")
       include jade/detail
       include jade/auth
 
+    script(type="text/javascript", src="js/lib/fastclick.js")
     script(type="text/javascript", src="cordova.js")
     script(type="text/javascript", src="js/lib/lodash.min.js")
     //-script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?client=***REMOVED***&v=3.17")

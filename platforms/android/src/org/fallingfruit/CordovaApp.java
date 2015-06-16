@@ -17,7 +17,7 @@
        under the License.
  */
 
-package uh.fallingfruit.app;
+package org.fallingfruit;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
