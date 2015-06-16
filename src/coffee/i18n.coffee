@@ -3,6 +3,7 @@ factories.I18nFactory = ($rootScope)->
 
     distance_string: (meters)->
       if window.FFApp.metric
+        meters = Math.round(meters)
         if meters < 1000
           return parseFloat((meters).toPrecision(2)) + " m"
         else
