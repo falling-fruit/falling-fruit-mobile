@@ -1,6 +1,6 @@
 <!-- http://cordova.apache.org/docs/en/5.0.0/config_ref_index.md.html#The%20config.xml%20File -->
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="org.fallingfruit" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.fallingfruit" version="0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Falling Fruit</name>
   <description>
     A mobile application for Falling Fruit (fallingfruit.org).
