@@ -52,6 +52,12 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     list_params.c = window.FFApp.cats unless window.FFApp.cats is null
     $http.get urls.nearby, params: list_params
     .success (data)->
+      # FIXME: Type filtering of list by id not possible
+      if window.FFApp.selectedType
+        _.remove data, (n)->
+          n["title"].split(RegExp(' , | & ')).indexOf(window.FFApp.selectedType.name.split(" [")[0]) < 0
+          #n["types"].concat(n["parent_types"]).indexOf(window.FFApp.selectedType.id) < 0
+      
       for item in data
         if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
           background_url = "url('#{item.photos[0][0].thumbnail}')"
@@ -107,6 +113,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     $scope.add_location_controls = false
     $rootScope.$broadcast "ADD-LOCATION"
   
+  ## Show location
+  $scope.show_location = (location_id)->
+    $rootScope.$broadcast "SHOW-LOCATION", location_id
+
   ## Current position (update once)
   
   $scope.update_position = ()->
@@ -229,8 +239,3 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     window.FFApp.ignoreCenterChange = true
     window.FFApp.map_obj.panTo(window.FFApp.current_position)
     $scope.list_center = window.FFApp.current_position
-  
-  
-  ## Info Window / Add Location
-  $scope.show_location = (location_id)->
-    $rootScope.$broadcast "SHOW-LOCATION", location_id

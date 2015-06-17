@@ -24,7 +24,8 @@ directives.mapContainer = ()->
     window.FFApp.metric = true
     window.FFApp.selectedType = null
     window.FFApp.cats = null
-
+    window.FFApp.loadedTypes = []
+    
     clear_offscreen_markers = () ->
       b = window.FFApp.map_obj.getBounds()
       i = 0
@@ -83,11 +84,15 @@ directives.mapContainer = ()->
         if find_marker(lid) isnt `undefined`
           i++
           continue
+        if window.FFApp.selectedType
+          if mdata[i]["types"].concat(mdata[i]["parent_types"]).indexOf(window.FFApp.selectedType.id) < 0
+            i++
+            continue
         if window.FFApp.markersArray.length > window.FFApp.markersMax
           break
         window.add_marker(mdata[i])
         i++
-
+  
     window.add_marker = (mdata)->
       w = 25
       h = 25
