@@ -25,7 +25,7 @@
         | Tree inventories
         .search-radio-container
           .search-radio-active(ng-show="muni")
-      //-.search-param-select
+      .search-param-select
         .label [{selectedType == null ? "Edible type" : selectedType.name}]
         select(ng-model="selectedType", ng-options="type as type.name for type in source_types", ng-change="filter_types()")
           option(value="") Edible type

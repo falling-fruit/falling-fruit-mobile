@@ -46,7 +46,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     bicycleLayer.setMap(null)
 
   ## Filters
-  # FIXME: Share fun/var with map directive in a cleaner fashion that using window...
+  # FIXME: Share fun/var with map directive in a cleaner fashion that using window?
 
   $scope.muni = window.FFApp.muni
   $scope.toggle_muni = ()->
@@ -77,7 +77,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
   $scope.reset_filter_types = () ->
     $scope.selectedType = null
     $scope.filter_types()
-    
+  
   ## Regional
   
   $scope.metric = window.FFApp.metric
@@ -88,7 +88,6 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     if $scope.current_view == "list" and $scope.list_items
       for item in $scope.list_items
         item.distance_string = I18nFactory.distance_string(item.distance)
-
 
   # Logout
   $scope.logout = ()->
