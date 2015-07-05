@@ -150,18 +150,18 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.save_location = ()->
     mapStateService.setLoading("Saving...")
     console.log("Location: ", $scope.location)
-    # Since index = -1 implies undefined, we need to unset these before saving
-    # Edit copy of observation to avoid changing view
-    observation = angular.copy($scope.location.observation)
-    if observation.quality_rating == "-1"
-      observation.quality_rating = null
-    if $scope.location.observation.yield_rating == "-1"
-      observation.yield_rating = null
-    if $scope.location.observation.fruiting == "-1"
-      observation.fruiting = null
-    $scope.location.observation = observation
     
     if !$scope.location.id?
+      # Since index = -1 implies undefined, we need to unset these before saving
+      # Edit copy of observation to avoid changing view
+      observation = angular.copy($scope.location.observation)
+      if observation.quality_rating == "-1"
+        observation.quality_rating = null
+      if $scope.location.observation.yield_rating == "-1"
+        observation.yield_rating = null
+      if $scope.location.observation.fruiting == "-1"
+        observation.fruiting = null
+      $scope.location.observation = observation
       $http.post urls.add_location, location: $scope.location
       .success (data)->
         console.log("ADDED")
