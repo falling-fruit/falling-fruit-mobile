@@ -42,14 +42,12 @@ Although in the global scope, they are not available until after the `deviceread
 - Firefox OS**
 - iOS
 - Windows Phone 7 and 8*
-- Windows 8***
-- Windows***
+- Windows 8
+- Windows
 
 \* _Do not support `onprogress` nor `abort()`_
 
 \** _Do not support `onprogress`_
-
-\*** Partial support of `onprogress` for upload method. `onprogress` is called with empty progress event due to Windows limitations_
 
 # FileTransfer
 
@@ -265,6 +263,9 @@ A `FileTransferError` object is passed to an error callback when an error occurs
 - __target__: URL to the target. (String)
 
 - __http_status__: HTTP status code.  This attribute is only available when a response code is received from the HTTP connection. (Number)
+
+- __body__ Response body. This attribute is only available when a response is received from the HTTP connection. (String)
+
 - __exception__: Either e.getMessage or e.toString (String)
 
 ### Constants
