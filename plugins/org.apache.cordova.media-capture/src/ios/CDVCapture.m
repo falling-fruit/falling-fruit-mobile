@@ -19,7 +19,6 @@
 
 #import "CDVCapture.h"
 #import "CDVFile.h"
-#import <Cordova/CDVJSON.h>
 #import <Cordova/CDVAvailability.h>
 
 #define kW3CMediaFormatHeight @"height"
@@ -90,7 +89,7 @@
 - (void)captureAudio:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    NSDictionary* options = [command.arguments objectAtIndex:0];
+    NSDictionary* options = [command argumentAtIndex:0];
 
     if ([options isKindOfClass:[NSNull class]]) {
         options = [NSDictionary dictionary];
@@ -127,7 +126,7 @@
 - (void)captureImage:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    NSDictionary* options = [command.arguments objectAtIndex:0];
+    NSDictionary* options = [command argumentAtIndex:0];
 
     if ([options isKindOfClass:[NSNull class]]) {
         options = [NSDictionary dictionary];
@@ -218,7 +217,7 @@
 - (void)captureVideo:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = command.callbackId;
-    NSDictionary* options = [command.arguments objectAtIndex:0];
+    NSDictionary* options = [command argumentAtIndex:0];
 
     if ([options isKindOfClass:[NSNull class]]) {
         options = [NSDictionary dictionary];
@@ -299,7 +298,7 @@
 
 - (void)getMediaModes:(CDVInvokedUrlCommand*)command
 {
-    // NSString* callbackId = [arguments objectAtIndex:0];
+    // NSString* callbackId = [command argumentAtIndex:0];
     // NSMutableDictionary* imageModes = nil;
     NSArray* imageArray = nil;
     NSArray* movieArray = nil;
@@ -342,7 +341,11 @@
         movieArray ? (NSObject*)                          movieArray:[NSNull null], @"video",
         audioArray ? (NSObject*)                          audioArray:[NSNull null], @"audio",
         nil];
-    NSString* jsString = [NSString stringWithFormat:@"navigator.device.capture.setSupportedModes(%@);", [modes JSONString]];
+    
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:modes options:0 error:nil];
+    NSString* jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
+    NSString* jsString = [NSString stringWithFormat:@"navigator.device.capture.setSupportedModes(%@);", jsonStr];
     [self.commandDelegate evalJs:jsString];
 }
 
@@ -350,12 +353,12 @@
 {
     NSString* callbackId = command.callbackId;
     // existence of fullPath checked on JS side
-    NSString* fullPath = [command.arguments objectAtIndex:0];
+    NSString* fullPath = [command argumentAtIndex:0];
     // mimeType could be null
     NSString* mimeType = nil;
 
     if ([command.arguments count] > 1) {
-        mimeType = [command.arguments objectAtIndex:1];
+        mimeType = [command argumentAtIndex:1];
     }
     BOOL bError = NO;
     CDVCaptureError errorCode = CAPTURE_INTERNAL_ERR;
@@ -572,7 +575,7 @@
     // if user wants iPhone only app to run on iPad they must remove *~ipad.* images from CDVCapture.bundle
     if (isLessThaniOS4) {
         NSString* iPadResource = [NSString stringWithFormat:@"%@~ipad.png", resource];
-        if (CDV_IsIPad() && [UIImage imageNamed:iPadResource]) {
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad && [UIImage imageNamed:iPadResource]) {
             return iPadResource;
         } else {
             return [NSString stringWithFormat:@"%@.png", resource];
@@ -611,7 +614,8 @@
     // make backgrounds
     NSString* microphoneResource = @"CDVCapture.bundle/microphone";
 
-    if (CDV_IsIPhone5()) {
+    BOOL isIphone5 = ([[UIScreen mainScreen] bounds].size.width == 568 && [[UIScreen mainScreen] bounds].size.height == 320) || ([[UIScreen mainScreen] bounds].size.height == 568 && [[UIScreen mainScreen] bounds].size.width == 320);
+    if (isIphone5) {
         microphoneResource = @"CDVCapture.bundle/microphone-568h";
     }
 
