@@ -11,8 +11,9 @@
 .search-menu {
   background-color: @ff-white;
   border-bottom: solid 1px @light-gray;
-  height: @map-menu-height;
+  height: @menu-height;
   left: 0;
+  padding-top: 10px;
   position: absolute;
   top: 0;
   width: 100%;
@@ -69,17 +70,17 @@
   overflow: hidden;
 
   .loading {
-    background: url('../img/gif/loader.gif') no-repeat 8% center;
-    background-size: 40px;
+    background: url('../img/gif/loader.gif') no-repeat 10% center;
+    background-size: @menu-height - 40;
     background-color: rgba(250, 249, 249, .8);
-    position: absolute;
-    height: 40px;
+    height: @menu-height - 35;
     left: 0;
+    position: absolute;
     right: 0;
     top: 0;
-    width: 170px;
+    width: 65%;
     .opacity(0);
-    padding: 10px 0 0 30px;
+    padding: 4px 0 0;
     margin: 0 auto;
     text-align: center;
     z-index: 80;
@@ -88,17 +89,17 @@
     box-shadow: 0px 2px 5px #555;
     &.show {
       .opacity(1);
-      top: 51px;
+      top: @menu-height - 1;
     }
   }
 }
 
 .search-view-container {
+  background-color: white;
+  bottom: @map-footer-height;
   position: absolute;
   top: @map-menu-height;
-  bottom: @map-footer-height;
   width: 200%;
-  background-color: white;
 }
 
 .search-input-container {
