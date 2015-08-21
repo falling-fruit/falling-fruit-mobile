@@ -7,7 +7,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.search_text = ''
   $scope.mapStateData = mapStateService.data
   $scope.authStateData = AuthFactory.data
-  
+
   ## Map
   $scope.show_map = ()->
     if $scope.current_view != "map"
@@ -57,7 +57,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         _.remove data, (n)->
           n["title"].split(RegExp(' , | & ')).indexOf(window.FFApp.selectedType.name.split(" [")[0]) < 0
           #n["types"].concat(n["parent_types"]).indexOf(window.FFApp.selectedType.id) < 0
-      
+
       for item in data
         if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
           background_url = "url('#{item.photos[0][0].thumbnail}')"
@@ -96,9 +96,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         $scope.list_center = latlng
       else
         console.log("Failed to do geocode") # FIXME: replace with common error handling
-  
+
   ## Add location
-  
+
   $scope.begin_add_location = ()->
     console.log "Begin add location"
     $scope.add_location_controls = true
@@ -107,18 +107,18 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.cancel_add_location = ()->
     console.log "Cancel add location"
     $scope.add_location_controls = false
-    
+
   $scope.confirm_add_location = ()->
     console.log "Confirm add location"
     $scope.add_location_controls = false
     $rootScope.$broadcast "ADD-LOCATION"
-  
+
   ## Show location
   $scope.show_location = (location_id)->
     $rootScope.$broadcast "SHOW-LOCATION", location_id
 
   ## Current position (update once)
-  
+
   $scope.update_position = ()->
 
     # position
@@ -145,7 +145,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         window.FFApp.position_marker.setPosition(window.FFApp.current_position)
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
       $scope.list_center = window.FFApp.current_position
-      
+
       # heading
       # FIXME: Always returns zero?
 #       navigator.compass.getCurrentHeading ((heading)->
@@ -182,13 +182,13 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 #           window.FFApp.heading_marker.setIcon(icon)
 #       ), ()->
 #         console.log("Failed to get heading") # FIXME: replace with common error handling
-      
+
     ), ()->
       console.log("Failed to get position") # FIXME: replace with common error handling
-  
-  
+
+
   ## Current position (watch - unused)
-  
+
   $scope.ignoreCenterChange = false
   # FIXME: Can't be called here (idea is to turn tracking off if map center is moved manually
 #   google.maps.event.addListener window.FFApp.map_obj, "center_changed", ()->
@@ -197,13 +197,13 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 #     else if $scope.watchPositionID
 #       navigator.geolocation.clearWatch($scope.watchPositionID)
 #       $scope.watchPositionID = null
-  
+
   $scope.watchPositionID = null
   watchPositionOptions =
     enableHighAccuracy: true
     timeout: 10000
     maximumAge: 3000
-  
+
   $scope.toggle_position_tracking = ()->
     if $scope.watchPositionID
       navigator.geolocation.clearWatch($scope.watchPositionID)
@@ -212,9 +212,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
         console.log("Failed to watch position")
       ), watchPositionOptions)
-  
+
   watch_position = (position)->
-    
+
     # position
     console.log("Position updated")
     window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
