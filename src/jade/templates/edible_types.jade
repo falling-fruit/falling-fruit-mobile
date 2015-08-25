@@ -1,4 +1,5 @@
-input(ng-model="filters.source_type", placeholder="{{source_type_placeholder}}", ng-focus="show_menu=true", ng-blur="blurInput()")
-ul(ng-show="show_menu")
-  li(ng-repeat="type in source_types_data.source_types|filter:filters.source_type", ng-click="updateLocationSourceType(type)")
-    {{type.name}}
+.detail-input-container
+  input(ng-model="filters.edible_types", placeholder="{{edible_type_placeholder}}", ng-focus="show_menu=true", ng-blur="blurInput()")
+  ul(class="select-dropdown", ng-show="show_menu")
+    li(ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types", ng-click="updateLocationEdibleType(type)")
+      {{type.name}}
