@@ -231,10 +231,16 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
         $scope.show_menu = false
       , 150)
 
-    $scope.updateLocationSourceType = (type)->
+    $scope.updateLocationEdibleType = (type)->
+      $scope.filters.edible_types = null
       $scope.location.type_ids = [] if $scope.location.type_ids is undefined
+      $scope.location.type_ids.push(type.id)
+      $scope.selected_edible_types.push(type.name)
 
-      $scope.location.type_ids[0] = type.id
-      $scope.filters.source_type = type.name
+    $scope.removeEdibleType = (type)->
+      index = $scope.location.type_ids.indexOf(type.name)
+      $scope.location.type_ids.splice(index, 1)
 
+      index = $scope.selected_edible_types.indexOf(type.name)
+      $scope.selected_edible_types.splice(index, 1)
 
