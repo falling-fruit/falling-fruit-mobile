@@ -1,10 +1,10 @@
 .auth-overlay(ng-controller="AuthCtrl", ng-class="{show: authStateData.show_auth}")
-  
+
   .auth-container.login(ng-show="authStateData.auth_context == 'login'")
     .auth-splash-logo
     .auth-default-logo
     .auth-input-container.email
-      input(type="text", placeholder="Email", ng-model="login_user.email")
+      input(type="email", placeholder="Email", ng-model="login_user.email")
       .auth-error-text
     .auth-input-container.password
       input(type="password", placeholder="Password", ng-model="login_user.password")
@@ -25,7 +25,7 @@
       input(type="text", placeholder="Name", ng-model="register_user.name")
       .auth-error-text()
     .auth-input-container.email
-      input(type="text", placeholder="Email", ng-model="register_user.email")
+      input(type="email", placeholder="Email", ng-model="register_user.email")
       .auth-error-text()
     .auth-input-container.password-1
       input(type="password", placeholder="Password", ng-model="register_user.password")
