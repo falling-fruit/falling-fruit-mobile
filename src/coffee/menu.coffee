@@ -1,8 +1,9 @@
-controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthFactory)->
+controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthFactory, edibleTypesService)->
   console.log "Menu Ctrl"
 
   ## Map type
   $scope.mapTypeId = window.FFApp.defaultMapTypeId
+  $scope.edible_types_data = edibleTypesService.data
 
   # Terrain
   $scope.toggle_terrain = ()->
@@ -58,14 +59,9 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
       $scope.load_list()
     else
       $scope.list_center = null
-  
+
   $scope.selectedType = window.FFApp.selectedType
-  $http.get urls.source_types
-  .success (data)->
-    $scope.source_types = data
-    $scope.source_types_by_id = {}
-    for row in data
-      $scope.source_types_by_id[row.id]  = row
+
   $scope.filter_types = ()->
     window.FFApp.selectedType = $scope.selectedType
     window.clear_markers()
@@ -77,9 +73,9 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
   $scope.reset_filter_types = () ->
     $scope.selectedType = null
     $scope.filter_types()
-  
+
   ## Regional
-  
+
   $scope.metric = window.FFApp.metric
   $scope.toggle_metric = ()->
     window.FFApp.metric = not window.FFApp.metric
