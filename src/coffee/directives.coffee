@@ -220,7 +220,7 @@ directives.sourceTypesFilter = (BASE_PATH, $timeout, sourceTypesService)->
   link: ($scope, $element, $attrs) ->
     $scope.source_types_data = sourceTypesService.data
     $scope.show_menu = false
-    $scope.source_type_placeholder = "Source Type"
+    $scope.source_type_placeholder = "Edible Type"
     $scope.filters = {}
 
     $scope.blurInput = ()->
