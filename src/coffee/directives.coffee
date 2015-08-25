@@ -211,17 +211,18 @@ directives.ngSwitcher = ()->
 
   return props
 
-directives.sourceTypesFilter = (BASE_PATH, $timeout, sourceTypesService)->
+directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
   restrict: "E"
-  templateUrl: BASE_PATH + "html/templates/source_types.html"
+  templateUrl: BASE_PATH + "html/templates/edible_types.html"
   scope:
     location: "="
 
   link: ($scope, $element, $attrs) ->
-    $scope.source_types_data = sourceTypesService.data
+    $scope.edible_types_data = edibleTypesService.data
     $scope.show_menu = false
-    $scope.source_type_placeholder = "Edible Type"
+    $scope.edible_type_placeholder = "Edible Type"
     $scope.filters = {}
+    $scope.selected_edible_types = []
 
     $scope.blurInput = ()->
       #wait for all other handlers to run first

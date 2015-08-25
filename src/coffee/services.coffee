@@ -17,18 +17,17 @@ factories.mapStateService = ()->
 
   return props
 
-factories.sourceTypesService = ($http)->
-
+factories.edibleTypesService = ($http)->
   props =
     data:
-      source_types: []
-      source_types_by_id: {}
+      edible_types: []
+      edible_types_by_id: {}
 
   $http.get urls.source_types
     .success (data)->
-      props.data.source_types = data
+      props.data.edible_types = data
       for row in data
-        props.data.source_types_by_id[row.id] = row
+        props.data.edible_types_by_id[row.id] = row
 
   return props
 
