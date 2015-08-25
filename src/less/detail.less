@@ -178,27 +178,55 @@
 
 .detail-select-container {
   .detail-input-container-mixin();
-  text-align: center;
   padding: 10px;
+  text-align: center;
   &:after {
-    content: " ";
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 50px;
-    background: url("../img/svg/control-arrow-downward.svg") no-repeat center center;
+    background: url("../img/svg/control-arrow-downward.svg") no-repeat center 10px;
     background-size: 20px;
+    content: " ";
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
   }
-}
-
-.detail-select-container select {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0;
+  ul {
+    border-top: 1px solid @lighter-gray;
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: scroll;
+    li {
+      border-bottom: 1px solid @lighter-gray;
+      cursor: pointer;
+      padding: 10px 0;
+      text-align: left;
+      &:hover {
+        color: @orange;
+      }
+    }
+  }
+  input {
+    background: transparent;
+    border: none;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    outline: none;
+    padding: 0 10% 0 3px;
+    position: relative;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    z-index: 100;
+  }
+  select {
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    width: 100%;
+  }
 }
 
 .detail-textarea-container {

@@ -27,6 +27,8 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
 
 ]
 
+FallingFruitApp.constant("BASE_PATH", window.location.pathname)
+
 FallingFruitApp.config ($routeProvider)->
   $routeProvider
 
@@ -58,9 +60,9 @@ FallingFruitApp.run ($rootScope) ->
   #document.addEventListener 'online', onOnline, false
   #document.addEventListener 'offline', onOffline, false
   document.addEventListener 'backbutton', onBack, false
-  
+
   FastClick.attach(document.body)
-  
+
   return
 
 auth_host = "https://fallingfruit.org/"

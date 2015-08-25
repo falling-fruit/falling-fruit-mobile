@@ -1,7 +1,6 @@
 .detail-container(ng-show="detail_context=='add_location' || detail_context=='edit_location'")
   .detail-select-container
-    | [{location.type_ids == undefined ? "Source type" : source_types_by_id[location.type_ids[0]].name}]
-    select(ng-model="location.type_ids[0]", ng-options="type.id as type.name for type in source_types")
+    source-types-filter(location="location")
 
   //.detail-input-container
   //  input(type="text", placeholder="?", ng-model="location.lat")

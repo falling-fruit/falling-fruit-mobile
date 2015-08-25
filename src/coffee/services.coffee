@@ -1,6 +1,7 @@
 # This service runs the loading animation and updates text
 # services/factories
 factories.mapStateService = ()->
+
   props =
     data:
       isLoading: false
@@ -13,6 +14,21 @@ factories.mapStateService = ()->
     removeLoading: ()->
       @data.isLoading = false
       @data.message = ""
+
+  return props
+
+factories.sourceTypesService = ($http)->
+
+  props =
+    data:
+      source_types: []
+      source_types_by_id: {}
+
+  $http.get urls.source_types
+    .success (data)->
+      props.data.source_types = data
+      for row in data
+        props.data.source_types_by_id[row.id] = row
 
   return props
 
