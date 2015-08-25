@@ -7,13 +7,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     $scope.location_id = null
     $scope.reviews = []
     reset_review()
-    $http.get urls.source_types
-    .success (data)->
-      # FIXME: Are we really calling this every time?
-      $scope.source_types = data
-      $scope.source_types_by_id = {}
-      for row in data
-        $scope.source_types_by_id[row.id]  = row
 
   reset_review = ()->
     $scope.location.observation = {quality_rating: "-1", yield_rating: "-1", fruiting: "-1"}

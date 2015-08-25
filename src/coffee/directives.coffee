@@ -209,5 +209,31 @@ directives.ngSwitcher = ()->
         switcherElem.classList.toggle("on")
         $scope.toggle = !$scope.toggle
 
-
   return props
+
+directives.sourceTypesFilter = (BASE_PATH, $timeout, sourceTypesService)->
+  restrict: "E"
+  templateUrl: BASE_PATH + "html/templates/source_types.html"
+  scope:
+    location: "="
+
+  link: ($scope, $element, $attrs) ->
+    $scope.source_types_data = sourceTypesService.data
+    $scope.show_menu = false
+    $scope.source_type_placeholder = "Source Type"
+    $scope.filters = {}
+
+    $scope.blurInput = ()->
+      #wait for all other handlers to run first
+      #like the click handler then blur
+      $timeout(()->
+        $scope.show_menu = false
+      , 150)
+
+    $scope.updateLocationSourceType = (type)->
+      $scope.location.type_ids = [] if $scope.location.type_ids is undefined
+
+      $scope.location.type_ids[0] = type.id
+      $scope.filters.source_type = type.name
+
+
