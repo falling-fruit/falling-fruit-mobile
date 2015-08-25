@@ -94,8 +94,8 @@
 }
 
 .location-info {
-  padding: 10px 20px;
   border-bottom: solid 2px @light-gray;
+  padding: 10px 20px;
 }
 
 .location-info > div:not(.tag-list) {
@@ -114,8 +114,8 @@
 
 .location-author {
   font-size: @font-size-small;
-  padding: 0 20px;
   font-style: italic;
+  padding: 0 20px;
 }
 
 .btn-location-reviews {
@@ -125,11 +125,11 @@
 }
 
 .detail-btn-container {
+  border-spacing: 20px 0px;
   display: table;
-  width: 80%;
   margin: 20px auto;
   table-layout: fixed;
-  border-spacing: 20px 0px;
+  width: 80%;
 }
 
 .detail-btn-container .detail-btn-dark {
@@ -138,26 +138,60 @@
 }
 
 .detail-input-container-mixin() {
-  position: relative;
   background-color: @light-gray;
   margin: 20px 10%;
   overflow: hidden;
+  position: relative;
   .border-radius(5px);
 }
 
 .detail-input-container {
   .detail-input-container-mixin();
+  input {
+    background-color: transparent;
+    display: block;
+    overflow: hidden;
+    border: none;
+    color: @gray;
+    font-size: @font-size-large;
+    padding: 10px 0 10px 10px;
+    width: 100%;
+  }
+  ul.select-dropdown {
+    border-top: 1px solid @lighter-gray;
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: scroll;
+    li {
+      border-bottom: 1px solid @lighter-gray;
+      cursor: pointer;
+      padding: 10px;
+      text-align: left;
+      &:hover {
+        color: @orange;
+      }
+    }
+  }
 }
 
-.detail-input-container input {
-  background-color: transparent;
-  display: block;
-  overflow: hidden;
-  border: none;
-  color: @gray;
-  font-size: @font-size-large;
-  padding: 10px 0 10px 10px;
-  width: 100%;
+.detail-links-container {
+  .detail-input-container-mixin();
+  padding: 0 5%;
+  p {
+    margin: 0;
+  }
+  a {
+    background: url("../img/svg/cross.svg") no-repeat center right;
+    background-size: 12px;
+    border-bottom: 1px solid @lighter-gray;
+    color: @ff-black;
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    padding: 5px 20px 5px 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .detail-slider-container {
@@ -189,35 +223,6 @@
     right: 0;
     top: 0;
     width: 50px;
-  }
-  ul {
-    border-top: 1px solid @lighter-gray;
-    margin-top: 10px;
-    max-height: 400px;
-    overflow-y: scroll;
-    li {
-      border-bottom: 1px solid @lighter-gray;
-      cursor: pointer;
-      padding: 10px 0;
-      text-align: left;
-      &:hover {
-        color: @orange;
-      }
-    }
-  }
-  input {
-    background: transparent;
-    border: none;
-    display: block;
-    height: 100%;
-    overflow: hidden;
-    outline: none;
-    padding: 0 10% 0 3px;
-    position: relative;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-    z-index: 100;
   }
   select {
     height: 100%;

@@ -3,3 +3,7 @@
   ul(class="select-dropdown", ng-show="show_menu")
     li(ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types", ng-click="updateLocationEdibleType(type)")
       {{type.name}}
+
+.detail-links-container(ng-show="selected_edible_types.length")
+  p
+    a(ng-repeat="type in selected_edible_types", ng-click="removeEdibleType(type)", href="#delete", data-type="{{type}}") {{type}}
