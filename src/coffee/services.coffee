@@ -1,7 +1,6 @@
 # This service runs the loading animation and updates text
 # services/factories
 factories.mapStateService = ()->
-
   props =
     data:
       isLoading: false

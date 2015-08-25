@@ -25,7 +25,7 @@ directives.mapContainer = ()->
     window.FFApp.selectedType = null
     window.FFApp.cats = null
     window.FFApp.loadedTypes = []
-    
+
     clear_offscreen_markers = () ->
       b = window.FFApp.map_obj.getBounds()
       i = 0
@@ -92,7 +92,7 @@ directives.mapContainer = ()->
           break
         window.add_marker(mdata[i])
         i++
-  
+
     window.add_marker = (mdata)->
       w = 25
       h = 25
@@ -150,8 +150,8 @@ directives.mapContainer = ()->
 
       google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
         window.do_markers()
-      
-      window.FFApp.map_initialized = true  
+
+      window.FFApp.map_initialized = true
       $rootScope.$broadcast "MAP-LOADED"
 
     initialize = ()->

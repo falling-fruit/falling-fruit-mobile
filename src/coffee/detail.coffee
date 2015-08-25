@@ -14,10 +14,10 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.source_types_by_id = {}
       for row in data
         $scope.source_types_by_id[row.id]  = row
-  
+
   reset_review = ()->
     $scope.location.observation = {quality_rating: "-1", yield_rating: "-1", fruiting: "-1"}
-  
+
   reset()
 
   load_location = (id)->
@@ -28,16 +28,16 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       data.map_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.map_obj.getCenter()))
       if window.FFApp.current_position
         data.current_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position))
-      
+
       # Tags
       data.season_string = I18nFactory.season_string(data.season_start, data.season_stop, data.no_season)
       data.access_string = I18nFactory.short_access_types[data.access]
-      
+
       # Types (unique)
       data.type_ids = _.uniq(data.type_ids)
       $scope.location = data
       $scope.location_id = data.id
-      
+
       # Refresh map
       # sort of hacky--manually call the map directive function with just one location worth of data
       window.add_marker({title: data["title"], lat: data["lat"], lng: data["lng"], location_id: data["id"], types: data["type_ids"]})
@@ -103,7 +103,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.location.lng = center.lng()
     else
       console.log "ERROR: Map not initialized!"
-  
+
   $scope.show_reviews = ()->
     $scope.detail_context = 'view_reviews'
     $scope.menu_title = 'Reviews'
@@ -133,7 +133,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       observation.yield_rating = null
     if observation.fruiting == "-1"
       observation.fruiting = null
-      
+
     $http.post urls.add_review($scope.location.id), observation: observation
     .success (data)->
       console.log("ADDED")
@@ -150,7 +150,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.save_location = ()->
     mapStateService.setLoading("Saving...")
     console.log("Location: ", $scope.location)
-    
+
     if !$scope.location.id?
       # Since index = -1 implies undefined, we need to unset these before saving
       # Edit copy of observation to avoid changing view
@@ -193,7 +193,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     reset_review() # Ensures that sliders are in left-most (null) position
     $scope.detail_context = 'add_review'
     $scope.menu_title = "Add review"
-  
+
   $scope.menu_left_btn_click = ()->
     # FIXME: add_review can be reached from view_location and view_reviews
     if $scope.detail_context == "edit_location" or $scope.detail_context == "add_review" or $scope.detail_context == "view_reviews"
