@@ -5,11 +5,12 @@
     ul.photo-list
       li(ng-repeat="photo in location.photos")
         img(ng-src="[{photo.url}]")
-  
+
   // Details
   .location-info
     .location-types
-      span(ng-repeat="id in location.type_ids") [{source_types_by_id[id].name}][{$last ? '' : ', '}]
+      span(ng-repeat="id in location.type_ids") [{edible_types_data.edible_types_by_id[id].name}][{$last ? '' : ', '}]
+
     //-div [{location.lat.toFixed(5)}], [{location.lng.toFixed(5)}]
     div(ng-show="location.current_distance == location.map_distance") [{location.current_distance}]
     div(ng-show="location.current_distance != location.map_distance")
@@ -23,13 +24,13 @@
         .label [{location.access_string}]
       .tag(ng-show="location.unverified")
         .label Unverified
-  
+
   // Description
   .location-description [{location.description}]
-  .location-author 
+  .location-author
     div Added [{location.created_at | date : 'MMMM d, yyyy'}] by [{location.author? location.author : "Anonymous"}]
     div(ng-show="location.updated_at.toDateString() != location.created_at.toDateString()") Updated [{location.updated_at | date : 'MMMM d, yyyy'}]
-  
+
   // Buttons
   //-a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ([{location.num_reviews}])
   .detail-btn-container
