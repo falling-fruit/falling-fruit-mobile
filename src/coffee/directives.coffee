@@ -47,6 +47,7 @@ directives.mapContainer = ()->
     window.do_markers = () ->
       console.log "UPDATING MARKERS"
       mapStateService.setLoading("Loading...")
+
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
       return  if window.FFApp.markersArray.length >= window.FFApp.markersMax
@@ -213,7 +214,7 @@ directives.ngSwitcher = ()->
 
 directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
   restrict: "E"
-  templateUrl: BASE_PATH + "html/templates/edible_types.html"
+  templateUrl: "html/templates/edible_types.html"
   scope:
     location: "="
 
@@ -234,8 +235,9 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
     $scope.updateLocationEdibleType = (type)->
       $scope.filters.edible_types = null
       $scope.location.type_ids = [] if $scope.location.type_ids is undefined
-      $scope.location.type_ids.push(type.id)
-      $scope.selected_edible_types.push(type.name)
+      $scope.location.type_ids.push(type.id) if $scope.location.type_ids.indexOf(type.id) == -1
+      $scope.selected_edible_types.push(type.name) if $scope.selected_edible_types.indexOf(type.name) == -1
+      debugger
 
     $scope.removeEdibleType = (type)->
       index = $scope.location.type_ids.indexOf(type.name)
