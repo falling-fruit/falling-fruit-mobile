@@ -1,4 +1,4 @@
-controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService)->
+controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService, edibleTypesService)->
   console.log "Detail Ctrl"
 
   reset = ()->
@@ -41,6 +41,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.short_access_types = I18nFactory.short_access_types
   $scope.ratings = I18nFactory.ratings
   $scope.fruiting_status = I18nFactory.fruiting_status
+  $scope.edible_types_data = edibleTypesService.data
 
   $scope.selected_review_source_type = ()->
     return "Edible Type"
