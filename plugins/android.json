@@ -61,6 +61,10 @@
                         {
                             "xml": "<feature name=\"Compass\"><param name=\"android-package\" value=\"org.apache.cordova.deviceorientation.CompassListener\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -88,6 +92,9 @@
         },
         "cordova-plugin-device-orientation": {
             "PACKAGE_NAME": "org.fallingfruit"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "uh.fallingfruit.app"
         }
     },
     "dependent_plugins": {
