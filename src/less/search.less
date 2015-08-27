@@ -13,27 +13,19 @@
   border-bottom: solid 1px @light-gray;
   height: @menu-height;
   left: 0;
-  padding-top: 10px;
   position: absolute;
   top: 0;
   width: 100%;
   z-index: 90;
 }
 
-.ios7 .search-menu {
-  height: @map-menu-height + @ios7-offset;
-}
-
 .current-location {
   background: url("../img/svg/control-me.svg") no-repeat center center;
   background-size: 30px;
-  height: @map-menu-height;
-  position: absolute;
-  width: @map-menu-height + 5px;
-}
-
-.ios7 .current-location {
-  top: @ios7-offset;
+  height: @menu-height;
+  position: relative;
+  width: @menu-height + 5px;
+  float: left;
 }
 
 .search-outer-container {
@@ -71,16 +63,17 @@
 
   .loading {
     background: url('../img/gif/loader.gif') no-repeat 10% center;
-    background-size: @menu-height - 40;
+    background-size: @menu-height - 27px;
     background-color: rgba(250, 249, 249, .8);
-    height: @menu-height - 35;
-    left: 0;
+    height: @menu-height - 22px;
     position: absolute;
+    left: 0;
     right: 0;
     top: 0;
     width: 65%;
+    max-width: 150px;
     .opacity(0);
-    padding: 4px 0 0;
+    padding: 6px 0 0 20px;
     margin: 0 auto;
     text-align: center;
     z-index: 80;
@@ -98,14 +91,14 @@
   background-color: white;
   bottom: @map-footer-height;
   position: absolute;
-  top: @map-menu-height;
+  top: @menu-height;
   width: 200%;
 }
 
 .search-input-container {
   position: relative;
   background-color: @light-gray;
-  margin: 10px 15px 0 @map-menu-height + 8px;
+  margin: 10px 15px 0 @menu-height + 8px;
   overflow: hidden;
   .border-radius(5px);
 }
@@ -126,24 +119,24 @@
   color: @gray;
   font-size: @font-size-large;
   padding: 0 0 0 38px;
-  height: @map-menu-height - 20px;
-  line-height: @map-menu-height - 20px;
+  height: @menu-height - 20px;
+  line-height: @menu-height - 20px;
   width: 100%;
 }
 
 .zoom-controls {
   position: absolute;
   left: 0;
-  top: @map-menu-height;
-  width: @map-menu-height;
-  height: 2 * @map-menu-height;
+  top: @menu-height;
+  width: @menu-height;
+  height: 2 * @menu-height;
   z-index: @zindex-map + 1;
   background-color: @ff-white;
   .opacity(0.75);
   div {
     border-bottom: solid 1px @light-gray;
-    height: @map-menu-height;
-    width: @map-menu-height;
+    height: @menu-height;
+    width: @menu-height;
   }
 }
 
@@ -167,13 +160,13 @@
 
 .angular-google-map-container {
   position: absolute;
-  top: @map-menu-height;
+  top: @menu-height;
   bottom: @map-footer-height;
   width: 100%;
 }
 
-.ios7 .angular-google-map-container {
-  top: @map-menu-height + @ios7-offset;
+.platform-browser .angular-google-map-container {
+  top: @menu-height + @ios-offset;
 }
 
 .map {

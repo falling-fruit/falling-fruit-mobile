@@ -22,10 +22,13 @@
   <preference name="SplashScreenBackgroundColor" value="#FAF9F9" />
   <icon src="resources/android/icon.png" />
   <platform name="ios">
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="StatusBarStyle" value="blackopaque" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
     <preference name="EnableViewportScale" value="true" />
     <preference name="deployment-target" value="6.0" />
     <preference name="target-device" value="universal" />
-    <preference name="ios-statusbarstyle" value="black-opaque" />
     <icon height="57" src="resources/ios/icon/icon.png" width="57" />
     <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
     <icon height="40" src="resources/ios/icon/icon-40.png" width="40" />
@@ -73,4 +76,7 @@
   <plugin name="org.apache.cordova.file-transfer" spec="~0.5.0" />
   <plugin name="org.apache.cordova.geolocation" spec="~0.3.12" />
   <plugin name="org.apache.cordova.media-capture" spec="~0.3.6" />
+  <feature name="StatusBar">
+    <param name="ios-package" value="CDVStatusBar" onload="true" />
+  </feature>
 </widget>
