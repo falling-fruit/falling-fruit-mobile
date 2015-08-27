@@ -221,7 +221,7 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
   link: ($scope, $element, $attrs) ->
     $scope.edible_types_data = edibleTypesService.data
     $scope.show_menu = false
-    $scope.edible_type_placeholder = "Edible Type"
+    $scope.edible_type_placeholder = "Edible types"
     $scope.filters = {}
     $scope.selected_edible_types = []
 
