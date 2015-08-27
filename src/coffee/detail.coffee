@@ -43,18 +43,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.fruiting_status = I18nFactory.fruiting_status
   $scope.edible_types_data = edibleTypesService.data
 
-  $scope.selected_review_source_type = ()->
-    return "Edible Type"
-
-  $scope.selected_review_access_type = ()->
-    return "Access type"
-
-  $scope.selected_location_access_type = ()->
-    return "Access type"
-
-  $scope.selected_location_source_type = ()->
-    return "Edible Type"
-
   $scope.update_photo_list = ()->
     if navigator.camera?
       navigator.camera.getPicture ((photo_data)->
