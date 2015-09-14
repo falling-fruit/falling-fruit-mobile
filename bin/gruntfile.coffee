@@ -117,7 +117,7 @@ module.exports = (grunt)->
 
       jade_compile:
         files: [SRC_BASE + "jade/*.jade", SRC_BASE + "jade/**/*.jade"]
-        tasks: ["jade:index"]
+        tasks: ["jade:compile", "jade:index"]
 
       ios_android_copy:
         files: [DEST_BASE + "*.html", DEST_BASE + "html/**/*.html", DEST_BASE + "html/*.html", DEST_BASE + "css/*.css", DEST_BASE + "js/*.js"]
