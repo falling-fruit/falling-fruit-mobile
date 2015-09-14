@@ -27,7 +27,6 @@
           .search-radio-active(ng-show="muni")
       .search-param-select
         .label [{selectedType == null ? "Edible Type" : selectedType.name}]
-        p [{ location.type_ids}]
         select(ng-model="selectedType", ng-options="type as type.name for type in edible_types_data.edible_types", ng-change="filter_types()")
           option(value="") Edible type
         .down-arrow

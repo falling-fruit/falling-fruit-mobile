@@ -4,6 +4,7 @@
     li(ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types", ng-click="updateLocationEdibleType(type)")
       {{type.name}}
 
-.detail-links-container(ng-show="selected_edible_types.length")
+.detail-links-container(ng-show="location.type_ids.length")
   p
-    a(ng-repeat="type in selected_edible_types", ng-click="removeEdibleType(type)", href="#delete", data-type="{{type}}") {{type}}
+    a(ng-repeat="id in location.type_ids", ng-click="removeEdibleType(id)", href="#removeType")
+      [{edible_types_data.edible_types_by_id[id].name}][{$last ? '' : ', '}]
