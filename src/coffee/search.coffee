@@ -15,6 +15,8 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
   ## List
   $scope.list_center = null
+  $scope.reset_list_center = ()->
+    $scope.list_center = null
   $scope.$watch("list_center", (newValue, oldValue)->
     if newValue != oldValue
       if $scope.current_view == "list"
@@ -28,7 +30,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     if $scope.current_view != "list"
       $scope.current_view = "list"
       $scope.list_center = window.FFApp.map_obj.getCenter()
-
+  
   $scope.load_list = (center)->
     mapStateService.setLoading("Loading...")
     $scope.targeted = false
