@@ -58,10 +58,9 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     if $scope.current_view == "list"
       $scope.load_list()
     else
-      $scope.list_center = null
+      $scope.reset_list_center()
 
   $scope.selectedType = window.FFApp.selectedType
-
   $scope.filter_types = ()->
     window.FFApp.selectedType = $scope.selectedType
     window.clear_markers()
@@ -69,7 +68,8 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     if $scope.current_view == "list"
       $scope.load_list()
     else
-      $scope.list_center = null
+      $scope.reset_list_center()
+  
   $scope.reset_filter_types = () ->
     $scope.selectedType = null
     $scope.filter_types()
