@@ -126,28 +126,31 @@
 
 .zoom-controls {
   position: absolute;
-  left: 0;
-  top: @menu-height;
-  width: @menu-height;
-  height: 2 * @menu-height;
+  left: 10px;
+  top: 50%;
+  margin-top: -@menu-height;
+  width: (2/3) * @menu-height;
+  height: 2 * (2/3) * @menu-height;
   z-index: @zindex-map + 1;
   background-color: @ff-white;
-  .opacity(0.75);
+  .opacity(1);
+  .border-radius(5px);
+  border: solid 1px @light-gray;
   div {
-    border-bottom: solid 1px @light-gray;
-    height: @menu-height;
-    width: @menu-height;
+    height: 50%;
+    width: 100%;
   }
 }
 
 .zoom-in {
-  background: url("../img/svg/cross.svg") no-repeat center center;
-  background-size: 30px;
+  background: url("../img/svg/plus.svg") no-repeat center center;
+  background-size: 20px;
 }
 
 .zoom-out {
-  background: url("../img/svg/check.svg") no-repeat center center;
-  background-size: 30px;
+  background: url("../img/svg/minus.svg") no-repeat center center;
+  background-size: 20px;
+  border-top: solid 1px @light-gray;
 }
 
 // MAP
