@@ -41,11 +41,20 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
       error_text += " Password is " + data.errors.password if data.errors.password?
       alert("There was a registration error: " + error_text )
 
-  # FIXME: Currently unused
   $scope.forgot_password = ()->
     console.log "FORGOT PASSWORD"
-    email = $scope.forgot_password_user.email
-    AuthFactory.forgot_password(email)
+    user =
+      email: $scope.forgot_password_user.email
+
+    $http.post urls.forgot_password, user: user
+    .success (data)->
+      alert("Password reset sent! Check your email address, then come back and login.")
+      AuthFactory.setAuthContext("login")
+      $scope.forgot_password_user.email = null
+      #AuthFactory.forgot_password(email) What would this do?
+    .error (data)->
+      alert("We're sorry. There was an error. Please try again!")
+
 
   $scope.$on "BACKBUTTON", ()->
     console.log "Caught BACKBUTTON event in controller"
@@ -58,7 +67,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
         $timeout(()->
           $scope.$apply()
         )
-  
+
   # Shows map if already logged in
   if AuthFactory.is_logged_in()
     $rootScope.$broadcast "SHOW-MAP"

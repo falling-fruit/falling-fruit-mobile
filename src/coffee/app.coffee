@@ -24,7 +24,6 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
           $rootScope.$broadcast "LOADING-ERROR", "Please try again."
 
         return rejection || $q.reject(rejection)
-
 ]
 
 FallingFruitApp.constant("BASE_PATH", window.location.pathname)
@@ -72,7 +71,7 @@ host = auth_host + "api/"
 urls =
   login: auth_host + "users/sign_in.json"
   register: auth_host + "users.json"
-  forgot_password: auth_host + "users.json"
+  forgot_password: auth_host + "users/password.json"
 
   nearby: host + "locations/nearby.json"
   markers: host + "locations/markers.json"

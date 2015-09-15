@@ -47,8 +47,8 @@ factories.AuthFactory = ($rootScope)->
       localStorage.setItem('EMAIL', email)
       localStorage.setItem('TOKEN', access_token)
 
-    forgot_password: (email)->
-      alert("Sorry! Feature Coming Soon.")
+    #forgot_password: (email)->
+      #alert("Sorry! Feature Coming Soon.")
 
     is_logged_in: ()->
       @email = localStorage.getItem("EMAIL") if not @email

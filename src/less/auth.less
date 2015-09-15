@@ -89,13 +89,17 @@ div:not(.login) > .auth-default-logo {
 
 .auth-input-container input {
   background-color: transparent;
+  border: none;
   display: block;
   overflow: hidden;
-  border: none;
   color: @gray;
   font-size: @font-size-large;
   padding: 10px 0 10px @auth-input-icon-dim;
   width: 100%;
+  &.ng-invalid.ng-touched {
+    border: 2px solid @error-red;
+    font-style: italic;
+  }
 }
 
 .auth-text {
@@ -116,23 +120,29 @@ div:not(.login) > .auth-default-logo {
 }
 
 .auth-btn-mixin() {
-  display: block;
-  background-color: @orange;
   color: white;
-  text-align: center;
+  background-color: @orange;
+  display: block;
   padding: 10px;
+  text-align: center;
   .border-radius(5px);
+  &[disabled], &.invalid {
+    background-color: @light-gray;
+  }
 }
 
 .auth-btn {
-  .auth-btn-mixin();  
+  .auth-btn-mixin();
+  border: none;
+  width: 80%;
   margin: auto 10%;
 }
 
 .auth-btn-cell {
   .auth-btn-mixin();
   display: table-cell;
-  width: 49%;  
+  border: none;
+  width: 49%;
 }
 
 .auth-btn-dark {
