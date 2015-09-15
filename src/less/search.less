@@ -125,12 +125,13 @@
 }
 
 .zoom-controls {
+  @zoom-control-scale: 2/3;
   position: absolute;
   left: 10px;
-  top: 50%;
-  margin-top: -@menu-height;
-  width: (2/3) * @menu-height;
-  height: 2 * (2/3) * @menu-height;
+  top: @menu-height;
+  margin-top: -(@zoom-control-scale * @menu-height);
+  width: @zoom-control-scale * @menu-height;
+  height: 2 * @zoom-control-scale * @menu-height;
   z-index: @zindex-map + 1;
   background-color: @ff-white;
   .opacity(1);
