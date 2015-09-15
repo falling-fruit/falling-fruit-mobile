@@ -4,12 +4,12 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
   $scope.authStateData = AuthFactory.data
 
   $scope.setAuthContext = (context)->
-    console.log "Setting Auth Context To:", context
+    console.log("Set AuthContext: ", context)
     AuthFactory.setAuthContext(context)
 
   $scope.login = ()->
     if $scope.SignInForm.$invalid
-      alert "Please enter email and password and try again"
+      alert("Please enter your email and password.")
       return false
 
     $http.post(urls.login, user: $scope.login_user).then(
@@ -19,34 +19,37 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
           $scope.login_user = AuthFactory.get_login_user_model()
           AuthFactory.hideAuth()
           $scope.SignInForm.$setUntouched()
-          $rootScope.$broadcast "LOGGED-IN"
+          $rootScope.$broadcast("LOGGED-IN")
         else
-          alert("Uh oh! " + response.data.error + " Please try again!")
-          console.log "DATA isnt as expected", response.data
+          alert("Oops! " + response.data.error)
+          console.log("DATA isnt as expected", response.data)
       , (response)->
-        alert("Uh oh! We couldn't find your email or the password was incorrect. Please try again!")
+        alert("Oops! Either we couldn't find your email or the password was incorrect.")
         $scope.login_user.password = null
     )
 
   $scope.register = ()->
-    user =
-      name: $scope.register_user.name
-      email: $scope.register_user.email
-      password: $scope.register_user.password
+    if $scope.register_user
+      user =
+        name: $scope.register_user.name
+        email: $scope.register_user.email
+        password: $scope.register_user.password
 
     $http.post urls.register, user: user
     .success (data) ->
       #$rootScope.$broadcast("REGISTERED")
-      alert("You've been registered! Please confirm your email address, then come back and login.")
+      alert("You've been registered! Check your email for a verification link, then come back and sign in.")
       AuthFactory.setAuthContext("login")
       $scope.login_user.email = $scope.register_user.email
     .error (data) ->
       $scope.register_user = AuthFactory.get_register_user_model()
       console.log "Register DATA isnt as expected", data
-      error_text = "Please check "
-      error_text += "email as it is: " + data.errors.email if data.errors.email?
-      error_text += " Password is " + data.errors.password if data.errors.password?
-      alert("There was a registration error: " + error_text )
+      error_text = ""
+      if data.errors.email
+        error_text += "Email address " + data.errors.email  + ". "
+      if data.errors.password
+        error_text += "Password " + data.errors.password + "."
+      alert("Oops! " + error_text)
 
   $scope.forgot_password = ()->
     console.log "FORGOT PASSWORD"
@@ -55,13 +58,13 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
 
     $http.post urls.forgot_password, user: user
     .success (data)->
-      alert("Password reset sent! Check your email address, then come back and login.")
+      alert("Password reset sent! Check your email for further instructions, then come back and sign in.")
       AuthFactory.setAuthContext("login")
       $scope.forgot_password_user.email = null
       $scope.ForgotPassword.$setUntouched()
       #AuthFactory.forgot_password(email) What would this do?
     .error (data)->
-      alert("We're sorry, There was an error. Please check your email address and try again!")
+      alert("Oops! Something went wrong. Please verify your email address and try again!")
 
 
   $scope.$on "BACKBUTTON", ()->
