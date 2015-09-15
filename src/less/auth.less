@@ -76,8 +76,6 @@ div:not(.login) > .auth-default-logo {
   background-size: 24px;
 }
 
-
-
 .login .email {
   margin-top: 30px;
 }
@@ -85,7 +83,6 @@ div:not(.login) > .auth-default-logo {
 .auth-input-container.password {
   margin-bottom: 0px;
 }
-
 
 .auth-input-container input {
   background-color: transparent;
@@ -96,9 +93,9 @@ div:not(.login) > .auth-default-logo {
   font-size: @font-size-large;
   padding: 10px 0 10px @auth-input-icon-dim;
   width: 100%;
+  border: 1px solid transparent;
   &.ng-invalid.ng-touched {
-    border: 2px solid @error-red;
-    font-style: italic;
+    border: 1px solid @orange;
   }
 }
 

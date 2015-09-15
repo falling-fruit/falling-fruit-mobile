@@ -22,21 +22,22 @@
 
   .auth-container.register(ng-show="authStateData.auth_context == 'register'")
     .auth-default-logo
-    .auth-input-container.name
-      input(type="text", placeholder="Name", ng-model="register_user.name")
-      .auth-error-text()
-    .auth-input-container.email
-      input(type="email", placeholder="Email", ng-model="register_user.email")
-      .auth-error-text()
-    .auth-input-container.password-1
-      input(type="password", placeholder="Password", ng-model="register_user.password")
-      .auth-error-text()
-    .auth-input-container.password-2
-      input(type="password", placeholder="Confirm password", ng-model="register_user.password_confirmation")
-      .auth-error-text()
+    form(name="RegisterForm", novalidate)
+      .auth-input-container.name
+        input(type="text", placeholder="Name", ng-model="register_user.name")
+        .auth-error-text()
+      .auth-input-container.email
+        input(type="email", placeholder="Email", ng-model="register_user.email", required)
+        .auth-error-text()
+      .auth-input-container.password-1
+        input(type="password", placeholder="Password", ng-model="register_user.password", required)
+        .auth-error-text()
+      .auth-input-container.password-2
+        input(type="password", placeholder="Confirm password", ng-model="register_user.password_confirmation", required)
+        .auth-error-text()
 
-    a.auth-btn(ng-click="register()") Send confirmation
-
+      a.auth-btn(ng-click="register()", ng-class="{invalid: RegisterForm.$invalid}") Send confirmation
+    
     a.auth-btn-dark(ng-click="setAuthContext('login')") Login
 
   .auth-container.forgot-password(ng-show="authStateData.auth_context == 'forgot_password'")
@@ -48,4 +49,4 @@
 
       button.auth-btn(type="submit", ng-click="forgot_password()", ng-disabled="ForgotPassword.$invalid") Send reset instructions
 
-      a.auth-btn-dark(ng-click="setAuthContext('login')") Login
+    a.auth-btn-dark(ng-click="setAuthContext('login')") Login
