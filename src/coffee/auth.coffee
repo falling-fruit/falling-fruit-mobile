@@ -21,10 +21,10 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
           $scope.SignInForm.$setUntouched()
           $rootScope.$broadcast "LOGGED-IN"
         else
-          alert("Uh oh! We couldn't find your email or the password was incorrect. Please try again!")
+          alert("Uh oh! " + response.data.error + " Please try again!")
           console.log "DATA isnt as expected", response.data
       , (response)->
-        alert("There was an error. Please try again!")
+        alert("Uh oh! We couldn't find your email or the password was incorrect. Please try again!")
         $scope.login_user.password = null
     )
 
