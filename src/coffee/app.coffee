@@ -23,7 +23,8 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
         else
           $rootScope.$broadcast "LOADING-ERROR", "Please try again."
 
-        return rejection || $q.reject(rejection)
+        #return rejection || $q.reject(rejection)
+        return $q.reject(rejection)
 ]
 
 FallingFruitApp.constant("BASE_PATH", window.location.pathname)
