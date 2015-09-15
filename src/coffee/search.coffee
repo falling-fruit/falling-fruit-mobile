@@ -12,7 +12,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.show_map = ()->
     if $scope.current_view != "map"
       $scope.current_view = "map"
-
+      
+  $scope.zoom_map = (dz)->
+    window.FFApp.map_obj.setZoom(window.FFApp.map_obj.getZoom() + dz)
+  
   ## List
   $scope.list_center = null
   $scope.reset_list_center = ()->

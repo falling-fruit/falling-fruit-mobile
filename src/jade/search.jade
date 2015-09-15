@@ -10,12 +10,12 @@
           form(ng-submit="location_search()")
             input(type="submit", value="")
             input(type="text", placeholder="Enter a location...", ng-model="search_text")
-        //-.zoom-controls
-            .zoom-in(class="controls", ng-click="window.FFApp.setZoom(window.FFApp.getZoom() + 1)")
-            .zoom-out(class="controls", ng-click="zoom_map(-1)")
 
       .search-view-container
         .map-container(directionstype="directions_type", stoplist="stopList")
+          .zoom-controls
+            .zoom-in(class="controls", ng-click="zoom_map(1)")
+            .zoom-out(class="controls", ng-click="zoom_map(-1)")
           .crosshair(ng-class="{add: add_location_controls}")
 
         include partials/list
