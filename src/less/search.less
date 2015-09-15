@@ -126,6 +126,7 @@
 
 .zoom-controls {
   @zoom-control-scale: 2/3;
+  
   position: absolute;
   left: 10px;
   top: @menu-height;
@@ -141,6 +142,10 @@
     height: 50%;
     width: 100%;
   }
+  
+  // Required, otherwise disappears on translation of parent in some browsers:
+  // http://stackoverflow.com/questions/21447511/css3-transition-on-absolute-positioned-element-disappears-under-canvas-embed
+  .transform-translate(0px, 0px, 0px);
 }
 
 .zoom-in {
@@ -189,7 +194,7 @@
   top: 50%;
   left: 50%;
   margin: -(@height/2) 0 0 -(@height/2); /* margins are all relative to item width */
-  z-index: 99999;
+  z-index: @zindex-map + 1;
   pointer-events: none;
   background: url("../img/svg/crosshair-small-green.svg") no-repeat center center;
   background-size: 100%;
