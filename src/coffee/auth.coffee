@@ -61,7 +61,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
       $scope.ForgotPassword.$setUntouched()
       #AuthFactory.forgot_password(email) What would this do?
     .error (data)->
-      alert("We're sorry. There was an error. Please try again!")
+      alert("We're sorry, There was an error. Please check your email address and try again!")
 
 
   $scope.$on "BACKBUTTON", ()->
