@@ -51,6 +51,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
       alert("Password reset sent! Check your email address, then come back and login.")
       AuthFactory.setAuthContext("login")
       $scope.forgot_password_user.email = null
+      $scope.ForgotPassword.$setUntouched()
       #AuthFactory.forgot_password(email) What would this do?
     .error (data)->
       alert("We're sorry. There was an error. Please try again!")
