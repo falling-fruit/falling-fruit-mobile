@@ -3,18 +3,19 @@
   .auth-container.login(ng-show="authStateData.auth_context == 'login'")
     .auth-splash-logo
     .auth-default-logo
-    .auth-input-container.email
-      input(type="email", placeholder="Email", ng-model="login_user.email")
-      .auth-error-text
-    .auth-input-container.password
-      input(type="password", placeholder="Password", ng-model="login_user.password")
-      .auth-error-text
+    form(name="SignInForm", novalidate)
+      .auth-input-container.email
+        input(type="email", placeholder="Email", ng-model="login_user.email", required)
+        .auth-error-text
+      .auth-input-container.password
+        input(type="password", placeholder="Password", ng-model="login_user.password", required)
+        .auth-error-text
 
       a.auth-text(ng-click="setAuthContext('forgot_password')") Forgot password?
 
-    .auth-btn-container
-      a.auth-btn-cell(ng-click="login()") Sign in
-      a.auth-btn-cell(ng-click="setAuthContext('register')") Register
+      .auth-btn-container
+        a.auth-btn-cell(ng-click="login()", ng-class="{invalid: SignInForm.$invalid}") Sign in
+        a.auth-btn-cell(ng-click="setAuthContext('register')") Register
 
     //- .auth-btn-container
     //-   a.auth-btn-dark(ng-click="anonymous_login()") Use anonymously

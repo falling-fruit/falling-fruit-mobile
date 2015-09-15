@@ -8,18 +8,25 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
     AuthFactory.setAuthContext(context)
 
   $scope.login = ()->
-    $http.post urls.login, user: $scope.login_user
-    .success (data)->
-      if data.hasOwnProperty("auth_token") and data.auth_token isnt null
-        AuthFactory.save($scope.login_user.email, data.auth_token)
-        $scope.login_user = AuthFactory.get_login_user_model()
-        AuthFactory.hideAuth()
-        $rootScope.$broadcast "LOGGED-IN"
-      else
-        alert("Uh oh! " + data.error + " Please try again!")
-        console.log "DATA isnt as expected", data
-    .error ()->
-      $scope.login_user.password = null
+    if $scope.SignInForm.$invalid
+      alert "Please enter email and password and try again"
+      return false
+
+    $http.post(urls.login, user: $scope.login_user).then(
+      (response)->
+        if response.data isnt null and response.data.hasOwnProperty("auth_token")
+          AuthFactory.save($scope.login_user.email, response.data.auth_token)
+          $scope.login_user = AuthFactory.get_login_user_model()
+          AuthFactory.hideAuth()
+          $scope.SignInForm.$setUntouched()
+          $rootScope.$broadcast "LOGGED-IN"
+        else
+          alert("Uh oh! We couldn't find your email or the password was incorrect. Please try again!")
+          console.log "DATA isnt as expected", response.data
+      , (response)->
+        alert("There was an error. Please try again!")
+        $scope.login_user.password = null
+    )
 
   $scope.register = ()->
     user =
