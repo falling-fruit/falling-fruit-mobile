@@ -54,7 +54,18 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       ), (->
         console.log("Failed to get photo")
       ),
-        quality: 50
+        sourceType: Camera.PictureSourceType.CAMERA
+        encodingType: Camera.EncodingType.JPEG
+        quality: 75
+        targetWidth: 1440
+        targetHeight: 1440
+        correctOrientation: true
+        allowEdit: false
+        #FIXME: Save to photo album not working on Android
+        saveToPhotoAlbum: true
+        #TODO: Give user choice to select from Camera.PictureSourceType.PHOTOLIBRARY
+        mediaType: Camera.MediaType.PICTURE
+        cameraDirection: Camera.Direction.BACK
         destinationType: Camera.DestinationType.DATA_URL
     else
       console.log("No camera attached to this device...")
@@ -144,6 +155,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       if $scope.location.observation.fruiting == "-1"
         observation.fruiting = null
       $scope.location.observation = observation
+      
       $http.post urls.add_location, location: $scope.location
       .success (data)->
         console.log("ADDED")
@@ -172,7 +184,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         $rootScope.$broadcast "SHOW-MAP"
 
   $scope.add_review = (id)->
-    reset_review() # Ensures that sliders are in left-most (null) position
+    reset_review() # Ensures that sliders are in their left-most position
     $scope.detail_context = 'add_review'
     $scope.menu_title = "Add review"
 
