@@ -7,4 +7,4 @@
 .detail-links-container(ng-show="location.type_ids.length")
   p
     a(ng-repeat="id in location.type_ids", ng-click="removeEdibleType(id)", href="#removeType")
-      [{edible_types_data.edible_types_by_id[id].name}][{$last ? '' : ', '}]
+      [{edible_types_data.edible_types_by_id[id].name}]
