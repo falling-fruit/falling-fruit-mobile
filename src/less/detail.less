@@ -154,7 +154,6 @@
     overflow: hidden;
     border: none;
     color: @gray;
-    font-size: @font-size-large;
     padding: 10px 0 10px 10px;
     width: 100%;
   }
@@ -177,7 +176,7 @@
 
 .detail-links-container {
   .detail-input-container-mixin();
-  padding: 0 5%;
+  padding: 0 20px 0 10px;
   p {
     margin: 0;
   }
@@ -214,7 +213,7 @@
 .detail-select-container {
   .detail-input-container-mixin();
   padding: 10px;
-  text-align: center;
+  //text-align: center;
   &:after {
     background: url("../img/svg/control-arrow-downward.svg") no-repeat center 10px;
     background-size: 20px;
@@ -224,13 +223,12 @@
     right: 0;
     top: 0;
     width: 50px;
+    pointer-events: none;
   }
   select {
-    height: 100%;
     left: 0;
     opacity: 0;
     position: absolute;
-    top: 10px;
     width: 100%;
   }
 }
@@ -247,7 +245,7 @@
   border: none;
   background-color: transparent;
   width: 100%;
-  font-size: @font-size-small;
+  //font-size: @font-size-small;
 }
 
 .detail-textarea-container.location textarea {
@@ -259,6 +257,7 @@
   table-layout: fixed;
   width: 80%;
   margin: 10px 10%;
+  padding-left: 10px;
 }
 
 .detail-range-label-1 {
@@ -306,6 +305,7 @@
   display: table;
   width: 80%;
   margin: 10px 10%;
+  padding-left: 10px;
 }
 
 .detail-toggle-label {
@@ -375,4 +375,24 @@
 
 .nowrap {
   white-space: nowrap;
+}
+
+/* Placeholder styling: */
+
+@placeholder-gray: #999;
+
+.placeholder { 
+  color: @placeholder-gray;
+}
+::-webkit-input-placeholder { 
+  color: @placeholder-gray;
+}
+:-moz-placeholder {
+  color: @placeholder-gray;
+}
+::-moz-placeholder {
+  color: @placeholder-gray;
+}
+:-ms-input-placeholder {
+  color: @placeholder-gray;
 }

@@ -2,19 +2,19 @@ div(ng-if="detail_context!='edit_location'")
 
   // FIXME: Using -1 on range is an ugly hack (but better than 0). Not possible to insert null in range?
   .detail-range-container
-    .detail-range-label-1 Status
+    .detail-range-label-1(ng-class="{placeholder: location.observation.fruiting == -1}") Status
     .detail-range-label-2 [{fruiting_status[location.observation.fruiting]}]
     .detail-range-control
       input(type="range", ng-model="location.observation.fruiting", min="-1", max="2", step="1")
 
   .detail-range-container
-    .detail-range-label-1 Quality
+    .detail-range-label-1(ng-class="{placeholder: location.observation.quality_rating == -1}") Quality
     .detail-range-label-2 [{ratings[location.observation.quality_rating]}]
     .detail-range-control
       input(type="range", ng-model="location.observation.quality_rating", min="-1", max="4", step="1")
 
   .detail-range-container
-    .detail-range-label-1 Yield
+    .detail-range-label-1(ng-class="{placeholder: location.observation.yield_rating == -1}") Yield
     .detail-range-label-2 [{ratings[location.observation.yield_rating]}]
     .detail-range-control
       input(type="range", ng-model="location.observation.yield_rating", min="-1", max="4", step="1")

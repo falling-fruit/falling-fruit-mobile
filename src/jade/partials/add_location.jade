@@ -2,17 +2,20 @@
   edible-types-filter(location="location")
 
   .detail-textarea-container.location
-    textarea(placeholder="Description...", ng-model="location.description")
+    textarea(placeholder="Description", ng-model="location.description")
 
+  // Empty option allows null selection
+  // Converting ng-options to number ensures they match the model.
   .detail-select-container
-    | [{location.access == undefined ? "Access" : short_access_types[location.access]}]
-    select(ng-model="location.access", ng-options="i as access for (i,access) in short_access_types")
-
+    span(ng-class="{placeholder: location.access == null}") [{location.access == null ? "Access" : short_access_types[location.access]}]
+    select(ng-model="location.access", ng-options="i*1 as access for (i,access) in short_access_types")
+      option(value=null)
+  
   .detail-toggle-container
-    .detail-toggle-label Unverified
+    .detail-toggle-label(ng-class="{placeholder: !location.unverified}") Unverified
     .ng-switcher(toggle="location.unverified")
 
-  //-OBSERVATION
+  //-Review
 
   include repeated_review_fields
 
