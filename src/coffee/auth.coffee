@@ -9,7 +9,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
 
   $scope.login = ()->
     if $scope.SignInForm.$invalid
-      alert("Please enter your email and password.")
+      alert("Oops! Please enter your email and password.")
       return false
 
     $http.post(urls.login, user: $scope.login_user).then(
@@ -29,26 +29,30 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
     )
 
   $scope.register = ()->
-    if $scope.register_user
-      user =
-        name: $scope.register_user.name
-        email: $scope.register_user.email
-        password: $scope.register_user.password
-
     if $scope.RegisterForm.passwordConfirm.$error.match
       alert("Oops! Passwords do not match.")
       $scope.register_user.password = null
       $scope.register_user.password_confirmation = null
       return false
+    if $scope.RegisterForm.$invalid
+      alert("Oops! Please enter your email and password.")
+      return false
+    
+    if $scope.register_user
+      user =
+        name: $scope.register_user.name
+        email: $scope.register_user.email
+        password: $scope.register_user.password
     
     $http.post(urls.register, user: user)
     .success (data)->
-      #$rootScope.$broadcast("REGISTERED")
       alert("You've been registered! Check your email for a verification link, then come back and sign in.")
       AuthFactory.setAuthContext("login")
-      $scope.login_user.email = $scope.register_user.email
+      initialize_sign_in($scope.register_user.email)
+      $scope.register_user = AuthFactory.get_register_user_model()
+      $scope.RegisterForm.$setUntouched()
     .error (data) ->
-      console.log "Register DATA isnt as expected", data
+      console.log "Register DATA isn't as expected", data
       error_text = ""
       if data.errors.email
         error_text += "Email address " + data.errors.email  + ". "
@@ -60,20 +64,23 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
       alert("Oops! " + error_text)
 
   $scope.forgot_password = ()->
-    console.log "FORGOT PASSWORD"
-    user =
-      email: $scope.forgot_password_user.email
+    if $scope.ForgotPassword.$invalid
+      alert("Oops! Please enter a valid email address.")
+      return false
+    
+    if $scope.forgot_password_user
+      user =
+        email: $scope.forgot_password_user.email
 
-    $http.post urls.forgot_password, user: user
+    $http.post(urls.forgot_password, user: user)
     .success (data)->
       alert("Password reset sent! Check your email for further instructions, then come back and sign in.")
       AuthFactory.setAuthContext("login")
-      $scope.forgot_password_user.email = null
+      initialize_sign_in($scope.forgot_password_user.email)
+      $scope.forgot_password_user = AuthFactory.get_forgot_password_user_model()
       $scope.ForgotPassword.$setUntouched()
-      #AuthFactory.forgot_password(email) What would this do?
     .error (data)->
       alert("Oops! Something went wrong. Please verify your email address and try again!")
-
 
   $scope.$on "BACKBUTTON", ()->
     console.log "Caught BACKBUTTON event in controller"
@@ -87,6 +94,13 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
           $scope.$apply()
         )
 
+  # Initialize sign in form
+  initialize_sign_in = (email)->
+    $scope.login_user = {}
+    if email
+      $scope.login_user.email = email
+    $scope.SignInForm.$setUntouched()
+      
   # Shows map if already logged in
   if AuthFactory.is_logged_in()
     $rootScope.$broadcast "SHOW-MAP"

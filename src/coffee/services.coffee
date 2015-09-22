@@ -77,8 +77,11 @@ factories.AuthFactory = ($rootScope)->
 
     get_register_user_model: ()->
       console.log "Called get_register_user_model"
-      return name: null, email: @email, password: null
-
+      return name: null, email: null, password: null, password_confirmation: null
+    
+    get_forgot_password_user_model: ()->
+      return email: null
+    
     needsAuth: (url)->
       return url.indexOf(".html") == -1 and url.indexOf("/users/") == -1
 
