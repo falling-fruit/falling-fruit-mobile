@@ -33,7 +33,7 @@
         input(type="password", placeholder="Password", ng-model="register_user.password", required)
         .auth-error-text()
       .auth-input-container.password-2
-        input(type="password", placeholder="Confirm password", ng-model="register_user.password_confirmation", required)
+        input(type="password", placeholder="Confirm password", ng-model="register_user.password_confirmation", match="register_user.password", name="passwordConfirm", required)
         .auth-error-text()
 
       a.auth-btn(ng-click="register()", ng-class="{invalid: RegisterForm.$invalid}") Send confirmation

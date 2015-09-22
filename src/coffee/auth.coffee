@@ -35,20 +35,28 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
         email: $scope.register_user.email
         password: $scope.register_user.password
 
-    $http.post urls.register, user: user
-    .success (data) ->
+    if $scope.RegisterForm.passwordConfirm.$error.match
+      alert("Oops! Passwords do not match.")
+      $scope.register_user.password = null
+      $scope.register_user.password_confirmation = null
+      return false
+    
+    $http.post(urls.register, user: user)
+    .success (data)->
       #$rootScope.$broadcast("REGISTERED")
       alert("You've been registered! Check your email for a verification link, then come back and sign in.")
       AuthFactory.setAuthContext("login")
       $scope.login_user.email = $scope.register_user.email
     .error (data) ->
-      $scope.register_user = AuthFactory.get_register_user_model()
       console.log "Register DATA isnt as expected", data
       error_text = ""
       if data.errors.email
         error_text += "Email address " + data.errors.email  + ". "
+        $scope.register_user.email = null
       if data.errors.password
         error_text += "Password " + data.errors.password + "."
+        $scope.register_user.password = null
+        $scope.register_user.password_confirmation = null
       alert("Oops! " + error_text)
 
   $scope.forgot_password = ()->
