@@ -1,4 +1,4 @@
-controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18nFactory, mapStateService)->
+controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18nFactory, mapStateService, $swipe)->
   console.log "Search Ctrl"
 
   $scope.current_view = "map"
@@ -81,6 +81,12 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   #$rootScope.$on "LOGGED-IN", load_view
   #load_view() if AuthFactory.is_logged_in()
 
+  # HACK (Android): Force blur on search input when map is touched
+  $scope.blurSearchInput = ()->
+    console.log("blurred!")
+    if (document.activeElement.id == "searchInput")
+      document.activeElement.blur()
+  
   $scope.location_search = ()->
     # If it looks like a lat/lng just go there
     strsplit = $scope.search_text.split(/[\s,]+/)
