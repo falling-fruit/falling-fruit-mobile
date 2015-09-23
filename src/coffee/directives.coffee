@@ -243,3 +243,14 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
       _.remove($scope.location.type_ids, (arr_id) ->
           return arr_id == id
       )
+
+# Do something extra on touchstart and/or click event
+#http://stackoverflow.com/a/24745264
+directives.ngTouchClick = ()->
+  link: ($scope, $element, $attrs)->
+    $element.bind 'touchstart click', (e)->
+      #e.preventDefault()
+      #e.stopPropagation()
+      $scope.$apply $attrs['ngTouchClick']
+      return
+    return

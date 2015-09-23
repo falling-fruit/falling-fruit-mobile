@@ -9,10 +9,10 @@
         .search-input-container
           form(ng-submit="location_search()")
             input(type="submit", value="")
-            input(type="text", placeholder="Address", ng-model="search_text")
+            input(id="searchInput", type="text", placeholder="Address", ng-model="search_text")
 
       .search-view-container
-        .map-container(directionstype="directions_type", stoplist="stopList")
+        .map-container(ng-touch-click="blurSearchInput()", directionstype="directions_type", stoplist="stopList")
           .zoom-controls
             .zoom-in(class="controls", ng-click="zoom_map(1)")
             .zoom-out(class="controls", ng-click="zoom_map(-1)")
