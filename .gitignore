@@ -10,8 +10,8 @@ www/index.html
 www/css/index.css
 www/css/style.css
 www/html/*
-www/js/*
-!www/js/*/lib/
+www/js/*.js
+!www/js/*/lib/**.js
 
 # XCode
 .DS_Store
@@ -34,7 +34,7 @@ platforms/ios/wedeliver-lucy.xcodeproj/xcuserdata/*
 platforms/ios/wedeliver-lucy.xcodeproj/project.xcworkspace/xcuserdata/*
 *.xcuserstate
 
-# Cordova build ios (except the app) 
+# Cordova build ios (except the app)
 
 # Miscellany
 npm-debug.log
