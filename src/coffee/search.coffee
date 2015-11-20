@@ -12,10 +12,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.show_map = ()->
     if $scope.current_view != "map"
       $scope.current_view = "map"
-      
+
   $scope.zoom_map = (dz)->
     window.FFApp.map_obj.setZoom(window.FFApp.map_obj.getZoom() + dz)
-  
+
   ## List
   $scope.list_center = null
   $scope.reset_list_center = ()->
@@ -33,7 +33,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     if $scope.current_view != "list"
       $scope.current_view = "list"
       $scope.list_center = window.FFApp.map_obj.getCenter()
-  
+
   $scope.load_list = (center)->
     mapStateService.setLoading("Loading...")
     $scope.targeted = false
@@ -83,10 +83,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
   # HACK (Android): Force blur on search input when map is touched
   $scope.blurSearchInput = ()->
-    console.log("blurred!")
+    console.log("blurred map!")
     if (document.activeElement.id == "searchInput")
       document.activeElement.blur()
-  
+
   $scope.location_search = ()->
     # If it looks like a lat/lng just go there
     strsplit = $scope.search_text.split(/[\s,]+/)
@@ -131,12 +131,12 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   ## Current position (update once)
 
   $scope.update_position = ()->
-
     # position
     navigator.geolocation.getCurrentPosition ((position)->
       console.log("Position obtained")
       window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
       window.FFApp.position_accuracy = position.coords.accuracy
+
       if !window.FFApp.position_marker
         window.FFApp.position_marker = new google.maps.Marker(
           icon:
@@ -154,6 +154,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         )
       else
         window.FFApp.position_marker.setPosition(window.FFApp.current_position)
+
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
       $scope.list_center = window.FFApp.current_position
 
@@ -194,12 +195,11 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 #       ), ()->
 #         console.log("Failed to get heading") # FIXME: replace with common error handling
 
-    ), ()->
+    ), (err)->
       console.log("Failed to get position") # FIXME: replace with common error handling
-
+      alert("Please enable location access in settings. Then we can find trees closer to you!")
 
   ## Current position (watch - unused)
-
   $scope.ignoreCenterChange = false
   # FIXME: Can't be called here (idea is to turn tracking off if map center is moved manually
 #   google.maps.event.addListener window.FFApp.map_obj, "center_changed", ()->

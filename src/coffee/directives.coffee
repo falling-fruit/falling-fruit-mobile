@@ -159,22 +159,18 @@ directives.mapContainer = ()->
       return if window.FFApp.map_initialized == true
 
       mapStateService.setLoading("Loading...")
+      window.FFApp.map_elem = document.getElementById("map")
 
-      if window.FFApp.map_elem isnt undefined
-        container_elem.appendChild(window.FFApp.map_elem)
-      else
-        window.FFApp.map_elem = document.createElement("div")
-        window.FFApp.map_elem.className = "map"
-        container_elem.appendChild(window.FFApp.map_elem)
-
-        navigator.geolocation.getCurrentPosition (position) ->
-          lat = position.coords.latitude
-          lng = position.coords.longitude
-          center = new google.maps.LatLng(lat, lng)
-          load_map(center)
-        , ->
-          #Error Handler Function (We can't get their location)
-          load_map(window.FFApp.defaultCenter)
+      navigator.geolocation.getCurrentPosition( (position)->
+        lat = position.coords.latitude
+        lng = position.coords.longitude
+        center = new google.maps.LatLng(lat, lng)
+        load_map(center)
+      , (err)->
+        #Error Handler Function (We can't get their location)
+        #load_map(window.FFApp.defaultCenter)
+        load_map(window.FFApp.defaultCenter)
+      )
 
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
     initialize()
