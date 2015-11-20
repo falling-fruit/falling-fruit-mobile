@@ -125,7 +125,7 @@
 
 .zoom-controls {
   @zoom-control-scale: 2/3;
-  
+
   position: absolute;
   left: 10px;
   top: @menu-height;
@@ -141,7 +141,7 @@
     height: 50%;
     width: 100%;
   }
-  
+
   // Required, otherwise disappears on translation of parent in some browsers:
   // http://stackoverflow.com/questions/21447511/css3-transition-on-absolute-positioned-element-disappears-under-canvas-embed
   .transform-translate(0px, 0px, 0px);
@@ -164,6 +164,12 @@
   .content-container();
   overflow: hidden;
   z-index: @zindex-map;
+  #map {
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+  }
 }
 
 .angular-google-map-container {
@@ -177,12 +183,6 @@
   top: @menu-height + @ios-offset;
 }
 
-.map {
-  overflow: hidden;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
 
 .crosshair {
   @height: 200px; /* must be in pixels */
