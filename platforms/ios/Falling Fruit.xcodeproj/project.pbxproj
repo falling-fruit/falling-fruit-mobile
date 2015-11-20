@@ -36,7 +36,6 @@
 		502D75E14BE0451884B83BFB /* CDVAssetLibraryFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = EA52F48CD6C349028008B071 /* CDVAssetLibraryFilesystem.m */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		5DAD8DB5583C489CA6644C8C /* CDVFile.m in Sources */ = {isa = PBXBuildFile; fileRef = FABF01D20D624A0FA1D17797 /* CDVFile.m */; };
-		7C6109BB645A4071BDACB7E8 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 87CAB5B7569C498AA7987F2B /* CDVLocation.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -54,6 +53,7 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F00A05C2F902404088A21371 /* CDVCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 54F02289E8824B2E9C84FCFC /* CDVCamera.m */; };
 		F780DB3D35F645E0A7E38EDA /* CDVFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD9A8B8C4E04AF0967B4B54 /* CDVFileTransfer.m */; };
+		883C579DDCBB46708102C145 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15FCA5430D4D8E886158C4 /* CDVLocation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +75,6 @@
 
 /* Begin PBXFileReference section */
 		06A5E535AF824C948CF8C52C /* CDVLocalFilesystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLocalFilesystem.h; path = org.apache.cordova.file/CDVLocalFilesystem.h; sourceTree = "<group>"; };
-		09FFD9E3F7B143578ABF8E21 /* CDVLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = org.apache.cordova.geolocation/CDVLocation.h; sourceTree = "<group>"; };
 		0A9C3DA895EE40CB8DD528B0 /* UIWebViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewExtension.h; path = com.ionic.keyboard/UIWebViewExtension.h; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -128,7 +127,6 @@
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
 		847F28BECC414F4380FF6E16 /* CDVCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVCapture.m; path = "org.apache.cordova.media-capture/CDVCapture.m"; sourceTree = "<group>"; };
-		87CAB5B7569C498AA7987F2B /* CDVLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVLocation.m; path = org.apache.cordova.geolocation/CDVLocation.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Falling Fruit-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Falling Fruit-Info.plist"; path = "../Falling Fruit-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		92643556B2E74329AFDC89B7 /* CDVCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVCapture.h; path = "org.apache.cordova.media-capture/CDVCapture.h"; sourceTree = "<group>"; };
 		96F40FDDAD224D4B92C7CA28 /* CDVJpegHeaderWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVJpegHeaderWriter.m; path = org.apache.cordova.camera/CDVJpegHeaderWriter.m; sourceTree = "<group>"; };
@@ -144,6 +142,8 @@
 		F258C67D1D084ECBAAFED46F /* CDVCapture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CDVCapture.bundle; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "Falling Fruit/config.xml"; sourceTree = "<group>"; };
 		FABF01D20D624A0FA1D17797 /* CDVFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVFile.m; path = org.apache.cordova.file/CDVFile.m; sourceTree = "<group>"; };
+		9E15FCA5430D4D8E886158C4 /* CDVLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLocation.m"; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		DD1F521444234ED5B490D6F0 /* CDVLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLocation.h"; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,10 +267,10 @@
 				7C80475FB87F4C529753EBED /* CDVAssetLibraryFilesystem.h */,
 				7DD9A8B8C4E04AF0967B4B54 /* CDVFileTransfer.m */,
 				582F5FEE32A04A03867D120D /* CDVFileTransfer.h */,
-				87CAB5B7569C498AA7987F2B /* CDVLocation.m */,
-				09FFD9E3F7B143578ABF8E21 /* CDVLocation.h */,
 				847F28BECC414F4380FF6E16 /* CDVCapture.m */,
 				92643556B2E74329AFDC89B7 /* CDVCapture.h */,
+				9E15FCA5430D4D8E886158C4 /* CDVLocation.m */,
+				DD1F521444234ED5B490D6F0 /* CDVLocation.h */,
 			);
 			name = Plugins;
 			path = "Falling Fruit/Plugins";
@@ -355,7 +355,7 @@
 				LastUpgradeCheck = 510;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = PPX6U2P39B;
+						DevelopmentTeam = 8EX32475UK;
 					};
 				};
 			};
@@ -471,8 +471,8 @@
 				2ED49BF201AB44FEA1809195 /* CDVLocalFilesystem.m in Sources */,
 				502D75E14BE0451884B83BFB /* CDVAssetLibraryFilesystem.m in Sources */,
 				F780DB3D35F645E0A7E38EDA /* CDVFileTransfer.m in Sources */,
-				7C6109BB645A4071BDACB7E8 /* CDVLocation.m in Sources */,
 				20B188E69B3E4735B4AAB6AD /* CDVCapture.m in Sources */,
+				883C579DDCBB46708102C145 /* CDVLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +495,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -517,6 +518,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "Falling Fruit";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -529,6 +531,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Falling Fruit/Falling Fruit-Prefix.pch";
@@ -549,6 +552,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "Falling Fruit";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
