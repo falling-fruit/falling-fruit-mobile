@@ -121,9 +121,6 @@
         "org.apache.cordova.file-transfer": {
             "PACKAGE_NAME": "uh.fallingfruit.app"
         },
-        "org.apache.cordova.geolocation": {
-            "PACKAGE_NAME": "uh.fallingfruit.app"
-        },
         "org.apache.cordova.media-capture": {
             "PACKAGE_NAME": "uh.fallingfruit.app"
         },
@@ -131,6 +128,9 @@
             "PACKAGE_NAME": "org.fallingfruit"
         },
         "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.fiddlemeragged.fallingfruit"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.fiddlemeragged.fallingfruit"
         }
     },
