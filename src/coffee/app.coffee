@@ -48,8 +48,8 @@ FallingFruitApp.config ($routeProvider)->
       redirectTo: '/auth'
 
 # catch cordova events and do things with them
-FallingFruitApp.run ($rootScope) ->
-
+FallingFruitApp.run ($rootScope, $window) ->
+  console.log("Bootstrapped and Running Angular FallingFruitApp")
   onBack = (event)->
     console.log "Caught back button press"
     event.preventDefault();
@@ -64,6 +64,21 @@ FallingFruitApp.run ($rootScope) ->
   FastClick.attach(document.body)
 
   return
+
+#This waits for the device to be ready before bootstrapping the angular app
+#http://stackoverflow.com/questions/21556090/cordova-angularjs-device-ready
+#MichaelOryl's Answer
+angular.element(document).ready ()->
+  if window.cordova
+    console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.");
+    document.addEventListener('deviceready', ()->
+      console.log("Deviceready event has fired, bootstrapping AngularJS.");
+      angular.bootstrap(document.body, ['FallingFruitApp']);
+    , false);
+  else
+    console.log("Running in browser, bootstrapping AngularJS now.");
+    angular.bootstrap(document.body, ['FallingFruitApp']);
+
 
 auth_host = "https://fallingfruit.org/"
 #auth_host = "http://localhost:3000/"
