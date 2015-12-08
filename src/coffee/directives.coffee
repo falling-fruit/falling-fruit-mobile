@@ -169,7 +169,6 @@ directives.mapContainer = ()->
           load_map(center)
         , (err)->
           #Error Handler Function (We can't get their location)
-          #load_map(window.FFApp.defaultCenter)
           load_map(window.FFApp.defaultCenter)
         )
       else
