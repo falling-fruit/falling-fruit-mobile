@@ -158,21 +158,28 @@ directives.mapContainer = ()->
     initialize = ()->
       return if window.FFApp.map_initialized == true
 
-      mapStateService.setLoading("Loading...")
+      mapStateService.setLoading("Loading Map...")
       window.FFApp.map_elem = document.getElementById("map")
 
-      navigator.geolocation.getCurrentPosition( (position)->
-        lat = position.coords.latitude
-        lng = position.coords.longitude
-        center = new google.maps.LatLng(lat, lng)
-        load_map(center)
-      , (err)->
-        #Error Handler Function (We can't get their location)
-        #load_map(window.FFApp.defaultCenter)
+      if navigator.geolocation
+        setTimeout () ->
+          navigator.geolocation.getCurrentPosition( (position)->
+            lat = position.coords.latitude
+            lng = position.coords.longitude
+            center = new google.maps.LatLng(lat, lng)
+            load_map(center)
+          , (err)->
+            #Error Handler Function (We can't get their location)
+            #load_map(window.FFApp.defaultCenter)
+            load_map(window.FFApp.defaultCenter)
+          )
+        , 4000
+      else
         load_map(window.FFApp.defaultCenter)
-      )
+
 
     console.log "LOADING MAP DIRECTIVE, STOPS NOT LOADED YET"
+    #deviceready should be used here, but doesn't seem to work well with how app is architected.
     initialize()
 
 directives.ffLoadingMsg = (mapStateService)->
