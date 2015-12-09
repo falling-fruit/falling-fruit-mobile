@@ -10,7 +10,7 @@
     span(ng-class="{placeholder: location.access == null}") [{location.access == null ? "Access" : short_access_types[location.access]}]
     select(ng-model="location.access", ng-options="i*1 as access for (i,access) in short_access_types")
       option(value=null)
-  
+
   .detail-toggle-container
     .detail-toggle-label(ng-class="{placeholder: !location.unverified}") Unverified
     .ng-switcher(toggle="location.unverified")
