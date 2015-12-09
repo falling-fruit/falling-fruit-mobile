@@ -193,6 +193,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     if $scope.detail_context == "edit_location" or $scope.detail_context == "add_review" or $scope.detail_context == "view_reviews"
       $scope.menu_title = "Location"
       $scope.detail_context = "view_location"
+      load_location($scope.location_id)
     else
       $scope.show_detail = false
       $scope.location_id = undefined
