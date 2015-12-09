@@ -77,7 +77,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.menu_left_btn_click()
 
   $scope.$on "SHOW-LOCATION", (event, id)->
-    console.log "SHOW-LOCATION Broadcast CAUGHT", id
+    console.log "SHOW-LOCATION Broadcast: ", id
     $scope.show_detail = true
     $scope.location_id = id
     load_location(id)
@@ -142,7 +142,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
 
   $scope.save_location = ()->
     mapStateService.setLoading("Saving...")
-    console.log("Location: ", $scope.location)
+    console.log("Saving Location: ", $scope.location)
 
     if !$scope.location.id?
       # Since index = -1 implies undefined, we need to unset these before saving
@@ -155,10 +155,10 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       if $scope.location.observation.fruiting == "-1"
         observation.fruiting = null
       $scope.location.observation = observation
-      
+
       $http.post urls.add_location, location: $scope.location
       .success (data)->
-        console.log("ADDED")
+        console.log("ADDED LOCATION", data.id)
         console.log(data)
         $scope.location_id = data.id
         load_location(data.id)
@@ -166,20 +166,20 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
       .error (data)->
-        console.log("ADD FAILED")
+        console.log("ADD LOCATION FAILED")
         console.log(data)
         $rootScope.$broadcast "SHOW-MAP"
     else
       $http.put urls.edit_location($scope.location.id), location: $scope.location
       .success (data)->
-        console.log("UPDATED")
+        console.log("UPDATED LOCATION")
         console.log(data)
         load_location($scope.location_id)
         mapStateService.removeLoading()
         $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
       .error (data)->
-        console.log("UPDATE FAILED")
+        console.log("UPDATE LOCATION FAILED: ", $scope.location.id)
         console.log(data)
         $rootScope.$broadcast "SHOW-MAP"
 
@@ -205,4 +205,4 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   # HACK (Android/iOS): Force blur on any active element when sliders are clicked
   $scope.blurActiveElement = ()->
     document.activeElement.blur()
-  
+
