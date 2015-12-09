@@ -1,7 +1,7 @@
 .detail-input-container
   input(ng-model="filters.edible_types", placeholder="{{edible_type_placeholder}}", ng-focus="show_menu=true", ng-blur="blurInput()")
   ul(class="select-dropdown", ng-show="show_menu")
-    li(ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types", ng-click="updateLocationEdibleType(type)")
+    li(ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types track by type.id", ng-click="updateLocationEdibleType(type)")
       {{type.name}}
 
 .detail-links-container(ng-show="location.type_ids.length")
