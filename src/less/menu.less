@@ -1,21 +1,22 @@
 .menu-component-mixin() {
-  position: absolute;
-  top: 0;  
-  overflow: hidden;
   height: @menu-height;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
 }
 
 .menu {
   .menu-component-mixin();
+  background-color: @light-gray;
   left: 0;
   width: 100%;
-  background-color: @light-gray;
+  z-index: 2000;
 }
 
 .menu-left-btn {
   .menu-component-mixin();
   left: 0;
-  width: @menu-height;  
+  width: @menu-height;
 }
 
 .menu-left-btn.back {
@@ -25,8 +26,8 @@
 
 .menu-title {
   .menu-component-mixin();
-  left: @menu-height; 
-  right: @menu-height;   
+  left: @menu-height;
+  right: @menu-height;
   line-height: @menu-height;
   text-align: center;
   font-size: @font-size-large;
@@ -36,5 +37,5 @@
 .menu-right-btn {
   .menu-component-mixin();
   right: 0;
-  width: @menu-height;  
+  width: @menu-height;
 }
