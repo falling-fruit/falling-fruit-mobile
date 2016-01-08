@@ -10,14 +10,17 @@ The backend is accessed over a RESTful JSON API served up at fallingfruit.org/ap
 ## Directory Layout
 
   * bin - grunt and npm configuration
-  * docs - our documentation (outside of this readme)
-  * src - the core source for the site
+  * docs - extra documentation
+  * hooks - Cordova hooks
+  * icons - Platform icon and splashscreen graphics
+  * platforms - Platform configuration and code compiled by grunt and Cordova
+  * plugins - Cordova plugins
+  * resources - same as icons (?)
+  * src - Source code for the site
     * jade - compiles to html
     * less - compiles to css
     * coffee - compiles to javascript
-  * plugins - downloaded cordova plugins
-  * www - app code compiled by grunt from stuff in the src directory along with static things like images and js libraries
-  * platforms - app code for various platforms (android, ios) compiled by grunt and/or cordova
+  * www - Code compiled by grunt from /src, along with static files (e.g. images, js libraries).
 
 ## Code Layout
 
@@ -54,9 +57,7 @@ Grunt is used to compile things in the "src" directory into "www". To do this, y
 
 ```
 cd bin
-grunt jade
-grunt coffee
-grunt less
+grunt jade coffee less
 ```
 
 If you want to start a watcher that will automatically recompile things when they are saved do:
@@ -73,7 +74,7 @@ grunt devserver
 
 You'll need to make sure to disable CORS warnings in your browser. The easiest way to do that is to install [this plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi/related?hl=en).
 
-Then browse to http://localhost:9001
+Then browse to [http://localhost:9001](http://localhost:9001).
 
 ### Develop with the Emulators
 
@@ -156,10 +157,8 @@ Should start the adb server with sufficient permissions and list your device. To
 
 ```
 cordova build android
-adb -d install /path/to/thething.apk
+adb -d install -r /path/to/thething.apk
 ```
-
-(note that it cannot already be installed, so you have to uninstall it on each debug iteration)
 
 ## Icons and Splash Screens
 	http://ionicframework.com/docs/cli/icon-splashscreen.html
