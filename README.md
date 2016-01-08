@@ -36,16 +36,31 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
 ### Install node and dependencies
 
   * Node Version Manager (nvm): [installation instructions](https://github.com/creationix/nvm)
-  * Node (0.10): `nvm install 0.10`
-  * Cordova (5.4.1): `npm install -g cordova@5.4.1`
-  * grunt-cli: `npm install -g grunt-cli`
+  * Node (0.10): 
+  
+  ```
+  nvm install 0.10
+  ```
+  
+  * Cordova (5.4.1): 
+  
+  ```
+  npm install -g cordova@5.4.1
+  ```
+  
+  * grunt-cli: 
+  
+  ```
+  npm install -g grunt-cli
+  ```
+  
   * Node packages: 
   
-```
-cd bin
-npm install
-cd ..
-```
+  ```
+  cd bin
+  npm install
+  cd ..
+  ```
 
 ### Develop with grunt
 
@@ -76,15 +91,20 @@ You'll need to disable CORS warnings in your browser. The easiest way to do that
 
 To build the app for Android, you'll need to install the Android SDKs. 
 
-  * Download and install the latest Android SDK Tools ([download links](http://developer.android.com/sdk/index.html#Other),  [instructions](http://spring.io/guides/gs/android/)).
+  * Download and install the latest Android SDK Tools: [download links](http://developer.android.com/sdk/index.html#Other),  [instructions](http://spring.io/guides/gs/android/).
   * Add the new folder to your path:
 
-```
-export ANDROID_HOME=<installation location>
-export PATH=$PATH:$ANDROID_HOME/tools
-```
+  ```
+  export ANDROID_HOME=<installation location>
+  export PATH=$PATH:$ANDROID_HOME/tools
+  ```
 
-  * Run the Android SDK Manager (command `android`) and install the following packages:
+  * Run the Android SDK Manager:
+  
+  ```
+  android
+  ```
+  *  With it, select and install the following packages:
   
     * Android SDK Platform-tools (latest)
     * Android SDK Platform (v22)

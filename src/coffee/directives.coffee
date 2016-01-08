@@ -158,7 +158,7 @@ directives.mapContainer = ()->
     initialize = ()->
       return if window.FFApp.map_initialized == true
 
-      mapStateService.setLoading("Loading your location...")
+      mapStateService.setLoading("Loading map...")
       window.FFApp.map_elem = document.getElementById("map")
 
       if navigator.geolocation
