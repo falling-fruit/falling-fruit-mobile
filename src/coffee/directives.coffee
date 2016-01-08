@@ -158,7 +158,7 @@ directives.mapContainer = ()->
     initialize = ()->
       return if window.FFApp.map_initialized == true
 
-      mapStateService.setLoading("Loading Map...")
+      mapStateService.setLoading("Loading your location...")
       window.FFApp.map_elem = document.getElementById("map")
 
       if navigator.geolocation
@@ -170,6 +170,7 @@ directives.mapContainer = ()->
         , (err)->
           #Error Handler Function (We can't get their location)
           load_map(window.FFApp.defaultCenter)
+        , {maximumAge: 3000, timeout: 4000, enableHighAccuracy: true}
         )
       else
         load_map(window.FFApp.defaultCenter)

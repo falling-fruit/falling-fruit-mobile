@@ -132,6 +132,9 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.fiddlemeragged.fallingfruit"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.fiddlemeragged.fallingfruit"
         }
     },
     "dependent_plugins": {}

@@ -95,6 +95,9 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "uh.fallingfruit.app"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "uh.fallingfruit.app"
         }
     },
     "dependent_plugins": {
