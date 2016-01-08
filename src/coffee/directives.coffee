@@ -221,21 +221,22 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
   link: ($scope, $element, $attrs) ->
     $scope.edible_types_data = edibleTypesService.data
     $scope.show_menu = false
-    $scope.edible_type_placeholder = "Edible types"
+    $scope.edible_type_placeholder = "Type to find edible type"
     $scope.filters = {}
     $scope.filters.edible_types = null
 
     $scope.blurInput = ()->
       #wait for all other handlers to run first
       #like the click handler then blur
-      $timeout(()->
-        $scope.show_menu = false
-      , 150)
+      # $timeout(()->
+      #   $scope.show_menu = false
+      # , 5)
 
     $scope.updateLocationEdibleType = (type)->
       $scope.filters.edible_types = null
       $scope.location.type_ids = [] if $scope.location.type_ids is undefined
       $scope.location.type_ids.push(type.id) if $scope.location.type_ids.indexOf(type.id) == -1
+      $scope.show_menu = false
 
     $scope.removeEdibleType = (id)->
       #index = $scope.location.type_ids.indexOf(type.name)
