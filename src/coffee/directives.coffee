@@ -222,8 +222,10 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
   link: ($scope, $element, $attrs) ->
     $scope.edible_types_data = edibleTypesService.data
     $scope.show_menu = false
-    $scope.edible_type_placeholder = "Type to find edible type"
+    $scope.edible_type_placeholder = "Edible types"
     $scope.filters = {}
+    $scope.not_filtered = true
+    $scope.et_quantity = 5
     $scope.filters.edible_types = null
 
     $scope.blurInput = ()->
@@ -232,6 +234,17 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
       # $timeout(()->
       #   $scope.show_menu = false
       # , 5)
+
+    $scope.checkInputTypedLength = ()->
+
+      console.log $scope.filteredTypes
+      if $scope.filteredTypes.length >= 1
+        console.log("greater than 2")
+        $scope.not_filtered = false
+        $scope.et_quantity = null #$scope.filteredTypes.length
+      else
+        $scope.et_quantity = 5
+        $scope.not_filtered = true
 
     $scope.updateLocationEdibleType = (type)->
       $scope.filters.edible_types = null

@@ -79,6 +79,8 @@ angular.element(document).ready ()->
     console.log("Running in browser, bootstrapping AngularJS now.");
     angular.bootstrap(document.body, ['FallingFruitApp']);
 
+  if navigator.userAgent.match(/iPhone/) || navigator.userAgent.match(/iPad/)
+    document.body.classList.add("ios-device");
 
 auth_host = "https://fallingfruit.org/"
 #auth_host = "http://localhost:3000/"
