@@ -4,6 +4,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   reset = ()->
     console.log "RESETTING LOCATION"
     $scope.location = {}
+    $scope.location_copy = {}
     $scope.location_id = null
     $scope.reviews = []
     reset_review()
@@ -29,6 +30,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       # Types (unique)
       data.type_ids = _.uniq(data.type_ids)
       $scope.location = data
+      #$scope.location_copy = angular.copy($scope.location)
       $scope.location_id = data.id
 
       # Refresh map

@@ -27,13 +27,13 @@
 }
 
 .detail-outer-container {
+  background-color: white;
+  left: 100%;
+  height: 100%;
+  overflow: hidden;
   position: absolute;
   top: 0;
-  left: 100%;
   width: 100%;
-  height: 100%;
-  background-color: white;
-  overflow: hidden;
   z-index: @zindex-detail;
   .transform-translate(0, 0, 0);
   .transition-all(300ms);
@@ -62,7 +62,16 @@
       top: @menu-height - 1;
     }
   }
+}
 
+body.ios-device {
+  .detail-outer-container {
+    .loading {
+      &.show {
+        top: @menu-height + 1;
+      }
+    }
+  }
 }
 
 .detail-outer-container.show {

@@ -1,8 +1,9 @@
 .detail-input-container
   form(name="edibleTypesForm")
-    input(ng-model="filters.edible_types", placeholder="{{edible_type_placeholder}}", ng-focus="show_menu=true", ng-blur="show_menu=false")
+    input(ng-model="filters.edible_types", placeholder="{{edible_type_placeholder}}", ng-focus="show_menu=true", ng-blur="show_menu=false" ng-change="checkInputTypedLength()" ng-model-options="{debounce: 25}")
     ul(class="select-dropdown", ng-show="show_menu")
-      li(ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types|limitTo:5 track by type.id", ng-click="updateLocationEdibleType(type)")
+      li(ng-show="not_filtered") Type to find an edible type
+      li(ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types|limitTo:et_quantity as filteredTypes", ng-click="updateLocationEdibleType(type)")
         {{type.name}}
 
 .detail-links-container(ng-show="location.type_ids.length")
