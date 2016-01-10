@@ -30,6 +30,20 @@
     <string>0.1</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+      <key>NSExceptionDomains</key>
+      <dict>
+        <key>fallingfruit.org</key>
+        <dict/>
+        <key>maps.googleapis.com</key>
+        <dict/>
+      </dict>
+    </dict>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string/>
     <key>NSMainNibFile~ipad</key>
     <string/>
     <key>UIInterfaceOrientation</key>
@@ -48,19 +62,5 @@
       <string>UIInterfaceOrientationPortrait</string>
       <string>UIInterfaceOrientationPortraitUpsideDown</string>
     </array>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-      <key>NSExceptionDomains</key>
-      <dict>
-        <key>maps.googleapis.com</key>
-        <dict/>
-        <key>fallingfruit.org</key>
-        <dict/>
-      </dict>
-    </dict>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string/>
   </dict>
 </plist>
