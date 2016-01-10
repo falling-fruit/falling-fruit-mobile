@@ -55,24 +55,19 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     $scope.muni = window.FFApp.muni
     window.clear_markers()
     window.do_markers()
-    if $scope.current_view == "list"
-      $scope.load_list()
-    else
-      $scope.expire_list()
+    $scope.reset_list()
 
   $scope.selectedType = window.FFApp.selectedType
   $scope.filter_types = ()->
     window.FFApp.selectedType = $scope.selectedType
     window.clear_markers()
     window.do_markers()
-    if $scope.current_view == "list"
-      $scope.load_list()
-    else
-      $scope.expire_list()
+    $scope.reset_list()
   
   $scope.reset_filter_types = () ->
     $scope.selectedType = null
     $scope.filter_types()
+    $scope.reset_list()
 
   ## Regional
 

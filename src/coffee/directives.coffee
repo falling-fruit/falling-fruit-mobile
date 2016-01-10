@@ -67,7 +67,7 @@ directives.mapContainer = ()->
       ).success (json) ->
         add_markers_from_json json
         mapStateService.removeLoading()
-
+    
     find_marker = (lid) ->
       i = 0
       while i < window.FFApp.markersArray.length

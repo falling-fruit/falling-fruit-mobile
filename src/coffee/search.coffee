@@ -19,12 +19,16 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   ## List
   $scope.list_bounds = null
   $scope.$watch("list_bounds", (newValue, oldValue)->
-    if newValue != oldValue
-      $scope.load_list($scope.list_bounds)
+    if $scope.current_view == "list"
+      if newValue != oldValue
+        $scope.load_list($scope.list_bounds)
   )
-  $scope.expire_list = ()->
-    $scope.list_bounds = null
-
+  $scope.reset_list = ()->
+    if $scope.current_view == "list"
+      $scope.load_list()
+    else
+      $scope.list_bounds = null
+  
   $scope.show_list = ()->
     if $scope.current_view != "list"
       $scope.current_view = "list"
@@ -71,6 +75,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
       $scope.list_items = data
       mapStateService.removeLoading()
+      $scope.list_bounds = bounds
 
   ## Side menu
   
