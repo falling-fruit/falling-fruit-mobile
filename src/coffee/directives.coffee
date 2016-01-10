@@ -224,7 +224,7 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
     $scope.show_menu = false
     $scope.edible_type_placeholder = "Edible types"
     $scope.filters = {}
-    $scope.not_filtered = true
+    $scope.filtered = false
     $scope.et_quantity = 0
     $scope.filters.edible_types = null
 
@@ -236,24 +236,21 @@ directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
       # , 5)
 
     $scope.checkInputTypedLength = ()->
-
-      $scope.et_quantity = 50
-
-      if $scope.filters.edible_types.length == 0
+      max_results = $scope.edible_types_data.edible_types.length
+      if $scope.filters.edible_types.length < 2
         $scope.et_quantity = 0
-        $scope.not_filtered = true
-      else if $scope.filteredTypes.length > 0
-        $scope.et_quantity = $scope.filteredTypes.length
-        $scope.not_filtered = false
-
-
+        $scope.filtered = false
+      else
+        $scope.et_quantity = max_results
+        $scope.filtered = true
+    
     $scope.updateLocationEdibleType = (type)->
-      $scope.filters.edible_types = null
       $scope.location.type_ids = [] if $scope.location.type_ids is undefined
       $scope.location.type_ids.push(type.id) if $scope.location.type_ids.indexOf(type.id) == -1
+      $scope.filters.edible_types = null
       $scope.show_menu = false
       $scope.et_quantity = 0
-      $scope.not_filtered = true
+      $scope.filtered = false
 
     $scope.removeEdibleType = (id)->
       #index = $scope.location.type_ids.indexOf(type.name)
