@@ -89,12 +89,11 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
   # HACK (Android): Force blur on search input when map is touched
   $scope.blurSearchInput = ()->
-    console.log("blurred map!")
     if (document.activeElement.id == "searchInput")
       document.activeElement.blur()
 
   $scope.location_search = ()->
-    # If it looks like a lat/lng just go there
+    # If it looks like "lat, lng" just go there
     strsplit = $scope.search_text.split(/[\s,]+/)
     if strsplit.length == 2
       lat = parseFloat(strsplit[0])
@@ -103,14 +102,14 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         latlng = new (google.maps.LatLng)(lat, lng)
         window.FFApp.map_obj.setZoom 17
         window.FFApp.map_obj.panTo latlng
-        $scope.list_center = latlng
+        $scope.reset_list()
     # Run geocoder for everything else
     window.FFApp.geocoder.geocode { 'address': $scope.search_text }, (results, status) ->
       if status == google.maps.GeocoderStatus.OK
         bounds = results[0].geometry.viewport
         latlng = results[0].geometry.location
         window.FFApp.map_obj.fitBounds bounds
-        $scope.list_center = latlng
+        $scope.reset_list()
       else
         console.log("Failed to do geocode") # FIXME: replace with common error handling
 
@@ -162,7 +161,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         window.FFApp.position_marker.setPosition(window.FFApp.current_position)
 
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
-      $scope.list_center = window.FFApp.current_position
+      $scope.reset_list()
 
       # heading
       # FIXME: Always returns zero?
@@ -256,4 +255,4 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
     window.FFApp.ignoreCenterChange = true
     window.FFApp.map_obj.panTo(window.FFApp.current_position)
-    $scope.list_center = window.FFApp.current_position
+    $scope.reset_list()

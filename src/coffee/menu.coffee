@@ -56,7 +56,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     window.clear_markers()
     window.do_markers()
     $scope.reset_list()
-
+  
   $scope.selectedType = window.FFApp.selectedType
   $scope.filter_types = ()->
     window.FFApp.selectedType = $scope.selectedType
@@ -67,8 +67,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
   $scope.reset_filter_types = () ->
     $scope.selectedType = null
     $scope.filter_types()
-    $scope.reset_list()
-
+    
   ## Regional
 
   $scope.metric = window.FFApp.metric
