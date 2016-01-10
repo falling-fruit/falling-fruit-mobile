@@ -17,31 +17,27 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     window.FFApp.map_obj.setZoom(window.FFApp.map_obj.getZoom() + dz)
 
   ## List
-  $scope.list_center = null
-  $scope.reset_list_center = ()->
-    $scope.list_center = null
-  $scope.$watch("list_center", (newValue, oldValue)->
+  $scope.list_bounds = null
+  $scope.$watch("list_bounds", (newValue, oldValue)->
     if newValue != oldValue
-      if $scope.current_view == "list"
-        $scope.load_list($scope.list_center)
+      $scope.load_list($scope.list_bounds)
   )
-
-  $scope.toggleSideMenu = ()->
-    AuthFactory.toggleSideMenu()
+  $scope.expire_list = ()->
+    $scope.list_bounds = null
 
   $scope.show_list = ()->
     if $scope.current_view != "list"
       $scope.current_view = "list"
-      $scope.list_center = window.FFApp.map_obj.getCenter()
+      $scope.list_bounds = window.FFApp.map_obj.getBounds()
 
-  $scope.load_list = (center)->
+  $scope.load_list = (bounds)->
+    console.log("LOADING LIST")
     mapStateService.setLoading("Loading...")
     $scope.targeted = false
     $scope.add_location_controls = false
-
-    if !center
-      center = window.FFApp.map_obj.getCenter()
-    bounds = window.FFApp.map_obj.getBounds()
+    center = window.FFApp.map_obj.getCenter()
+    if !bounds
+      bounds = window.FFApp.map_obj.getBounds()
     list_params =
       lat: center.lat()
       lng: center.lng()
@@ -76,6 +72,11 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       $scope.list_items = data
       mapStateService.removeLoading()
 
+  ## Side menu
+  
+  $scope.toggleSideMenu = ()->
+    AuthFactory.toggleSideMenu()
+    
   ## Position
   #$rootScope.$on "MAP-LOADED", $scope.update_position
   #$rootScope.$on "LOGGED-IN", load_view

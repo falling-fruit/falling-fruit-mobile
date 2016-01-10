@@ -47,7 +47,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     bicycleLayer.setMap(null)
 
   ## Filters
-  # FIXME: Share fun/var with map directive in a cleaner fashion that using window?
+  # FIXME: Share fun/var with map directive in a cleaner fashion than using window?
 
   $scope.muni = window.FFApp.muni
   $scope.toggle_muni = ()->
@@ -58,7 +58,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     if $scope.current_view == "list"
       $scope.load_list()
     else
-      $scope.reset_list_center()
+      $scope.expire_list()
 
   $scope.selectedType = window.FFApp.selectedType
   $scope.filter_types = ()->
@@ -68,7 +68,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     if $scope.current_view == "list"
       $scope.load_list()
     else
-      $scope.reset_list_center()
+      $scope.expire_list()
   
   $scope.reset_filter_types = () ->
     $scope.selectedType = null
