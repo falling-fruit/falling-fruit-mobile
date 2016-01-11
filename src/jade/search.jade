@@ -1,35 +1,38 @@
 .search-outer-container(ng-controller="SearchCtrl")
   //-.loading-indicator
-  .search-inner-container(ng-class="{show: authStateData.show_side_menu}")
-    .search-container
-      ff-loading-msg
+  .search-container(ng-class="{show: authStateData.show_side_menu}")
+    .side-menu-overlay(ng-show="authStateData.show_side_menu", ng-class="{show: authStateData.show_side_menu}", ng-swipe-right="toggleSideMenu()", ng-swipe-left="toggleSideMenu()", ng-click="toggleSideMenu()")
+    ff-loading-msg
 
-      .search-menu(ng-swipe-right="toggleSideMenu()", ng-swipe-left="toggleSideMenu()")
-        .current-location(ng-click="update_position()")
-        .search-input-container
-          form(ng-submit="location_search()")
-            input(type="submit", value="")
-            input(id="searchInput", type="text", placeholder="Address", ng-model="search_text")
+    .search-menu(ng-swipe-right="toggleSideMenu()")
+      .current-location(ng-click="update_position()")
+      .search-input-container
+        form(ng-submit="location_search()")
+          input(type="submit", value="")
+          input(id="searchInput", type="text", placeholder="Address", ng-model="search_text")
 
-      .search-view-container
-        .map-container(ng-touch-click="blurSearchInput()", directionstype="directions_type", stoplist="stopList")
-          .zoom-controls
-            .zoom-in(class="controls", ng-click="zoom_map(1)")
-            .zoom-out(class="controls", ng-click="zoom_map(-1)")
-          .crosshair(ng-class="{add: add_location_controls}")
-          #map
+    .search-view-container
+      .map-container(ng-touch-click="blurSearchInput()", directionstype="directions_type", stoplist="stopList")
+        .swipe-right-overlay(ng-swipe-right="toggleSideMenu()")
+        .zoom-controls
+          .zoom-in(class="controls", ng-click="zoom_map(1)")
+          .zoom-out(class="controls", ng-click="zoom_map(-1)")
+        .crosshair(ng-class="{add: add_location_controls}")
+        #map
 
-        include partials/list
+      include partials/list
 
-      .search-footer(ng-swipe-right="toggleSideMenu()", ng-swipe-left="toggleSideMenu()")
-        .settings(class="controls", ng-click="toggleSideMenu()")
-        .btn-group-container
-          .btn-group
-            .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
-            .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()") List
-        .add-location(class="controls", ng-click="begin_add_location()")
-        .add-location-controls(ng-class="{show: add_location_controls}")
-          .cancel-add-location(class="controls", ng-click="cancel_add_location()")
-          .confirm-add-location(class="controls", ng-click="confirm_add_location()")
+    .search-footer(ng-swipe-right="toggleSideMenu()")
+      .settings(class="controls", ng-click="toggleSideMenu()")
+      .btn-group-container
+        .btn-group
+          .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
+          .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()") List
+      .add-location(class="controls", ng-click="begin_add_location()")
+      .add-location-controls(ng-class="{show: add_location_controls}")
+        .cancel-add-location(class="controls", ng-click="cancel_add_location()")
+        .confirm-add-location(class="controls", ng-click="confirm_add_location()")
 
-    include partials/search_side_menu
+  // Needs to be drawn after map for UI elements to load properly (?)
+  include partials/search_side_menu
+  

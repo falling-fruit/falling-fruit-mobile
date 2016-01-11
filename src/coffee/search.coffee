@@ -202,7 +202,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
     ), (err)->
       console.log("Failed to get position") # FIXME: replace with common error handling
-      alert("Please enable location access in settings. Then we can find trees closer to you!")
+      alert("Enable location access in settings to track your position.")
     , {maximumAge: 3000, timeout: 4000, enableHighAccuracy: true}
       
   ## Current position (watch - unused)
