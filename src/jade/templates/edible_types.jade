@@ -4,9 +4,8 @@
     ul(class="select-dropdown", ng-show="show_menu")
       li(ng-show="!filtered") Type to find an edible type
       li(ng-show="filtered", ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types|limitTo:et_quantity as filteredTypes", ng-click="updateLocationEdibleType(type)")
-        {{type.name}}
-
+        | {{type.name}}
 .detail-links-container(ng-show="location.type_ids.length")
   p
     a(ng-repeat="id in location.type_ids", ng-click="removeEdibleType(id)", href="#removeType")
-      [{edible_types_data.edible_types_by_id[id].name}]
+      | [{edible_types_data.edible_types_by_id[id].name}]
