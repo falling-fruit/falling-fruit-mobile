@@ -20,16 +20,14 @@
         .search-radio-active(ng-show="layer == 'transit'")
 
     .search-param-header Filters
+
     a.search-param-radio(ng-click="toggle_muni()")
       | Tree inventories
       .search-radio-container
         .search-radio-active(ng-show="muni")
+
     .search-param-select
-      .label [{selectedType == null ? "Edible type" : selectedType.name}]
-      select(ng-model="selectedType", ng-options="type as type.name for type in edible_types_data.edible_types", ng-change="filter_types()")
-        option(value="") Edible type
-      .down-arrow
-      .reset(ng-show="selectedType", ng-click="reset_filter_types()")
+      edible-types-filter-single
 
     .search-param-header Regional
     a.search-param-radio(ng-click="toggle_metric()")
