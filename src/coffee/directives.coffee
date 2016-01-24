@@ -213,59 +213,71 @@ directives.ngSwitcher = ()->
 
   return props
 
-
-directives.edibleTypesFilterSingle = (BASE_PATH, $timeout, edibleTypesService)->
+directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
   restrict: "E"
-  templateUrl: "html/templates/edible_types.html"
+  templateUrl: "html/templates/edible_types_map.html"
 
   link: ($scope, $element, $attrs) ->
     $scope.edible_types_data = edibleTypesService.data
     $scope.show_types = false
-    $scope.edible_type_placeholder = "Edible type"
+    $scope.show_reset = false
+    $scope.edible_type_placeholder = "Edible types"
     $scope.filters = {}
     $scope.filtered = false
     $scope.et_quantity = 0
     $scope.filters.edible_types = null
-
+    
+    $scope.focusInput = ()->
+      $scope.show_types=true
+      $scope.show_reset=true
+    
     $scope.blurInput = ()->
       #wait for all other handlers to run first
       #like the click handler then blur
       $timeout(()->
         $scope.show_types = false
+        $scope.show_reset = false
       , 150)
 
     $scope.checkInputTypedLength = ()->
       max_results = $scope.edible_types_data.edible_types.length
       if $scope.filters.edible_types.length < 2
-        $scope.edible_type_placeholder = "Edible type"
         $scope.et_quantity = 0
         $scope.filtered = false
-        $scope.show_types = false
       else
         $scope.et_quantity = max_results
         $scope.filtered = true
-        $scope.show_types = true
 
     $scope.updateSelectedEdibleType = (type)->
-      $scope.filters.edible_types = type.name
+      $scope.type_ids = [] if $scope.type_ids is undefined
+      $scope.type_ids.push(type.id) if $scope.type_ids.indexOf(type.id) == -1
+      $scope.filters.edible_types = null
       $scope.show_types = false
       $scope.et_quantity = 0
-      $scope.edible_type_placeholder = type.name
+      $scope.filtered = false
       window.FFApp.selectedType = type
       window.clear_markers()
       window.do_markers()
-
+      $scope.reset_list()
+    
+    #FIXME: Clear but keep focus on input?
     $scope.clearEdibleType = ()->
-      $scope.filters.edible_types = null
-      window.FFApp.selectedType = null
+      $scope.blurInput()
       $scope.filtered = false
-      $scope.edible_type_placeholder = "Edible Type"
+      $scope.filters.edible_types = null
+    
+    $scope.removeEdibleType = (id)->
+      _.remove($scope.type_ids, (arr_id) ->
+          return arr_id == id
+      )
+      window.FFApp.selectedType = null
       window.clear_markers()
       window.do_markers()
-
+      $scope.reset_list()
+      
 directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
   restrict: "E"
-  templateUrl: "html/templates/edible_types.html"
+  templateUrl: "html/templates/edible_types_location.html"
   scope:
     location: "="
 

@@ -1,0 +1,13 @@
+.detail-input-container
+  form(name="edibleTypesForm")
+    input(ng-model="filters.edible_types", placeholder="{{edible_type_placeholder}}", ng-focus="focusInput()", ng-blur="blurInput()", ng-change="checkInputTypedLength()")
+    .reset(ng-show="show_reset", ng-click="clearEdibleType()")
+    ul(class="select-dropdown", ng-show="show_types")
+      li(ng-show="!filtered") Type to find an edible type
+      li(ng-show="filtered", ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types|limitTo:et_quantity as filteredTypes", ng-click="updateSelectedEdibleType(type)")
+        | {{type.name}}
+
+.detail-links-container(ng-show="type_ids.length")
+  p
+    a(ng-repeat="id in type_ids", ng-click="removeEdibleType(id)", href="#removeType")
+      | [{edible_types_data.edible_types_by_id[id].name}]
