@@ -1,6 +1,14 @@
 .search-side-menu(ng-controller="MenuCtrl", ng-swipe-left="toggleSideMenu()")
   .search-params-container
 
+    .search-param-header Filters
+    a.search-param-radio(ng-click="toggle_muni()")
+      | Tree inventories
+      .search-radio-container
+        .search-radio-active(ng-show="muni")
+    .search-param-select
+      edible-types-filter-map
+    
     .search-param-header Map
     a.search-param-radio(ng-click="toggle_terrain()")
       | Terrain
@@ -18,16 +26,6 @@
       | Transit
       .search-radio-container
         .search-radio-active(ng-show="layer == 'transit'")
-
-    .search-param-header Filters
-
-    a.search-param-radio(ng-click="toggle_muni()")
-      | Tree inventories
-      .search-radio-container
-        .search-radio-active(ng-show="muni")
-
-    .search-param-select
-      edible-types-filter-map
 
     .search-param-header Regional
     a.search-param-radio(ng-click="toggle_metric()")

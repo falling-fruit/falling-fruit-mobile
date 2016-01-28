@@ -57,11 +57,11 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     list_params.c = window.FFApp.cats unless window.FFApp.cats is null
     $http.get urls.nearby, params: list_params
     .success (data)->
-      # FIXME: Type filtering of list by id not possible
+      # FIXME: Type filtering of list by id not possible.
       if window.FFApp.selectedType
+        selectedTypeName = window.FFApp.selectedType.name.split(" [")[0]
         _.remove data, (n)->
-          n["title"].split(RegExp(' , | & ')).indexOf(window.FFApp.selectedType.name.split(" [")[0]) < 0
-          #n["types"].concat(n["parent_types"]).indexOf(window.FFApp.selectedType.id) < 0
+          not _.contains(n["title"].split(RegExp(', | & ')), selectedTypeName)
 
       for item in data
         if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
@@ -130,9 +130,19 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     $rootScope.$broadcast "ADD-LOCATION"
 
   ## Show location
+  
   $scope.show_location = (location_id)->
     $rootScope.$broadcast "SHOW-LOCATION", location_id
 
+  # FIXME: Once list and map share same data, highlight location by z-index / color
+  # Avoid recentering map since this resets map and list
+  $scope.show_location_on_map = (location_id)->
+    $scope.current_view = "map"
+    $http.get urls.location + location_id + ".json"
+    .success (data)->
+      latlng = new (google.maps.LatLng)(data.lat, data.lng)
+      window.FFApp.map_obj.panTo(latlng)
+    
   ## Current position (update once)
 
   $scope.update_position = ()->

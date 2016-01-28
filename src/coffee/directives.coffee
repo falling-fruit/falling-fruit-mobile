@@ -275,7 +275,7 @@ directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
       window.do_markers()
       $scope.reset_list()
       
-directives.edibleTypesFilter = (BASE_PATH, $timeout, edibleTypesService)->
+directives.edibleTypesFilterLocation = (BASE_PATH, $timeout, edibleTypesService)->
   restrict: "E"
   templateUrl: "html/templates/edible_types_location.html"
   scope:
