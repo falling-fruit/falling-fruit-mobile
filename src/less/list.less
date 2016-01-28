@@ -2,13 +2,12 @@
 @list-item-padding: 10px;
 
 .list-item {
-  background-color: @ff-white;
-  position: relative;
+  padding: @list-item-padding;
   display: block;
+  background-color: @ff-white;
   border-bottom: solid 1px @light-gray;
   min-height: @list-item-image-width + @list-item-padding * 2;
-  overflow: hidden;
-  padding: @list-item-padding;
+  position: relative;
 }
 
 .list-item-image {
@@ -25,7 +24,9 @@
 }
 
 .list-item-info-container {
-  margin-left: @list-item-image-width + @list-item-padding;
+  position: absolute;
+  left: @list-item-image-width + @list-item-padding * 2;
+  right: @list-item-padding * 4;
 }
 
 .list-item-distance {
@@ -47,4 +48,14 @@
   line-height: @font-size-small + 2px;
   color: @gray;
   .text-overflow-ellipsis;
+}
+
+.list-item-map {
+  background: url("../img/svg/waypoint.svg") no-repeat center center;
+  background-size: 18px;
+  position: absolute;
+  width: @list-item-padding * 2;
+  right: @list-item-padding;
+  top: @list-item-padding;
+  bottom: @list-item-padding;
 }
