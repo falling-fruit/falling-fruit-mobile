@@ -88,25 +88,26 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  
+
   .detail-input-container {
     background-color: transparent;
     margin: 0;
     padding-bottom: 10px;
     width: 91.5%;
     .vertical-scroll();
-    
+
     input {
       background: url("../img/svg/control-arrow-downward.svg") no-repeat 100% 10px;
       background-size: 20px;
       color: @ff-white;
       padding: 10px 25px 0 0;
     }
-    
+
     ul.select-dropdown {
       border-top: solid 2px @gray;
       border-bottom: solid 2px @gray;
-      
+      max-height: 200px;
+      padding-bottom: 10px;
       li {
         border-bottom: solid 1px @gray;
         padding: 10px 0;
@@ -116,12 +117,12 @@
       }
     }
   }
-  
+
   .detail-links-container {
     margin: 0;
     padding: 0 24px 10px 0;
     background-color: transparent;
-        
+
     a {
       border: none;
       color: @ff-white;
