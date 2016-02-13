@@ -10,7 +10,7 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
   * `/hooks` - Cordova hooks
   * `/icons` - Platform icon and splashscreen graphics
   * `/platforms` - Platform configuration and code compiled by grunt and Cordova
-  * `/plugins` - Cordova plugins
+  * `/plugins` - Cordova plugins (not included in repo)
   * `/resources` - same as icons (?)
   * `/src` - Source code for the site
     * `/jade` - compiles to html

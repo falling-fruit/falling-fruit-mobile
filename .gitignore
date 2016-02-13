@@ -1,3 +1,6 @@
+# Cordova plugins
+/plugins
+
 # Cordova build android (except the apk)
 platforms/android/ant-build/*
 !platforms/android/ant-build/CordovaApp-debug.apk
@@ -14,7 +17,6 @@ www/js/*.js
 !www/js/*/lib/**.js
 
 # XCode
-.DS_Store
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -34,10 +36,17 @@ platforms/ios/wedeliver-lucy.xcodeproj/xcuserdata/*
 platforms/ios/wedeliver-lucy.xcodeproj/project.xcworkspace/xcuserdata/*
 *.xcuserstate
 
-# Cordova build ios (except the app)
-
 # Miscellany
 npm-debug.log
 node_modules/
 tmp/
 *~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
