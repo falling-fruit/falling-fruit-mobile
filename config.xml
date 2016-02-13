@@ -76,6 +76,8 @@
   <plugin name="cordova-plugin-file-transfer" spec="~0.5.0" />
   <plugin name="cordova-plugin-geolocation" spec="~2.1.0" />
   <plugin name="cordova-plugin-media-capture" spec="~0.3.6" />
+  <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
+  <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true" />
   </feature>
