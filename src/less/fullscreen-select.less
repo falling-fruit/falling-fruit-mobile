@@ -1,0 +1,123 @@
+.open-fullscreen-select {
+  background: url("../img/svg/control-arrow-down.svg") no-repeat 100% center;
+  background-size: 20px;
+  color: @ff-white;
+  padding: 10px 25px 0 0;
+}
+
+.fullscreen-select-search {
+  position: relative;
+    
+  .fullscreen-select-search-input {
+    background: url('../img/svg/input-search.svg') no-repeat 0% 30%, url("../img/svg/control-arrow-down.svg") no-repeat 100% center;
+    background-size: 20px, 20px;
+    color: @ff-white;
+    padding: 0 25px 0 30px;
+    border: none;
+    width: 100%;
+    font-size: inherit;
+  }
+  
+  .fullscreen-select-search-reset {
+    background: url("../img/svg/cross-small.svg") no-repeat 100% center @side-menu-bg-color;
+    background-size: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 20px;
+  }
+}
+
+.fullscreen-select-container {
+  display: block;
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999999;
+  font-size: @font-size-large;
+  
+  .fullscreen-select {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    background-color: @side-menu-bg-color;
+    overflow: hidden;
+    
+    .fullscreen-select-header {
+      border-bottom: solid 2px @side-menu-border-color;
+      color: @ff-white;
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      padding: 20px 20px 14px 20px;
+      height: 60px;
+    }
+    
+    .fullscreen-select-list {
+      .vertical-scroll();
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin-top: 60px;
+      margin-bottom: 60px;
+      
+      .fullscreen-select-option {
+        background-color: inherit;
+        color: fade(@ff-white, 90%);
+        border-bottom: solid 1px fade(@side-menu-border-color, 50%);
+        text-decoration: none;
+        display: block;
+        padding: 17px 20px;
+        /* for multi-select:
+        padding-left: 40px;
+        background-position: 10px center;
+        background-repeat: no-repeat;
+        font-size: inherit;
+        background-image: url("../img/svg/control-radio-off.svg");
+        background-size: 18px;
+    
+        &.selected {
+          color: @ff-white;
+          background-image: url("../img/svg/control-radio-on.svg");
+        }
+        */
+      }
+    }
+    
+    .fullscreen-select-buttons {
+      display: none;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      height: 60px;
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: separate;
+      
+      a {
+        text-decoration: none;
+        border-top: solid 2px @side-menu-border-color;
+        border-right: solid 1px @gray;
+        color: @orange;
+        text-align: center;
+        display: table-cell;
+        padding: 15px 0;
+        font-size: inherit;
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+  }
+}
