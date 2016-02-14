@@ -78,6 +78,10 @@
   <plugin name="cordova-plugin-media-capture" spec="~0.3.6" />
   <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
   <plugin name="cordova-plugin-whitelist" spec="~1.2.1" />
+  <!-- Whitelist -->
+  <allow-navigation href="*" />
+  <allow-intent href="*" />
+  <access origin="*" />
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true" />
   </feature>

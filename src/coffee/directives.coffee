@@ -275,6 +275,64 @@ directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
       window.do_markers()
       $scope.reset_list()
       
+directives.edibleTypesFilterMapFullscreen = (BASE_PATH, $timeout, edibleTypesService)->
+  restrict: "E"
+  templateUrl: "html/templates/edible_types_map_fullscreen.html"
+
+  link: ($scope, $element, $attrs) ->
+    $scope.input_placeholder = "Search types"
+    $scope.select_placeholder = "Edible type"
+    $scope.edible_types_data = edibleTypesService.data
+    $scope.show_reset_select = false
+    $scope.show_reset = false
+    $scope.search_string = ""
+    $scope.type_ids = []
+    console.log($scope.max_results)
+    
+    $scope.closeKeyboard = ()->
+      window.cordova.plugins.Keyboard.close()
+    
+    $scope.checkSearchLength = ()->
+      if $scope.search_string.length == 0
+        $scope.show_reset = false
+      else
+        $scope.show_reset = true
+    
+    $scope.updateSelectedEdibleType = (type)->
+      $scope.type_ids.push(type.id) if $scope.type_ids.indexOf(type.id) == -1
+      window.FFApp.selectedType = type
+      window.clear_markers()
+      window.do_markers()
+      $scope.reset_list()
+      $scope.show_select = false
+      $scope.show_reset_select = true
+      $scope.select_placeholder = type.name
+    
+    $scope.resetSearch = ()->
+      $scope.search_string = ""
+      $scope.show_reset = false
+        
+    $scope.resetSelect = ()->
+      $scope.type_ids = []
+      $scope.show_reset_select = false
+      $scope.select_placeholder = "Edible type"
+      window.FFApp.selectedType = null
+      window.clear_markers()
+      window.do_markers()
+      $scope.reset_list()
+      
+    $scope.removeEdibleType = (id)->
+      _.remove($scope.type_ids, (arr_id) ->
+          return arr_id == id
+      )
+      window.FFApp.selectedType = null
+      window.clear_markers()
+      window.do_markers()
+      $scope.reset_list()
+    
+    $scope.cancel = ()->
+      $scope.show_select = false
+      
 directives.edibleTypesFilterLocation = (BASE_PATH, $timeout, edibleTypesService)->
   restrict: "E"
   templateUrl: "html/templates/edible_types_location.html"
@@ -326,8 +384,14 @@ directives.edibleTypesFilterLocation = (BASE_PATH, $timeout, edibleTypesService)
 directives.ngTouchClick = ()->
   link: ($scope, $element, $attrs)->
     $element.bind 'touchstart click', (e)->
-      #e.preventDefault()
-      #e.stopPropagation()
       $scope.$apply $attrs['ngTouchClick']
+      return
+    return
+
+directives.quietClick = ()->
+  link: ($scope, $element, $attrs)->
+    $element.bind 'touchstart click', (e)->
+      e.preventDefault()
+      e.stopPropagation()
       return
     return
