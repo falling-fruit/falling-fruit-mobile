@@ -21,7 +21,7 @@
           span.tag(ng-show="r.yield_rating != null")
             span.label Yield&nbsp;
             | [{::ratings[r.yield_rating]}]
-        div(ng-show="r.comment") [{::r.comment}]
+        div.comment(ng-show="r.comment") [{::r.comment}]
     
     .detail-btn-container
       .detail-btn-dark(ng-click="add_review(location.id)") Add a review
