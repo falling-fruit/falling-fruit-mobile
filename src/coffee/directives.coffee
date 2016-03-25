@@ -226,11 +226,11 @@ directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
     $scope.filtered = false
     $scope.et_quantity = 0
     $scope.filters.edible_types = null
-    
+
     $scope.focusInput = ()->
       $scope.show_types=true
       $scope.show_reset=true
-    
+
     $scope.blurInput = ()->
       #wait for all other handlers to run first
       #like the click handler then blur
@@ -259,13 +259,13 @@ directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
       window.clear_markers()
       window.do_markers()
       $scope.reset_list()
-    
+
     #FIXME: Clear but keep focus on input?
     $scope.clearEdibleType = ()->
       $scope.blurInput()
       $scope.filtered = false
       $scope.filters.edible_types = null
-    
+
     $scope.removeEdibleType = (id)->
       _.remove($scope.type_ids, (arr_id) ->
           return arr_id == id
@@ -274,7 +274,7 @@ directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
       window.clear_markers()
       window.do_markers()
       $scope.reset_list()
-      
+
 directives.edibleTypesFilterMapFullscreen = (BASE_PATH, $timeout, edibleTypesService)->
   restrict: "E"
   templateUrl: "html/templates/edible_types_map_fullscreen.html"
@@ -287,17 +287,17 @@ directives.edibleTypesFilterMapFullscreen = (BASE_PATH, $timeout, edibleTypesSer
     $scope.show_reset = false
     $scope.search_string = ""
     $scope.type_ids = []
-    console.log($scope.max_results)
-    
+    console.log("$scope.max_results", $scope.max_results)
+
     $scope.closeKeyboard = ()->
       window.cordova.plugins.Keyboard.close()
-    
+
     $scope.checkSearchLength = ()->
       if $scope.search_string.length == 0
         $scope.show_reset = false
       else
         $scope.show_reset = true
-    
+
     $scope.updateSelectedEdibleType = (type)->
       $scope.type_ids.push(type.id) if $scope.type_ids.indexOf(type.id) == -1
       window.FFApp.selectedType = type
@@ -307,11 +307,11 @@ directives.edibleTypesFilterMapFullscreen = (BASE_PATH, $timeout, edibleTypesSer
       $scope.show_select = false
       $scope.show_reset_select = true
       $scope.select_placeholder = type.name
-    
+
     $scope.resetSearch = ()->
       $scope.search_string = ""
       $scope.show_reset = false
-        
+
     $scope.resetSelect = ()->
       $scope.type_ids = []
       $scope.show_reset_select = false
@@ -320,7 +320,7 @@ directives.edibleTypesFilterMapFullscreen = (BASE_PATH, $timeout, edibleTypesSer
       window.clear_markers()
       window.do_markers()
       $scope.reset_list()
-      
+
     $scope.removeEdibleType = (id)->
       _.remove($scope.type_ids, (arr_id) ->
           return arr_id == id
@@ -329,10 +329,10 @@ directives.edibleTypesFilterMapFullscreen = (BASE_PATH, $timeout, edibleTypesSer
       window.clear_markers()
       window.do_markers()
       $scope.reset_list()
-    
+
     $scope.cancel = ()->
       $scope.show_select = false
-      
+
 directives.edibleTypesFilterLocation = (BASE_PATH, $timeout, edibleTypesService)->
   restrict: "E"
   templateUrl: "html/templates/edible_types_location.html"

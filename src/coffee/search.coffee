@@ -28,7 +28,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       $scope.load_list()
     else
       $scope.list_bounds = null
-  
+
   $scope.show_list = ()->
     if $scope.current_view != "list"
       $scope.current_view = "list"
@@ -78,10 +78,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       $scope.list_bounds = bounds
 
   ## Side menu
-  
+
   $scope.toggleSideMenu = ()->
     AuthFactory.toggleSideMenu()
-    
+
   ## Position
   #$rootScope.$on "MAP-LOADED", $scope.update_position
   #$rootScope.$on "LOGGED-IN", load_view
@@ -130,7 +130,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     $rootScope.$broadcast "ADD-LOCATION"
 
   ## Show location
-  
+
   $scope.show_location = (location_id)->
     $rootScope.$broadcast "SHOW-LOCATION", location_id
 
@@ -142,7 +142,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     .success (data)->
       latlng = new (google.maps.LatLng)(data.lat, data.lng)
       window.FFApp.map_obj.panTo(latlng)
-    
+
   ## Current position (update once)
 
   $scope.update_position = ()->
@@ -214,7 +214,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       console.log("Failed to get position") # FIXME: replace with common error handling
       alert("Enable location access in settings to track your position.")
     , {maximumAge: 3000, timeout: 4000, enableHighAccuracy: true}
-      
+
   ## Current position (watch - unused)
   $scope.ignoreCenterChange = false
   # FIXME: Can't be called here (idea is to turn tracking off if map center is moved manually
