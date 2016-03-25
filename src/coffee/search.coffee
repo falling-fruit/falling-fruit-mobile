@@ -237,32 +237,47 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       $scope.watchPositionID = null
     else
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
+        #Error handling wil go here
         console.log("Failed to watch position")
       ), watchPositionOptions)
 
   watch_position = (position)->
-
     # position
-    console.log("Position updated")
+    console.log("Position watched and updated")
     window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
     window.FFApp.position_accuracy = position.coords.accuracy
+
+    console.log("window.FFApp.position_accuracy", window.FFApp.position_accuracy)
+
     if !window.FFApp.position_marker
       window.FFApp.position_marker = new google.maps.Marker(
         icon:
           path: google.maps.SymbolPath.CIRCLE
           strokeColor: '#1C95F2'
           fillColor: '#FF8A22'
-          fillOpacity: 1
-          strokeWeight: 8
-          scale: 8
+          fillOpacity: 0.75
+          strokeWeight: 3
+          scale: window.FFApp.position_accuracy / 2
         position: window.FFApp.current_position
+        animation: google.maps.Animation.BOUNCE
         map: window.FFApp.map_obj
         draggable: false
         clickable: false
         zIndex: 100
       )
     else
+      debugger
+      window.FFApp.position_marker.setIcon({
+        path: google.maps.SymbolPath.CIRCLE
+        strokeColor: '#1C95F2'
+        fillColor: '#FF8A22'
+        fillOpacity: 0.75
+        strokeWeight: 3
+        scale: window.FFApp.position_accuracy / 2
+      })
+
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
+
     window.FFApp.ignoreCenterChange = true
     window.FFApp.map_obj.panTo(window.FFApp.current_position)
     $scope.reset_list()
