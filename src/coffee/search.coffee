@@ -235,6 +235,8 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     if $scope.watchPositionID
       navigator.geolocation.clearWatch($scope.watchPositionID)
       $scope.watchPositionID = null
+      window.FFApp.position_marker.setMap(null)
+      window.FFApp.position_marker = null
     else
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
         #Error handling wil go here
@@ -249,33 +251,27 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
     console.log("window.FFApp.position_accuracy", window.FFApp.position_accuracy)
 
+    circleIcon =
+      path: google.maps.SymbolPath.CIRCLE
+      strokeColor: '#1C95F2'
+      fillColor: '#FF8A22'
+      fillOpacity: 0.75
+      strokeWeight: 4
+      scale: 8
+
     if !window.FFApp.position_marker
       window.FFApp.position_marker = new google.maps.Marker(
-        icon:
-          path: google.maps.SymbolPath.CIRCLE
-          strokeColor: '#1C95F2'
-          fillColor: '#FF8A22'
-          fillOpacity: 0.75
-          strokeWeight: 3
-          scale: window.FFApp.position_accuracy / 2
+        icon: circleIcon,
+        title: 'Current Location'
         position: window.FFApp.current_position
-        animation: google.maps.Animation.BOUNCE
         map: window.FFApp.map_obj
+        flat: true
+        optimized: false
         draggable: false
-        clickable: false
         zIndex: 100
       )
     else
-      debugger
-      window.FFApp.position_marker.setIcon({
-        path: google.maps.SymbolPath.CIRCLE
-        strokeColor: '#1C95F2'
-        fillColor: '#FF8A22'
-        fillOpacity: 0.75
-        strokeWeight: 3
-        scale: window.FFApp.position_accuracy / 2
-      })
-
+      #window.FFApp.position_marker.setIcon(circleIcon)
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
 
     window.FFApp.ignoreCenterChange = true
