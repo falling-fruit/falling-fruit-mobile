@@ -5,7 +5,7 @@
     ff-loading-msg
 
     .search-menu(ng-swipe-right="toggleSideMenu()")
-      .current-location(ng-click="toggle_position_tracking()")
+      .current-location(ng-click="toggle_position_tracking()", ng-class="{active: watchPositionID}")
       .search-input-container
         form(ng-submit="location_search()")
           input(type="submit", value="")
