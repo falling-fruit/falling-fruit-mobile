@@ -254,6 +254,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     prev_lat_lng = window.FFApp.current_position
     window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
     window.FFApp.position_accuracy = position.coords.accuracy
+    accuracy = position.coords.accuracy
 
     if prev_lat_lng != null
       distance = google.maps.geometry.spherical.computeDistanceBetween(prev_lat_lng, window.FFApp.current_position)
@@ -265,7 +266,8 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       strokeColor: '#1C95F2'
       fillColor: '#FF8A22'
       fillOpacity: 0.75
-      strokeWeight: 4
+      strokeWeight: 10
+      strokeOpacity: (100 - accuracy) / 100
       scale: 8
 
     if !window.FFApp.position_marker
@@ -281,7 +283,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       )
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
     else
-      #window.FFApp.position_marker.setIcon(circleIcon)
+      window.FFApp.position_marker.setIcon(circleIcon)
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
 
     if moved_far_enough || !window.FFApp.ignoreCenterChange
