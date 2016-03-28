@@ -219,17 +219,11 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       alert("Enable location access in settings to track your position.")
     , {maximumAge: 3000, timeout: 4000, enableHighAccuracy: true}
 
-  ## Current position (watch - unused)
+  ## Current position watch
   $scope.ignoreCenterChange = false
-  # FIXME: Can't be called here (idea is to turn tracking off if map center is moved manually
-#   google.maps.event.addListener window.FFApp.map_obj, "center_changed", ()->
-#     if $scope.ignoreCenterChange
-#       $scope.ignoreCenterChange = false
-#     else if $scope.watchPositionID
-#       navigator.geolocation.clearWatch($scope.watchPositionID)
-#       $scope.watchPositionID = null
 
   $scope.watchPositionID = null
+
   watchPositionOptions =
     enableHighAccuracy: true
     timeout: 10000
@@ -248,6 +242,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         #Error handling wil go here
         console.log("Failed to watch position")
       ), watchPositionOptions)
+
+  $scope.recenter_map = ()->
+    if window.FFApp.current_position != null
+      window.FFApp.map_obj.panTo(window.FFApp.current_position)
 
   watch_position = (position)->
     console.log("Position watching")
@@ -286,8 +284,16 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       #window.FFApp.position_marker.setIcon(circleIcon)
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
 
-    if moved_far_enough
+    if moved_far_enough || !window.FFApp.ignoreCenterChange
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
+
+    #If we want to track center changes and clear listeners / update settings later.
+    # google.maps.event.addListener window.FFApp.map_obj, "center_changed", ()->
+    #   if $scope.ignoreCenterChange
+    #     $scope.ignoreCenterChange = false
+    #   else if $scope.watchPositionID
+    #     navigator.geolocation.clearWatch($scope.watchPositionID)
+    #     $scope.watchPositionID = null
 
     window.FFApp.ignoreCenterChange = true
     $scope.reset_list()

@@ -22,13 +22,22 @@
 .current-location {
   background: url("../img/svg/control-me.svg") no-repeat center center;
   background-size: 30px;
+  float: left;
   height: @menu-height;
   position: relative;
   width: @menu-height + 5px;
-  float: left;
   &.active {
     background-image: url("../img/svg/control-me-filled.svg");
   }
+}
+.center-on-location {
+  background: url("../img/svg/cross-small.svg") center center no-repeat;
+  background-size: 30px;
+  height: @menu-height;
+  left: 0;
+  position: absolute;
+  top: 60%;
+  width: @menu-height + 5px;
 }
 
 .search-outer-container {
@@ -336,11 +345,11 @@
 @keyframes pulsate {
   from {
     transform: scale(0.25) translateZ(0);
-    opacity: .5;
+    opacity: .65;
   }
   95% {
     transform: scale(.75) translateZ(0);
-    opacity: 0;
+    opacity: .1;
   }
   to {
     transform: scale(0.25) translateZ(0);
@@ -356,7 +365,7 @@
     }
     border: 1pt solid #fff;
     height: 50px !important;
-    margin: -15px 0 0 -15px;
+    margin: -12px 0 0 -12px;
     width:  50px !important;
     box-shadow: inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f,
                     0 0 5px #06f,       0 0 5px #06f,       0 0 5px #06f;
@@ -370,6 +379,6 @@
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
        only screen and (device-width: 768px) {
   #map div.gmnoprint[title="Current Location"] {
-    margin: -2.05% 0 0 -2.05%;
+    margin: -4px 0 0 -4px;
   }
 }
