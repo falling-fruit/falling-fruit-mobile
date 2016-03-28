@@ -40,8 +40,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     $scope.targeted = false
     $scope.add_location_controls = false
     center = window.FFApp.map_obj.getCenter()
+
     if !bounds
       bounds = window.FFApp.map_obj.getBounds()
+
     list_params =
       lat: center.lat()
       lng: center.lng()
@@ -49,12 +51,15 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       nelng: bounds.getNorthEast().lng()
       swlat: bounds.getSouthWest().lat()
       swlng: bounds.getSouthWest().lng()
+
     if window.FFApp.muni
       list_params.muni = 1
     else
       list_params.muni = 0
+
     list_params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
     list_params.c = window.FFApp.cats unless window.FFApp.cats is null
+
     $http.get urls.nearby, params: list_params
     .success (data)->
       # FIXME: Type filtering of list by id not possible.
@@ -78,7 +83,6 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       $scope.list_bounds = bounds
 
   ## Side menu
-
   $scope.toggleSideMenu = ()->
     AuthFactory.toggleSideMenu()
 
@@ -235,6 +239,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     if $scope.watchPositionID
       navigator.geolocation.clearWatch($scope.watchPositionID)
       $scope.watchPositionID = null
+
       if window.FFApp.position_marker
         window.FFApp.position_marker.setMap(null)
         window.FFApp.position_marker = null
@@ -245,12 +250,17 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       ), watchPositionOptions)
 
   watch_position = (position)->
-    # position
-    console.log("Position watched and updated")
+    console.log("Position watching")
+
+    moved_far_enough = true
+    prev_lat_lng = window.FFApp.current_position
     window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
     window.FFApp.position_accuracy = position.coords.accuracy
 
-    console.log("window.FFApp.position_accuracy", window.FFApp.position_accuracy)
+    if prev_lat_lng != null
+      distance = google.maps.geometry.spherical.computeDistanceBetween(prev_lat_lng, window.FFApp.current_position)
+      if distance < 500 #meters
+        moved_far_enough = false
 
     circleIcon =
       path: google.maps.SymbolPath.CIRCLE
@@ -271,12 +281,13 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         draggable: false
         zIndex: 100
       )
+      window.FFApp.map_obj.panTo(window.FFApp.current_position)
     else
       #window.FFApp.position_marker.setIcon(circleIcon)
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
 
+    if moved_far_enough
+      window.FFApp.map_obj.panTo(window.FFApp.current_position)
+
     window.FFApp.ignoreCenterChange = true
-
-    window.FFApp.map_obj.panTo(window.FFApp.current_position)
-
     $scope.reset_list()
