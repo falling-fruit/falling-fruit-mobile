@@ -237,6 +237,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       if window.FFApp.position_marker
         window.FFApp.position_marker.setMap(null)
         window.FFApp.position_marker = null
+        window.FFApp.ignoreCenterChange = false
     else
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
         #Error handling wil go here
