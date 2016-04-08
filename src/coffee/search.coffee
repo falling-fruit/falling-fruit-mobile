@@ -223,6 +223,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.ignoreCenterChange = false
 
   $scope.watchPositionID = null
+  $scope.movedFarEnough = false
+  $scope.showRecenterBtn = false
+  $scope.centerChangeEL = null
 
   watchPositionOptions =
     enableHighAccuracy: true
@@ -237,7 +240,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       if window.FFApp.position_marker
         window.FFApp.position_marker.setMap(null)
         window.FFApp.position_marker = null
-        window.FFApp.ignoreCenterChange = false
+        $scope.ignoreCenterChange = false
     else
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
         #Error handling wil go here
@@ -251,7 +254,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   watch_position = (position)->
     console.log("Position watching")
 
-    moved_far_enough = true
+    $scope.movedFarEnough = true
     prev_lat_lng = window.FFApp.current_position
     window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
     window.FFApp.position_accuracy = position.coords.accuracy
@@ -259,8 +262,8 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
     if prev_lat_lng != null
       distance = google.maps.geometry.spherical.computeDistanceBetween(prev_lat_lng, window.FFApp.current_position)
-      if distance < 500 #meters
-        moved_far_enough = false
+      if distance < 100 #meters
+        $scope.movedFarEnough = false
 
     circleIcon =
       path: google.maps.SymbolPath.CIRCLE
@@ -287,16 +290,18 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       window.FFApp.position_marker.setIcon(circleIcon)
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
 
-    if moved_far_enough || !window.FFApp.ignoreCenterChange
+    if $scope.movedFarEnough || !$scope.ignoreCenterChange
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
 
-    #If we want to track center changes and clear listeners / update settings later.
-    # google.maps.event.addListener window.FFApp.map_obj, "center_changed", ()->
+    google.maps.event.removeListener($scope.centerChangeEL);
+    $scope.centerChangeEL = google.maps.event.addListener window.FFApp.map_obj, "center_changed", ()->
+      console.log("Map Center Changed")
+      $scope.showRecenterBtn = true
+      $scope.ignoreCenterChange = true
     #   if $scope.ignoreCenterChange
     #     $scope.ignoreCenterChange = false
     #   else if $scope.watchPositionID
     #     navigator.geolocation.clearWatch($scope.watchPositionID)
     #     $scope.watchPositionID = null
 
-    window.FFApp.ignoreCenterChange = true
     $scope.reset_list()
