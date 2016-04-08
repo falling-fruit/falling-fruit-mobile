@@ -1,12 +1,12 @@
 .search-outer-container(ng-controller="SearchCtrl")
   //-.loading-indicator
   .search-container(ng-class="{show: authStateData.show_side_menu}")
-    .side-menu-overlay(ng-show="authStateData.show_side_menu", ng-class="{show: authStateData.show_side_menu}", ng-swipe-right="toggleSideMenu()", ng-swipe-left="toggleSideMenu()", ng-click="toggleSideMenu()")
+    .side-menu-overlay(ng-if="authStateData.show_side_menu", ng-class="{show: authStateData.show_side_menu}", ng-swipe-right="toggleSideMenu()", ng-swipe-left="toggleSideMenu()", ng-click="toggleSideMenu()")
     ff-loading-msg
 
     .search-menu(ng-swipe-right="toggleSideMenu()")
       .current-location(ng-click="toggle_position_tracking()", ng-class="{active: watchPositionID}")
-      .center-on-location(ng-click="recenter_map()", ng-show="watchPositionID")
+      .center-on-location(ng-click="recenter_map()", ng-if="watchPositionID")
       .search-input-container
         form(ng-submit="location_search()")
           input(type="submit", value="")
