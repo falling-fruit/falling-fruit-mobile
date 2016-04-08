@@ -243,8 +243,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
         $scope.ignoreCenterChange = false
     else
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
-        #Error handling wil go here
-        console.log("Failed to watch position")
+        alert("Falling Fruit could not get your position. Either GPS signals are weak or GPS is off")
       ), watchPositionOptions)
 
   $scope.recenter_map = ()->
