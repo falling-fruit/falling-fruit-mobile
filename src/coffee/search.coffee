@@ -267,7 +267,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       strokeColor: '#1C95F2'
       fillColor: '#FF8A22'
       fillOpacity: 0.75
-      strokeWeight: 10
+      strokeWeight: accuracy
       strokeOpacity: (100 - accuracy) / 100
       scale: 8
 
