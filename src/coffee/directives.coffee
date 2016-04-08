@@ -149,6 +149,7 @@ directives.mapContainer = ()->
       window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
       window.FFApp.geocoder = new google.maps.Geocoder()
 
+      #When the map stops being scrolled by the user this fires
       google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
         window.do_markers()
 
