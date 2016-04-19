@@ -8,10 +8,10 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
   * `/bin` - grunt and npm configuration
   * `/docs` - extra documentation
   * `/hooks` - Cordova hooks
-  * `/icons` - Platform icon and splashscreen graphics
+  * `/icons` - Platform icon and splashscreen graphics. Same as `/resources` ?
   * `/platforms` - Platform configuration and code compiled by grunt and Cordova
   * `/plugins` - Cordova plugins (not included in repo)
-  * `/resources` - same as icons (?)
+  * `/resources` - same as `/icons` (?)
   * `/src` - Source code for the site
     * `/jade` - compiles to html
     * `/less` - compiles to css
@@ -36,26 +36,26 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
 ### Install node and dependencies
 
   * Node Version Manager (nvm): [installation instructions](https://github.com/creationix/nvm)
-  * Node (0.10): 
-  
+  * Node (0.10):
+
   ```
   nvm install 0.10
   ```
-  
-  * Cordova (5.4.1): 
-  
+
+  * Cordova (5.4.1):
+
   ```
   npm install -g cordova@5.4.1
   ```
-  
-  * grunt-cli: 
-  
+
+  * grunt-cli:
+
   ```
   npm install -g grunt-cli
   ```
-  
-  * Node packages: 
-  
+
+  * Node packages:
+
   ```
   cd bin
   npm install
@@ -89,7 +89,7 @@ You'll need to disable CORS warnings in your browser. The easiest way to do that
 
 ### Run on Android
 
-To build the app for Android, you'll need to install the Android SDKs. 
+To build the app for Android, you'll need to install the Android SDKs.
 
   * Download and install the latest Android SDK Tools: [download links](http://developer.android.com/sdk/index.html#Other),  [instructions](http://spring.io/guides/gs/android/).
   * Add the new folder to your path:
@@ -100,12 +100,12 @@ To build the app for Android, you'll need to install the Android SDKs.
   ```
 
   * Run the Android SDK Manager:
-  
+
   ```
   android
   ```
   *  With it, select and install the following packages:
-  
+
     * Android SDK Platform-tools (latest)
     * Android SDK Platform (v22)
     * Android SDK Build-tools (v22.latest)
