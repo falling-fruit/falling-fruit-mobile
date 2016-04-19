@@ -6,8 +6,8 @@
       | Tree inventories
       .search-radio-container
         .search-radio-active(ng-show="muni")
-    edible-types-filter-map-fullscreen
-    
+    edible-types-filter-map
+
     .search-param-header Map
     a.search-param-radio(ng-click="toggle_terrain()")
       | Terrain
@@ -31,7 +31,6 @@
       | Metric units
       .search-radio-container
         .search-radio-active(ng-show="metric")
-    
+
   a.btn-logout-container(ng-click="logout()")
     .btn-logout Sign out
-  

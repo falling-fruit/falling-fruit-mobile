@@ -36,7 +36,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
   $scope.load_list = (bounds)->
     console.log("LOADING LIST")
-    mapStateService.setLoading("Loading...")
+    mapStateService.setLoading("Loading list")
     $scope.targeted = false
     $scope.add_location_controls = false
     center = window.FFApp.map_obj.getCenter()
@@ -87,7 +87,6 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     AuthFactory.toggleSideMenu()
 
   ## Position
-  #$rootScope.$on "MAP-LOADED", $scope.update_position
   #$rootScope.$on "LOGGED-IN", load_view
   #load_view() if AuthFactory.is_logged_in()
 
@@ -147,160 +146,124 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       latlng = new (google.maps.LatLng)(data.lat, data.lng)
       window.FFApp.map_obj.panTo(latlng)
 
-  ## Current position (update once)
+  ## Watch position
 
-  $scope.update_position = ()->
-    # position
-    navigator.geolocation.getCurrentPosition ((position)->
-      console.log("Position obtained")
-      window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-      window.FFApp.position_accuracy = position.coords.accuracy
-
-      if !window.FFApp.position_marker
-        window.FFApp.position_marker = new google.maps.Marker(
-          icon:
-            path: google.maps.SymbolPath.CIRCLE
-            strokeColor: '#1C95F2'
-            fillColor: '#FF8A22'
-            fillOpacity: 1
-            strokeWeight: 8
-            scale: 8
-          position: window.FFApp.current_position
-          map: window.FFApp.map_obj
-          draggable: false
-          clickable: false
-          zIndex: 100
-        )
-      else
-        window.FFApp.position_marker.setPosition(window.FFApp.current_position)
-
-      window.FFApp.map_obj.panTo(window.FFApp.current_position)
-      $scope.reset_list()
-
-      # heading
-      # FIXME: Always returns zero?
-#       navigator.compass.getCurrentHeading ((heading)->
-#         console.log("Heading obtained")
-#         if !window.FFApp.heading_marker
-#           heading_icon_inner =
-#             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-#             fillColor: '#FF8A22'
-#             fillOpacity: 1
-#             strokeWeight: 0
-#             scale: 4
-#             rotation: heading.trueHeading
-#             anchor: new google.maps.Point(0, 2.6)
-#           heading_icon_outer =
-#             path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-#             fillColor: '#1C95F2'
-#             fillOpacity: 1
-#             strokeWeight: 0
-#             scale: 4
-#             rotation: heading.trueHeading
-#             anchor: new google.maps.Point(0, 7.75)
-#           window.FFApp.heading_marker = new google.maps.Marker(
-#             icon: heading_icon_outer
-#             position: window.FFApp.current_position
-#             map: window.FFApp.map_obj
-#             draggable: false
-#             clickable: false
-#             zIndex: 100
-#           )
-#           window.FFApp.heading_marker.bindTo('position', window.FFApp.position_marker, 'position')
-#         else
-#           icon = window.FFApp.heading_marker.getIcon()
-#           icon.rotation = heading.trueHeading
-#           window.FFApp.heading_marker.setIcon(icon)
-#       ), ()->
-#         console.log("Failed to get heading") # FIXME: replace with common error handling
-
-    ), (err)->
-      console.log("Failed to get position") # FIXME: replace with common error handling
-      alert("Enable location access in settings to track your position.")
-    , {maximumAge: 3000, timeout: 4000, enableHighAccuracy: true}
-
-  ## Current position watch
-  $scope.ignoreCenterChange = false
-
+  $scope.trackPosition = true
   $scope.watchPositionID = null
-  $scope.movedFarEnough = false
-  $scope.showRecenterBtn = false
-  $scope.centerChangeEL = null
-
+  $scope.centerChangeListener = null
   watchPositionOptions =
     enableHighAccuracy: true
-    timeout: 10000
-    maximumAge: 3000
+    timeout: 10000 # milliseconds
+    maximumAge: 3000 # milliseconds
 
-  $scope.toggle_position_tracking = ()->
+  $scope.watchHeadingID = null
+  watchHeadingOptions =
+    frequency: 200 # milliseconds
+
+  $scope.toggle_position_watching = ()->
+    # Position
     if $scope.watchPositionID
+      console.log("STOP Watching position")
+      window.FFApp.position_marker.setVisible(false)
       navigator.geolocation.clearWatch($scope.watchPositionID)
+      google.maps.event.removeListener($scope.centerChangeListener)
       $scope.watchPositionID = null
-
-      if window.FFApp.position_marker
-        window.FFApp.position_marker.setMap(null)
-        window.FFApp.position_marker = null
-        $scope.ignoreCenterChange = false
+      window.FFApp.current_position = null
+      mapStateService.removeLoading()
     else
+      console.log("START Watching position")
+      $scope.trackPosition = true
+      mapStateService.setLoading("Locating you")
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
-        alert("Falling Fruit could not get your position. Either GPS signals are weak or GPS is off")
+        mapStateService.removeLoading()
+        alert("We could not determine your position. Either GPS signals are weak or GPS is off.")
       ), watchPositionOptions)
+    # Heading
+    if $scope.watchHeadingID
+      console.log("STOP Watching heading")
+      window.FFApp.heading_marker.setVisible(false)
+      navigator.compass.clearWatch($scope.watchHeadingID)
+      $scope.watchHeadingID = null
+    else if navigator.compass
+      console.log("START Watching heading")
+      $scope.watchHeadingID = navigator.compass.watchHeading(watch_heading, (->
+        console.log("Could not determine compass heading.")
+      ), watchHeadingOptions)
 
   $scope.recenter_map = ()->
-    if window.FFApp.current_position != null
+    if window.FFApp.current_position == null
+      return
+    if window.FFApp.map_idle
       window.FFApp.map_obj.panTo(window.FFApp.current_position)
-
-  watch_position = (position)->
-    console.log("Position watching")
-
-    $scope.movedFarEnough = true
-    prev_lat_lng = window.FFApp.current_position
-    window.FFApp.current_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-    window.FFApp.position_accuracy = position.coords.accuracy
-    accuracy = position.coords.accuracy
-
-    if prev_lat_lng != null
-      distance = google.maps.geometry.spherical.computeDistanceBetween(prev_lat_lng, window.FFApp.current_position)
-      if distance < 100 #meters
-        $scope.movedFarEnough = false
-
-    circleIcon =
-      path: google.maps.SymbolPath.CIRCLE
-      strokeColor: '#1C95F2'
-      fillColor: '#FF8A22'
-      fillOpacity: 0.75
-      strokeWeight: accuracy
-      strokeOpacity: (100 - accuracy) / 100
-      scale: 8
-
-    if !window.FFApp.position_marker
-      window.FFApp.position_marker = new google.maps.Marker(
-        icon: circleIcon,
-        title: 'Current Location'
-        position: window.FFApp.current_position
-        map: window.FFApp.map_obj
-        flat: true
-        optimized: false
-        draggable: false
-        zIndex: 100
-      )
-      window.FFApp.map_obj.panTo(window.FFApp.current_position)
+      $scope.reset_list()
+      if !$scope.trackPosition
+        $scope.trackPosition = true
+        listen_for_map_drag()
     else
-      window.FFApp.position_marker.setIcon(circleIcon)
+      # Wait until idle, in case map is panning
+      google.maps.event.addListenerOnce(window.FFApp.map_obj, "idle", ()->
+        $scope.recenter_map()
+      )
+
+  listen_for_map_drag = ()->
+    google.maps.event.addListenerOnce(window.FFApp.map_obj, "dragstart", ()->
+      console.log("Map center changed")
+      $scope.trackPosition = false
+      # Make the recenter button appear immediately:
+      $scope.$apply()
+    )
+
+  # TODO: Smoother transitions with sliding window averaging?
+  watch_position = (position)->
+
+    # Set current position based on distance between old and new positions
+    old_position = window.FFApp.current_position
+    new_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
+    window.FFApp.position_accuracy = position.coords.accuracy # meters
+    $scope.movedFarEnough = true
+    if old_position == null
+      window.FFApp.current_position = new_position
+    else
+      distance_moved = google.maps.geometry.spherical.computeDistanceBetween(old_position, new_position)
+      # TODO: Use old and new position accuracy to dynamically set threshold?
+      if distance_moved < 2 # meters (smartphone GPS max accuracy ~ 2 meters)
+        $scope.movedFarEnough = false
+      else
+        window.FFApp.current_position = new_position
+
+    # If position changed enough, move marker
+    if $scope.movedFarEnough
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
+      # And if map is tracking position, recenter map and reset list
+      if $scope.trackPosition
+        $scope.recenter_map()
 
-    if $scope.movedFarEnough || !$scope.ignoreCenterChange
-      window.FFApp.map_obj.panTo(window.FFApp.current_position)
+    # Either way, make position marker visible and update accuracy marker
+    if !window.FFApp.position_marker.getVisible()
+      window.FFApp.position_marker.setVisible(true)
+    window.FFApp.accuracy_marker.setRadius(window.FFApp.position_accuracy)
 
-    google.maps.event.removeListener($scope.centerChangeEL);
-    $scope.centerChangeEL = google.maps.event.addListener window.FFApp.map_obj, "center_changed", ()->
-      console.log("Map Center Changed")
-      $scope.showRecenterBtn = true
-      $scope.ignoreCenterChange = true
-    #   if $scope.ignoreCenterChange
-    #     $scope.ignoreCenterChange = false
-    #   else if $scope.watchPositionID
-    #     navigator.geolocation.clearWatch($scope.watchPositionID)
-    #     $scope.watchPositionID = null
+    # If loading message is showing, hide it
+    if mapStateService.data.isLoading
+      mapStateService.removeLoading()
+      # HACK: To close loading message from inside callback, force digest cycle
+      $scope.$apply()
 
-    $scope.reset_list()
+    # If first callback, add map drag listener
+    if old_position == null
+      listen_for_map_drag()
+
+  watch_heading = (heading)->
+
+    # Determine heading
+    rotation = heading.trueHeading
+    if rotation < 0
+      rotation = heading.magneticHeading
+
+    # Update marker
+    icon = window.FFApp.heading_marker.getIcon()
+    icon.rotation = rotation
+    window.FFApp.heading_marker.setIcon(icon)
+    # Don't show heading marker until position marker is visible
+    if !window.FFApp.heading_marker.getVisible() && window.FFApp.position_marker.getVisible()
+      window.FFApp.heading_marker.setVisible(true)

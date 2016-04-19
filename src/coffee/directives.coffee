@@ -8,18 +8,25 @@ directives.mapContainer = ()->
     directionstype: "="
   controller: ($scope, $element, $http, $rootScope, mapStateService)->
     container_elem = $element[0]
+
+    # Map settings
     window.FFApp.map_initialized = false
     window.FFApp.defaultZoom = 14
     window.FFApp.defaultMapTypeId = google.maps.MapTypeId.ROADMAP
     window.FFApp.defaultCenter = new google.maps.LatLng(40.015, -105.27)
+    window.FFApp.map_idle = false
+
+    # Locations
     window.FFApp.markersArray = []
     window.FFApp.openMarker = null
     window.FFApp.openMarkerId = null
     window.FFApp.markersMax = 100
+
+    # Position
     window.FFApp.current_position = null
     window.FFApp.position_accuracy = null
-    window.FFApp.position_marker = null
-    window.FFApp.heading_marker = null
+
+    # Filters
     window.FFApp.muni = true
     window.FFApp.metric = true
     window.FFApp.selectedType = null
@@ -46,7 +53,7 @@ directives.mapContainer = ()->
 
     window.do_markers = () ->
       console.log "UPDATING MARKERS"
-      mapStateService.setLoading("Loading...")
+      mapStateService.setLoading("Loading markers")
 
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
@@ -134,7 +141,7 @@ directives.mapContainer = ()->
         window.FFApp.openMarker = marker
         $rootScope.$broadcast "SHOW-LOCATION", location_id
 
-    load_map = (center) ->
+    load_map = (center)->
       map_options =
         center: center
         zoom: window.FFApp.defaultZoom
@@ -149,9 +156,65 @@ directives.mapContainer = ()->
       window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
       window.FFApp.geocoder = new google.maps.Geocoder()
 
-      #When the map stops being scrolled by the user this fires
-      google.maps.event.addListener window.FFApp.map_obj, "idle", ()->
+      window.FFApp.position_marker = new google.maps.Marker(
+        icon:
+          path: google.maps.SymbolPath.CIRCLE
+          fillColor: '#1C95F2'
+          fillOpacity: 1
+          strokeColor: '#FFFFFF'
+          strokeOpacity: 1
+          strokeWeight: 1
+          scale: 9
+        position: center
+        map: window.FFApp.map_obj
+        draggable: false
+        clickable: false
+        zIndex: 100
+        visible: false
+      )
+
+      window.FFApp.accuracy_marker = new google.maps.Circle(
+        center: center
+        radius: 10
+        map: window.FFApp.map_obj
+        fillColor: '#1C95F2'
+        fillOpacity: 0.05
+        strokeColor: '#1C95F2'
+        strokeOpacity: 0.25
+        strokeWeight: 1
+        clickable: false
+        zIndex: 99
+        visible: false
+      )
+      window.FFApp.accuracy_marker.bindTo('center', window.FFApp.position_marker, 'position')
+      window.FFApp.accuracy_marker.bindTo('visible', window.FFApp.position_marker, 'visible')
+
+      window.FFApp.heading_marker = new google.maps.Marker(
+        icon:
+          path: "M10,6.9L5,0L0,6.9C1.4,6,3.1,5.5,4.9,5.5C6.7,5.5,10,6.9,10,6.9z"
+          fillColor: '#1C95F2'
+          fillOpacity: 1
+          strokeWeight: 0
+          scale: 1.3
+          rotation: 0
+          anchor: new google.maps.Point(5, 15)
+        position: center
+        map: window.FFApp.map_obj
+        draggable: false
+        clickable: false
+        zIndex: 100
+        visible: false
+      )
+      window.FFApp.heading_marker.bindTo('position', window.FFApp.position_marker, 'position')
+
+      # When the map stops being scrolled by the user this fires
+      window.FFApp.map_obj.addListener("idle", ()->
+        window.FFApp.map_idle = true
         window.do_markers()
+      )
+      window.FFApp.map_obj.addListener("dragstart", ()->
+        window.FFApp.map_idle = false
+      )
 
       window.FFApp.map_initialized = true
       $rootScope.$broadcast "MAP-LOADED"
@@ -159,7 +222,7 @@ directives.mapContainer = ()->
     initialize = ()->
       return if window.FFApp.map_initialized == true
 
-      mapStateService.setLoading("Loading map...")
+      mapStateService.setLoading("Loading map")
       window.FFApp.map_elem = document.getElementById("map")
 
       if navigator.geolocation
@@ -183,7 +246,7 @@ directives.mapContainer = ()->
 
 directives.ffLoadingMsg = (mapStateService)->
   restrict : "E"
-  template: "<div class='loading' ng-class='{show: mapStateData.isLoading}'><div class='loading-message'>[{mapStateData.message || 'Loading...'}]</div></div>"
+  template: "<div class='loading' ng-class='{show: mapStateData.isLoading}'><div class='loading-message'>[{mapStateData.message}]</div></div>"
   replace: true
   link: ($scope, elem, attrs)->
     $scope.mapStateData = mapStateService.data
@@ -219,68 +282,6 @@ directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
   templateUrl: "html/templates/edible_types_map.html"
 
   link: ($scope, $element, $attrs) ->
-    $scope.edible_types_data = edibleTypesService.data
-    $scope.show_types = false
-    $scope.show_reset = false
-    $scope.edible_type_placeholder = "Edible types"
-    $scope.filters = {}
-    $scope.filtered = false
-    $scope.et_quantity = 0
-    $scope.filters.edible_types = null
-
-    $scope.focusInput = ()->
-      $scope.show_types=true
-      $scope.show_reset=true
-
-    $scope.blurInput = ()->
-      #wait for all other handlers to run first
-      #like the click handler then blur
-      $timeout(()->
-        $scope.show_types = false
-        $scope.show_reset = false
-      , 150)
-
-    $scope.checkInputTypedLength = ()->
-      max_results = $scope.edible_types_data.edible_types.length
-      if $scope.filters.edible_types.length < 2
-        $scope.et_quantity = 0
-        $scope.filtered = false
-      else
-        $scope.et_quantity = max_results
-        $scope.filtered = true
-
-    $scope.updateSelectedEdibleType = (type)->
-      $scope.type_ids = [] if $scope.type_ids is undefined
-      $scope.type_ids.push(type.id) if $scope.type_ids.indexOf(type.id) == -1
-      $scope.filters.edible_types = null
-      $scope.show_types = false
-      $scope.et_quantity = 0
-      $scope.filtered = false
-      window.FFApp.selectedType = type
-      window.clear_markers()
-      window.do_markers()
-      $scope.reset_list()
-
-    #FIXME: Clear but keep focus on input?
-    $scope.clearEdibleType = ()->
-      $scope.blurInput()
-      $scope.filtered = false
-      $scope.filters.edible_types = null
-
-    $scope.removeEdibleType = (id)->
-      _.remove($scope.type_ids, (arr_id) ->
-          return arr_id == id
-      )
-      window.FFApp.selectedType = null
-      window.clear_markers()
-      window.do_markers()
-      $scope.reset_list()
-
-directives.edibleTypesFilterMapFullscreen = (BASE_PATH, $timeout, edibleTypesService)->
-  restrict: "E"
-  templateUrl: "html/templates/edible_types_map_fullscreen.html"
-
-  link: ($scope, $element, $attrs) ->
     $scope.input_placeholder = "Search types"
     $scope.select_placeholder = "Edible type"
     $scope.edible_types_data = edibleTypesService.data
@@ -291,7 +292,8 @@ directives.edibleTypesFilterMapFullscreen = (BASE_PATH, $timeout, edibleTypesSer
     console.log("$scope.max_results", $scope.max_results)
 
     $scope.closeKeyboard = ()->
-      window.cordova.plugins.Keyboard.close()
+      if window.cordova
+        window.cordova.plugins.Keyboard.close()
 
     $scope.checkSearchLength = ()->
       if $scope.search_string.length == 0
