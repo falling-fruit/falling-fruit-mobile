@@ -174,10 +174,23 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       console.log("START Watching position")
       $scope.trackPosition = true
       mapStateService.setLoading("Locating you")
-      $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (->
+      $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (error)->
+        console.log("ERROR Watching position:")
+        console.log(error)
+        # TODO: Cooler prompt if PERMISSION_DENIED
+        # Falling Fruit would like to use your current position: Don't allow | Allow
+        # Turn on location services to allow Falling Fruit to determine your position: Settings | Cancel
+        # FIXME: Android device returns TIMEOUT even if location services are off
+        # if error.code == error.PERMISSION_DENIED
+        #   alert("We could not determine your location. Please allow us to do so by turning on location services.")
+        # else # Position unavailable or timeout
+        #   alert("We could not determine your location. GPS and network signals may be weak.")
+        alert("We failed to determine your position. Either GPS and network signals are weak, or location services are turned off.")
         mapStateService.removeLoading()
-        alert("We could not determine your position. Either GPS signals are weak or GPS is off.")
-      ), watchPositionOptions)
+        $scope.watchPositionID = null
+        # HACK: To close loading message from inside callback, force digest cycle
+        $scope.$apply()
+      , watchPositionOptions)
     # Heading
     if $scope.watchHeadingID
       console.log("STOP Watching heading")
@@ -186,9 +199,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       $scope.watchHeadingID = null
     else if navigator.compass
       console.log("START Watching heading")
-      $scope.watchHeadingID = navigator.compass.watchHeading(watch_heading, (->
-        console.log("Could not determine compass heading.")
-      ), watchHeadingOptions)
+      $scope.watchHeadingID = navigator.compass.watchHeading(watch_heading, (error)->
+        console.log("ERROR Watching heading:")
+        console.log(error)
+      , watchHeadingOptions)
 
   $scope.recenter_map = ()->
     if window.FFApp.current_position == null
