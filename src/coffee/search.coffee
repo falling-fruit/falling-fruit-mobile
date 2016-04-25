@@ -270,14 +270,17 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   watch_heading = (heading)->
 
     # Determine heading
-    rotation = heading.trueHeading
-    if rotation < 0
-      rotation = heading.magneticHeading
+    old_heading = window.FFApp.current_heading
+    new_heading = heading.trueHeading
+    if new_heading < 0
+      new_heading = heading.magneticHeading
+    if Math.abs(old_heading - new_heading) > 2 # degrees
+      # Update marker
+      icon = window.FFApp.heading_marker.getIcon()
+      icon.rotation = new_heading
+      window.FFApp.heading_marker.setIcon(icon)
+      window.FFApp.current_heading = new_heading
 
-    # Update marker
-    icon = window.FFApp.heading_marker.getIcon()
-    icon.rotation = rotation
-    window.FFApp.heading_marker.setIcon(icon)
     # Don't show heading marker until position marker is visible
     if !window.FFApp.heading_marker.getVisible() && window.FFApp.position_marker.getVisible()
       window.FFApp.heading_marker.setVisible(true)

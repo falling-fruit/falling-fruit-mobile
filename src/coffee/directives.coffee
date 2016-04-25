@@ -22,9 +22,10 @@ directives.mapContainer = ()->
     window.FFApp.openMarkerId = null
     window.FFApp.markersMax = 100
 
-    # Position
+    # Position & Heading
     window.FFApp.current_position = null
     window.FFApp.position_accuracy = null
+    window.FFApp.current_heading = null
 
     # Filters
     window.FFApp.muni = true
