@@ -22,6 +22,8 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
 
 Cordova installs plugins (`/plugins/*`) and builds platforms (`/platforms/*`) based on the content of the root `/config.xml` file, which is why these directories are not version-controlled. The names and versions of required plugins are indicated with `<plugin>` tags. The platform-specific preferences that are not supported natively by Cordova are set using the [`cordova-custom-config`](https://github.com/dpa99c/cordova-custom-config) plugin, which dynamically modifies content in `/platforms/*` from `/config.xml` on calls to `cordova platform add *`, `cordova prepare *`, or `cordova build *`. Note that the installation of missing plugins can sometimes revert changes made by `cordova-custom-config`, so please followup with `cordova prepare *` or `cordova build *` if this occurs.
 
+The `/config.xml` has been thoroughly documented. Please do not run `cordova plugin install * --save` to install a plugin and save it to `/config.xml`, as this will blast away all comments and formatting. Instead, add the plugin to `/config.xml` and run `cordova platform add *`, `cordova prepare *` or `cordova build *` instead.
+
 ## Code layout
 
   * Factories (reusable code)
