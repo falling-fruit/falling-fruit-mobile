@@ -1,40 +1,12 @@
-# Cordova plugins
-/plugins
-
-# Cordova build android (except the apk)
-platforms/android/ant-build/*
-!platforms/android/ant-build/CordovaApp-debug.apk
-platforms/android/CordovaLib/
+# Cordova plugins and platforms
+/plugins/
+/platforms/
 
 # Grunt built stuff
-platforms/ios/www/
-platforms/android/assets/www/
-www/index.html
-www/css/index.css
-www/css/style.css
-www/html/*
-www/js/*.js
-!www/js/*/lib/**.js
-
-# XCode
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-*.xcworkspace
-!default.xcworkspace
-xcuserdata
-profile
-*.moved-aside
-DerivedData
-.idea/
-platforms/ios/wedeliver-lucy.xcodeproj/xcuserdata/*
-platforms/ios/wedeliver-lucy.xcodeproj/project.xcworkspace/xcuserdata/*
-*.xcuserstate
+/www/index.html
+/www/html/*
+/www/css/*.css
+/www/js/*.js
 
 # Miscellany
 npm-debug.log
