@@ -18,7 +18,9 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
     * `/coffee` - compiles to javascript
   * `/www` - Code compiled by grunt from `/src` (not version controlled), along with static files (e.g. images, js libraries).
 
-Note: Cordova installs plugins (`/plugins/*`) and builds platforms (`/platforms/*`) based on the content of the root `/config.xml` file, which is why these directories are not version-controlled. The names and versions of required plugins are indicated with `<plugin>` tags. The platform-specific preferences that are not supported natively by Cordova are set using the [`cordova-custom-config`](https://github.com/dpa99c/cordova-custom-config) plugin, which dynamically rewrites content in `/platforms/*` from `/config.xml` on calls to `cordova prepare` or `cordova build`. Since the installation of any missing plugins can revert the changes made by `cordova-custom-config` (?), please repeat the command if this occurs.
+### Plugins & Platforms
+
+Cordova installs plugins (`/plugins/*`) and builds platforms (`/platforms/*`) based on the content of the root `/config.xml` file, which is why these directories are not version-controlled. The names and versions of required plugins are indicated with `<plugin>` tags. The platform-specific preferences that are not supported natively by Cordova are set using the [`cordova-custom-config`](https://github.com/dpa99c/cordova-custom-config) plugin, which dynamically modifies content in `/platforms/*` from `/config.xml` on calls to `cordova platform add *`, `cordova prepare *`, or `cordova build *`. Note that the installation of missing plugins can sometimes revert changes made by `cordova-custom-config`, so please followup with `cordova prepare *` or `cordova build *` if this occurs.
 
 ## Code layout
 
@@ -199,10 +201,6 @@ Once you have built successfully, open `platforms/ios/FallingFruit.xcodeproj` in
 #### iOS devices
 
 (coming soon!)
-
-## Plugins & Platforms
-
-Cordova installs plugins (`/plugins/*`) and builds platforms (`/platforms/*`) based on the content of the root `/config.xml` file, which is why these directories are not version-controlled. The names and versions of required plugins are indicated with `<plugin>` tags. The platform-specific preferences that are not supported natively by Cordova are set using the [cordova-custom-config](https://github.com/dpa99c/cordova-custom-config) plugin, which dynamically rewrites content in `/platforms/*` from `/config.xml` on calls to `cordova prepare` or `cordova build`. Note that
 
 ## Icons & Splashscreens
 	http://ionicframework.com/docs/cli/icon-splashscreen.html
