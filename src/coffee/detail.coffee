@@ -47,15 +47,15 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
 
   $scope.update_photo_list = ()->
     if navigator.camera?
-      navigator.camera.getPicture ((photo_data)->
+      navigator.camera.getPicture (photo_data) ->
         $scope.location.observation.photo_data =
           data: photo_data
           #name: ?
           #type: ?
         console.log("Processed photo")
-      ), (->
-        console.log("Failed to get photo")
-      ),
+      , (message)->
+        console.log("Failed to get photo: " + message)
+      ,
         sourceType: Camera.PictureSourceType.CAMERA
         encodingType: Camera.EncodingType.JPEG
         quality: 75
