@@ -9,14 +9,20 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
   * `/docs` - extra documentation
   * `/hooks` - Cordova hooks
   * `/icons` - Platform icon and splashscreen graphics. Same as `/resources` ?
-  * `/platforms` - Platform configuration and code compiled by grunt and Cordova
-  * `/plugins` - Cordova plugins (not included in repo)
+  * (`/platforms`) - Platform configuration and code compiled by Cordova and grunt (not version-controlled)
+  * (`/plugins`) - Cordova plugins (not version-controlled)
   * `/resources` - same as `/icons` (?)
   * `/src` - Source code for the site
     * `/jade` - compiles to html
     * `/less` - compiles to css
     * `/coffee` - compiles to javascript
-  * `/www` - Code compiled by grunt from /src, along with static files (e.g. images, js libraries).
+  * `/www` - Code compiled by grunt from `/src` (not version controlled), along with static files (e.g. images, js libraries).
+
+### Plugins & Platforms
+
+Cordova installs plugins (`/plugins/*`) and builds platforms (`/platforms/*`) based on the content of the root `/config.xml` file, which is why these directories are not version-controlled. The names and versions of required plugins are indicated with `<plugin>` tags. The platform-specific preferences that are not supported natively by Cordova are set using the [`cordova-custom-config`](https://github.com/dpa99c/cordova-custom-config) plugin, which dynamically modifies content in `/platforms/*` from `/config.xml` on calls to `cordova platform add *`, `cordova prepare *`, or `cordova build *`. Note that the installation of missing plugins can sometimes revert changes made by `cordova-custom-config`, so please followup with `cordova prepare *` or `cordova build *` if this occurs.
+
+The `/config.xml` has been thoroughly documented. Please do not run `cordova plugin install * --save` to install a plugin and save it to `/config.xml`, as this will blast away all comments and formatting. Instead, add the plugin to `/config.xml` and run `cordova platform add *`, `cordova prepare *` or `cordova build *` instead.
 
 ## Code layout
 
@@ -36,10 +42,10 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
 ### Install node and dependencies
 
   * Node Version Manager (nvm): [installation instructions](https://github.com/creationix/nvm)
-  * Node (0.10):
+  * Node (0.12):
 
   ```
-  nvm install 0.10
+  nvm install 0.12
   ```
 
   * Cordova (5.4.1):
@@ -89,7 +95,7 @@ You'll need to disable CORS warnings in your browser. The easiest way to do that
 
 ### Run on Android
 
-To build the app for Android, you'll need to install the Android SDKs.
+To build the app for Android, you'll first need to install the Android SDKs.
 
   * Download and install the latest Android SDK Tools: [download links](http://developer.android.com/sdk/index.html#Other),  [instructions](http://spring.io/guides/gs/android/).
   * Add the new folder to your path:
@@ -109,6 +115,19 @@ To build the app for Android, you'll need to install the Android SDKs.
     * Android SDK Platform-tools (latest)
     * Android SDK Platform (v22)
     * Android SDK Build-tools (v22.latest)
+
+You can then initialize the android platform directory (deleting any deprecated one):
+
+```
+cordova platform rm android
+cordova platform add android
+```
+
+And build!
+
+```
+cordova build android
+```
 
 #### Android emulators
 
@@ -164,24 +183,28 @@ If you want to debug with Chrome, go to [chrome://inspect/#devices](chrome://ins
 
 You can only build iOS applications on a Mac ([instructions](http://cordova.apache.org/docs/en/5.4.0/guide/platforms/ios/index.html)).
 
-#### iOS emulators
+If so, you can initialize the ios platform directory (deleting any deprecated one):
 
-To build and emulate on iOS:
+```
+cordova platform rm ios
+cordova platform add ios
+```
+
+And build!
 
 ```
 cordova build ios
 ```
 
-Then open `platforms/ios/FallingFruit.xcodeproj` in Xcode and run the app on the selected emulator.
+#### iOS emulators
 
-Only one emulator may run at a time, so quit iOS Simulator before running the app in a different target device.
-
+Once you have built successfully, open `platforms/ios/FallingFruit.xcodeproj` in Xcode and run the app on the selected emulator.
 
 #### iOS devices
 
 (coming soon!)
 
-## Icons and Splashscreens
+## Icons & Splashscreens
 	http://ionicframework.com/docs/cli/icon-splashscreen.html
 
   * ionic cli must be installed like comes with a new app (http://ionicframework.com/getting-started/)
