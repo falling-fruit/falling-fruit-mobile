@@ -1,4 +1,4 @@
-controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18nFactory, mapStateService, $swipe)->
+controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFactory, I18nFactory, mapStateService, $swipe)->
   console.log "Search Ctrl"
 
   $scope.current_view = "map"
@@ -174,23 +174,32 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
       console.log("START Watching position")
       $scope.trackPosition = true
       mapStateService.setLoading("Locating you")
+
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (error)->
-        console.log("ERROR Watching position:")
-        console.log(error)
-        # TODO: Cooler prompt if PERMISSION_DENIED
+        console.log("ERROR Watching position: ", error)
         # Falling Fruit would like to use your current position: Don't allow | Allow
         # Turn on location services to allow Falling Fruit to determine your position: Settings | Cancel
         # FIXME: Android device returns TIMEOUT even if location services are off
-        # if error.code == error.PERMISSION_DENIED
-        #   alert("We could not determine your location. Please allow us to do so by turning on location services.")
-        # else # Position unavailable or timeout
-        #   alert("We could not determine your location. GPS and network signals may be weak.")
-        alert("We failed to determine your position. Either GPS and network signals are weak, or location services are turned off.")
-        mapStateService.removeLoading()
+        if error.code == error.PERMISSION_DENIED
+          mapStateService.setLoading("We could not determine your location. Please allow us to do so by turning on location services.", true)
+        else #Position unavailable or timeout
+          mapStateService.setLoading("We lost your location. GPS and network signals may be weak. Please try again", true)
+        #mapStateService.setLoading("We failed to determine your position. Either GPS and network signals are weak, or location services are turned off.")
+
+        $timeout () ->
+          mapStateService.removeLoading()
+        , 5000
+
+        #Clear the watch positioning
         $scope.watchPositionID = null
-        # HACK: To close loading message from inside callback, force digest cycle
-        $scope.$apply()
+        window.FFApp.heading_marker.setVisible(false)
+        window.FFApp.position_marker.setVisible(false)
+        navigator.compass.clearWatch($scope.watchHeadingID)
+        $scope.watchHeadingID = null
+
+        $scope.$apply() # HACK: To close loading message from inside callback, force digest cycle
       , watchPositionOptions)
+
     # Heading
     if $scope.watchHeadingID
       console.log("STOP Watching heading")
@@ -229,7 +238,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
 
   # TODO: Smoother transitions with sliding window averaging?
   watch_position = (position)->
-
+    console.log("position watched");
     # Set current position based on distance between old and new positions
     old_position = window.FFApp.current_position
     new_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
