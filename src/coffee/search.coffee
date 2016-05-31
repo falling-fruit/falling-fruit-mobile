@@ -153,7 +153,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.centerChangeListener = null
   watchPositionOptions =
     enableHighAccuracy: true
-    timeout: 10000 # milliseconds
+    timeout: 10000 # 10 seconds in milliseconds
     maximumAge: 3000 # milliseconds
 
   $scope.watchHeadingID = null
@@ -163,7 +163,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
   $scope.toggle_position_watching = ()->
     # Position
     if $scope.watchPositionID
-      console.log("STOP Watching position")
+      console.log("STOPPING position watch")
       window.FFApp.position_marker.setVisible(false)
       navigator.geolocation.clearWatch($scope.watchPositionID)
       google.maps.event.removeListener($scope.centerChangeListener)
@@ -235,6 +235,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, AuthFactory, I18
     new_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
     window.FFApp.position_accuracy = position.coords.accuracy # meters
     $scope.movedFarEnough = true
+
     if old_position == null
       window.FFApp.current_position = new_position
     else
