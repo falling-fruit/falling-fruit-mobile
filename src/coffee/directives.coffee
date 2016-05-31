@@ -247,7 +247,7 @@ directives.mapContainer = ()->
 
 directives.ffLoadingMsg = (mapStateService)->
   restrict : "E"
-  template: "<div class='loading' ng-class='{show: mapStateData.isLoading}'><div class='loading-message'>[{mapStateData.message}]</div></div>"
+  template: "<div class='loading' ng-class='{show: mapStateData.isLoading, larger: mapStateData.isLargerNotice}'><div class='loading-message'>[{mapStateData.message}]</div></div>"
   replace: true
   link: ($scope, elem, attrs)->
     $scope.mapStateData = mapStateService.data
