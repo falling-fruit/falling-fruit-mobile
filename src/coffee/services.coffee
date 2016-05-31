@@ -4,15 +4,19 @@ factories.mapStateService = ()->
 
   props =
     data:
+      isLargerNotice: false
       isLoading: false
       message: ""
 
-    setLoading: (msg)->
+    setLoading: (msg, larger)->
       @data.isLoading = true
       @data.message = msg
+      if larger == true
+        @data.isLargerNotice = true
 
     removeLoading: ()->
       @data.isLoading = false
+      @data.isLargerNotice = false
       @data.message = ""
 
   return props
@@ -78,10 +82,10 @@ factories.AuthFactory = ($rootScope)->
     get_register_user_model: ()->
       console.log "Called get_register_user_model"
       return name: null, email: null, password: null, password_confirmation: null
-    
+
     get_forgot_password_user_model: ()->
       return email: null
-    
+
     needsAuth: (url)->
       return url.indexOf(".html") == -1 and url.indexOf("/users/") == -1
 
