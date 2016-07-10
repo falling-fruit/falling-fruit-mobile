@@ -14,7 +14,7 @@
       
     .fullscreen-select-list(ng-touch-click="closeKeyboard()")
       a.fullscreen-select-option(ng-show="search_string.length < 2") Type to find an edible type
-      a.fullscreen-select-option(ng-repeat="type in edible_types_data.edible_types", ng-show="search_string.length > 1 && type.name.indexOf(search_string) > -1", ng-click="updateSelectedEdibleType(type)")
+      a.fullscreen-select-option(ng-repeat="type in edible_types_data.edible_types", ng-show="search_string.length > 1 && type.name.toLowerCase().indexOf(search_string.toLowerCase()) > -1", ng-click="updateSelectedEdibleType(type)")
         | {{type.name}}
     .fullscreen-select-buttons
       //- a.save(href = "#") Save
