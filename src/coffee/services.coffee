@@ -4,20 +4,15 @@ factories.mapStateService = ()->
 
   props =
     data:
-      isLargerNotice: false
       isLoading: false
       message: ""
 
-    setLoading: (msg, larger)->
+    setLoading: (msg)->
       @data.isLoading = true
       @data.message = msg
-      if larger == true
-        @data.isLargerNotice = true
 
     removeLoading: ()->
       @data.isLoading = false
-      @data.isLargerNotice = false
-      @data.message = ""
 
   return props
 
