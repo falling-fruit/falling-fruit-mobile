@@ -57,34 +57,28 @@
   }
 }
 
+.loading-container {
+  text-align: center;
+}
+
 .loading {
-  background: url('../img/gif/loader.gif') no-repeat 5% center;
+  background: url('../img/gif/loader.gif') no-repeat 10px center;
   background-size: @menu-height - 27px;
   background-color: rgba(250, 249, 249, .8);
-  height: @menu-height - 22px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  .opacity(0);
-  padding: 5px 5px 0 15%;
-  position: absolute;
-  text-align: left;
+  position: relative;
   top: 0;
-  width: 200px;
-  z-index: @zindex-loading;
+  display: inline-block;
+  padding: 5px 10px 5px 43px;
+  max-width: 70%;
+  text-align: left;
   .border-radius(0 0 10px 10px);
+  .opacity(0);
+  z-index: @zindex-loading;
   .transition(top 250ms ease-in-out, opacity 250ms ease-in-out);
   box-shadow: 0px 2px 5px #555;
   &.show {
     .opacity(1);
     top: @menu-height - 1;
-  }
-  &.larger {
-    font-size: .9em;
-    height: auto;
-    line-height: 1.4;
-    min-height: @menu-height - 22px;
-    width: 75%;
   }
 }
 

@@ -181,9 +181,9 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
         # Turn on location services to allow Falling Fruit to determine your position: Settings | Cancel
         # FIXME: Android device returns TIMEOUT even if location services are off
         if error.code == error.PERMISSION_DENIED
-          mapStateService.setLoading("We could not determine your location. Please allow us to do so by turning on location services.", true)
+          mapStateService.setLoading("We could not access your location. Please allow us to do so by turning on location services.")
         else #Position unavailable or timeout
-          mapStateService.setLoading("We lost your location. GPS and network signals may be weak. Please try again", true)
+          mapStateService.setLoading("We could not determine your location. Either signals are too weak or location services are turned off.")
         #mapStateService.setLoading("We failed to determine your position. Either GPS and network signals are weak, or location services are turned off.")
 
         $timeout () ->
