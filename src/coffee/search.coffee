@@ -160,21 +160,30 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
   watchHeadingOptions =
     frequency: 200 # milliseconds
 
+  clear_position_watching = ()->
+    console.log("STOP Watching position")
+    window.FFApp.position_marker.setVisible(false)
+    navigator.geolocation.clearWatch($scope.watchPositionID)
+    google.maps.event.removeListener($scope.centerChangeListener)
+    $scope.watchPositionID = null
+    window.FFApp.current_position = null
+
+  clear_heading_watching = ()->
+    console.log("STOP Watching heading")
+    window.FFApp.heading_marker.setVisible(false)
+    navigator.compass.clearWatch($scope.watchHeadingID)
+    $scope.watchHeadingID = null
+
   $scope.toggle_position_watching = ()->
     # Position
     if $scope.watchPositionID
-      console.log("STOPPING position watch")
-      window.FFApp.position_marker.setVisible(false)
-      navigator.geolocation.clearWatch($scope.watchPositionID)
-      google.maps.event.removeListener($scope.centerChangeListener)
-      $scope.watchPositionID = null
-      window.FFApp.current_position = null
-      mapStateService.removeLoading()
+      clear_position_watching()
+      if (mapStateService.data.message == "Locating you")
+        mapStateService.removeLoading()
     else
       console.log("START Watching position")
       $scope.trackPosition = true
       mapStateService.setLoading("Locating you")
-
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (error)->
         console.log("ERROR Watching position: ", error)
         # Falling Fruit would like to use your current position: Don't allow | Allow
@@ -182,35 +191,28 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
         # FIXME: Android device returns TIMEOUT even if location services are off
         if error.code == error.PERMISSION_DENIED
           mapStateService.setLoading("We could not access your location. Please allow us to do so by turning on location services.")
-        else #Position unavailable or timeout
+        else # Position unavailable or timeout
           mapStateService.setLoading("We could not determine your location. Either signals are too weak or location services are turned off.")
-        #mapStateService.setLoading("We failed to determine your position. Either GPS and network signals are weak, or location services are turned off.")
-
+        $scope.$apply() # HACK: Force digest cycle to update loading message from within callback.
         $timeout () ->
           mapStateService.removeLoading()
         , 5000
 
-        #Clear the watch positioning
-        $scope.watchPositionID = null
-        window.FFApp.heading_marker.setVisible(false)
-        window.FFApp.position_marker.setVisible(false)
-        navigator.compass.clearWatch($scope.watchHeadingID)
-        $scope.watchHeadingID = null
+        # Clear the watch positioning
+        clear_position_watching()
+        if $scope.watchHeadingID
+          clear_heading_watching()
 
-        $scope.$apply() # HACK: To close loading message from inside callback, force digest cycle
       , watchPositionOptions)
 
     # Heading
     if $scope.watchHeadingID
-      console.log("STOP Watching heading")
-      window.FFApp.heading_marker.setVisible(false)
-      navigator.compass.clearWatch($scope.watchHeadingID)
-      $scope.watchHeadingID = null
+      clear_heading_watching()
     else if navigator.compass
       console.log("START Watching heading")
       $scope.watchHeadingID = navigator.compass.watchHeading(watch_heading, (error)->
-        console.log("ERROR Watching heading:")
-        console.log(error)
+        console.log("ERROR Watching heading:", error)
+        clear_heading_watching()
       , watchHeadingOptions)
 
   $scope.recenter_map = ()->
@@ -238,7 +240,8 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
 
   # TODO: Smoother transitions with sliding window averaging?
   watch_position = (position)->
-    console.log("position watched");
+    console.log("Position watched: ", position);
+
     # Set current position based on distance between old and new positions
     old_position = window.FFApp.current_position
     new_position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
@@ -257,6 +260,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
 
     # If position changed enough, move marker
     if $scope.movedFarEnough
+      console.log("Position updated");
       window.FFApp.position_marker.setPosition(window.FFApp.current_position)
       # And if map is tracking position, recenter map and reset list
       if $scope.trackPosition
@@ -278,6 +282,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
       listen_for_map_drag()
 
   watch_heading = (heading)->
+    console.log("Heading watched: ", heading);
 
     # Determine heading
     old_heading = window.FFApp.current_heading
@@ -285,6 +290,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
     if new_heading < 0
       new_heading = heading.magneticHeading
     if Math.abs(old_heading - new_heading) > 2 # degrees
+      console.log("Heading updated");
       # Update marker
       icon = window.FFApp.heading_marker.getIcon()
       icon.rotation = new_heading
