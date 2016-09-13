@@ -1,5 +1,22 @@
-window.FallingFruitApp = angular.module('FallingFruitApp',
-  ['ngRoute', 'ngAnimate', 'ngTouch', 'uiSlider', 'validation.match'])
+window.FallingFruitApp = angular.module('FallingFruitApp', [
+  'ngRoute',
+  'ngAnimate',
+  'ngTouch',
+  'pascalprecht.translate',
+  'phrase',
+  'uiSlider',
+  'validation.match'
+])
+
+FallingFruitApp.value("phraseProjectId", "f198b01b5612afc8ac9f7d95b8ba1889")
+FallingFruitApp.value("phraseEnabled", false)
+
+FallingFruitApp.config(['$translateProvider', ($translateProvider)->
+  $translateProvider.preferredLanguage('en')
+  $translateProvider.useStaticFilesLoader
+    prefix: '/locales/'
+    suffix: '.json'
+])
 
 FallingFruitApp.config ($interpolateProvider)->
   $interpolateProvider.startSymbol('[{')
