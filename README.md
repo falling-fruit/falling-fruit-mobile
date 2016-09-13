@@ -68,6 +68,17 @@ The `/config.xml` has been thoroughly documented. Please do not run `cordova plu
   cd ..
   ```
 
+  * PhraseApp cli:
+
+  ```
+  brew tap phrase/brewed
+  brew install phraseapp
+  cp .phraseapp.yml.sample .phraseapp.yml
+  ```
+
+Edit `.phraseapp.yml`, replace `YOUR_ACCESS_TOKEN` with your
+[phraseapp.com](phraseapp.com) access token.
+
 ### Develop with grunt
 
 Grunt is used to compile source code in `/src` into `/www`:
@@ -205,7 +216,7 @@ Once you have built successfully, open `platforms/ios/FallingFruit.xcodeproj` in
 (coming soon!)
 
 ## Icons & Splashscreens
-	http://ionicframework.com/docs/cli/icon-splashscreen.html
+    http://ionicframework.com/docs/cli/icon-splashscreen.html
 
   * ionic cli must be installed like comes with a new app (http://ionicframework.com/getting-started/)
   * Save an icon.png, icon.psd or icon.ai file within the resources directory at the root of the Cordova project. The icon image's minimum dimensions should be 192x192 px, and should have no rounded corners.
