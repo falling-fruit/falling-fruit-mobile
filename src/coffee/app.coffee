@@ -3,6 +3,7 @@ window.FallingFruitApp = angular.module('FallingFruitApp', [
   'ngAnimate',
   'ngTouch',
   'pascalprecht.translate',
+  'phrase',
   'uiSlider',
   'validation.match'
 ])
