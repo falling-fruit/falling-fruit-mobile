@@ -77,7 +77,8 @@ The `/config.xml` has been thoroughly documented. Please do not run `cordova plu
   ```
 
 Edit `.phraseapp.yml`, replace `YOUR_ACCESS_TOKEN` with your
-[phraseapp.com](phraseapp.com) access token.
+[phraseapp.com](phraseapp.com) access token. You can
+(generate an access token here)[https://phraseapp.com/settings/oauth_access_tokens].
 
 ### Develop with grunt
 
