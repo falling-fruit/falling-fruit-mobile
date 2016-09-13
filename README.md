@@ -80,6 +80,45 @@ Edit `.phraseapp.yml`, replace `YOUR_ACCESS_TOKEN` with your
 [phraseapp.com](phraseapp.com) access token. You can
 (generate an access token here)[https://phraseapp.com/settings/oauth_access_tokens].
 
+### Adding new Phraseapp language translations
+
+Adding a new translation is easy!
+
+*Step 1*: Add the new translation key to phraseapp.com.
+
+Visit [phraseapp](http://phraseapp.com), sign in, browse to the Falling Fruit mobile 
+project, select the desired locale (start with English/en), and create your new 
+translation key.
+
+When naming your translation key, follow this convention:
+
+`<template name>.<key name>`
+
+For example, if you're adding a key called `map_btn` to the `search.jade` template,
+you'll want to name the full key `search.map_btn`.
+
+*Step 2*: Update your translation files
+
+Provided you've setup the Phraseapp CLI program (instructions above), just run:
+
+```
+phraseapp pull
+```
+
+This will update the translation files in `www/locales/*.json`.
+
+*Step 3*: Replace the string in your template with the translation key
+
+```pug
+/ Instead of this:
+button(type='button', ng-class='map-btn') Map
+
+/ Add a translate="YOUR_TRANSLATION_KEY" attribute and remove the innerHTML
+button(type='button', ng-class='map-btn', translate='search.map_btn')
+```
+
+Your commit should look something like this example: 1f65a504ab4d0bfb70e3063d30040174c0071cf1
+
 ### Develop with grunt
 
 Grunt is used to compile source code in `/src` into `/www`:
