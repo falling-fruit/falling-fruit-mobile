@@ -28,7 +28,7 @@
       .btn-group-container
         .btn-group
           .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()") Map
-          .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()") List
+          .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()", translate="LIST_BTN")
       .add-location(class="controls", ng-click="begin_add_location()")
       .add-location-controls(ng-class="{show: add_location_controls}")
         .cancel-add-location(class="controls", ng-click="cancel_add_location()")
