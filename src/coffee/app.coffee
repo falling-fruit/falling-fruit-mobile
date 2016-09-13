@@ -13,6 +13,8 @@ FallingFruitApp.value("phraseEnabled", false)
 
 FallingFruitApp.config(['$translateProvider', ($translateProvider)->
   $translateProvider.preferredLanguage('en')
+  $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
+
   $translateProvider.useStaticFilesLoader
     prefix: '/locales/'
     suffix: '.json'
