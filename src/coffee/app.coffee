@@ -1,5 +1,18 @@
-window.FallingFruitApp = angular.module('FallingFruitApp',
-  ['ngRoute', 'ngAnimate', 'ngTouch', 'uiSlider', 'validation.match'])
+window.FallingFruitApp = angular.module('FallingFruitApp', [
+  'ngRoute',
+  'ngAnimate',
+  'ngTouch',
+  'pascalprecht.translate',
+  'uiSlider',
+  'validation.match'
+])
+
+FallingFruitApp.config ($translateProvider)->
+  $translateProvider.translations('en', {
+    LIST_BTN: "List"
+  })
+
+  $translateProvider.preferredLanguage('en')
 
 FallingFruitApp.config ($interpolateProvider)->
   $interpolateProvider.startSymbol('[{')
