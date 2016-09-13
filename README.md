@@ -117,7 +117,8 @@ button(type='button', ng-class='map-btn') Map
 button(type='button', ng-class='map-btn', translate='search.map_btn')
 ```
 
-Your commit should look something like this example: 1f65a504ab4d0bfb70e3063d30040174c0071cf1
+Your commit should look something like this example: 
+[1f65a50](https://github.com/bion/falling-fruit-mobile/commit/1f65a504ab4d0bfb70e3063d30040174c0071cf1)
 
 ### Develop with grunt
 
