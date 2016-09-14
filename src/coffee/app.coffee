@@ -16,7 +16,7 @@ FallingFruitApp.config(['$translateProvider', ($translateProvider)->
   $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
 
   $translateProvider.useStaticFilesLoader
-    prefix: '/locales/'
+    prefix: 'locales/'
     suffix: '.json'
 ])
 
