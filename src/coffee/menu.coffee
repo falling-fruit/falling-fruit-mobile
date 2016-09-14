@@ -1,4 +1,4 @@
-controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthFactory, edibleTypesService)->
+controllers.MenuCtrl = ($scope, $rootScope, $http, $location, $translate, I18nFactory, AuthFactory, edibleTypesService)->
   console.log "Menu Ctrl"
 
   ## Map type
@@ -69,6 +69,13 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, I18nFactory, AuthF
     $scope.filter_types()
 
   ## Regional
+  $scope.autonyms = {
+    "en": "English"
+    "fr": "Français"
+  }
+  $scope.language = $translate.use()
+  $scope.set_language = ()->
+    $translate.use($scope.language)
 
   $scope.metric = window.FFApp.metric
   $scope.toggle_metric = ()->

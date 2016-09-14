@@ -25,8 +25,12 @@
       | Transit
       .search-radio-container
         .search-radio-active(ng-show="layer == 'transit'")
-
+    
     .search-param-header Regional
+    .search-param-select
+      .label [{autonyms[language]}]
+      select(ng-model="language", ng-change="set_language()", ng-options="key as value for (key, value) in autonyms")
+            
     a.search-param-radio(ng-click="toggle_metric()")
       | Metric units
       .search-radio-container

@@ -68,6 +68,68 @@ The `/config.xml` has been thoroughly documented. Please do not run `cordova plu
   cd ..
   ```
 
+  * PhraseApp cli:
+
+  ```
+  brew tap phrase/brewed
+  brew install phraseapp
+  cp .phraseapp.yml.sample .phraseapp.yml
+  ```
+
+Edit `.phraseapp.yml`, and replace `YOUR_ACCESS_TOKEN` with your
+[phraseapp.com](phraseapp.com) access token. You can
+generate an access token [here](https://phraseapp.com/settings/oauth_access_tokens).
+
+### Adding new PhraseApp language translations
+
+Adding a new translation is easy!
+
+*Step 1*: Add the new translation key on [phraseapp.com](phraseapp.com).
+
+Sign in to [phraseapp](http://phraseapp.com), browse to the Falling Fruit (mobile)
+project, select the default locale (English/en), and add a new translation key.
+
+When naming your key, follow this convention:
+
+`<template name>.<key name>`
+
+For example, if you're adding a key called `map_btn` to the `search.jade` template,
+you'll want to name the full key `search.map_btn`.
+If the same word or phrase appears often, you can file it as `glossary.<key name>` to avoid
+making many keys with identical or derived (pluralized, capitalized, etc) values.
+
+*Step 2*: Update your translation files.
+
+Provided you've setup the PhraseApp CLI (instructions above), run:
+
+```
+phraseapp pull
+```
+
+This will update the translation files in `www/locales/*.json`.
+
+*Step 3*: Replace the string in your template with the translation key.
+
+```pug
+/ Instead of this:
+button(type='button', ng-class='map-btn') Map
+
+/ Add a translate="YOUR_TRANSLATION_KEY" attribute and remove the innerHTML
+button(type='button', ng-class='map-btn', translate='search.map_btn')
+```
+
+Your commit should look something like this example:
+[1f65a50](https://github.com/bion/falling-fruit-mobile/commit/1f65a504ab4d0bfb70e3063d30040174c0071cf1)
+
+#### Managing empty translation keys
+
+By design, `angular-translate` falls back to the default language for a key only if the key is missing in the desired language, not if the key in the desired language is empty (see [here](https://github.com/angular-translate/angular-translate/issues/815)). To ensure that language fallbacks work as expected, empty translation keys can be filled with the value for that key in the default language using the following default parameters for `phraseapp pull` (included in `.phraseapp.yml.sample`):
+
+```
+include_empty_translations: true
+fallback_locale_id: 53d2ae32ea5672ed2a5f322670c95d98
+```
+
 ### Develop with grunt
 
 Grunt is used to compile source code in `/src` into `/www`:
@@ -205,7 +267,7 @@ Once you have built successfully, open `platforms/ios/FallingFruit.xcodeproj` in
 (coming soon!)
 
 ## Icons & Splashscreens
-	http://ionicframework.com/docs/cli/icon-splashscreen.html
+    http://ionicframework.com/docs/cli/icon-splashscreen.html
 
   * ionic cli must be installed like comes with a new app (http://ionicframework.com/getting-started/)
   * Save an icon.png, icon.psd or icon.ai file within the resources directory at the root of the Cordova project. The icon image's minimum dimensions should be 192x192 px, and should have no rounded corners.
