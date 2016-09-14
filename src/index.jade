@@ -7,11 +7,12 @@ html(lang="en")
     meta(name="viewport", content="width = device-width, initial-scale = 1.0, user-scalable = 0, maximum-scale = 1.0, height = device-height")
     meta(http-equiv="Content-Security-Policy", content="default-src *; style-src * 'unsafe-inline'; script-src *;")
 
-
     link(rel="stylesheet", type="text/css", href="css/lib/angular-csp.css")
     link(rel="stylesheet", type="text/css", href="css/lib/angular-slider.css")
     //-link(rel="stylesheet", type="text/css", href="http://code.ionicframework.com/nightly/css/ionic.css")
     link(rel="stylesheet", type="text/css", href="css/style.css")
+
+    phrase-javascript
 
   body
     .main-container
@@ -21,15 +22,18 @@ html(lang="en")
 
     script(type="text/javascript", src="js/lib/fastclick.js")
     script(type="text/javascript", src="js/lib/lodash.min.js")
+    script(type="text/javascript", src="js/lib/jquery.min.js")
     //-script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?client=***REMOVED***&v=3.17")
     script(type="text/javascript", src="https://maps.googleapis.com/maps/api/js?key=***REMOVED***&libraries=geometry")
     script(type="text/javascript", src="js/lib/angular.js")
     script(type="text/javascript", src="js/lib/angular-route.js")
     script(type="text/javascript", src="js/lib/angular-touch.js")
+    script(type="text/javascript", src="js/lib/angular-translate.min.js")
+    script(type="text/javascript", src="js/lib/angular-translate-loader-static-files.min.js")
+    script(type="text/javascript", src="js/lib/angular-phrase.min.js")
     script(type="text/javascript", src="js/lib/angular-animate.js")
     script(type="text/javascript", src="js/lib/angular-slider.js")
     script(type="text/javascript", src="js/lib/angular-validation-match.min.js")
     //-script(type="text/javascript", src="http://code.ionicframework.com/nightly/js/ionic.bundle.js")
     script(type="text/javascript", src="js/all.js")
     script(type="text/javascript", src="cordova.js")
-

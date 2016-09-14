@@ -31,8 +31,8 @@
 
 .search-param-radio {
   padding-left: 15px;
-  height: 45px;
-  line-height: 45px;
+  height: @search-side-menu-param-height;
+  line-height: @search-side-menu-param-height;
   position: relative;
   display: block;
 }
@@ -61,55 +61,78 @@
 
 // Dropdown select
 
-.search-param-container {
+.search-param-select {
   position: relative;
   margin: 0 20px 0 15px;
-}
-
-.search-param-select {
-  background: url("../img/svg/control-arrow-down.svg") no-repeat 100% center;
-  background-size: 20px;
-  color: @ff-white;
-  padding-right: 25px;
+  height: @search-side-menu-param-height;
   display: block;
-  height: 45px;
-  line-height: 45px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
-.search-param-select-reset {
-  background: url("../img/svg/cross-small.svg") no-repeat 100% center @side-menu-bg-color;
-  background-size: 20px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 20px;
-}
-
-.search-param-select-fullscreen {
-  .search-param-select;
-  background: url("../img/svg/control-arrow-right.svg") no-repeat 100% center;
-  background-size: 20px;
-}
-
-.search-param-selected {
-  padding: 10px 0 10px 15px;
-
-  a {
-    color: @ff-white;
-    background: url("../img/svg/cross.svg") no-repeat 100% center;
-    background-size: 12px;
-    //border-bottom: 1px solid @lighter-gray;
-    display: block;
+  .label {
+    line-height: @search-side-menu-param-height;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin-right: 23px;
+    padding-right: 25px;
+  }
+
+  select {
+    -webkit-appearance: menulist-button;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    .opacity(0);
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20px;
+    background: url("../img/svg/control-arrow-down.svg") no-repeat 100% center;
+    background-size: 100%;
+    pointer-events: none;
+  }
+
+  .reset {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20px;
+    background: url("../img/svg/cross.svg") no-repeat 100% center;
+    background-size: 100%;
+    background-color: @side-menu-bg-color;
+    z-index: @zindex-menu + 1;
   }
 }
+
+.search-param-select-fullscreen {
+  .search-param-select();
+  &:after {
+    background: url("../img/svg/control-arrow-right.svg") no-repeat 100% center;
+    background-size: 100%;
+  }
+}
+
+// .search-param-selected {
+//   padding: 10px 0 10px 15px;
+//
+//   a {
+//     color: @ff-white;
+//     background: url("../img/svg/cross.svg") no-repeat 100% center;
+//     background-size: 12px;
+//     //border-bottom: 1px solid @lighter-gray;
+//     display: block;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//     margin-right: 23px;
+//   }
+// }
 
 // LOGOUT
 

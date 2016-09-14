@@ -1,7 +1,6 @@
-.search-param-container
-  a.search-param-select-fullscreen(ng-click="show_select=true")
-    | {{select_placeholder}}
-  .search-param-select-reset(ng-show="show_reset_select", ng-click="resetSelect()")
+.search-param-select-fullscreen
+  .label(ng-click="show_select=true") {{select_placeholder}}
+  .reset(ng-show="show_reset_select", ng-click="resetSelect()")
 
 // Using ng-class to switch on visibility, as ng-cloak wasn't enough to avoid flicker on Android.
 .fullscreen-select-container(ng-class="{visible: show_select}", ng-cloak)
