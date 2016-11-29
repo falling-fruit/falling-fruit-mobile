@@ -20,7 +20,7 @@
 -->
 # Cordova Hooks
 
-Cordova Hooks represent special scripts which could be added by application and plugin developers or even by your own build system  to customize cordova commands. Hook scripts could be defined by adding them to the special predefined folder (`/hooks`) or via configuration files (`config.xml` and `plugin.xml`) and run serially in the following order: 
+Cordova Hooks represent special scripts which could be added by application and plugin developers or even by your own build system  to customize cordova commands. Hook scripts could be defined by adding them to the special predefined folder (`/hooks`) or via configuration files (`config.xml` and `plugin.xml`) and run serially in the following order:
 * Application hooks from `/hooks`;
 * Application hooks from `config.xml`;
 * Plugin hooks from `plugins/.../plugin.xml`.
@@ -128,8 +128,8 @@ module.exports = function(context) {
     var deferral = new Q.defer();
 
     setTimeout(function(){
-    	console.log('hook.js>> end');
-		deferral.resolve();
+      console.log('hook.js>> end');
+    deferral.resolve();
     }, 1000);
 
     return deferral.promise;
@@ -139,26 +139,26 @@ module.exports = function(context) {
 `context` object contains hook type, executed script full path, hook options, command-line arguments passed to Cordova and top-level "cordova" object:
 ```json
 {
-	"hook": "before_plugin_install",
-	"scriptLocation": "c:\\script\\full\\path\\appBeforePluginInstall.js",
-	"cmdLine": "The\\exact\\command\\cordova\\run\\with arguments",
-	"opts": {
-		"projectRoot":"C:\\path\\to\\the\\project",
-		"cordova": {
-			"platforms": ["wp8"],
-			"plugins": ["com.plugin.withhooks"],
-			"version": "0.21.7-dev"
-		},
-		"plugin": {
-			"id": "com.plugin.withhooks",
-			"pluginInfo": {
-				...
-			},
-			"platform": "wp8",
-			"dir": "C:\\path\\to\\the\\project\\plugins\\com.plugin.withhooks"
-		}
-	},
-	"cordova": {...}
+  "hook": "before_plugin_install",
+  "scriptLocation": "c:\\script\\full\\path\\appBeforePluginInstall.js",
+  "cmdLine": "The\\exact\\command\\cordova\\run\\with arguments",
+  "opts": {
+    "projectRoot":"C:\\path\\to\\the\\project",
+    "cordova": {
+      "platforms": ["wp8"],
+      "plugins": ["com.plugin.withhooks"],
+      "version": "0.21.7-dev"
+    },
+    "plugin": {
+      "id": "com.plugin.withhooks",
+      "pluginInfo": {
+        ...
+      },
+      "platform": "wp8",
+      "dir": "C:\\path\\to\\the\\project\\plugins\\com.plugin.withhooks"
+    }
+  },
+  "cordova": {...}
 }
 
 ```
@@ -169,7 +169,7 @@ You can also require additional Cordova modules in your script using `context.re
 var Q = context.requireCordovaModule('q');
 ```
 
-__Note__:  new module loader script interface is used for the `.js` files defined via `config.xml` or `plugin.xml` only. 
+__Note__:  new module loader script interface is used for the `.js` files defined via `config.xml` or `plugin.xml` only.
 For compatibility reasons hook files specified via `/hooks` folders are run via Node child_process spawn, see 'Non-javascript' section below.
 
 ### Non-javascript
