@@ -1,3 +1,5 @@
+/// Layout ///
+
 .auth-overlay {
   .screen-cover();
   top: 100%;
@@ -36,7 +38,7 @@ div:not(.login) > .auth-default-logo {
   z-index: @zindex-auth-inner;
 }
 
-@auth-input-icon-dim: 50px;
+/// Inputs ///
 
 .auth-input-container {
   position: relative;
@@ -44,6 +46,22 @@ div:not(.login) > .auth-default-logo {
   margin: 20px 10%;
   overflow: hidden;
   .border-radius(5px);
+
+  input {
+    background-color: transparent;
+    border: none;
+    display: block;
+    overflow: hidden;
+    color: @gray;
+    font-size: @font-size-large;
+    padding: 10px 0 10px @auth-input-icon-dim;
+    width: 100%;
+    border: 1px solid transparent;
+    .border-radius(5px);
+    &.ng-invalid.ng-touched {
+      border: 1px solid @orange;
+    }
+  }
 }
 
 .auth-input-container.name:before {
@@ -69,89 +87,65 @@ div:not(.login) > .auth-default-logo {
   }
 }
 
-.login .email {
-  margin-top: 30px;
-}
+/// Buttons ///
 
-.auth-input-container.password {
-  margin-bottom: 0px;
-}
-
-.auth-input-container input {
-  background-color: transparent;
-  border: none;
-  display: block;
-  overflow: hidden;
-  color: @gray;
-  font-size: @font-size-large;
-  padding: 10px 0 10px @auth-input-icon-dim;
-  width: 100%;
-  border: 1px solid transparent;
-  .border-radius(5px);
-  &.ng-invalid.ng-touched {
-    border: 1px solid @orange;
-  }
-}
-
-.auth-text-container {
-  width: 80%;
-  margin: auto;
-  text-align: center;
-}
-
-.auth-text {
-  display: inline-block;
-  text-align: center;
-  color: @gray;
-  font-size: @font-size-small;
-  padding: 20px;
-}
-
-.auth-btn-container {
-  display: table;
-  width: 80%;
-  margin: auto;
-  //border-collapse: collapse;
-  border-spacing: 20px;
-  table-layout: fixed;
-}
-
-.auth-btn-mixin() {
+.auth-btn {
   color: white;
-  background-color: @orange;
   display: block;
   padding: 10px;
   text-align: center;
+  border: none;
+  margin: 20px 10%;
+  width: 80%;
   .border-radius(5px);
+  &.orange {
+    background-color: @orange;
+  }
+  &.dark {
+    background-color: @dark-green;
+  }
+  &.bottom {
+    position: absolute;
+    bottom: 0;
+  }
   &[disabled], &.invalid {
     background-color: @light-gray;
   }
 }
 
-.auth-btn {
-  .auth-btn-mixin();
-  border: none;
-  width: 80%;
-  margin: auto 10%;
-}
+// .auth-btn-table {
+//   display: table;
+//   width: 80%;
+//   margin: auto;
+//   border-spacing: 20px;
+//   table-layout: fixed;
+// }
+//
+// .auth-btn-cell {
+//   .auth-btn-mixin();
+//   display: table-cell;
+//   width: 49%;
+// }
 
-.auth-btn-cell {
-  .auth-btn-mixin();
-  display: table-cell;
-  border: none;
-  width: 49%;
-}
+/// Text ///
 
-.auth-btn-dark {
-  display: block;
-  padding: 10px;
-  margin: 20px 10%;
-  background-color: @dark-green;
-  color: white;
+.auth-text {
+  width: 100%;
+  padding: 0 10%;
+  margin: auto;
   text-align: center;
-  .border-radius(5px);
+  display: inline-block;
+  color: @gray;
+  font-size: @font-size-small;
 }
 
-.register .auth-btn-dark, .forgot-password .auth-btn-dark {
+/// Hacks ///
+
+.login .email {
+  margin-top: 30px;
+}
+
+.register .auth-btn-dark,
+.forgot-password .auth-btn-dark {
   margin-top: 20px;
 }
