@@ -9,32 +9,29 @@
   //- Details
   .location-info
     .location-types
-      span(ng-repeat="id in location.type_ids") {{edible_types_data.edible_types_by_id[id].name}}{{$last ? '' : ', '}}
+      span(ng-repeat="id in location.type_ids", ng-bind-template="{{edible_types_data.edible_types_by_id[id].name}}{{$last ? '' : ', '}}")
 
     //-div {{location.lat.toFixed(5)}}, {{location.lng.toFixed(5)}}
-    div(ng-show="location.current_distance == location.map_distance") {{location.current_distance}}
+    div(ng-show="location.current_distance == location.map_distance", ng-bind="location.current_distance")
     div(ng-show="location.current_distance != location.map_distance")
-      span(ng-show="location.current_distance") {{location.current_distance}} (from me) &nbsp;/ &nbsp;
-      span {{location.map_distance}} (from map center)
+      span(ng-show="location.current_distance", ng-bind-template="{{location.current_distance}} (from me)") &nbsp;/ &nbsp;
+      span(ng-bind-template="{{location.map_distance}} (from map center)")
     .tag-list
       .tag(ng-show="location.season_string")
-        .label(translate="view_location.season")
-        | {{location.season_string}}
-      .tag(ng-show="location.access != null")
-        | {{location.access_string}}
-      .tag(ng-show="location.unverified")
-        | {{"glossary.unverified" | translate}}
+        .label(translate="view_location.season", ng-bind="location.season_string")
+      .tag(ng-show="location.access != null", ng-bind="location.access_string")
+      .tag(ng-show="location.unverified", translate="glossary.unverified")
 
   //- Description
-  .location-description {{location.description}}
+  .location-description(ng-bind="location.description")
   .location-author
-    div Added {{location.created_at | date : 'MMMM d, yyyy'}} by {{location.author? location.author : "Anonymous"}}
-    div(ng-show="location.updated_at.toDateString() != location.created_at.toDateString()") Updated {{location.updated_at | date : 'MMMM d, yyyy'}}
+    div(ng-bind-template="Added {{location.created_at | date : 'MMMM d, yyyy'}} by {{location.author? location.author : 'Anonymous'}}")
+    div(ng-show="location.updated_at.toDateString() != location.created_at.toDateString()", ng-bind-template="Updated {{location.updated_at | date : 'MMMM d, yyyy'}}")
     
   //- Buttons
   //-a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ({{location.num_reviews}})
   .detail-btn-container
-    .detail-btn-dark(ng-click="detail_context='edit_location'; menu_title='Edit location';", translate="view_location.edit")
+    .detail-btn-dark(ng-click="detail_context='edit_location'", translate="view_location.edit")
     .detail-btn-dark(ng-click="add_review(location.id)", translate="view_location.review")
   .detail-btn-container
-    .detail-btn-dark(ng-click="show_reviews()", ng-show="location.num_reviews > 0") {{"view_location.read_reviews" | translate}} ({{location.num_reviews}})
+    .detail-btn-dark(ng-click="show_reviews()", ng-show="location.num_reviews > 0", ng-bind-template="{{'view_location.read_reviews' | translate}} ({{location.num_reviews}})")

@@ -1,5 +1,5 @@
 .search-param-select-fullscreen
-  .label(ng-click="show_select=true") {{select_placeholder}}
+  .label(ng-click="show_select=true", ng-bind="select_placeholder")
   .reset(ng-show="show_reset_select", ng-click="resetSelect()")
 
 //- Using ng-class to switch on visibility, as ng-cloak wasn't enough to avoid flicker on Android.
@@ -8,16 +8,15 @@
     .fullscreen-select-header
         
       .fullscreen-select-search
-        input.fullscreen-select-search-input(id="fullscreen-search-input", ng-model="search_string", placeholder="{{'glossary.type.one' | translate}}", ng-change="checkSearchLength()")
+        input.fullscreen-select-search-input(id="fullscreen-search-input", ng-model="search_string", translate-attr="{placeholder: 'glossary.type.one'}", ng-change="checkSearchLength()")
         .fullscreen-select-search-reset(ng-show="show_reset", ng-touch-click="resetSearch()", quiet-click)
       
     .fullscreen-select-list(ng-touch-click="closeKeyboard()")
       .fullscreen-select-option(ng-show="search_string.length < 2", translate="glossary.search_by_typing")
-      a.fullscreen-select-option(ng-repeat="type in edible_types_data.edible_types", ng-show="search_string.length > 1 && type.name.toLowerCase().indexOf(search_string.toLowerCase()) > -1", ng-click="updateSelectedEdibleType(type)")
-        | {{type.name}}
+      a.fullscreen-select-option(ng-repeat="type in edible_types_data.edible_types", ng-show="search_string.length > 1 && type.name.toLowerCase().indexOf(search_string.toLowerCase()) > -1", ng-click="updateSelectedEdibleType(type)", ng-bind="type.name")
     .fullscreen-select-buttons
       //- a.save(href = "#", translate="glossary.save")
-      a.cancel(ng-click = "cancel()", translate="glossary.cancel")
+      a.cancel(ng-click="cancel()", translate="glossary.cancel")
 
 //- .search-param-selected(ng-show="type_ids.length")
 //-   a(ng-repeat="id in type_ids", ng-click="removeEdibleType(id)", href="#removeType")
