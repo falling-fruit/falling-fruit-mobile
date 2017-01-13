@@ -385,3 +385,23 @@ body.ios-device {
 :-ms-input-placeholder {
   color: @placeholder-gray;
 }
+
+/// Animations ///
+
+.detail-container.ng-hide-add {
+  .transition-all(275ms, linear);
+  .transform-scale(1, 1, 1);
+}
+
+.detail-container.ng-hide-add.ng-hide-add-active {
+  .transform-scale(0, 0, 0);
+}
+
+.detail-container.ng-hide-remove {
+  .transition-all(300ms, linear);
+  .transform-scale(0, 0, 0);
+}
+
+.detail-container.ng-hide-remove.ng-hide-remove-active {
+  .transform-scale(1, 1, 1);
+}
