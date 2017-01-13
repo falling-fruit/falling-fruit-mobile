@@ -1,25 +1,25 @@
 div(ng-if="detail_context!='edit_location'")
 
-  // FIXME: Using -1 on range is an ugly hack (but better than 0). Not possible to insert null in range?
+  //- FIXME: Using -1 on range is an ugly hack (but better than 0). Not possible to insert null in range?
   .detail-range-container(ng-touch-click="blurActiveElement()")
-    .detail-range-label-1(ng-class="{placeholder: location.observation.fruiting == -1}") Status
-    .detail-range-label-2 [{fruiting_status[location.observation.fruiting]}]
+    .detail-range-label-1(ng-class="{placeholder: location.observation.fruiting == -1}", translate="glossary.status")
+    .detail-range-label-2 {{fruiting_status[location.observation.fruiting]}}
     .detail-range-control
       input(type="range", ng-model="location.observation.fruiting", min="-1", max="2", step="1")
 
   .detail-range-container(ng-touch-click="blurActiveElement()")
-    .detail-range-label-1(ng-class="{placeholder: location.observation.quality_rating == -1}") Quality
-    .detail-range-label-2 [{ratings[location.observation.quality_rating]}]
+    .detail-range-label-1(ng-class="{placeholder: location.observation.quality_rating == -1}", translate="glossary.quality")
+    .detail-range-label-2 {{ratings[location.observation.quality_rating]}}
     .detail-range-control
       input(type="range", ng-model="location.observation.quality_rating", min="-1", max="4", step="1")
 
   .detail-range-container(ng-touch-click="blurActiveElement()")
-    .detail-range-label-1(ng-class="{placeholder: location.observation.yield_rating == -1}") Yield
-    .detail-range-label-2 [{ratings[location.observation.yield_rating]}]
+    .detail-range-label-1(ng-class="{placeholder: location.observation.yield_rating == -1}",translate="glossary.yield")
+    .detail-range-label-2 {{ratings[location.observation.yield_rating]}}
     .detail-range-control
       input(type="range", ng-model="location.observation.yield_rating", min="-1", max="4", step="1")
 
-  .detail-btn.btn-photo(ng-click="update_photo_list()") Take a photo
+  .detail-btn.btn-photo(ng-click="update_photo_list()", translate="repeated_review_fields.take_a_photo")
 
-  //.detail-textarea-container
-  //  textarea(ng-model="location.observation.photo_caption", placeholder="Add a caption...")
+  //-.detail-textarea-container
+  //-  textarea(ng-model="location.observation.photo_caption", placeholder="Add a caption...")

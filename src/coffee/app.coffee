@@ -12,7 +12,7 @@ FallingFruitApp.value("phraseProjectId", "f198b01b5612afc8ac9f7d95b8ba1889")
 FallingFruitApp.value("phraseEnabled", false)
 
 FallingFruitApp.config(['$translateProvider', ($translateProvider)->
-  $translateProvider.preferredLanguage('en').fallbackLanguage('en')
+  $translateProvider.preferredLanguage('en')
   $translateProvider.useSanitizeValueStrategy('sanitizeParameters')
   $translateProvider.useStaticFilesLoader
     prefix: 'locales/'
@@ -20,8 +20,8 @@ FallingFruitApp.config(['$translateProvider', ($translateProvider)->
 ])
 
 FallingFruitApp.config ($interpolateProvider)->
-  $interpolateProvider.startSymbol('[{')
-  $interpolateProvider.endSymbol('}]')
+  $interpolateProvider.startSymbol('{{')
+  $interpolateProvider.endSymbol('}}')
 
 FallingFruitApp.config ['$httpProvider', ($httpProvider)->
 

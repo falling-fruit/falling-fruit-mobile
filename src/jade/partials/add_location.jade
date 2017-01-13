@@ -1,22 +1,20 @@
 .detail-container(ng-show="detail_context=='add_location' || detail_context=='edit_location'")
-  edible-types-filter-location(location="location")
+  location-type-select(location="location")
 
   .detail-textarea-container.location
-    textarea(placeholder="Description", ng-model="location.description")
+    textarea(placeholder="{{'add_location.description' | translate}}", ng-model="location.description")
 
-  // Empty option allows null selection
-  // Converting ng-options to number ensures they match the model.
+  //- Empty option allows null selection
+  //- Converting ng-options to number ensures they match the model.
   .detail-select-container
-    span(ng-class="{placeholder: location.access == null}") [{location.access == null ? "Access" : short_access_types[location.access]}]
+    span(ng-class="{placeholder: location.access == null}") {{location.access == null ? ('glossary.access' | translate) : short_access_types[location.access]}}
     select(ng-model="location.access", ng-options="i*1 as access for (i,access) in short_access_types")
       option(value=null)
 
   .detail-toggle-container
-    .detail-toggle-label(ng-class="{placeholder: !location.unverified}") Unverified
+    .detail-toggle-label(ng-class="{placeholder: !location.unverified}", translate="glossary.unverified")
     .ng-switcher(toggle="location.unverified")
 
-  //-Review
-
   include repeated_review_fields
-
-  .detail-btn-dark.btn-save(ng-click="save_location()") Save
+  
+  .detail-btn-dark.btn-save(ng-click="save_location()", translate="glossary.save")

@@ -1,27 +1,27 @@
 .detail-container(ng-show="detail_context=='view_reviews'")
   .review-list-container
-    // FIXME: Once supported by API, enable users to edit their own reviews?
-    // a.list-item(ng-repeat="r in reviews", ng-click="add_review(r.id)")
+    //- FIXME: Once supported by API, enable users to edit their own reviews.
+    //- a.list-item(ng-repeat="r in reviews", ng-click="add_review(r.id)")
     a.list-item(ng-repeat="r in reviews")
 
       .list-item-image(ng-style="r.style")
 
       .list-item-info-container
-        div.review-author by [{::r.author? r.author : "Anonymous"}]
+        div.review-author by {{::r.author? r.author : "Anonymous"}}
         div
-          span(ng-show="r.observed_on") Visited [{::r.observed_on | date : 'MMMM d, yyyy'}]
-          span(ng-show="!r.observed_on") Posted [{::r.created_at | date : 'MMMM d, yyyy'}]
+          span(ng-show="r.observed_on") Visited {{::r.observed_on | date : 'MMMM d, yyyy'}}
+          span(ng-show="!r.observed_on") Posted {{::r.created_at | date : 'MMMM d, yyyy'}}
         .tag-list
           span.tag(ng-show="r.fruiting != null")
-            span.label Status&nbsp;
-            | [{::fruiting_status[r.fruiting]}]
+            span.label(translate="glossary.status")
+            | {{::fruiting_status[r.fruiting]}}
           span.tag(ng-show="r.quality_rating != null")
-            span.label Quality&nbsp;
-            | [{::ratings[r.quality_rating]}]
+            span.label(translate="glossary.quality")
+            | {{::ratings[r.quality_rating]}}
           span.tag(ng-show="r.yield_rating != null")
-            span.label Yield&nbsp;
-            | [{::ratings[r.yield_rating]}]
-        div.comment(ng-show="r.comment") [{::r.comment}]
+            span.label(translate="glossary.yield")
+            | {{::ratings[r.yield_rating]}}
+        div.comment(ng-show="r.comment") {{::r.comment}}
     
     .detail-btn-container
-      .detail-btn-dark(ng-click="add_review(location.id)") Add a review
+      .detail-btn-dark(ng-click="add_review(location.id)", translate="view_reviews.add_review")

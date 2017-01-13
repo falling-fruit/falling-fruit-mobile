@@ -9,7 +9,7 @@
       .search-input-container
         form(ng-submit="location_search()")
           input(type="submit", value="")
-          input(id="searchInput", type="text", placeholder="Address", ng-model="search_text")
+          input(id="searchInput", type="text", placeholder="{{'search.address' | translate}}", ng-model="search_text")
 
     .search-view-container
       .map-container(ng-touch-click="blurSearchInput()", directionstype="directions_type", stoplist="stopList")
@@ -29,16 +29,16 @@
         .btn-group
           .btn-map(ng-class="current_view == 'map' ? 'active' : ''",
             ng-click="show_map()",
-            translate="search.map_btn")
+            translate="glossary.map")
 
           .btn-list(ng-class="current_view == 'list' ? 'active' : ''",
             ng-click="show_list()",
-            translate="search.list_btn")
+            translate="glossary.list")
 
       .add-location(class="controls", ng-click="begin_add_location()")
       .add-location-controls(ng-class="{show: add_location_controls}")
         .cancel-add-location(class="controls", ng-click="cancel_add_location()")
         .confirm-add-location(class="controls", ng-click="confirm_add_location()")
 
-  // Needs to be drawn after map for UI elements to load properly (?)
+  //- Needs to be drawn after map for UI elements to load properly (?)
   include partials/search_side_menu

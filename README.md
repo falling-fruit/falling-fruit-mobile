@@ -126,7 +126,6 @@ Your commit should look something like this example:
 By design, `angular-translate` falls back to the default language for a key only if the key is missing in the desired language, not if the key in the desired language is empty (see [here](https://github.com/angular-translate/angular-translate/issues/815)). To ensure that language fallbacks work as expected, empty translation keys can be filled with the value for that key in the default language using the following default parameters for `phraseapp pull` (included in `.phraseapp.yml.sample`):
 
 ```
-include_empty_translations: true
 fallback_locale_id: 53d2ae32ea5672ed2a5f322670c95d98
 ```
 

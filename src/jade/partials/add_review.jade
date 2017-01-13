@@ -1,8 +1,8 @@
 .detail-container(ng-show="detail_context=='add_review'")
 
   .detail-textarea-container
-    textarea(ng-model="location.observation.comment", placeholder="Comment")
+    textarea(ng-model="location.observation.comment", placeholder="{{ 'glossary.comment' | translate }}")
   
   include repeated_review_fields
   
-  .detail-btn-dark.btn-save(ng-click="save_review()") Save
+  .detail-btn-dark.btn-save(ng-click="save_review()", translate="glossary.save")

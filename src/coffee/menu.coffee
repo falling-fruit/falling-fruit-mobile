@@ -72,6 +72,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, $translate, I18nFa
   $scope.autonyms = {
     "en": "English"
     "fr": "Français"
+    "es": "Español"
   }
   $scope.language = $translate.use()
   $scope.set_language = ()->

@@ -4,8 +4,8 @@
     .list-item-image(ng-style="li.style")
 
     .list-item-info-container
-      .list-item-distance [{li.distance_string}]
-      .list-item-name [{::li.title}]
-      .list-item-description [{::li.description}]
+      .list-item-distance {{li.distance_string}}
+      .list-item-name {{::li.title}}
+      .list-item-description {{::li.description}}
     
     //-.list-item-map(ng-click="show_location_on_map(li.location_id); $event.stopPropagation();")
