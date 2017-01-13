@@ -12,5 +12,4 @@ phraseapp:
     - file: ./www/locales/<locale_name>.json
       params:
         file_format: angular_translate
-        include_empty_translations: true
         fallback_locale_id: 53d2ae32ea5672ed2a5f322670c95d98

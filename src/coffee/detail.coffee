@@ -208,4 +208,3 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   # HACK (Android/iOS): Force blur on any active element when sliders are clicked
   $scope.blurActiveElement = ()->
     document.activeElement.blur()
-

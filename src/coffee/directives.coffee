@@ -247,14 +247,14 @@ directives.mapContainer = ()->
 
 directives.ffLoadingMsg = (mapStateService)->
   restrict : "E"
-  template: "<div class='loading-container'><div class='loading' ng-class='{show: mapStateData.isLoading}'><div class='loading-message'>[{mapStateData.message}]</div></div></div>"
+  template: "<div class='loading-container'><div class='loading' ng-class='{show: mapStateData.isLoading}'><div class='loading-message'>{{mapStateData.message}}</div></div></div>"
   replace: true
   link: ($scope, elem, attrs)->
     $scope.mapStateData = mapStateService.data
 
 directives.confirmDialog = ()->
   restrict: "C"
-  template: "<div class='conf-container'><div class='conf-txt'>[{confmsg}]</div><div class='conf-ok' ng-click='okfn()'>[{oktxt}]</div><div class='conf-cancel' ng-click='cancelfn()'>[{canceltxt}]</div></div>"
+  template: "<div class='conf-container'><div class='conf-txt'>{{confmsg}}</div><div class='conf-ok' ng-click='okfn()'>{{oktxt}}</div><div class='conf-cancel' ng-click='cancelfn()'>{{canceltxt}}</div></div>"
   scope:
     confmsg: "@"
     okfn: "&"
@@ -278,19 +278,19 @@ directives.ngSwitcher = ()->
 
   return props
 
-directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
+directives.mapTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesService)->
   restrict: "E"
-  templateUrl: "html/templates/edible_types_map.html"
+  templateUrl: "html/templates/map_type_select.html"
 
-  link: ($scope, $element, $attrs) ->
-    $scope.input_placeholder = "Search types"
-    $scope.select_placeholder = "Edible type"
+  link: ($scope, $element, $attrs)->
+    $translate("glossary.type.one").then((translation)->
+      $scope.select_placeholder = translation
+    )
     $scope.edible_types_data = edibleTypesService.data
     $scope.show_reset_select = false
     $scope.show_reset = false
     $scope.search_string = ""
     $scope.type_ids = []
-    console.log("$scope.max_results", $scope.max_results)
 
     $scope.closeKeyboard = ()->
       if window.cordova
@@ -319,7 +319,9 @@ directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
     $scope.resetSelect = ()->
       $scope.type_ids = []
       $scope.show_reset_select = false
-      $scope.select_placeholder = "Edible type"
+      $translate("glossary.type.one").then((translation)->
+        $scope.select_placeholder = translation
+      )
       window.FFApp.selectedType = null
       window.clear_markers()
       window.do_markers()
@@ -337,16 +339,15 @@ directives.edibleTypesFilterMap = (BASE_PATH, $timeout, edibleTypesService)->
     $scope.cancel = ()->
       $scope.show_select = false
 
-directives.edibleTypesFilterLocation = (BASE_PATH, $timeout, edibleTypesService)->
+directives.locationTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesService)->
   restrict: "E"
-  templateUrl: "html/templates/edible_types_location.html"
+  templateUrl: "html/templates/location_type_select.html"
   scope:
     location: "="
 
   link: ($scope, $element, $attrs) ->
     $scope.edible_types_data = edibleTypesService.data
     $scope.show_types = false
-    $scope.edible_type_placeholder = "Edible types"
     $scope.filters = {}
     $scope.filtered = false
     $scope.et_quantity = 0

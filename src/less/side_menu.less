@@ -1,4 +1,4 @@
-//SEARCH SIDE MENU
+/// Layout ///
 
 .search-side-menu {
   position: absolute;
@@ -27,7 +27,7 @@
   background: fade(@gray, 40%);
 }
 
-// Radio buttons
+/// Radio buttons ///
 
 .search-param-radio {
   padding-left: 15px;
@@ -59,7 +59,7 @@
   .border-radius(10px);
 }
 
-// Dropdown select
+/// Dropdowns ///
 
 .search-param-select {
   position: relative;
@@ -134,12 +134,12 @@
 //   }
 // }
 
-// LOGOUT
+/// Logout ///
 
 .btn-logout-container {
   display: block;
   position: absolute;
-  bottom:0;
+  bottom: 0;
   width: 100%;
   height: @btn-logout-container-height;
   border-top: solid 1px @side-menu-border-color;
@@ -151,8 +151,9 @@
   display: inline-block;
   height: @btn-logout-container-height - 20px;
   line-height: @btn-logout-container-height - 20px;
-  padding: 0 50px;
+  padding: 0 10px;
   margin: 10px auto;
+  min-width: 80%;
   background-color: rgba(61, 62, 62, 1);
   color: white;
   .border-radius(5px);
