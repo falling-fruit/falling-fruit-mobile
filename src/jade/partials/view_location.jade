@@ -31,7 +31,7 @@
   //- Buttons
   //-a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ({{location.num_reviews}})
   .detail-btn-container
-    .detail-btn-dark(ng-click="detail_context='edit_location'", translate="view_location.edit")
+    .detail-btn-dark(ng-click="edit_location(location.id)", translate="view_location.edit")
     .detail-btn-dark(ng-click="add_review(location.id)", translate="view_location.review")
   .detail-btn-container
     .detail-btn-dark(ng-click="show_reviews()", ng-show="location.num_reviews > 0", ng-bind-template="{{'view_location.read_reviews' | translate}} ({{location.num_reviews}})")
