@@ -3,7 +3,7 @@
 .auth-overlay {
   .screen-cover();
   top: -100%;
-  .transition-all(300ms);
+  .transition-all(300ms, ease);
   z-index: @zindex-auth;
   background-color: @ff-white;
   .transform-translate(0, 0, 0);
@@ -21,14 +21,14 @@
   &:not(.login) {
     z-index: @zindex-auth + 2;
     &.ng-hide-add {
-      .transition-all(250ms);
+      .transition-all(300ms, ease);
       .transform-translate(0, 0, 0);
     }
     &.ng-hide-add.ng-hide-add-active {
       .transform-translate(100%, 0, 0);
     }
     &.ng-hide-remove {
-      .transition-all(250ms);
+      .transition-all(300ms, ease);
       .transform-translate(100%, 0, 0);
     }
     &.ng-hide-remove.ng-hide-remove-active {
