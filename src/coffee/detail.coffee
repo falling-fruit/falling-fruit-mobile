@@ -187,8 +187,12 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
 
   $scope.add_review = (id)->
     reset_review() # Ensures that sliders are in their left-most position
-    $scope.detail_context = 'add_review'
+    $scope.detail_context = "add_review"
     $scope.menu_title = "Add review"
+
+  $scope.edit_location = (id)->
+    $scope.detail_context = "edit_location"
+    $scope.menu_title = "Edit location"
 
   $scope.menu_left_btn_click = ()->
     # FIXME: add_review can be reached from view_location and view_reviews
