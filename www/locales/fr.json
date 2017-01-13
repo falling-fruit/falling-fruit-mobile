@@ -1,4 +1,7 @@
 {
-  "search.list_btn": "List",
+  "auth.email": "Email",
+  "auth.name": "Nom",
+  "auth.password": "Mot de passe",
+  "search.list_btn": "Liste",
   "search.map_btn": "Carte"
 }
