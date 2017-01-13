@@ -39,6 +39,7 @@ factories.AuthFactory = ($rootScope)->
       show_auth: true
       auth_context: "login"
       show_side_menu: false
+      show_passwords: false
 
     save: (email, access_token)->
       @email = email
@@ -87,6 +88,7 @@ factories.AuthFactory = ($rootScope)->
     hideAuth: ()->
       console.log "Hiding Auth View"
       @data.show_auth = false
+      @data.show_passwords = false
 
     showAuth: ()->
       console.log "Showing Auth View"
@@ -102,6 +104,7 @@ factories.AuthFactory = ($rootScope)->
 
     setAuthContext: (context)->
       @data.auth_context = context
+      @data.show_passwords = false
 
     handleLoggedOut: ()->
       @.clear()
@@ -111,5 +114,8 @@ factories.AuthFactory = ($rootScope)->
 
     toggleSideMenu: ()->
       @data.show_side_menu = !@data.show_side_menu
+
+    togglePasswordVisibility: ()->
+      @data.show_passwords = !@data.show_passwords
 
   return props
