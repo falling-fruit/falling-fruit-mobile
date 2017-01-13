@@ -147,11 +147,7 @@ directives.mapContainer = ()->
         center: center
         zoom: window.FFApp.defaultZoom
         mapTypeId: window.FFApp.defaultMapTypeId
-        mapTypeControl: false
-        streetViewControl: false
-        zoomControl: false
-        rotateControl: false
-        panControl: false
+        disableDefaultUI: true
         tilt: 0
 
       window.FFApp.map_obj = new google.maps.Map(window.FFApp.map_elem, map_options)
