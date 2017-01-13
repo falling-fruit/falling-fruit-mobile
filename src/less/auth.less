@@ -2,15 +2,39 @@
 
 .auth-overlay {
   .screen-cover();
-  top: 100%;
+  top: -100%;
   .transition-all(300ms);
   z-index: @zindex-auth;
   background-color: @ff-white;
   .transform-translate(0, 0, 0);
+  &.show {
+    .transform-translate(0, 100%, 0);
+  }
 }
 
-.auth-overlay.show {
-  .transform-translate(0, -100%, 0);
+.auth-container {
+  .screen-cover();
+  background-color: @ff-white;
+  &.login {
+    z-index: @zindex-auth + 1;
+  }
+  &:not(.login) {
+    z-index: @zindex-auth + 2;
+    &.ng-hide-add {
+      .transition-all(250ms);
+      .transform-translate(0, 0, 0);
+    }
+    &.ng-hide-add.ng-hide-add-active {
+      .transform-translate(100%, 0, 0);
+    }
+    &.ng-hide-remove {
+      .transition-all(250ms);
+      .transform-translate(100%, 0, 0);
+    }
+    &.ng-hide-remove.ng-hide-remove-active {
+      .transform-translate(0, 0, 0);
+    }
+  }
 }
 
 .auth-splash-logo {
@@ -27,15 +51,6 @@
   min-height: 100px;
   background: url('../img/svg/logo-full.svg') center bottom no-repeat;
   background-size: 75% 100%;
-}
-
-div:not(.login) > .auth-default-logo {
-  margin-top: 10px;
-}
-
-.auth-container {
-  .screen-cover();
-  z-index: @zindex-auth-inner;
 }
 
 /// Inputs ///
@@ -127,11 +142,6 @@ div:not(.login) > .auth-default-logo {
 
 /// Hacks ///
 
-.login .email {
-  margin-top: 30px;
-}
-
-.register .auth-btn-dark,
-.forgot-password .auth-btn-dark {
+div:not(.login) > .auth-default-logo {
   margin-top: 20px;
 }
