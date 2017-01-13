@@ -7,10 +7,10 @@
       .list-item-image(ng-style="r.style")
 
       .list-item-info-container
-        div.review-author by {{::r.author? r.author : "Anonymous"}}
+        div.review-author(ng-bind-template="by {{::r.author? r.author : 'Anonymous'}}")
         div
-          span(ng-show="r.observed_on") Visited {{::r.observed_on | date : 'MMMM d, yyyy'}}
-          span(ng-show="!r.observed_on") Posted {{::r.created_at | date : 'MMMM d, yyyy'}}
+          span(ng-show="r.observed_on", ng-bind-template="Visited {{::r.observed_on | date : 'MMMM d, yyyy'}}")
+          span(ng-show="!r.observed_on", ng-bind-template="Posted {{::r.created_at | date : 'MMMM d, yyyy'}}")
         .tag-list
           span.tag(ng-show="r.fruiting != null")
             span.label(translate="glossary.status")

@@ -1,6 +1,6 @@
 .detail-input-container
   form(name="edibleTypesForm")
-    input(ng-model="filters.edible_types", placeholder="{{'glossary.type.other' | translate}}", ng-focus="show_types=true", ng-blur="blurInput()" ng-change="checkInputTypedLength()")
+    input(ng-model="filters.edible_types", translate-attr="{placeholder: 'glossary.type.other'}", ng-focus="show_types=true", ng-blur="blurInput()" ng-change="checkInputTypedLength()")
     .reset(ng-show="filtered", ng-click="clearEdibleType()")
     ul(class="select-dropdown", ng-show="show_types")
       li(ng-show="!filtered", translate="glossary.search_by_typing")

@@ -28,13 +28,13 @@
     
     .search-param-header(translate="side_menu.regional")
     .search-param-select
-      .label {{autonyms[language]}}
+      .label(ng-bind="autonyms[language]")
       select(ng-model="language", ng-change="set_language()", ng-options="key as value for (key, value) in autonyms")
-            
+    
     a.search-param-radio(ng-click="toggle_metric()")
       | {{"side_menu.metric" | translate}}
       .search-radio-container
         .search-radio-active(ng-show="metric")
 
   a.btn-logout-container(ng-click="logout()")
-    .btn-logout {{"side_menu.sign_out" | translate}}
+    .btn-logout(translate="side_menu.sign_out")

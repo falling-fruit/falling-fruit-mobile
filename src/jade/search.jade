@@ -9,7 +9,7 @@
       .search-input-container
         form(ng-submit="location_search()")
           input(type="submit", value="")
-          input(id="searchInput", type="text", placeholder="{{'search.address' | translate}}", ng-model="search_text")
+          input(id="searchInput", type="text", translate-attr="{placeholder: 'search.address'}", ng-model="search_text")
 
     .search-view-container
       .map-container(ng-touch-click="blurSearchInput()", directionstype="directions_type", stoplist="stopList")
@@ -27,13 +27,8 @@
       .settings(class="controls", ng-click="toggleSideMenu()")
       .btn-group-container
         .btn-group
-          .btn-map(ng-class="current_view == 'map' ? 'active' : ''",
-            ng-click="show_map()",
-            translate="glossary.map")
-
-          .btn-list(ng-class="current_view == 'list' ? 'active' : ''",
-            ng-click="show_list()",
-            translate="glossary.list")
+          .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()", translate="glossary.map")
+          .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()", translate="glossary.list")
 
       .add-location(class="controls", ng-click="begin_add_location()")
       .add-location-controls(ng-class="{show: add_location_controls}")

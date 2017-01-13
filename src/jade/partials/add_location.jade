@@ -2,12 +2,12 @@
   location-type-select(location="location")
 
   .detail-textarea-container.location
-    textarea(placeholder="{{'add_location.description' | translate}}", ng-model="location.description")
+    textarea(translate-attr="{placeholder: 'add_location.description'}", ng-model="location.description")
 
   //- Empty option allows null selection
   //- Converting ng-options to number ensures they match the model.
   .detail-select-container
-    span(ng-class="{placeholder: location.access == null}") {{location.access == null ? ('glossary.access' | translate) : short_access_types[location.access]}}
+    span(ng-class="{placeholder: location.access == null}", ng-bind="location.access == null ? ('glossary.access' | translate) : short_access_types[location.access]")
     select(ng-model="location.access", ng-options="i*1 as access for (i,access) in short_access_types")
       option(value=null)
 
