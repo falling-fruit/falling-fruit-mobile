@@ -62,13 +62,14 @@
   border-radius: @tl @tr @br @bl;
 }
 
-.auth-input-container-bg(@dim: @auth-input-icon-dim) {
+.auth-input-container-bg(@dim: @auth-input-icon-dim, @left: initial, @right: initial) {
   content: " ";
   position: absolute;
   top: 0;
-  left: 0;
-  width: @dim;
   height: 100%;
+  width: @dim;
+  left: @left;
+  right: @right;
 }
 
 .transform-scale(@x, @y, @z) {

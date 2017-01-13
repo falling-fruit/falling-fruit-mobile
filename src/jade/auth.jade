@@ -5,18 +5,19 @@
     .auth-default-logo
     form(name="SignInForm", novalidate)
       .auth-input-container.email
-        input(type="email", placeholder="Email", ng-model="login_user.email", required)
-        .auth-error-text
+        input(type="email", placeholder="[{ 'auth.email' | translate }]", ng-model="login_user.email", required)
+        .auth-error-text()
       .auth-input-container.password
-        input(type="password", placeholder="Password", ng-model="login_user.password", required)
-        .auth-error-text
+        input(type="[{authStateData.show_passwords ? 'text' : 'password'}]", placeholder="[{ 'auth.password' | translate }]", ng-model="login_user.password", required)
+        .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
+        .auth-error-text()
 
       .auth-text-container
-        a.auth-text(ng-click="setAuthContext('forgot_password')") Forgot password?
+        a.auth-text(ng-click="setAuthContext('forgot_password')", translate = "auth.forgot_password")
 
       .auth-btn-container
-        a.auth-btn-cell(ng-click="login()", ng-class="{invalid: SignInForm.$invalid}") Sign in
-        a.auth-btn-cell(ng-click="setAuthContext('register')") Register
+        a.auth-btn-cell(ng-click="login()", ng-class="{invalid: SignInForm.$invalid}", translate = "auth.sign_in")
+        a.auth-btn-cell(ng-click="setAuthContext('register')", translate = "auth.register")
 
     //- .auth-btn-container
     //-   a.auth-btn-dark(ng-click="anonymous_login()") Use anonymously
@@ -25,29 +26,27 @@
     .auth-default-logo
     form(name="RegisterForm", novalidate)
       .auth-input-container.name
-        input(type="text", placeholder="Name", ng-model="register_user.name")
+        input(type="text", placeholder="[{ 'auth.name' | translate }]", ng-model="register_user.name")
         .auth-error-text()
       .auth-input-container.email
-        input(type="email", placeholder="Email", ng-model="register_user.email", required)
+        input(type="email", placeholder="[{ 'auth.email' | translate }]", ng-model="register_user.email", required)
         .auth-error-text()
-      .auth-input-container.password-1
-        input(type="password", placeholder="Password", ng-model="register_user.password", required)
-        .auth-error-text()
-      .auth-input-container.password-2
-        input(type="password", placeholder="Confirm password", ng-model="register_user.password_confirmation", match="register_user.password", name="passwordConfirm", required)
+      .auth-input-container.password
+        input(type="[{authStateData.show_passwords ? 'text' : 'password'}]", placeholder="[{ 'auth.password' | translate }]", ng-model="register_user.password", required)
+        .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
         .auth-error-text()
 
-      a.auth-btn(ng-click="register()", ng-class="{invalid: RegisterForm.$invalid}") Send confirmation
+      a.auth-btn(ng-click="register()", ng-class="{invalid: RegisterForm.$invalid}", translate = "auth.send_confirmation")
     
-    a.auth-btn-dark(ng-click="setAuthContext('login')") Login
+    a.auth-btn-dark(ng-click="setAuthContext('login')", translate = "auth.login")
 
   .auth-container.forgot-password(ng-show="authStateData.auth_context == 'forgot_password'")
     .auth-default-logo
     form(name="ForgotPassword", novalidate)
       .auth-input-container.email
-        input(type="email", name="email", placeholder="Email", ng-model="forgot_password_user.email", required)
+        input(type="email", name="email", placeholder="[{ 'auth.email' | translate }]", ng-model="forgot_password_user.email", required)
         .auth-error-text()
 
-      button.auth-btn(type="submit", ng-click="forgot_password()", ng-disabled="ForgotPassword.$invalid") Send reset instructions
+      button.auth-btn(type="submit", ng-click="forgot_password()", ng-disabled="ForgotPassword.$invalid", translate = "auth.send_reset_instructions")
 
-    a.auth-btn-dark(ng-click="setAuthContext('login')") Login
+    a.auth-btn-dark(ng-click="setAuthContext('login')", translate = "auth.login")

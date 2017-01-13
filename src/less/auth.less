@@ -46,34 +46,27 @@ div:not(.login) > .auth-default-logo {
   .border-radius(5px);
 }
 
+.auth-input-container.name:before {
+  .auth-input-container-bg(@left: 0);
+  background: url('../img/svg/input-name.svg') center / 18px no-repeat;
+}
+
 .auth-input-container.email:before {
-  .auth-input-container-bg();
-  background: url('../img/svg/input-email.svg') no-repeat center center;
-  background-size: 28px;
+  .auth-input-container-bg(@left: 0);
+  background: url('../img/svg/input-email.svg') center / 28px no-repeat;
 }
 
 .auth-input-container.password:before {
-  .auth-input-container-bg();
-  background: url('../img/svg/input-password.svg') no-repeat center center;
-  background-size: 28px;
+  .auth-input-container-bg(@left: 0);
+  background: url('../img/svg/input-password.svg') center / 28px no-repeat;
 }
 
-.auth-input-container.name:before {
-  .auth-input-container-bg();
-  background: url('../img/svg/input-name.svg') no-repeat center center;
-  background-size: 18px;
-}
-
-.auth-input-container.password-1:before {
-  .auth-input-container-bg();
-  background: url('../img/svg/input-password1.svg') no-repeat center center;
-  background-size: 24px;
-}
-
-.auth-input-container.password-2:before {
-  .auth-input-container-bg();
-  background: url('../img/svg/input-password2.svg') no-repeat center center;
-  background-size: 24px;
+.visibility-toggle {
+  .auth-input-container-bg(@right: 0);
+  background: url('../img/svg/visibility_on.svg') center / 28px no-repeat;
+  &.visible {
+    background-image: url('../img/svg/visibility_off.svg');
+  }
 }
 
 .login .email {
