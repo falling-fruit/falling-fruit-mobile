@@ -1,6 +1,12 @@
 controllers.MenuCtrl = ($scope, $rootScope, $http, $location, $translate, I18nFactory, AuthFactory, edibleTypesService)->
   console.log "Menu Ctrl"
 
+  $scope.toggleClass = ($event, toggled_class)->
+    e = angular.element($event.currentTarget)
+    e.toggleClass(toggled_class)
+    e.next(".search-params").toggleClass(toggled_class)
+    return true
+
   ## Map type
   $scope.mapTypeId = window.FFApp.defaultMapTypeId
   $scope.edible_types_data = edibleTypesService.data

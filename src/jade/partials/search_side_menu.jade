@@ -4,40 +4,42 @@
     .search-param-header
       .side-menu-close(ng-click="toggleSideMenu()")
       
-    .search-param-header(translate="side_menu.filters")
-    a.search-param-radio(ng-click="toggle_muni()")
-      |  {{"side_menu.tree_inventories" | translate}}
-      .search-radio-container
-        .search-radio-active(ng-show="muni")
-    map-type-select
+    .search-param-header(translate="side_menu.filters", ng-click="toggleClass($event, 'collapsed')")
+    .search-params
+      a.search-param-radio(ng-click="toggle_muni()")
+        |  {{"side_menu.tree_inventories" | translate}}
+        .search-radio-container
+          .search-radio-active(ng-show="muni")
+      map-type-select
 
-    .search-param-header(translate="glossary.map")
-    a.search-param-radio(ng-click="toggle_terrain()")
-      | {{"side_menu.terrain" | translate}}
-      .search-radio-container
-        .search-radio-active(ng-show="mapTypeId == 'terrain'")
-    a.search-param-radio(ng-click="toggle_hybrid()")
-      | {{"side_menu.satellite" | translate}}
-      .search-radio-container
-        .search-radio-active(ng-show="mapTypeId == 'hybrid'")
-    a.search-param-radio(ng-click="toggle_bicycle()")
-      | {{"side_menu.bicycle" | translate}}
-      .search-radio-container
-        .search-radio-active(ng-show="layer == 'bicycle'")
-    a.search-param-radio(ng-click="toggle_transit()")
-      | {{"side_menu.transit" | translate}}
-      .search-radio-container
-        .search-radio-active(ng-show="layer == 'transit'")
+    .search-param-header(translate="glossary.map", ng-click="toggleClass($event, 'collapsed')")
+    .search-params
+      a.search-param-radio(ng-click="toggle_terrain()")
+        | {{"side_menu.terrain" | translate}}
+        .search-radio-container
+          .search-radio-active(ng-show="mapTypeId == 'terrain'")
+      a.search-param-radio(ng-click="toggle_hybrid()")
+        | {{"side_menu.satellite" | translate}}
+        .search-radio-container
+          .search-radio-active(ng-show="mapTypeId == 'hybrid'")
+      a.search-param-radio(ng-click="toggle_bicycle()")
+        | {{"side_menu.bicycle" | translate}}
+        .search-radio-container
+          .search-radio-active(ng-show="layer == 'bicycle'")
+      a.search-param-radio(ng-click="toggle_transit()")
+        | {{"side_menu.transit" | translate}}
+        .search-radio-container
+          .search-radio-active(ng-show="layer == 'transit'")
     
-    .search-param-header(translate="side_menu.regional")
-    .search-param-select
-      .label(ng-bind="autonyms[language]")
-      select(ng-model="language", ng-change="set_language()", ng-options="key as value for (key, value) in autonyms")
-    
-    a.search-param-radio(ng-click="toggle_metric()")
-      | {{"side_menu.metric" | translate}}
-      .search-radio-container
-        .search-radio-active(ng-show="metric")
+    .search-param-header(translate="side_menu.regional", ng-click="toggleClass($event, 'collapsed')")
+    .search-params
+      .search-param-select
+        .label(ng-bind="autonyms[language]")
+        select(ng-model="language", ng-change="set_language()", ng-options="key as value for (key, value) in autonyms")
+      a.search-param-radio(ng-click="toggle_metric()")
+        | {{"side_menu.metric" | translate}}
+        .search-radio-container
+          .search-radio-active(ng-show="metric")
 
   a.btn-logout-container(ng-click="logout()")
     .btn-logout(translate="side_menu.sign_out")
