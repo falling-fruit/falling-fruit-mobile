@@ -5,10 +5,17 @@
   width: @search-side-menu-width;
   height: 100%;
   top: 0;
-  left: 0;
+  left: -@search-side-menu-width;
   overflow: hidden;
   background-color: @side-menu-bg-color;
   color: white;
+  z-index: @zindex-menu;
+  .transition-all(200ms, ease-in-out);
+  &.show {
+    .transform-translate(@search-side-menu-width, 0, 0);
+    box-shadow: 1px 0px 10px 0px #333;
+    .transition-all(300ms);
+  }
 }
 
 .search-params-container {

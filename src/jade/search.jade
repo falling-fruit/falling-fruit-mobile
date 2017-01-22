@@ -1,6 +1,6 @@
 .search-outer-container(ng-controller="SearchCtrl")
   //- .loading-indicator
-  .search-container(ng-class="{show: authStateData.show_side_menu}")
+  .search-container
     .side-menu-overlay(ng-if="authStateData.show_side_menu", ng-class="{show: authStateData.show_side_menu}", ng-swipe-right="toggleSideMenu()", ng-swipe-left="toggleSideMenu()", ng-click="toggleSideMenu()")
     ff-loading-msg
 

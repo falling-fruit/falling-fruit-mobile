@@ -51,12 +51,6 @@
   left: 0;
   overflow: hidden;
   z-index: @zindex-map;
-  box-shadow: -2px 0px 5px 0px #222;
-  .transform-translate(0, 0, 0);
-  .transition-all(250ms);
-  &.show {
-    .transform-translate(@search-side-menu-width, 0, 0);
-  }
 }
 
 .loading-container {
@@ -92,9 +86,9 @@
   left: 0;
   z-index: 0;
   background: @side-menu-bg-color;
-  .opacity(0.1);
+  .opacity(0.25);
   &.show {
-    z-index: 101;
+    z-index: @zindex-menu - 1;
   }
 }
 
@@ -104,7 +98,7 @@
   width: 10px;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: @zindex-menu;
 }
 
 .search-view-container {
