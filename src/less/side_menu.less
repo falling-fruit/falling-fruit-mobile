@@ -25,6 +25,21 @@
   padding: 10px 0 10px 15px;
   border-bottom: solid 1px @gray;
   background: fade(@gray, 40%);
+  position: relative;
+  &:first-of-type {
+    padding: 15px 0 15px 15px;
+    height: 52px;
+    border: none;
+    .side-menu-close {
+      height: 100%;
+      width: 25px;
+      background: url("../img/svg/close.svg") no-repeat 100% center;
+      background-size: 100%;
+      position: absolute;
+      left: 13px;
+      top: 0;
+    }
+  }
 }
 
 /// Radio buttons ///

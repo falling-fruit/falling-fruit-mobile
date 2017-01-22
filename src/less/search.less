@@ -22,10 +22,12 @@
 .current-position {
   background: url("../img/svg/control-me-crosshair.svg") no-repeat center center;
   background-size: 30px;
-  float: left;
+  // float: left;
   height: @menu-height;
-  position: relative;
+  // position: relative;
   width: @menu-height + 5px;
+  position: absolute;
+  right: 0;
   &.active {
     background-image: url("../img/svg/control-me-crosshair-active.svg");
   }
@@ -145,8 +147,8 @@
 
 .zoom-controls {
   position: absolute;
-  left: 10px;
-  top: @menu-height;
+  right: 10px;
+  bottom: @menu-height - @overmap-control-scale * @menu-height;
   margin-top: -(@overmap-control-scale * @menu-height);
   width: @overmap-control-scale * @menu-height;
   height: 2 * @overmap-control-scale * @menu-height;
@@ -178,8 +180,8 @@
 
 .center-on-position {
   position: absolute;
-  left: 10px;
-  top: 2 * @menu-height;
+  right: 10px;
+  bottom: 2 * @menu-height;
   width: @overmap-control-scale * @menu-height;
   height: @overmap-control-scale * @menu-height;
   z-index: @zindex-map + 1;
@@ -268,19 +270,12 @@
     height: @map-footer-height;
     width: @map-footer-height;
   }
-  .settings {
-    background: url("../img/svg/control-settings.svg") no-repeat center center;
-    background-size: 30px;
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
   .add-location {
     background: url("../img/svg/control-add.svg") no-repeat center center;
     background-size: 30px;
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
   }
 
   .btn-group-container {
@@ -289,9 +284,22 @@
   }
 }
 
+.settings {
+  background: url("../img/svg/control-settings.svg") no-repeat center center;
+  background-size: 30px;
+  float: left;
+  height: @menu-height;
+  position: relative;
+  width: @menu-height + 5px;
+  transform: rotate(0deg);
+  // position: absolute;
+  // right: 0;
+  // top: 0;
+}
+
 .add-location-controls {
   position: absolute;
-  right: 0;
+  left: 0;
   bottom: 0;
   height: @map-footer-height * 2;
   width: @map-footer-height;

@@ -1,6 +1,9 @@
 .search-side-menu(ng-controller="MenuCtrl", ng-swipe-left="toggleSideMenu()")
   .search-params-container
-
+    
+    .search-param-header
+      .side-menu-close(ng-click="toggleSideMenu()")
+      
     .search-param-header(translate="side_menu.filters")
     a.search-param-radio(ng-click="toggle_muni()")
       |  {{"side_menu.tree_inventories" | translate}}

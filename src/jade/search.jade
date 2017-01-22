@@ -5,7 +5,8 @@
     ff-loading-msg
 
     .search-menu(ng-swipe-right="toggleSideMenu()")
-      .current-position(ng-click="toggle_position_watching()", ng-class="{active: watchPositionID}")
+      //- .current-position(ng-click="toggle_position_watching()", ng-class="{active: watchPositionID}")
+      .settings(class="controls", ng-click="toggleSideMenu()")
       .search-input-container
         form(ng-submit="location_search()")
           input(type="submit", value="")
@@ -24,7 +25,8 @@
       include partials/list
 
     .search-footer(ng-swipe-right="toggleSideMenu()")
-      .settings(class="controls", ng-click="toggleSideMenu()")
+      .current-position(ng-click="toggle_position_watching()", ng-class="{active: watchPositionID}")
+      //- .settings(class="controls", ng-click="toggleSideMenu()")
       .btn-group-container
         .btn-group
           .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()", translate="glossary.map")
