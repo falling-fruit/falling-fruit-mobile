@@ -27,18 +27,39 @@
   background: fade(@gray, 40%);
   position: relative;
   &:first-of-type {
-    padding: 15px 0 15px 15px;
-    height: 52px;
+    height: @menu-height;
     border: none;
     .side-menu-close {
       height: 100%;
       width: 25px;
-      background: url("../img/svg/close.svg") no-repeat 100% center;
-      background-size: 100%;
+      background: url("../img/svg/close.svg") center / 100% no-repeat;
       position: absolute;
       left: 13px;
       top: 0;
     }
+  }
+  // &:not(:first-of-type) {
+  //   &::after {
+  //     content: "";
+  //     height: 100%;
+  //     width: 20px;
+  //     background: url("../img/svg/minus-gray.svg") center / 100% no-repeat;
+  //     position: absolute;
+  //     right: 20px;
+  //     top: 0;
+  //   }
+  //   &.collapsed {
+  //     &::after {
+  //       background: url("../img/svg/plus-gray.svg") center / 100% no-repeat;
+  //     }
+  //   }
+  // }
+}
+
+.search-params {
+  &.collapsed {
+    height: 0;
+    overflow: hidden;
   }
 }
 
