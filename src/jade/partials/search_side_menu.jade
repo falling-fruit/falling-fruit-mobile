@@ -1,4 +1,4 @@
-.search-side-menu(ng-controller="MenuCtrl", ng-swipe-left="toggleSideMenu()")
+.search-side-menu(ng-controller="MenuCtrl", ng-swipe-left="toggleSideMenu()", ng-class="{show: authStateData.show_side_menu}")
   .search-params-container
     
     .search-param-header
