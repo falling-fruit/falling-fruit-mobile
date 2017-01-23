@@ -119,3 +119,24 @@ factories.AuthFactory = ($rootScope)->
       @data.show_passwords = !@data.show_passwords
 
   return props
+
+factories.languageSwitcher = ($translate)->
+
+  props =
+    autonyms:
+      "en": "English"
+      "fr": "Français"
+      "es": "Español"
+    locale: $translate.use()
+
+    setLocale: (locale)->
+      $translate.use(locale)
+      @locale = locale
+
+    getLocale: ()->
+      return @locale
+
+    getAutonym: ()->
+      return @autonyms[@locale]
+
+  return props
