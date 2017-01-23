@@ -12,7 +12,6 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
 
   $scope.login = ()->
     if $scope.SignInForm.$invalid
-      alert("Oops! Please enter your email and password.")
       return false
 
     $http.post(urls.login, user: $scope.login_user).then(
@@ -24,16 +23,19 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
           $scope.SignInForm.$setUntouched()
           $rootScope.$broadcast("LOGGED-IN")
         else
-          alert("Oops! " + response.data.error)
-          console.log("DATA isnt as expected", response.data)
+          $translate('glossary.generic_error').then((string)->
+            alert(string)
+          )
+          console.log("Login DATA isn't as expected", response.data)
       , (response)->
-        alert("Oops! Please check your email and password and try again.")
+        $translate('auth.invalid_credentials').then((string)->
+          alert(string)
+        )
         $scope.login_user.password = null
     )
 
   $scope.register = ()->
     if $scope.RegisterForm.$invalid
-      alert("Oops! Please enter your email and password.")
       return false
 
     if $scope.register_user
@@ -58,12 +60,10 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
       if data.errors.password
         error_text += "Password " + data.errors.password + "."
         $scope.register_user.password = null
-        $scope.register_user.password_confirmation = null
       alert("Oops! " + error_text)
 
   $scope.forgot_password = ()->
     if $scope.ForgotPassword.$invalid
-      alert("Oops! Please enter a valid email address.")
       return false
 
     if $scope.forgot_password_user
