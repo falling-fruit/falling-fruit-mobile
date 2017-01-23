@@ -75,10 +75,7 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, $translate, I18nFa
     $scope.filter_types()
 
   ## Regional
-  $scope.autonyms = languageSwitcher.autonyms
-  $scope.locale = languageSwitcher.getLocale()
-  $scope.set_locale = ()->
-    languageSwitcher.setLocale($scope.locale)
+  $scope.languageSwitcher = languageSwitcher
 
   $scope.metric = window.FFApp.metric
   $scope.toggle_metric = ()->

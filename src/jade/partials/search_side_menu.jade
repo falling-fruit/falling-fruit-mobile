@@ -34,8 +34,8 @@
     .search-param-header(translate="side_menu.regional", ng-click="toggleClass($event, 'collapsed')")
     .search-params
       .search-param-select
-        .label(ng-bind="autonyms[locale]")
-        select(ng-model="locale", ng-change="set_locale()", ng-options="key as value for (key, value) in autonyms")
+        .label(ng-bind="languageSwitcher.getAutonym()")
+        select(ng-model="languageSwitcher.locale", ng-change="languageSwitcher.applyLocale()", ng-options="key as value for (key, value) in languageSwitcher.autonyms")
       a.search-param-radio(ng-click="toggle_metric()")
         | {{"side_menu.metric" | translate}}
         .search-radio-container

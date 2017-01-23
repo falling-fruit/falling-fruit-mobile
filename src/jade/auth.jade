@@ -6,7 +6,7 @@
     
     //- Language switcher
     .auth-language-switcher
-      select(ng-model="locale", ng-change="set_locale()", ng-options="key as value for (key, value) in autonyms")
+      select(ng-model="languageSwitcher.locale", ng-change="languageSwitcher.applyLocale()", ng-options="key as value for (key, value) in languageSwitcher.autonyms")
       
     //- Sign in
     form(name="SignInForm", novalidate)

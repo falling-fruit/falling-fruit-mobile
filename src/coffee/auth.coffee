@@ -1,4 +1,4 @@
-controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFactory, languageSwitcher)->
+controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFactory, languageSwitcher, $translate)->
   console.log "Auth Ctrl"
 
   $scope.authStateData = AuthFactory.data
@@ -106,7 +106,4 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
     AuthFactory.handleLoggedOut()
 
   # Language switcher
-  $scope.autonyms = languageSwitcher.autonyms
-  $scope.locale = languageSwitcher.getLocale()
-  $scope.set_locale = ()->
-    languageSwitcher.setLocale($scope.locale)
+  $scope.languageSwitcher = languageSwitcher
