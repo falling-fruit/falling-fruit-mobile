@@ -3,6 +3,11 @@
   .auth-container.login
     .auth-splash-logo
     .auth-default-logo
+    
+    //- Language switcher
+    .auth-language-switcher
+      select(ng-model="locale", ng-change="set_locale()", ng-options="key as value for (key, value) in autonyms")
+      
     //- Sign in
     form(name="SignInForm", novalidate)
       .auth-input-container.email

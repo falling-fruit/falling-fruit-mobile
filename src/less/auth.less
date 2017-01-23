@@ -145,3 +145,27 @@
 div:not(.login) > .auth-default-logo {
   margin-top: 20px;
 }
+
+/// Language Switcher ///
+
+.auth-language-switcher {
+  position: absolute;
+  top: 180px;
+  right: 11%;
+  display: inline-block;
+  select {
+    font-size: 16px;
+    color: @gray;
+    font-family: inherit;
+  }
+  &::after {
+    content: "";
+    background: url('../img/svg/arrow-dropdown.svg') center / 100% no-repeat;
+    height: 100%;
+    width: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+  }
+}

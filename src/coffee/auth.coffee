@@ -1,4 +1,4 @@
-controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFactory)->
+controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFactory, languageSwitcher)->
   console.log "Auth Ctrl"
 
   $scope.authStateData = AuthFactory.data
@@ -9,7 +9,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
 
   $scope.togglePasswordVisibility = ()->
     AuthFactory.togglePasswordVisibility()
-  
+
   $scope.login = ()->
     if $scope.SignInForm.$invalid
       alert("Oops! Please enter your email and password.")
@@ -104,3 +104,9 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
     $rootScope.$broadcast "SHOW-MAP"
   else
     AuthFactory.handleLoggedOut()
+
+  # Language switcher
+  $scope.autonyms = languageSwitcher.autonyms
+  $scope.locale = languageSwitcher.getLocale()
+  $scope.set_locale = ()->
+    languageSwitcher.setLocale($scope.locale)

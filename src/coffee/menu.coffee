@@ -1,4 +1,4 @@
-controllers.MenuCtrl = ($scope, $rootScope, $http, $location, $translate, I18nFactory, AuthFactory, edibleTypesService)->
+controllers.MenuCtrl = ($scope, $rootScope, $http, $location, $translate, I18nFactory, AuthFactory, edibleTypesService, languageSwitcher)->
   console.log "Menu Ctrl"
 
   $scope.toggleClass = ($event, toggled_class)->
@@ -75,14 +75,10 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, $translate, I18nFa
     $scope.filter_types()
 
   ## Regional
-  $scope.autonyms = {
-    "en": "English"
-    "fr": "Français"
-    "es": "Español"
-  }
-  $scope.language = $translate.use()
-  $scope.set_language = ()->
-    $translate.use($scope.language)
+  $scope.autonyms = languageSwitcher.autonyms
+  $scope.locale = languageSwitcher.getLocale()
+  $scope.set_locale = ()->
+    languageSwitcher.setLocale($scope.locale)
 
   $scope.metric = window.FFApp.metric
   $scope.toggle_metric = ()->
