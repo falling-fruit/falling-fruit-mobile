@@ -12,7 +12,7 @@
           input(type="submit", value="")
           input(id="searchInput", type="text", translate-attr="{placeholder: 'search.address'}", ng-model="search_text")
 
-    .search-view-container
+    .search-view-container(ng-class="{list: current_view == 'list'}")
       .map-container(ng-touch-click="blurSearchInput()", directionstype="directions_type", stoplist="stopList")
         .swipe-right-overlay(ng-swipe-right="toggleSideMenu()")
         .zoom-controls
