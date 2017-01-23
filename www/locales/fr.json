@@ -2,6 +2,7 @@
   "add_location.description": "Description",
   "auth.email": "Email",
   "auth.forgot_password": "Mot de passe oublié?",
+  "auth.invalid_credentials": "Email ou mot de passe incorrect",
   "auth.name": "Nom",
   "auth.password": "Mot de passe",
   "auth.send_reset_instructions": "Envoyer des instructions de réinitialisation",
