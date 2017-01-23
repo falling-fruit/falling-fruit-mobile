@@ -107,6 +107,10 @@
   position: absolute;
   top: @menu-height;
   width: 200%;
+  .transition-all(250ms, linear);
+  &.list {
+    .transform-translate(-50%, 0, 0);
+  }
 }
 
 .search-input-container {
@@ -243,13 +247,7 @@
   .vertical-scroll-fast();
   background-color: white;
   z-index: @zindex-list;
-  .transform-translate(0, 0, 0);
-  .transition-all(250ms, linear);
-  left: -50%;
-
-  &.show {
-    .transform-translate(100%, 0, 0);
-  }
+  left: 50%;
 }
 
 // FOOTER
@@ -351,20 +349,20 @@
   color: white;
 }
 
-@keyframes pulsate {
-  from {
-    transform: scale(0.25) translateZ(0);
-    opacity: .65;
-  }
-  95% {
-    transform: scale(.75) translateZ(0);
-    opacity: .1;
-  }
-  to {
-    transform: scale(0.25) translateZ(0);
-    opacity: 0;
-  }
-}
+// @keyframes pulsate {
+//   from {
+//     transform: scale(0.25) translateZ(0);
+//     opacity: .65;
+//   }
+//   95% {
+//     transform: scale(.75) translateZ(0);
+//     opacity: .1;
+//   }
+//   to {
+//     transform: scale(0.25) translateZ(0);
+//     opacity: 0;
+//   }
+// }
 
 // #map {
 //   div.gmnoprint[title="Current Location"] {
