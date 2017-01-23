@@ -129,12 +129,8 @@ factories.languageSwitcher = ($translate)->
       "es": "Español"
     locale: $translate.use()
 
-    setLocale: (locale)->
-      $translate.use(locale)
-      @locale = locale
-
-    getLocale: ()->
-      return @locale
+    applyLocale: ()->
+      $translate.use(@locale)
 
     getAutonym: ()->
       return @autonyms[@locale]
