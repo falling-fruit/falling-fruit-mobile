@@ -1,4 +1,4 @@
-controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService, edibleTypesService)->
+controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService, edibleTypesService, $translate)->
   console.log "Detail Ctrl"
 
   reset = ()->
@@ -84,13 +84,11 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     $scope.location_id = id
     load_location(id)
     $scope.detail_context = "view_location"
-    $scope.menu_title = "Location"
 
   $scope.$on "ADD-LOCATION", (event)->
     console.log "ADD-LOCATION Broadcast CAUGHT"
     $scope.show_detail = true
     $scope.detail_context = "add_location"
-    $scope.menu_title = "Add location"
     $scope.location_id = null
     if window.FFApp.map_initialized == true
       center = window.FFApp.map_obj.getCenter()
@@ -101,7 +99,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
 
   $scope.show_reviews = ()->
     $scope.detail_context = 'view_reviews'
-    $scope.menu_title = 'Reviews'
     $http.get urls.reviews($scope.location.id)
     .success (data)->
       console.log "REVIEWS", data
@@ -165,7 +162,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         $scope.location_id = data.id
         load_location(data.id)
         mapStateService.removeLoading()
-        $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("ADD LOCATION FAILED")
@@ -178,7 +174,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         console.log(data)
         load_location($scope.location_id)
         mapStateService.removeLoading()
-        $scope.menu_title = "Location"
         $scope.detail_context = "view_location"
       .error (data)->
         console.log("UPDATE LOCATION FAILED: ", $scope.location.id)
@@ -188,16 +183,13 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.add_review = (id)->
     reset_review() # Ensures that sliders are in their left-most position
     $scope.detail_context = "add_review"
-    $scope.menu_title = "Add review"
 
   $scope.edit_location = (id)->
     $scope.detail_context = "edit_location"
-    $scope.menu_title = "Edit location"
 
   $scope.menu_left_btn_click = ()->
     # FIXME: add_review can be reached from view_location and view_reviews
     if $scope.detail_context == "edit_location" or $scope.detail_context == "add_review" or $scope.detail_context == "view_reviews"
-      $scope.menu_title = "Location"
       $scope.detail_context = "view_location"
       load_location($scope.location_id)
     else
@@ -212,3 +204,19 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   # HACK (Android/iOS): Force blur on any active element when sliders are clicked
   $scope.blurActiveElement = ()->
     document.activeElement.blur()
+
+  # Update menu title
+  # view_location, edit_location, add_location
+  # view_reviews, add_review
+  $scope.menu_title = null
+  # Context change
+  $scope.$watch('detail_context', (newValue, oldValue, $scope)->
+    $translate("menu." + newValue).then((string)->
+      $scope.menu_title = string
+    )
+  )
+  # Language change
+  $rootScope.$on '$translateChangeSuccess', ->
+    $translate("menu." + $scope.detail_context).then((string)->
+      $scope.menu_title = string
+    )
