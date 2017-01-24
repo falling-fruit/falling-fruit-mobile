@@ -23,6 +23,7 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
           $scope.SignInForm.$setUntouched()
           $rootScope.$broadcast("LOGGED-IN")
         else
+          # NOTE: Generic error
           $translate('glossary.generic_error').then((string)->
             alert(string)
           )
@@ -46,21 +47,26 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
 
     $http.post(urls.register, user: user)
     .success (data)->
-      alert("You've been registered! Check your email for a verification link, then come back and sign in.")
+      $translate('auth.signed_up_but_unconfirmed').then((string)->
+        alert(string)
+      )
       AuthFactory.setAuthContext("login")
       initialize_sign_in($scope.register_user.email)
       $scope.register_user = AuthFactory.get_register_user_model()
       $scope.RegisterForm.$setUntouched()
     .error (data) ->
       console.log "Register DATA isn't as expected", data
-      error_text = ""
       if data.errors.email
-        error_text += "Email address " + data.errors.email  + ". "
+        $translate('auth.email_taken').then((string)->
+          alert(string)
+        )
         $scope.register_user.email = null
       if data.errors.password
-        error_text += "Password " + data.errors.password + "."
+        # NOTE: Generic error
+        $translate('glossary.generic_error').then((string)->
+          alert(string)
+        )
         $scope.register_user.password = null
-      alert("Oops! " + error_text)
 
   $scope.forgot_password = ()->
     if $scope.ForgotPassword.$invalid
@@ -72,13 +78,19 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
 
     $http.post(urls.forgot_password, user: user)
     .success (data)->
-      alert("Password reset sent! Check your email for further instructions, then come back and sign in.")
+      $translate('auth.sent_reset_instructions').then((string)->
+        alert(string)
+      )
       AuthFactory.setAuthContext("login")
       initialize_sign_in($scope.forgot_password_user.email)
       $scope.forgot_password_user = AuthFactory.get_forgot_password_user_model()
       $scope.ForgotPassword.$setUntouched()
     .error (data)->
-      alert("Oops! Something went wrong. Please verify your email address and try again!")
+      # NOTE: This is more user-friendly, but could be used to scrape emails
+      $translate('auth.email_not_found').then((string)->
+        alert(string)
+      )
+      $scope.forgot_password_user.email = null
 
   $scope.$on "BACKBUTTON", ()->
     console.log "Caught BACKBUTTON event in controller"
