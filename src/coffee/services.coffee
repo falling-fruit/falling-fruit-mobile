@@ -120,7 +120,7 @@ factories.AuthFactory = ($rootScope)->
 
   return props
 
-factories.languageSwitcher = ($translate)->
+factories.languageSwitcher = ($translate, amMoment)->
 
   props =
     autonyms:
@@ -131,6 +131,7 @@ factories.languageSwitcher = ($translate)->
 
     applyLocale: ()->
       $translate.use(@locale)
+      amMoment.changeLocale(@locale)
 
     getAutonym: ()->
       return @autonyms[@locale]
