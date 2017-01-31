@@ -5,7 +5,8 @@ window.FallingFruitApp = angular.module('FallingFruitApp', [
   'pascalprecht.translate',
   'phrase',
   'uiSlider',
-  'validation.match'
+  'validation.match',
+  'angularMoment'
 ])
 
 FallingFruitApp.value("phraseProjectId", "f198b01b5612afc8ac9f7d95b8ba1889")
@@ -67,7 +68,7 @@ FallingFruitApp.config ($routeProvider)->
       redirectTo: '/auth'
 
 # catch cordova events and do things with them
-FallingFruitApp.run ($rootScope, $window) ->
+FallingFruitApp.run ($rootScope, $window, $translate, amMoment) ->
   console.log("Bootstrapped and Running Angular FallingFruitApp")
   onBack = (event)->
     console.log "Caught back button press"
@@ -79,8 +80,10 @@ FallingFruitApp.run ($rootScope, $window) ->
   #document.addEventListener 'online', onOnline, false
   #document.addEventListener 'offline', onOffline, false
   document.addEventListener 'backbutton', onBack, false
-
+  # Enable fastclick.js
   FastClick.attach(document.body)
+  # Set angular-moment locale to use angular-translate language
+  amMoment.changeLocale($translate.use())
 
   return
 
