@@ -11,9 +11,6 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
     AuthFactory.togglePasswordVisibility()
 
   $scope.login = ()->
-    if $scope.SignInForm.$invalid
-      return false
-
     $http.post(urls.login, user: $scope.login_user).then(
       (response)->
         if response.data isnt null and response.data.hasOwnProperty("auth_token")
@@ -36,9 +33,6 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
     )
 
   $scope.register = ()->
-    if $scope.RegisterForm.$invalid
-      return false
-
     if $scope.register_user
       user =
         name: $scope.register_user.name
@@ -69,9 +63,6 @@ controllers.AuthCtrl = ($scope, $rootScope, $http, $timeout, $location, AuthFact
         $scope.register_user.password = null
 
   $scope.forgot_password = ()->
-    if $scope.ForgotPassword.$invalid
-      return false
-
     if $scope.forgot_password_user
       user =
         email: $scope.forgot_password_user.email

@@ -140,9 +140,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.detail_context = "view_location"
 
   $scope.save_location = ()->
-    if $scope.location.type_ids.length
-      return false
-
     mapStateService.setLoading("Saving...")
     console.log("Saving Location: ", $scope.location)
 
@@ -223,3 +220,9 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     $translate("menu." + $scope.detail_context).then((string)->
       $scope.menu_title = string
     )
+
+  # Helper functions
+  $scope.is_empty = (obj)->
+    return typeof(obj) == "undefined" || Object.values(obj).every((x)->
+      return ["-1", -1, "", null, undefined].indexOf(x) > -1
+     )

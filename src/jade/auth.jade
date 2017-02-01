@@ -15,7 +15,7 @@
       .auth-input-container.password
         input(type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="login_user.password", required)
         .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
-      .auth-btn.orange(ng-click="login()", ng-class="{invalid: SignInForm.$invalid}", translate="auth.sign_in")
+      .auth-btn.orange(ng-click="login()", ng-disabled="SignInForm.$invalid", translate="auth.sign_in")
     //- Forgot password
     .auth-text(ng-click="setAuthContext('forgot_password')", translate="auth.forgot_password")
     //- Sign up
@@ -33,7 +33,7 @@
         input(type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="register_user.password", minlength="6", required, name = "password")
         .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
       .auth-password-help(ng-show="RegisterForm.password.$error.minlength", translate="auth.password_help")
-      .auth-btn.orange(ng-click="register()", ng-class="{invalid: RegisterForm.$invalid}", translate="auth.sign_up")
+      .auth-btn.orange(ng-click="register()", ng-disabled="RegisterForm.$invalid", translate="auth.sign_up")
     //- Cancel (back to home)
     .auth-btn.dark.bottom(ng-click="setAuthContext('login')", translate="glossary.cancel")
 
