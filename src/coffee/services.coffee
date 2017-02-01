@@ -126,7 +126,7 @@ factories.languageSwitcher = ($translate, amMoment)->
     autonyms:
       "en": "English"
       "fr": "Français"
-      "es": "Español"
+      # "es": "Español"
     locale: $translate.use()
 
     applyLocale: ()->

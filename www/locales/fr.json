@@ -46,9 +46,13 @@
   "side_menu.transit": "Transports en commun",
   "side_menu.tree_inventories": "Inventaires d'arbres",
   "view_location.date_added": "Ajouté le {{date}}",
+  "view_location.date_added_by_author": "Ajouté le {{date}} par {{author}}",
+  "view_location.date_edited": "Modifié le {{date}}",
   "view_location.edit": "Modifier",
   "view_location.read_reviews": "Lire les commentaires",
   "view_location.review": "Commenter",
   "view_location.season": "Saison",
-  "view_reviews.add_review": "Ajouter un commentaire"
+  "view_reviews.add_review": "Ajouter un commentaire",
+  "view_reviews.date_posted": "Publié le {{date}}",
+  "view_reviews.date_visited": "Visité le {{date}}"
 }

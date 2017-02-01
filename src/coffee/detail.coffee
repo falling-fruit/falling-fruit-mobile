@@ -1,10 +1,6 @@
 controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapStateService, edibleTypesService, $translate, moment)->
   console.log "Detail Ctrl"
 
-  $scope.message =
-     text: 'hello world!'
-     time: new Date()
-
   reset = ()->
     console.log "RESETTING LOCATION"
     $scope.location = {}

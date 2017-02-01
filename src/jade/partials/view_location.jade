@@ -25,8 +25,9 @@
   //- Description
   .location-description(ng-bind="location.description")
   .location-author
-    div(ng-bind-template="Added {{location.created_at | date : 'MMMM d, yyyy'}} by {{location.author? location.author : 'Anonymous'}}")
-    div(ng-show="location.updated_at.toDateString() != location.created_at.toDateString()", ng-bind-template="Updated {{location.updated_at | date : 'MMMM d, yyyy'}}")
+    div(ng-if="!location.author", translate="view_location.date_added", translate-value-date="{{location.created_at | amUtc | amLocal | amDateFormat: 'LL'}}")
+    div(ng-if="location.author", translate="view_location.date_added_by_author", translate-value-date="{{location.created_at | amUtc | amLocal | amDateFormat: 'LL'}}", translate-value-author="{{location.author}}")
+    div(ng-show="location.updated_at != location.created_at", translate="view_location.date_edited", translate-value-date="{{location.updated_at | amUtc | amLocal | amDateFormat: 'LL'}}")
     
   //- Buttons
   //-a.btn-location-reviews(ng-click="show_reviews()", ng-show="location.num_reviews > 0") Read reviews ({{location.num_reviews}})

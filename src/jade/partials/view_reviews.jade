@@ -9,8 +9,8 @@
       .list-item-info-container
         div.review-author(ng-bind-template="by {{::r.author? r.author : 'Anonymous'}}")
         div
-          span(ng-show="r.observed_on", ng-bind-template="Visited {{::r.observed_on | date : 'MMMM d, yyyy'}}")
-          span(ng-show="!r.observed_on", ng-bind-template="Posted {{::r.created_at | date : 'MMMM d, yyyy'}}")
+          span(ng-if="r.observed_on", translate="view_reviews.date_visited", translate-value-date="{{::r.observed_on | amUtc | amLocal | amDateFormat: 'LL'}}")
+          span(ng-if="!r.observed_on", translate="view_reviews.date_posted", translate-value-date="{{::r.created_at | amUtc | amLocal | amDateFormat: 'LL'}}")
         .tag-list
           span.tag(ng-show="r.fruiting != null")
             span.label(translate="glossary.status")
