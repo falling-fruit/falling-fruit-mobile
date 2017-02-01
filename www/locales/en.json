@@ -45,10 +45,14 @@
   "side_menu.terrain": "Terrain",
   "side_menu.transit": "Transit",
   "side_menu.tree_inventories": "Tree inventories",
-  "view_location.date_added": "Added on {{date}}",
+  "view_location.date_added": "Added {{date}}",
+  "view_location.date_added_by_author": "Added {{date}} by {{author}}",
+  "view_location.date_edited": "Updated {{date}}",
   "view_location.edit": "Edit",
   "view_location.read_reviews": "Read reviews",
   "view_location.review": "Review",
   "view_location.season": "Season",
-  "view_reviews.add_review": "Add a review"
+  "view_reviews.add_review": "Add a review",
+  "view_reviews.date_posted": "Posted {{date}}",
+  "view_reviews.date_visited": "Visited {{date}}"
 }
