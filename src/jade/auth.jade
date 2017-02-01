@@ -12,11 +12,9 @@
     form(name="SignInForm", novalidate)
       .auth-input-container.email
         input(type="email", translate-attr="{placeholder: 'auth.email'}", ng-model="login_user.email", required)
-        .auth-error-text()
       .auth-input-container.password
         input(type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="login_user.password", required)
         .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
-        .auth-error-text()
       .auth-btn.orange(ng-click="login()", ng-class="{invalid: SignInForm.$invalid}", translate="auth.sign_in")
     //- Forgot password
     .auth-text(ng-click="setAuthContext('forgot_password')", translate="auth.forgot_password")
@@ -45,7 +43,6 @@
     form(name="ForgotPassword", novalidate)
       .auth-input-container.email
         input(type="email", name="email", translate-attr="{placeholder: 'auth.email'}", ng-model="forgot_password_user.email", required)
-        .auth-error-text()
       .auth-btn.orange(type="submit", ng-click="forgot_password()", ng-disabled="ForgotPassword.$invalid", translate="auth.send_reset_instructions")
     //- Cancel (back to home)
     .auth-btn.dark.bottom(ng-click="setAuthContext('login')", translate="glossary.cancel")
