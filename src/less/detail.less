@@ -1,20 +1,51 @@
-.detail-btn-mixin() {
-  display: block;
-  background-color: @orange;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  margin: auto 15%;
-  .border-radius(5px);
+/// Buttons ///
+
+.detail-btn-container {
+  border-spacing: 20px 0px;
+  display: table;
+  margin: 20px auto;
+  table-layout: fixed;
+  width: 80%;
+  .detail-btn {
+    display: table-cell;
+  }
 }
 
 .detail-btn {
-  .detail-btn-mixin();
-}
-
-.detail-btn-dark {
-  .detail-btn-mixin();
-  background-color: @dark-green;
+  display: block;
+  text-align: center;
+  padding: 10px;
+  margin: 20px 15%;
+  .border-radius(5px);
+  &.orange {
+    background-color: @orange;
+    color: white;
+  }
+  &.dark {
+    background-color: @dark-green;
+    color: white;
+  }
+  &.placeholder {
+    background-color: @light-gray;
+    color: @placeholder;
+  }
+  &[disabled], &.invalid {
+    background-color: @light-gray;
+    color: white;
+  }
+  &.photo {
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 6px;
+      left: 10px;
+      background: url("../img/svg/input-photo.svg") no-repeat center left;
+      background-size: 25px;
+      height: 25px;
+      width: 25px;
+    }
+  }
 }
 
 .detail-container {
@@ -102,25 +133,6 @@ body.ios-device {
   font-size: @font-size-small;
   font-style: italic;
   padding: 0 20px;
-}
-
-.btn-location-reviews {
-  display: block;
-  padding: 20px 0 10px 0;
-  text-align: center;
-}
-
-.detail-btn-container {
-  border-spacing: 20px 0px;
-  display: table;
-  margin: 20px auto;
-  table-layout: fixed;
-  width: 80%;
-}
-
-.detail-btn-container .detail-btn-dark {
-  display: table-cell;
-  width: 49%;
 }
 
 .detail-input-container-mixin() {
@@ -300,36 +312,6 @@ body.ios-device {
   display: table-cell;
   vertical-align: middle;
   width: 100%;
-}
-
-.detail-btn.btn-photo {
-  position: relative;
-  overflow: hidden;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  &:before {
-    content: " ";
-    position: absolute;
-    top: 6px;
-    left: 10px;
-    background: @orange url("../img/svg/input-photo.svg") no-repeat center left;
-    background-size: 25px;
-    height: 25px;
-    width: 25px;
-  }
-}
-
-.btn-photo input {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0;
-}
-
-.btn-save {
-  margin-bottom: 20px;
 }
 
 .tag-list {

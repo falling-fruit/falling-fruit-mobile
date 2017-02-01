@@ -1,20 +1,21 @@
 .detail-container(ng-show="detail_context=='add_location' || detail_context=='edit_location'")
-  location-type-select(location="location")
+  form(name="AddLocationForm", novalidate)
+    location-type-select(location="location")
 
-  .detail-textarea-container.location
-    textarea(translate-attr="{placeholder: 'add_location.description'}", ng-model="location.description")
+    .detail-textarea-container.location
+      textarea(translate-attr="{placeholder: 'add_location.description'}", ng-model="location.description")
 
-  //- Empty option allows null selection
-  //- Converting ng-options to number ensures they match the model.
-  .detail-select-container
-    span(ng-class="{placeholder: location.access == null}", ng-bind="location.access == null ? ('glossary.access' | translate) : short_access_types[location.access]")
-    select(ng-model="location.access", ng-options="i*1 as access for (i,access) in short_access_types")
-      option(value=null)
+    //- Empty option allows null selection
+    //- Converting ng-options to number ensures they match the model.
+    .detail-select-container
+      span(ng-class="{placeholder: location.access == null}", ng-bind="location.access == null ? ('glossary.access' | translate) : short_access_types[location.access]")
+      select(ng-model="location.access", ng-options="i*1 as access for (i,access) in short_access_types")
+        option(value=null)
 
-  .detail-toggle-container
-    .detail-toggle-label(ng-class="{placeholder: !location.unverified}", translate="glossary.unverified")
-    .ng-switcher(toggle="location.unverified")
+    .detail-toggle-container
+      .detail-toggle-label(ng-class="{placeholder: !location.unverified}", translate="glossary.unverified")
+      .ng-switcher(toggle="location.unverified")
 
-  include repeated_review_fields
+    include repeated_review_fields
   
-  .detail-btn-dark.btn-save(ng-click="save_location()", translate="glossary.save")
+  .detail-btn.orange(ng-click="save_location()", ng-class="{invalid: AddLocationForm.$invalid}", translate="glossary.save")
