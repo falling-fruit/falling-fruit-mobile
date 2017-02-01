@@ -1,5 +1,7 @@
 .detail-container(ng-show="detail_context=='add_location' || detail_context=='edit_location'")
+  
   form(name="AddLocationForm", novalidate)
+  
     location-type-select(location="location")
 
     .detail-textarea-container.location
@@ -18,4 +20,4 @@
 
     include repeated_review_fields
   
-  .detail-btn.orange(ng-click="save_location()", ng-class="{invalid: !location.type_ids.length}", translate="glossary.save")
+  .detail-btn.orange(ng-click="save_location()", ng-disabled="!location.type_ids.length", translate="glossary.save")
