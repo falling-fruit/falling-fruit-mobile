@@ -246,16 +246,18 @@ body.ios-device {
   padding-left: 10px;
 }
 
-.detail-range-label-1 {
+.detail-range-label {
   display: table-cell;
+  height: 100%;
+  width: 140px;
   vertical-align: middle;
-  width: 60px;
-}
 
-.detail-range-label-2 {
-  display: table-cell;
-  vertical-align: middle;
-  width: 80px;
+  .detail-range-label-1 {
+    vertical-align: top;
+  }
+  .detail-range-label-2 {
+    vertical-align: bottom;
+  }
 }
 
 @input-range-dim: 28px;
