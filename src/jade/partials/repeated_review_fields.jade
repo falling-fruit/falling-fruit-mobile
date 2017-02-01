@@ -2,20 +2,23 @@ div(ng-if="detail_context!='edit_location'")
 
   //- FIXME: Using -1 on range is an ugly hack (but better than 0). Not possible to insert null in range?
   .detail-range-container(ng-touch-click="blurActiveElement()")
-    .detail-range-label-1(ng-class="{placeholder: location.observation.fruiting == -1}", translate="glossary.status")
-    .detail-range-label-2(ng-bind="fruiting_status[location.observation.fruiting]")
+    .detail-range-label
+      .detail-range-label-1(ng-class="{placeholder: location.observation.fruiting == -1}", translate="glossary.status")
+      .detail-range-label-2(ng-bind="fruiting_status[location.observation.fruiting]")
     .detail-range-control
       input(type="range", ng-model="location.observation.fruiting", min="-1", max="2", step="1")
 
   .detail-range-container(ng-touch-click="blurActiveElement()")
-    .detail-range-label-1(ng-class="{placeholder: location.observation.quality_rating == -1}", translate="glossary.quality")
-    .detail-range-label-2(ng-bind="ratings[location.observation.quality_rating]")
+    .detail-range-label
+      .detail-range-label-1(ng-class="{placeholder: location.observation.quality_rating == -1}", translate="glossary.quality")
+      .detail-range-label-2(ng-bind="ratings[location.observation.quality_rating]", style="display: block; width: 100%;")
     .detail-range-control
       input(type="range", ng-model="location.observation.quality_rating", min="-1", max="4", step="1")
 
   .detail-range-container(ng-touch-click="blurActiveElement()")
-    .detail-range-label-1(ng-class="{placeholder: location.observation.yield_rating == -1}",translate="glossary.yield")
-    .detail-range-label-2(ng-bind="ratings[location.observation.yield_rating]")
+    .detail-range-label
+      .detail-range-label-1(ng-class="{placeholder: location.observation.yield_rating == -1}",translate="glossary.yield")
+      .detail-range-label-2(ng-bind="ratings[location.observation.yield_rating]", style="display: block; width: 100%;")
     .detail-range-control
       input(type="range", ng-model="location.observation.yield_rating", min="-1", max="4", step="1")
 
