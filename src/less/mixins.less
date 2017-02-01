@@ -1,4 +1,4 @@
-.transition(@value1,@value2:X,...) {
+.transition(@value1, @value2:X, ...) {
     @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
     -webkit-transition: @value;
     -moz-transition: @value;
@@ -89,4 +89,8 @@
   -webkit-opacity: @opacity;
   -moz-opacity: @opacity;
   opacity: @opacity;
+}
+
+.transform-opacity() {
+
 }

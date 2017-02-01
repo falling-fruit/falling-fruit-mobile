@@ -36,3 +36,8 @@ div, input, textarea, a, ul, li {
   right: 0;
   overflow: hidden;
 }
+
+// HACK: Prevents clicks to propagate to element revealed by click
+.ng-hide-remove {
+  pointer-events: none;
+}
