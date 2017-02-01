@@ -140,6 +140,9 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.detail_context = "view_location"
 
   $scope.save_location = ()->
+    if $scope.location.type_ids.length
+      return false
+
     mapStateService.setLoading("Saving...")
     console.log("Saving Location: ", $scope.location)
 

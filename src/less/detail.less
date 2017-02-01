@@ -372,20 +372,14 @@ body.ios-device {
 
 /// Animations ///
 
-.detail-container.ng-hide-add {
-  .transition-all(300ms, ease);
-  .transform-scale(1, 1, 1);
+.detail-container {
+  .opacity(1);
+  .transition-all(500ms);
+  background-color: white;
 }
 
-.detail-container.ng-hide-add.ng-hide-add-active {
-  .transform-scale(0, 0, 0);
-}
-
-.detail-container.ng-hide-remove {
-  .transition-all(300ms, ease);
-  .transform-scale(0, 0, 0);
-}
-
-.detail-container.ng-hide-remove.ng-hide-remove-active {
-  .transform-scale(1, 1, 1);
+.detail-container.ng-hide {
+  .opacity(0);
+  // Only fade in:
+  .transition-all(0ms);
 }
