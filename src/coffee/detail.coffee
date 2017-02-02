@@ -46,31 +46,28 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.edible_types_data = edibleTypesService.data
 
   $scope.update_photo_list = ()->
-    if navigator.camera?
-      navigator.camera.getPicture (photo_data) ->
-        $scope.location.observation.photo_data =
-          data: photo_data
-          #name: ?
-          #type: ?
-        console.log("Processed photo")
-      , (message)->
-        console.log("Failed to get photo: " + message)
-      ,
-        sourceType: Camera.PictureSourceType.CAMERA
-        encodingType: Camera.EncodingType.JPEG
-        quality: 75
-        targetWidth: 1440
-        targetHeight: 1440
-        correctOrientation: true
-        allowEdit: false
-        #FIXME: Save to photo album not working on Android
-        saveToPhotoAlbum: true
-        #TODO: Give user choice to select from Camera.PictureSourceType.PHOTOLIBRARY
-        mediaType: Camera.MediaType.PICTURE
-        cameraDirection: Camera.Direction.BACK
-        destinationType: Camera.DestinationType.DATA_URL
-    else
-      console.log("No camera attached to this device...")
+    navigator.camera.getPicture (photo_data) ->
+      $scope.location.observation.photo_data =
+        data: photo_data
+        #name: ?
+        #type: ?
+      console.log("Processed photo")
+    , (message)->
+      console.log("Failed to get photo: " + message)
+    ,
+      sourceType: Camera.PictureSourceType.CAMERA
+      encodingType: Camera.EncodingType.JPEG
+      quality: 75
+      targetWidth: 1440
+      targetHeight: 1440
+      correctOrientation: true
+      allowEdit: false
+      #FIXME: Save to photo album not working on Android
+      saveToPhotoAlbum: true
+      #TODO: Give user choice to select from Camera.PictureSourceType.PHOTOLIBRARY
+      mediaType: Camera.MediaType.PICTURE
+      cameraDirection: Camera.Direction.BACK
+      destinationType: Camera.DestinationType.DATA_URL
 
   $scope.$on "BACKBUTTON", ()->
     console.log "Caught BACKBUTTON event in controller"
@@ -222,7 +219,12 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     )
 
   # Helper functions
+
+  # Check if object is undefined, empty, or has only blank values
   $scope.is_empty = (obj)->
-    return typeof(obj) == "undefined" || Object.values(obj).every((x)->
+    return typeof(obj) == "undefined" || obj.length == 0 || Object.values(obj).every((x)->
       return ["-1", -1, "", null, undefined].indexOf(x) > -1
      )
+
+  # Used for showing otherwise disabled features
+  $scope.hostname = window.location.hostname
