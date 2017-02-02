@@ -22,7 +22,7 @@ div(ng-if="detail_context!='edit_location'")
     .detail-range-control
       input(type="range", ng-model="location.observation.yield_rating", min="-1", max="4", step="1")
 
-  .detail-btn.placeholder.photo(ng-click="update_photo_list()", translate="repeated_review_fields.take_a_photo")
+  .detail-btn.placeholder.photo(ng-click="update_photo_list()", translate="repeated_review_fields.take_a_photo", ng-disabled="!navigator.camera", ng-if="navigator.camera || hostname == 'localhost'")
 
   //-.detail-textarea-container
   //-  textarea(ng-model="location.observation.photo_caption", placeholder="Add a caption...")
