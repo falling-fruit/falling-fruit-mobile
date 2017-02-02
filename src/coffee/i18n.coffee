@@ -16,13 +16,13 @@ factories.I18nFactory = ($rootScope)->
           return parseFloat((feet / 5280).toPrecision(2)) + " mi"
 
     short_access_types: [
-      "Added by owner"
-      "Permitted by owner"
-      "Public"
-      "Private but overhanging"
-      "Private"
+      "location.access.owner_added"
+      "location.access.owner_permitted"
+      "location.access.public"
+      "location.access.private_overhanging"
+      "location.access.private"
     ]
-  
+
     ratings: [
       "Poor"
       "Fair"
@@ -30,13 +30,13 @@ factories.I18nFactory = ($rootScope)->
       "Very good"
       "Excellent"
     ]
-  
+
     fruiting_status: [
       "Flowering"
       "Fruiting"
       "Ripe"
     ]
-  
+
     months: [
       "January"
       "February"
