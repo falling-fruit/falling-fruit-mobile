@@ -104,13 +104,17 @@ angular.element(document).ready ()->
   if navigator.userAgent.match(/iPhone/) || navigator.userAgent.match(/iPad/)
     document.body.classList.add("ios-device")
 
-# Production
-#auth_host = "https://fallingfruit.org"
-#api_host = "https://api.fallingfruit.org/api/v2"
-
-# Development
-auth_host = "http://localhost:3000"
-api_host = "http://localhost:3100/api/0.2"
+if document.URL.indexOf("http://localhost:9001/") > -1
+  # Development
+  auth_host = "http://localhost:3000"
+  api_host = "http://localhost:3100/api/0.2"
+  # Production
+  # auth_host = "https://fallingfruit.org"
+  # api_host = "https://fallingfruit.org/api/0.2"
+else
+  # Production
+  auth_host = "https://fallingfruit.org"
+  api_host = "https://fallingfruit.org/api/0.2"
 
 urls =
   login: auth_host + "/users/sign_in.json"
