@@ -124,7 +124,7 @@ urls =
   nearby: api_host + "/locations.json"
   markers: api_host + "/locations.json"
 
-  location: api_host + "/locations"
+  location: api_host + "/locations/"
   add_location: api_host + "/locations.json"
   edit_location: (id) -> api_host + "/locations/#{id}.json"
 
