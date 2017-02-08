@@ -72,8 +72,8 @@ FallingFruitApp.run ($rootScope, $window, $translate, amMoment) ->
   console.log("Bootstrapped and Running Angular FallingFruitApp")
   onBack = (event)->
     console.log "Caught back button press"
-    event.preventDefault();
-    event.stopPropagation();
+    event.preventDefault()
+    event.stopPropagation()
     console.log "Broadcasting backbutton press to application"
     $rootScope.$broadcast "BACKBUTTON"
 
@@ -92,17 +92,17 @@ FallingFruitApp.run ($rootScope, $window, $translate, amMoment) ->
 #MichaelOryl's Answer
 angular.element(document).ready ()->
   if window.cordova
-    console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.");
+    console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.")
     document.addEventListener('deviceready', ()->
-      console.log("Deviceready event has fired, bootstrapping AngularJS.");
-      angular.bootstrap(document.body, ['FallingFruitApp']);
-    , false);
+      console.log("Deviceready event has fired, bootstrapping AngularJS.")
+      angular.bootstrap(document.body, ['FallingFruitApp'])
+    , false)
   else
-    console.log("Running in browser, bootstrapping AngularJS now.");
-    angular.bootstrap(document.body, ['FallingFruitApp']);
+    console.log("Running in browser, bootstrapping AngularJS now.")
+    angular.bootstrap(document.body, ['FallingFruitApp'])
 
   if navigator.userAgent.match(/iPhone/) || navigator.userAgent.match(/iPad/)
-    document.body.classList.add("ios-device");
+    document.body.classList.add("ios-device")
 
 # Production
 #auth_host = "https://fallingfruit.org"
