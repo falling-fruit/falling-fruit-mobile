@@ -104,26 +104,30 @@ angular.element(document).ready ()->
   if navigator.userAgent.match(/iPhone/) || navigator.userAgent.match(/iPad/)
     document.body.classList.add("ios-device");
 
-auth_host = "https://fallingfruit.org/"
-#auth_host = "http://localhost:3000/"
-host = auth_host + "api/"
+# Production
+#auth_host = "https://fallingfruit.org"
+#api_host = "https://api.fallingfruit.org/api/v2"
+
+# Development
+auth_host = "http://localhost:3000"
+api_host = "http://localhost:3100/api/v2"
 
 urls =
-  login: auth_host + "users/sign_in.json"
-  register: auth_host + "users.json"
-  forgot_password: auth_host + "users/password.json"
+  login: auth_host + "/users/sign_in.json"
+  register: auth_host + "/users.json"
+  forgot_password: auth_host + "/users/password.json"
 
-  nearby: host + "locations/nearby.json"
-  markers: host + "locations/markers.json"
+  nearby: api_host + "/locations/nearby.json"
+  markers: api_host + "/locations/markers.json"
 
-  location: host + "locations/"
-  add_location: host + "locations.json"
-  edit_location: (id) -> host + "locations/#{id}.json"
+  location: api_host + "/locations"
+  add_location: api_host + "/locations.json"
+  edit_location: (id) -> api_host + "/locations/#{id}.json"
 
-  source_types: host + "locations/types.json"
+  source_types: api_host + "/locations/types.json"
 
-  reviews: (id)-> host + "locations/#{id}/reviews.json"
-  add_review: (id) -> host + "locations/#{id}/add_review.json"
+  reviews: (id)-> api_host + "/locations/#{id}/reviews.json"
+  add_review: (id) -> api_host + "/locations/#{id}/add_review.json"
 
 controllers = {}
 factories = {}
