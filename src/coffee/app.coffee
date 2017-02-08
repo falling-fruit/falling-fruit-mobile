@@ -108,9 +108,6 @@ if document.URL.indexOf("http://localhost") > -1
   # Development
   auth_host = "http://localhost:3000"
   api_host = "http://localhost:3100/api/0.2"
-  # Production
-  # auth_host = "https://fallingfruit.org"
-  # api_host = "https://fallingfruit.org/api/0.2"
 else
   # Production
   auth_host = "https://fallingfruit.org"
