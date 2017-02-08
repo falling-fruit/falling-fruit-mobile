@@ -104,7 +104,7 @@ angular.element(document).ready ()->
   if navigator.userAgent.match(/iPhone/) || navigator.userAgent.match(/iPad/)
     document.body.classList.add("ios-device")
 
-if document.URL.indexOf("http://localhost:9001/") > -1
+if document.URL.indexOf("http://localhost") > -1
   # Development
   auth_host = "http://localhost:3000"
   api_host = "http://localhost:3100/api/0.2"
