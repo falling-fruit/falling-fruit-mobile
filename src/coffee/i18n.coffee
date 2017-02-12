@@ -24,17 +24,17 @@ factories.I18nFactory = ($rootScope)->
     ]
 
     ratings: [
-      "Poor"
-      "Fair"
-      "Good"
-      "Very good"
-      "Excellent"
+      "review.rating.poor"
+      "review.rating.fair"
+      "review.rating.good"
+      "review.rating.very_good"
+      "review.rating.excellent"
     ]
 
     fruiting_status: [
-      "Flowering"
-      "Fruiting"
-      "Ripe"
+      "review.fruiting.flowers"
+      "review.fruiting.unripe_fruit"
+      "review.fruiting.ripe_fruit"
     ]
 
     months: [
