@@ -19,7 +19,7 @@
     .tag-list
       .tag(ng-show="location.season_string")
         .label(translate="view_location.season", ng-bind="location.season_string")
-      .tag(ng-show="location.access != null", ng-bind="location.access_string")
+      .tag(ng-show="location.access != null", ng-bind="(short_access_types[location.access]) | translate")
       .tag(ng-show="location.unverified", translate="glossary.unverified")
 
   //- Description
