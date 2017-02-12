@@ -13,3 +13,4 @@ phraseapp:
       params:
         file_format: angular_translate
         fallback_locale_id: 53d2ae32ea5672ed2a5f322670c95d98
+        include_empty_translations: true
