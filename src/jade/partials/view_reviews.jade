@@ -6,22 +6,22 @@
 
       .list-item-image(ng-style="r.style")
 
-      .list-item-info-container
-        div.review-author(ng-bind-template="by {{::r.author? r.author : 'Anonymous'}}")
-        div
+      .review-container
+        div.review-date
           span(ng-if="r.observed_on", translate="view_reviews.date_visited", translate-value-date="{{::r.observed_on | amUtc | amLocal | amDateFormat: 'LL'}}")
           span(ng-if="!r.observed_on", translate="view_reviews.date_posted", translate-value-date="{{::r.created_at | amUtc | amLocal | amDateFormat: 'LL'}}")
+        div.review-author(ng-show="r.author", ng-bind="r.author")
         .tag-list
           span.tag(ng-show="r.fruiting != null")
             span.label(translate="glossary.status")
-            | {{::fruiting_status[r.fruiting]}}
+            | {{::fruiting_status[r.fruiting] | translate}}
           span.tag(ng-show="r.quality_rating != null")
             span.label(translate="glossary.quality")
-            | {{::ratings[r.quality_rating]}}
+            | {{::ratings[r.quality_rating] | translate}}
           span.tag(ng-show="r.yield_rating != null")
             span.label(translate="glossary.yield")
-            | {{::ratings[r.yield_rating]}}
-        div.comment(ng-show="r.comment") {{::r.comment}}
+            | {{::ratings[r.yield_rating] | translate}}
+        div.comment(ng-show="r.comment", ng-bind="::r.comment")
     
     .detail-btn-container
       .detail-btn.dark(ng-click="add_review(location.id)", translate="view_reviews.add_review")
