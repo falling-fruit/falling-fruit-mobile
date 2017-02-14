@@ -19,6 +19,7 @@
   "glossary.generic_error": "Nous sommes désolés, quelque chose a mal tourné.",
   "glossary.list": "Liste",
   "glossary.map": "Carte",
+  "glossary.month_range": "{{start}} à {{end}}",
   "glossary.quality": "Qualité",
   "glossary.save": "Enregistrer",
   "glossary.search_by_typing": "Chercher en tapant",

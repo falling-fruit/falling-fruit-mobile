@@ -23,9 +23,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       if window.FFApp.current_position
         data.current_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position))
 
-      # Tags
-      data.season_string = I18nFactory.season_string(data.season_start, data.season_stop, data.no_season)
-
       # Types (unique)
       data.type_ids = _.uniq(data.type_ids)
       $scope.location = data
