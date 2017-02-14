@@ -37,28 +37,4 @@ factories.I18nFactory = ($rootScope)->
       "review.fruiting.ripe_fruit"
     ]
 
-    months: [
-      "January"
-      "February"
-      "March"
-      "April"
-      "May"
-      "June"
-      "July"
-      "August"
-      "September"
-      "October"
-      "November"
-      "December"
-    ]
-
-    season_string: (season_start, season_stop, no_season)->
-      if no_season
-        season_start = 0
-        season_stop = 11
-      if season_start != null or season_stop != null
-        return (if season_start != null then props.months[season_start] else "?") + " - " + (if season_stop != null then props.months[season_stop] else "?")
-      else
-        return null
-
   return props

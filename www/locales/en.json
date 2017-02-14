@@ -19,6 +19,7 @@
   "glossary.generic_error": "We're sorry, something went wrong.",
   "glossary.list": "List",
   "glossary.map": "Map",
+  "glossary.month_range": "{{start}} to {{end}}",
   "glossary.quality": "Quality",
   "glossary.save": "Save",
   "glossary.search_by_typing": "Search by typing",
