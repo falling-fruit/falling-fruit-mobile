@@ -248,32 +248,6 @@ directives.ffLoadingMsg = (mapStateService)->
   link: ($scope, elem, attrs)->
     $scope.mapStateData = mapStateService.data
 
-directives.confirmDialog = ()->
-  restrict: "C"
-  template: "<div class='conf-container'><div class='conf-txt'>{{confmsg}}</div><div class='conf-ok' ng-click='okfn()'>{{oktxt}}</div><div class='conf-cancel' ng-click='cancelfn()'>{{canceltxt}}</div></div>"
-  scope:
-    confmsg: "@"
-    okfn: "&"
-    cancelfn: "&"
-    oktxt: "@"
-    canceltxt: "@"
-
-directives.ngSwitcher = ()->
-  props =
-    restrict: "C"
-    template: '<a ng-click="toggleSwitch()" class="switcher"><div class="switcher-circle"></div></a>'
-    scope:
-      toggle: "="
-    controller: ($scope, $element)->
-      switcherElem = $element[0].getElementsByClassName("switcher")[0]
-      switcherElem.classList.add("on") if $scope.toggle == true
-
-      $scope.toggleSwitch = ()->
-        switcherElem.classList.toggle("on")
-        $scope.toggle = !$scope.toggle
-
-  return props
-
 directives.mapTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesService)->
   restrict: "E"
   templateUrl: "html/templates/map_type_select.html"
