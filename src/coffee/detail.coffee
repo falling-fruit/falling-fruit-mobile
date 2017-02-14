@@ -106,7 +106,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.reviews = data
 
   $scope.save_review = ()->
-    mapStateService.setLoading("Saving...")
+    mapStateService.setLoading("status_message.saving")
     console.log("Location: ", $scope.location)
     # Since index = -1 implies undefined, we need to unset these before saving
     # Edit copy of observation to avoid changing view
@@ -132,7 +132,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.detail_context = "view_location"
 
   $scope.save_location = ()->
-    mapStateService.setLoading("Saving...")
+    mapStateService.setLoading("status_message.saving")
     console.log("Saving Location: ", $scope.location)
 
     if !$scope.location.id?

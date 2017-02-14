@@ -54,7 +54,7 @@ directives.mapContainer = ()->
 
     window.do_markers = () ->
       console.log "UPDATING MARKERS"
-      mapStateService.setLoading("Loading markers")
+      mapStateService.setLoading("status_message.loading_markers")
 
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
@@ -219,7 +219,7 @@ directives.mapContainer = ()->
     initialize = ()->
       return if window.FFApp.map_initialized == true
 
-      mapStateService.setLoading("Loading map")
+      mapStateService.setLoading("status_message.loading_map")
       window.FFApp.map_elem = document.getElementById("map")
 
       if navigator.geolocation
