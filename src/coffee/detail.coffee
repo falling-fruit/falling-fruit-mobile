@@ -29,7 +29,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.location_id = data.id
 
       # Refresh map
-      # sort of hacky--manually call the map directive function with just one location worth of data
+      # HACK: Manually call the map directive function with just one location worth of data
       window.add_marker({title: data["title"], lat: data["lat"], lng: data["lng"], location_id: data["id"], types: data["type_ids"]})
       console.log "Added marker to map"
       console.log "DATA", data
