@@ -8,23 +8,31 @@
 
   //- Details
   .location-info
+    //- Types
     .location-types
-      span(ng-repeat="id in location.type_ids", ng-bind-template="{{edible_types_data.edible_types_by_id[id].name}}{{$last ? '' : ', '}}")
+      span(ng-repeat="id in location.type_ids", ng-bind-template="{{edible_types_data.edible_types_by_id[id].name}}{{$last ? '' : ' · '}}")
 
+    //- Distances
+    div(ng-show="!location.current_distance", ng-bind="location.map_distance")
     div(ng-show="location.current_distance == location.map_distance", ng-bind="location.current_distance")
-    div(ng-show="location.current_distance != location.map_distance")
-      span(ng-show="location.current_distance", ng-bind-template="{{location.current_distance}} (from me)") &nbsp;/ &nbsp;
-      span(ng-bind-template="{{location.map_distance}} (from map center)")
+    div(ng-show="location.current_distance && location.current_distance != location.map_distance")
+      span(translate="view_location.distance_from_map_center", translate-value-distance="{{location.map_distance}}")
+      | &nbsp;&middot;&nbsp;
+      span(translate="view_location.distance_from_me", translate-value-distance="{{location.current_distance}}")
     .tag-list
+      //- Season
       .tag(ng-show="location.no_season || location.season_start != null || location.season_stop != null")
         .label(translate="view_location.season")
         span(ng-show="location.no_season", translate="glossary.month_range", translate-value-start="{{'0000-01' | amDateFormat: 'MMMM'}}", translate-value-end="{{'0000-12' | amDateFormat: 'MMMM'}}")
         span(ng-show="location.season_start != null || location.season_stop != null", translate="glossary.month_range", translate-value-start="{{(location.season_start != null) ? (('0000-' + ('0' + (location.season_start + 1)).slice(-2)) | amDateFormat: 'MMMM') : '...'}}", translate-value-end="{{(location.season_stop != null) ? (('0000-' + ('0' + (location.season_stop + 1)).slice(-2)) | amDateFormat: 'MMMM') : '...'}}")
+      //- Access
       .tag(ng-show="location.access != null", ng-bind="(short_access_types[location.access]) | translate")
+      //- Unverified
       .tag(ng-show="location.unverified", translate="glossary.unverified")
 
   //- Description
   .location-description(ng-bind="location.description")
+  //- Author & Dates
   .location-author
     div(ng-if="!location.author", translate="view_location.date_added", translate-value-date="{{location.created_at | amUtc | amLocal | amDateFormat: 'LL'}}")
     div(ng-if="location.author", translate="view_location.date_added_by_author", translate-value-date="{{location.created_at | amUtc | amLocal | amDateFormat: 'LL'}}", translate-value-author="{{location.author}}")

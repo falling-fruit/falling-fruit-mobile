@@ -62,6 +62,8 @@
   "view_location.date_added": "Ajouté le {{date}}",
   "view_location.date_added_by_author": "Ajouté le {{date}} par {{author}}",
   "view_location.date_edited": "Modifié le {{date}}",
+  "view_location.distance_from_map_center": "{{distance}} (du centre de la carte)",
+  "view_location.distance_from_me": "{{distance}} (de moi)",
   "view_location.edit": "Modifier",
   "view_location.read_reviews": "Lire les commentaires",
   "view_location.review": "Commenter",
