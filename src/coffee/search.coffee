@@ -36,7 +36,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
 
   $scope.load_list = (bounds)->
     console.log("LOADING LIST")
-    mapStateService.setLoading("Loading list")
+    mapStateService.setLoading("status_message.loading_list")
     $scope.targeted = false
     $scope.add_location_controls = false
     center = window.FFApp.map_obj.getCenter()
@@ -183,16 +183,16 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
     else
       console.log("START Watching position")
       $scope.trackPosition = true
-      mapStateService.setLoading("Locating you")
+      mapStateService.setLoading("status_message.locating_you")
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (error)->
         console.log("ERROR Watching position: ", error)
         # Falling Fruit would like to use your current position: Don't allow | Allow
         # Turn on location services to allow Falling Fruit to determine your position: Settings | Cancel
         # FIXME: Android device returns TIMEOUT even if location services are off
         if error.code == error.PERMISSION_DENIED
-          mapStateService.setLoading("We could not access your location. Please allow us to do so by turning on location services.")
+          mapStateService.setLoading("status_message.position_denied")
         else # Position unavailable or timeout
-          mapStateService.setLoading("We could not determine your location. Either signals are too weak or location services are turned off.")
+          mapStateService.setLoading("status_message.position_unavailable")
         $scope.$apply() # HACK: Force digest cycle to update loading message from within callback.
         $timeout () ->
           mapStateService.removeLoading()
