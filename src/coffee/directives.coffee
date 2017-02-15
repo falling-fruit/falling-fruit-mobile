@@ -251,63 +251,44 @@ directives.ffLoadingMsg = (mapStateService)->
 directives.mapTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesService)->
   restrict: "E"
   templateUrl: "html/templates/map_type_select.html"
+  scope:
+    setTypeCallback: '&'
+    api: '=?'
 
-  link: ($scope, $element, $attrs)->
-    $translate("glossary.type.one").then((translation)->
-      $scope.select_placeholder = translation
-    )
-    $scope.edible_types_data = edibleTypesService.data
-    $scope.show_reset_select = false
-    $scope.show_reset = false
+  controller: ($scope, $element, $attrs)->
+    $scope.EdibleTypesData = edibleTypesService.data
     $scope.search_string = ""
-    $scope.type_ids = []
+    $scope.show_select = false
+    $scope.show_reset_select = false
+    $scope.selected_type_name = null
 
     $scope.closeKeyboard = ()->
       if window.cordova
         window.cordova.plugins.Keyboard.close()
 
-    $scope.checkSearchLength = ()->
-      if $scope.search_string.length == 0
-        $scope.show_reset = false
+    $scope.setType = (type)->
+      $scope.setTypeCallback({type: type})
+      if type == null
+        $scope.selected_type_name = null
+        $scope.show_reset_select = false
       else
-        $scope.show_reset = true
+        $scope.selected_type_name = type.name
+        $scope.show_reset_select = true
 
-    $scope.updateSelectedEdibleType = (type)->
-      $scope.type_ids.push(type.id) if $scope.type_ids.indexOf(type.id) == -1
-      window.FFApp.selectedType = type
-      window.clear_markers()
-      window.do_markers()
-      $scope.reset_list()
-      $scope.show_select = false
-      $scope.show_reset_select = true
-      $scope.select_placeholder = type.name
+    $scope.setVisible = (boolean)->
+      $scope.show_select = boolean
 
-    $scope.resetSearch = ()->
-      $scope.search_string = ""
-      $scope.show_reset = false
+    $scope.getShowResetSelect = ()->
+      return $scope.show_reset_select
 
-    $scope.resetSelect = ()->
-      $scope.type_ids = []
-      $scope.show_reset_select = false
-      $translate("glossary.type.one").then((translation)->
-        $scope.select_placeholder = translation
-      )
-      window.FFApp.selectedType = null
-      window.clear_markers()
-      window.do_markers()
-      $scope.reset_list()
+    $scope.getSelectedTypeName = ()->
+      return $scope.selected_type_name
 
-    $scope.removeEdibleType = (id)->
-      _.remove($scope.type_ids, (arr_id) ->
-          return arr_id == id
-      )
-      window.FFApp.selectedType = null
-      window.clear_markers()
-      window.do_markers()
-      $scope.reset_list()
-
-    $scope.cancel = ()->
-      $scope.show_select = false
+    $scope.api =
+      getSelectedTypeName: $scope.getSelectedTypeName
+      getShowResetSelect: $scope.getShowResetSelect
+      setType: $scope.setType
+      setVisible: $scope.setVisible
 
 directives.locationTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesService)->
   restrict: "E"

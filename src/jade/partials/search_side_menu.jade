@@ -10,7 +10,9 @@
         |  {{"side_menu.tree_inventories" | translate}}
         .search-radio-container
           .search-radio-active(ng-show="muni")
-      map-type-select
+      .search-param-select-fullscreen
+        .label(ng-click="typeSelect.setVisible(true)", ng-bind-template="{{typeSelect.getSelectedTypeName() ? typeSelect.getSelectedTypeName() : ('glossary.type.one' | translate)}}")
+        .reset(ng-show="typeSelect.getShowResetSelect()", ng-click="typeSelect.setType(null)")
 
     .search-param-header(translate="glossary.map", ng-click="toggleClass($event, 'collapsed')")
     .search-params
