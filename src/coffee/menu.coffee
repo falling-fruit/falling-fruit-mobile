@@ -63,17 +63,6 @@ controllers.MenuCtrl = ($scope, $rootScope, $http, $location, $translate, I18nFa
     window.do_markers()
     $scope.reset_list()
 
-  $scope.selectedType = window.FFApp.selectedType
-  $scope.filter_types = ()->
-    window.FFApp.selectedType = $scope.selectedType
-    window.clear_markers()
-    window.do_markers()
-    $scope.reset_list()
-
-  $scope.reset_filter_types = () ->
-    $scope.selectedType = null
-    $scope.filter_types()
-
   ## Regional
   $scope.languageSwitcher = languageSwitcher
 

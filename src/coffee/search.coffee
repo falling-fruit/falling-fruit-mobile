@@ -1,4 +1,4 @@
-controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFactory, I18nFactory, mapStateService, $swipe)->
+controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFactory, I18nFactory, mapStateService, edibleTypesService, $swipe, $translate)->
   console.log "Search Ctrl"
 
   $scope.current_view = "map"
@@ -300,3 +300,12 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
     # Don't show heading marker until position marker is visible
     if !window.FFApp.heading_marker.getVisible() && window.FFApp.position_marker.getVisible()
       window.FFApp.heading_marker.setVisible(true)
+
+  # Type select
+  # NOTE: Moved from side menu controller because of CSS limitation
+  # (position: fixed relative to transformed parent element, not viewport)
+  $scope.onTypeChange = (type)->
+    window.FFApp.selectedType = type
+    window.clear_markers()
+    window.do_markers()
+    $scope.reset_list()
