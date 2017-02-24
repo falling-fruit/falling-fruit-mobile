@@ -4,7 +4,7 @@
   .photo-list-container(ng-show="location.photos.length > 0")
     ul.photo-list
       li(ng-repeat="photo in location.photos")
-        img(ng-src="{{photo.url}}")
+        img(ng-src="{{photo.photo.medium}}")
 
   //- Details
   .location-info

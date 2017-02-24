@@ -72,8 +72,8 @@ FallingFruitApp.run ($rootScope, $window, $translate, amMoment) ->
   console.log("Bootstrapped and Running Angular FallingFruitApp")
   onBack = (event)->
     console.log "Caught back button press"
-    event.preventDefault();
-    event.stopPropagation();
+    event.preventDefault()
+    event.stopPropagation()
     console.log "Broadcasting backbutton press to application"
     $rootScope.$broadcast "BACKBUTTON"
 
@@ -92,38 +92,43 @@ FallingFruitApp.run ($rootScope, $window, $translate, amMoment) ->
 #MichaelOryl's Answer
 angular.element(document).ready ()->
   if window.cordova
-    console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.");
+    console.log("Running in Cordova, will bootstrap AngularJS once 'deviceready' event fires.")
     document.addEventListener('deviceready', ()->
-      console.log("Deviceready event has fired, bootstrapping AngularJS.");
-      angular.bootstrap(document.body, ['FallingFruitApp']);
-    , false);
+      console.log("Deviceready event has fired, bootstrapping AngularJS.")
+      angular.bootstrap(document.body, ['FallingFruitApp'])
+    , false)
   else
-    console.log("Running in browser, bootstrapping AngularJS now.");
-    angular.bootstrap(document.body, ['FallingFruitApp']);
+    console.log("Running in browser, bootstrapping AngularJS now.")
+    angular.bootstrap(document.body, ['FallingFruitApp'])
 
   if navigator.userAgent.match(/iPhone/) || navigator.userAgent.match(/iPad/)
-    document.body.classList.add("ios-device");
+    document.body.classList.add("ios-device")
 
-auth_host = "https://fallingfruit.org/"
-#auth_host = "http://localhost:3000/"
-host = auth_host + "api/"
+if document.URL.indexOf("http://localhost") > -1
+  # Development
+  auth_host = "http://localhost:3000"
+  api_host = "http://localhost:3100/api/0.2"
+else
+  # Production
+  auth_host = "https://fallingfruit.org"
+  api_host = "https://fallingfruit.org/api/0.2"
 
 urls =
-  login: auth_host + "users/sign_in.json"
-  register: auth_host + "users.json"
-  forgot_password: auth_host + "users/password.json"
+  login: auth_host + "/users/sign_in.json"
+  register: auth_host + "/users.json"
+  forgot_password: auth_host + "/users/password.json"
 
-  nearby: host + "locations/nearby.json"
-  markers: host + "locations/markers.json"
+  nearby: api_host + "/locations.json"
+  markers: api_host + "/locations.json"
 
-  location: host + "locations/"
-  add_location: host + "locations.json"
-  edit_location: (id) -> host + "locations/#{id}.json"
+  location: api_host + "/locations/"
+  add_location: api_host + "/locations.json"
+  edit_location: (id) -> api_host + "/locations/#{id}.json"
 
-  source_types: host + "locations/types.json"
+  source_types: api_host + "/types.json"
 
-  reviews: (id)-> host + "locations/#{id}/reviews.json"
-  add_review: (id) -> host + "locations/#{id}/add_review.json"
+  reviews: (id)-> api_host + "/locations/#{id}/reviews.json"
+  add_review: (id) -> api_host + "/locations/#{id}/add_review.json"
 
 controllers = {}
 factories = {}

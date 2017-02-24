@@ -58,7 +58,7 @@ directives.mapContainer = ()->
 
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
-      return  if window.FFApp.markersArray.length >= window.FFApp.markersMax
+      return if window.FFApp.markersArray.length >= window.FFApp.markersMax
       list_params =
         nelat: bounds.getNorthEast().lat()
         nelng: bounds.getNorthEast().lng()
@@ -73,7 +73,7 @@ directives.mapContainer = ()->
       $http.get(urls.markers,
         params: list_params
       ).success (json) ->
-        add_markers_from_json json
+        add_markers_from_json(json)
         mapStateService.removeLoading()
 
     find_marker = (lid) ->
@@ -89,12 +89,12 @@ directives.mapContainer = ()->
       len = mdata.length
       i = 0
       while i < len
-        lid = mdata[i]["location_id"]
+        lid = mdata[i]["id"]
         if find_marker(lid) isnt `undefined`
           i++
           continue
         if window.FFApp.selectedType
-          if mdata[i]["types"].concat(mdata[i]["parent_types"]).indexOf(window.FFApp.selectedType.id) < 0
+          if mdata[i]["type_ids"].indexOf(window.FFApp.selectedType.id) < 0
             i++
             continue
         if window.FFApp.markersArray.length > window.FFApp.markersMax
@@ -107,7 +107,7 @@ directives.mapContainer = ()->
       h = 25
       wo = parseInt(w / 2, 10)
       ho = parseInt(h / 2, 10)
-      lid = mdata["location_id"]
+      lid = mdata["id"]
       if window.FFApp.openMarkerId is lid
         m = window.FFApp.openMarker
       else
@@ -122,7 +122,6 @@ directives.mapContainer = ()->
 
           position: new google.maps.LatLng(mdata["lat"], mdata["lng"])
           map: window.FFApp.map_obj
-          title: mdata["title"]
           draggable: false
           zIndex: 0
         )
@@ -131,10 +130,9 @@ directives.mapContainer = ()->
 
         window.FFApp.markersArray.push
           marker: m
-          id: mdata["location_id"]
+          id: mdata["id"]
           type: "point"
-          types: mdata["types"]
-          parent_types: mdata["parent_types"]
+          types: mdata["type_ids"]
 
     setup_marker = (marker,location_id)->
       google.maps.event.addListener marker, "click", ()->
