@@ -54,7 +54,7 @@ directives.mapContainer = ()->
 
     window.do_markers = () ->
       console.log "UPDATING MARKERS"
-      mapStateService.setLoading("Loading markers")
+      mapStateService.setLoading("status_message.loading_markers")
 
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
@@ -217,7 +217,7 @@ directives.mapContainer = ()->
     initialize = ()->
       return if window.FFApp.map_initialized == true
 
-      mapStateService.setLoading("Loading map")
+      mapStateService.setLoading("status_message.loading_map")
       window.FFApp.map_elem = document.getElementById("map")
 
       if navigator.geolocation
@@ -246,92 +246,47 @@ directives.ffLoadingMsg = (mapStateService)->
   link: ($scope, elem, attrs)->
     $scope.mapStateData = mapStateService.data
 
-directives.confirmDialog = ()->
-  restrict: "C"
-  template: "<div class='conf-container'><div class='conf-txt'>{{confmsg}}</div><div class='conf-ok' ng-click='okfn()'>{{oktxt}}</div><div class='conf-cancel' ng-click='cancelfn()'>{{canceltxt}}</div></div>"
-  scope:
-    confmsg: "@"
-    okfn: "&"
-    cancelfn: "&"
-    oktxt: "@"
-    canceltxt: "@"
-
-directives.ngSwitcher = ()->
-  props =
-    restrict: "C"
-    template: '<a ng-click="toggleSwitch()" class="switcher"><div class="switcher-circle"></div></a>'
-    scope:
-      toggle: "="
-    controller: ($scope, $element)->
-      switcherElem = $element[0].getElementsByClassName("switcher")[0]
-      switcherElem.classList.add("on") if $scope.toggle == true
-
-      $scope.toggleSwitch = ()->
-        switcherElem.classList.toggle("on")
-        $scope.toggle = !$scope.toggle
-
-  return props
-
 directives.mapTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesService)->
   restrict: "E"
   templateUrl: "html/templates/map_type_select.html"
+  scope:
+    setTypeCallback: '&'
+    api: '=?'
 
-  link: ($scope, $element, $attrs)->
-    $translate("glossary.type.one").then((translation)->
-      $scope.select_placeholder = translation
-    )
-    $scope.edible_types_data = edibleTypesService.data
-    $scope.show_reset_select = false
-    $scope.show_reset = false
+  controller: ($scope, $element, $attrs)->
+    $scope.EdibleTypesData = edibleTypesService.data
     $scope.search_string = ""
-    $scope.type_ids = []
+    $scope.show_select = false
+    $scope.show_reset_select = false
+    $scope.selected_type_name = null
 
     $scope.closeKeyboard = ()->
       if window.cordova
         window.cordova.plugins.Keyboard.close()
 
-    $scope.checkSearchLength = ()->
-      if $scope.search_string.length == 0
-        $scope.show_reset = false
+    $scope.setType = (type)->
+      $scope.setTypeCallback({type: type})
+      if type == null
+        $scope.selected_type_name = null
+        $scope.show_reset_select = false
       else
-        $scope.show_reset = true
+        $scope.selected_type_name = type.name
+        $scope.show_reset_select = true
 
-    $scope.updateSelectedEdibleType = (type)->
-      $scope.type_ids.push(type.id) if $scope.type_ids.indexOf(type.id) == -1
-      window.FFApp.selectedType = type
-      window.clear_markers()
-      window.do_markers()
-      $scope.reset_list()
-      $scope.show_select = false
-      $scope.show_reset_select = true
-      $scope.select_placeholder = type.name
+    $scope.setVisible = (boolean)->
+      $scope.show_select = boolean
 
-    $scope.resetSearch = ()->
-      $scope.search_string = ""
-      $scope.show_reset = false
+    $scope.getShowResetSelect = ()->
+      return $scope.show_reset_select
 
-    $scope.resetSelect = ()->
-      $scope.type_ids = []
-      $scope.show_reset_select = false
-      $translate("glossary.type.one").then((translation)->
-        $scope.select_placeholder = translation
-      )
-      window.FFApp.selectedType = null
-      window.clear_markers()
-      window.do_markers()
-      $scope.reset_list()
+    $scope.getSelectedTypeName = ()->
+      return $scope.selected_type_name
 
-    $scope.removeEdibleType = (id)->
-      _.remove($scope.type_ids, (arr_id) ->
-          return arr_id == id
-      )
-      window.FFApp.selectedType = null
-      window.clear_markers()
-      window.do_markers()
-      $scope.reset_list()
-
-    $scope.cancel = ()->
-      $scope.show_select = false
+    $scope.api =
+      getSelectedTypeName: $scope.getSelectedTypeName
+      getShowResetSelect: $scope.getShowResetSelect
+      setType: $scope.setType
+      setVisible: $scope.setVisible
 
 directives.locationTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesService)->
   restrict: "E"

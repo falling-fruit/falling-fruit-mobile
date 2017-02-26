@@ -4,21 +4,21 @@ div(ng-if="detail_context!='edit_location'")
   .detail-range-container(ng-touch-click="blurActiveElement()")
     .detail-range-label
       .detail-range-label-1(ng-class="{placeholder: location.observation.fruiting == -1}", translate="glossary.status")
-      .detail-range-label-2(ng-bind="fruiting_status[location.observation.fruiting]")
+      .detail-range-label-2(ng-bind="location.observation.fruiting > -1 ? ((fruiting_status[location.observation.fruiting]) | translate) : ''")
     .detail-range-control
       input(type="range", ng-model="location.observation.fruiting", min="-1", max="2", step="1")
 
   .detail-range-container(ng-touch-click="blurActiveElement()")
     .detail-range-label
       .detail-range-label-1(ng-class="{placeholder: location.observation.quality_rating == -1}", translate="glossary.quality")
-      .detail-range-label-2(ng-bind="ratings[location.observation.quality_rating]", style="display: block; width: 100%;")
+      .detail-range-label-2(ng-bind="location.observation.quality_rating > -1 ? ((ratings[location.observation.quality_rating]) | translate) : ''")
     .detail-range-control
       input(type="range", ng-model="location.observation.quality_rating", min="-1", max="4", step="1")
 
   .detail-range-container(ng-touch-click="blurActiveElement()")
     .detail-range-label
       .detail-range-label-1(ng-class="{placeholder: location.observation.yield_rating == -1}",translate="glossary.yield")
-      .detail-range-label-2(ng-bind="ratings[location.observation.yield_rating]", style="display: block; width: 100%;")
+      .detail-range-label-2(ng-bind="location.observation.yield_rating > -1 ? ((ratings[location.observation.yield_rating]) | translate) : ''")
     .detail-range-control
       input(type="range", ng-model="location.observation.yield_rating", min="-1", max="4", step="1")
 

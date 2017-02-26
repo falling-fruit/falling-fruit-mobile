@@ -24,41 +24,17 @@ factories.I18nFactory = ($rootScope)->
     ]
 
     ratings: [
-      "Poor"
-      "Fair"
-      "Good"
-      "Very good"
-      "Excellent"
+      "review.rating.poor"
+      "review.rating.fair"
+      "review.rating.good"
+      "review.rating.very_good"
+      "review.rating.excellent"
     ]
 
     fruiting_status: [
-      "Flowering"
-      "Fruiting"
-      "Ripe"
+      "review.fruiting.flowers"
+      "review.fruiting.unripe_fruit"
+      "review.fruiting.ripe_fruit"
     ]
-
-    months: [
-      "January"
-      "February"
-      "March"
-      "April"
-      "May"
-      "June"
-      "July"
-      "August"
-      "September"
-      "October"
-      "November"
-      "December"
-    ]
-
-    season_string: (season_start, season_stop, no_season)->
-      if no_season
-        season_start = 0
-        season_stop = 11
-      if season_start != null or season_stop != null
-        return (if season_start != null then props.months[season_start] else "?") + " - " + (if season_stop != null then props.months[season_stop] else "?")
-      else
-        return null
 
   return props
