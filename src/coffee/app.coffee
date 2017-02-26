@@ -31,7 +31,10 @@ FallingFruitApp.config ['$httpProvider', ($httpProvider)->
     interceptor =
       request: (config)->
         if AuthFactory.needsAuth(config.url)
-          auth_param = "user_email=#{AuthFactory.get_email()}&auth_token=#{AuthFactory.get_access_token()}&api_key=BJBNKMWM"
+          email = encodeURIComponent(AuthFactory.get_email())
+          token = encodeURIComponent(AuthFactory.get_access_token())
+
+          auth_param = "user_email=#{email}&auth_token=#{token}&api_key=BJBNKMWM"
           config.url += if config.url.indexOf("?") == -1 then "?#{auth_param}" else "&#{auth_param}"
 
         return config || $q.when(config)
