@@ -1,6 +1,6 @@
 # This service runs the loading animation and updates text
 # services/factories
-factories.mapStateService = ()->
+factories.mapStateService = ($translate)->
 
   props =
     data:
@@ -8,8 +8,10 @@ factories.mapStateService = ()->
       message: ""
 
     setLoading: (msg)->
-      @data.isLoading = true
-      @data.message = msg
+      $translate(msg).then((string)->
+        props.data.message = string
+        props.data.isLoading = true
+      )
 
     removeLoading: ()->
       @data.isLoading = false

@@ -1,4 +1,4 @@
-controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFactory, I18nFactory, mapStateService, $swipe)->
+controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFactory, I18nFactory, mapStateService, edibleTypesService, $swipe, $translate)->
   console.log "Search Ctrl"
 
   $scope.current_view = "map"
@@ -36,7 +36,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
 
   $scope.load_list = (bounds)->
     console.log("LOADING LIST")
-    mapStateService.setLoading("Loading list")
+    mapStateService.setLoading("status_message.loading_list")
     $scope.targeted = false
     $scope.add_location_controls = false
     center = window.FFApp.map_obj.getCenter()
@@ -179,16 +179,16 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
     else
       console.log("START Watching position")
       $scope.trackPosition = true
-      mapStateService.setLoading("Locating you")
+      mapStateService.setLoading("status_message.locating_you")
       $scope.watchPositionID = navigator.geolocation.watchPosition(watch_position, (error)->
         console.log("ERROR Watching position: ", error)
         # Falling Fruit would like to use your current position: Don't allow | Allow
         # Turn on location services to allow Falling Fruit to determine your position: Settings | Cancel
         # FIXME: Android device returns TIMEOUT even if location services are off
         if error.code == error.PERMISSION_DENIED
-          mapStateService.setLoading("We could not access your location. Please allow us to do so by turning on location services.")
+          mapStateService.setLoading("status_message.position_denied")
         else # Position unavailable or timeout
-          mapStateService.setLoading("We could not determine your location. Either signals are too weak or location services are turned off.")
+          mapStateService.setLoading("status_message.position_unavailable")
         $scope.$apply() # HACK: Force digest cycle to update loading message from within callback.
         $timeout () ->
           mapStateService.removeLoading()
@@ -296,3 +296,12 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
     # Don't show heading marker until position marker is visible
     if !window.FFApp.heading_marker.getVisible() && window.FFApp.position_marker.getVisible()
       window.FFApp.heading_marker.setVisible(true)
+
+  # Type select
+  # NOTE: Moved from side menu controller because of CSS limitation
+  # (position: fixed relative to transformed parent element, not viewport)
+  $scope.onTypeChange = (type)->
+    window.FFApp.selectedType = type
+    window.clear_markers()
+    window.do_markers()
+    $scope.reset_list()

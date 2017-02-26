@@ -23,18 +23,13 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       if window.FFApp.current_position
         data.current_distance = I18nFactory.distance_string(google.maps.geometry.spherical.computeDistanceBetween(latlng, window.FFApp.current_position))
 
-      # Tags
-      data.season_string = I18nFactory.season_string(data.season_start, data.season_stop, data.no_season)
-      data.access_string = I18nFactory.short_access_types[data.access]
-
       # Types (unique)
       data.type_ids = _.uniq(data.type_ids)
       $scope.location = data
-      #$scope.location_copy = angular.copy($scope.location)
       $scope.location_id = data.id
 
       # Refresh map
-      # sort of hacky--manually call the map directive function with just one location worth of data
+      # HACK: Manually call the map directive function with just one location worth of data
       window.add_marker({title: data["title"], lat: data["lat"], lng: data["lng"], location_id: data["id"], types: data["type_ids"]})
       console.log "Added marker to map"
       console.log "DATA", data
@@ -111,7 +106,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.reviews = data
 
   $scope.save_review = ()->
-    mapStateService.setLoading("Saving...")
+    mapStateService.setLoading("status_message.saving")
     console.log("Location: ", $scope.location)
     # Since index = -1 implies undefined, we need to unset these before saving
     # Edit copy of observation to avoid changing view
@@ -137,7 +132,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.detail_context = "view_location"
 
   $scope.save_location = ()->
-    mapStateService.setLoading("Saving...")
+    mapStateService.setLoading("status_message.saving")
     console.log("Saving Location: ", $scope.location)
 
     if !$scope.location.id?
