@@ -40,10 +40,10 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
     $scope.targeted = false
     $scope.add_location_controls = false
 
-    locationsService.fetchData
-      bounds: bounds
-      onSuccess: (locations) ->
-        console.log("in success handleR")
+    locationsService
+      .fetchData(bounds: bounds)
+      .success (locations) ->
+        console.log("in success handler")
 
         n_found = locations.shift()
         n_limit = locations.shift()
@@ -61,7 +61,6 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
         $scope.list_items = locations
         $scope.list_bounds = bounds
 
-        debugger
         mapStateService.removeLoading()
 
   ## Side menu

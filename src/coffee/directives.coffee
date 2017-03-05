@@ -60,8 +60,9 @@ directives.mapContainer = ()->
       clear_offscreen_markers(bounds)
       return if window.FFApp.markersArray.length >= window.FFApp.markersMax
 
-      locationsService.fetchData
-        onSuccess: (json) ->
+      locationsService
+        .fetchData()
+        .success (json) ->
           add_markers_from_json(json)
           mapStateService.removeLoading()
 
