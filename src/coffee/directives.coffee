@@ -250,6 +250,9 @@ directives.mapTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesService)
     $scope.show_reset_select = false
     $scope.selected_type_name = null
 
+    $scope.typeFullName = (type) ->
+      type.fullName($translate.use())
+
     $scope.closeKeyboard = ()->
       if window.cordova
         window.cordova.plugins.Keyboard.close()
