@@ -4,7 +4,7 @@
 
     .list-item-info-container
       .list-item-distance(ng-bind="li.distance_string")
-      .list-item-name(ng-bind="::li.type_names")
+      .list-item-name(ng-bind="::li.type_names.join(', ')")
       .list-item-description(ng-bind="::li.description")
 
     //-.list-item-map(ng-click="show_location_on_map(li.location_id); $event.stopPropagation();")
