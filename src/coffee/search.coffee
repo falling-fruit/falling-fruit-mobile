@@ -60,23 +60,24 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
     list_params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
     list_params.c = window.FFApp.cats unless window.FFApp.cats is null
 
-    $http.get urls.nearby, params: list_params
-    .success (data)->
-      n_found = data.shift()
-      n_limit = data.shift()
-      for item in data
-        if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
-          background_url = "url('#{item.photos[0][0].thumbnail}')"
-        else
-          background_url = "url('img/png/no-image.png')"
+    $http
+      .get(urls.nearby, params: list_params)
+      .success (data)->
+        n_found = data.shift()
+        n_limit = data.shift()
+        for item in data
+          if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
+            background_url = "url('#{item.photos[0][0].thumbnail}')"
+          else
+            background_url = "url('img/png/no-image.png')"
 
-        item.distance_string = I18nFactory.distance_string(item.distance)
-        item.style =
-          "background-image": background_url
+          item.distance_string = I18nFactory.distance_string(item.distance)
+          item.style =
+            "background-image": background_url
 
-      $scope.list_items = data
-      mapStateService.removeLoading()
-      $scope.list_bounds = bounds
+        $scope.list_items = data
+        mapStateService.removeLoading()
+        $scope.list_bounds = bounds
 
   ## Side menu
   $scope.toggleSideMenu = ()->
