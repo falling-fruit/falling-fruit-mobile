@@ -24,11 +24,22 @@ factories.edibleTypesService = ($http)->
       edible_types: []
       edible_types_by_id: {}
 
+  attachFunctionalityToType = (type) ->
+    # Provides a locale-specific full name of "Common Name [Scientific Name]"
+    # Usage: type.fullName($translate.use())
+    type.fullName = (locale) ->
+      name = type["#{locale}_name"] || type.name
+      name += " [#{type.scientific_name}]" if type.scientific_name
+      name
+
+    return type
+
   $http.get urls.source_types
     .success (data)->
       props.data.edible_types = data
-      for row in data
-        props.data.edible_types_by_id[row.id] = row
+
+      for type in data
+        props.data.edible_types_by_id[type.id] = attachFunctionalityToType(type)
 
   return props
 
