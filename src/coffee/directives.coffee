@@ -6,7 +6,7 @@ directives.mapContainer = ()->
   scope:
     stoplist: "="
     directionstype: "="
-  controller: ($scope, $element, $http, $rootScope, mapStateService)->
+  controller: ($scope, $element, $http, $rootScope, mapStateService, locationsService)->
     container_elem = $element[0]
 
     # Map settings
@@ -59,22 +59,12 @@ directives.mapContainer = ()->
       bounds = window.FFApp.map_obj.getBounds()
       clear_offscreen_markers(bounds)
       return if window.FFApp.markersArray.length >= window.FFApp.markersMax
-      list_params =
-        nelat: bounds.getNorthEast().lat()
-        nelng: bounds.getNorthEast().lng()
-        swlat: bounds.getSouthWest().lat()
-        swlng: bounds.getSouthWest().lng()
-      if window.FFApp.muni
-        list_params.muni = 1
-      else
-        list_params.muni = 0
-      list_params.c = window.FFApp.cats unless window.FFApp.cats is null
-      list_params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
-      $http.get(urls.markers,
-        params: list_params
-      ).success (json) ->
-        add_markers_from_json(json)
-        mapStateService.removeLoading()
+
+      locationsService
+        .fetchData()
+        .success (json) ->
+          add_markers_from_json(json)
+          mapStateService.removeLoading()
 
     find_marker = (lid) ->
       i = 0
