@@ -1,4 +1,4 @@
-controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFactory, I18nFactory, mapStateService, edibleTypesService, $swipe, $translate)->
+controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFactory, I18nFactory, mapStateService, locationsService, edibleTypesService, $swipe, $translate)->
   console.log "Search Ctrl"
 
   $scope.current_view = "map"
@@ -39,45 +39,30 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
     mapStateService.setLoading("status_message.loading_list")
     $scope.targeted = false
     $scope.add_location_controls = false
-    center = window.FFApp.map_obj.getCenter()
 
-    if !bounds
-      bounds = window.FFApp.map_obj.getBounds()
+    locationsService.fetchData
+      bounds: bounds
+      onSuccess: (locations) ->
+        console.log("in success handleR")
 
-    list_params =
-      lat: center.lat()
-      lng: center.lng()
-      nelat: bounds.getNorthEast().lat()
-      nelng: bounds.getNorthEast().lng()
-      swlat: bounds.getSouthWest().lat()
-      swlng: bounds.getSouthWest().lng()
+        n_found = locations.shift()
+        n_limit = locations.shift()
 
-    if window.FFApp.muni
-      list_params.muni = 1
-    else
-      list_params.muni = 0
-
-    list_params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
-    list_params.c = window.FFApp.cats unless window.FFApp.cats is null
-
-    $http
-      .get(urls.nearby, params: list_params)
-      .success (data)->
-        n_found = data.shift()
-        n_limit = data.shift()
-        for item in data
-          if item.hasOwnProperty("photos") and item.photos[0][0].thumbnail.indexOf("missing.png") == -1
-            background_url = "url('#{item.photos[0][0].thumbnail}')"
+        for location in locations
+          if location.hasOwnProperty("photos") and location.photos[0][0].thumbnail.indexOf("missing.png") == -1
+            background_url = "url('#{location.photos[0][0].thumbnail}')"
           else
             background_url = "url('img/png/no-image.png')"
 
-          item.distance_string = I18nFactory.distance_string(item.distance)
-          item.style =
+          location.distance_string = I18nFactory.distance_string(location.distance)
+          location.style =
             "background-image": background_url
 
-        $scope.list_items = data
-        mapStateService.removeLoading()
+        $scope.list_items = locations
         $scope.list_bounds = bounds
+
+        debugger
+        mapStateService.removeLoading()
 
   ## Side menu
   $scope.toggleSideMenu = ()->
