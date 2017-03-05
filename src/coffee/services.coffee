@@ -33,16 +33,10 @@ factories.edibleTypesService = ($http)->
   return props
 
 factories.locationsService = ($http) ->
-  cachedData = null
-  lastSearchParams = null
-
   props = {}
 
-  props.fetchData = (options) ->
+  props.fetchData = (options = {}) ->
     console.log("locationsService.fetchData()")
-
-    onSuccess = options.onSuccess ||
-      throw new Error("locationsService.fetchData() requires an onSuccess handler")
 
     # bounds can be optionally passed in as a key
     bounds = options.bounds || window.FFApp.map_obj.getBounds()
@@ -64,22 +58,7 @@ factories.locationsService = ($http) ->
     params.c = window.FFApp.cats unless window.FFApp.cats is null
     params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
 
-    console.log("cachedData = ", cachedData)
-    console.log("lastSearchParams = ", lastSearchParams)
-    console.log("params = ", params)
-
-    if cachedData && _.isEqual(lastSearchParams, params)
-      console.log("--> hit the cache")
-      return onSuccess(cachedData)
-
-    lastSearchParams = params
-
-    $http
-      .get(urls.locations, params: params)
-      .success (json) ->
-        console.log("--> loaded from http")
-        cachedData = json
-        onSuccess(json)
+    $http.get(urls.locations, params: params, cache: true)
 
   return props
 
