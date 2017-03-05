@@ -10,7 +10,10 @@
   .location-info
     //- Types
     .location-types
-      span(ng-repeat="id in location.type_ids", ng-bind-template="{{edible_types_data.edible_types_by_id[id].name}}{{$last ? '' : ' · '}}")
+      span(
+        ng-repeat="id in location.type_ids"
+        ng-bind-template="{{edible_types_data.edible_types_by_id[id].fullName(translate.use())}}{{$last ? '' : ' · '}}"
+      )
 
     //- Distances
     div(ng-show="!location.current_distance", ng-bind="location.map_distance")

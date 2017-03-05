@@ -39,6 +39,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
   $scope.ratings = I18nFactory.ratings
   $scope.fruiting_status = I18nFactory.fruiting_status
   $scope.edible_types_data = edibleTypesService.data
+  $scope.translate = $translate
 
   $scope.update_photo_list = ()->
     navigator.camera.getPicture (photo_data) ->
