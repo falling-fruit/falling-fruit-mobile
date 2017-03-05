@@ -43,6 +43,36 @@ factories.edibleTypesService = ($http)->
 
   return props
 
+factories.locationsService = ($http) ->
+  props = {}
+
+  props.fetchData = (options = {}) ->
+    console.log("locationsService.fetchData()")
+
+    # bounds can be optionally passed in as a key
+    bounds = options.bounds || window.FFApp.map_obj.getBounds()
+    center = window.FFApp.map_obj.getCenter()
+
+    params =
+      lat: center.lat()
+      lng: center.lng()
+      nelat: bounds.getNorthEast().lat()
+      nelng: bounds.getNorthEast().lng()
+      swlat: bounds.getSouthWest().lat()
+      swlng: bounds.getSouthWest().lng()
+
+    if window.FFApp.muni
+      params.muni = 1
+    else
+      params.muni = 0
+
+    params.c = window.FFApp.cats unless window.FFApp.cats is null
+    params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
+
+    $http.get(urls.locations, params: params, cache: true)
+
+  return props
+
 factories.AuthFactory = ($rootScope)->
 
   props =

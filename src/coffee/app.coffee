@@ -121,8 +121,7 @@ urls =
   register: auth_host + "/users.json"
   forgot_password: auth_host + "/users/password.json"
 
-  nearby: api_host + "/locations.json"
-  markers: api_host + "/locations.json"
+  locations: api_host + "/locations.json"
 
   location: api_host + "/locations/"
   add_location: api_host + "/locations.json"
