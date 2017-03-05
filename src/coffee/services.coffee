@@ -32,6 +32,57 @@ factories.edibleTypesService = ($http)->
 
   return props
 
+factories.locationsService = ($http) ->
+  cachedData = null
+  lastSearchParams = null
+
+  props = {}
+
+  props.fetchData = (options) ->
+    console.log("locationsService.fetchData()")
+
+    onSuccess = options.onSuccess ||
+      throw new Error("locationsService.fetchData() requires an onSuccess handler")
+
+    # bounds can be optionally passed in as a key
+    bounds = options.bounds || window.FFApp.map_obj.getBounds()
+    center = window.FFApp.map_obj.getCenter()
+
+    params =
+      lat: center.lat()
+      lng: center.lng()
+      nelat: bounds.getNorthEast().lat()
+      nelng: bounds.getNorthEast().lng()
+      swlat: bounds.getSouthWest().lat()
+      swlng: bounds.getSouthWest().lng()
+
+    if window.FFApp.muni
+      params.muni = 1
+    else
+      params.muni = 0
+
+    params.c = window.FFApp.cats unless window.FFApp.cats is null
+    params.t = window.FFApp.selectedType.id unless window.FFApp.selectedType is null
+
+    console.log("cachedData = ", cachedData)
+    console.log("lastSearchParams = ", lastSearchParams)
+    console.log("params = ", params)
+
+    if cachedData && _.isEqual(lastSearchParams, params)
+      console.log("--> hit the cache")
+      return onSuccess(cachedData)
+
+    lastSearchParams = params
+
+    $http
+      .get(urls.locations, params: params)
+      .success (json) ->
+        console.log("--> loaded from http")
+        cachedData = json
+        onSuccess(json)
+
+  return props
+
 factories.AuthFactory = ($rootScope)->
 
   props =
