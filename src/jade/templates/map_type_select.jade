@@ -1,15 +1,37 @@
-//- Using ng-class to switch on visibility, as ng-cloak wasn't enough to avoid flicker on Android.
+//- Using ng-class to switch on visibility, as ng-cloak wasn't enough to
+//- avoid flicker on Android.
 .fullscreen-select-container(ng-class="{visible: show_select}", ng-cloak)
   .fullscreen-select
     .fullscreen-select-header
-        
+
       .fullscreen-select-search
-        input.fullscreen-select-search-input(id="fullscreen-search-input", ng-model="search_string", translate-attr="{placeholder: 'glossary.type.one'}")
-        .fullscreen-select-search-reset(ng-show="search_string.length != 0", ng-touch-click="search_string = ''", quiet-click)
-      
+        input.fullscreen-select-search-input(
+          id="fullscreen-search-input"
+          ng-model="search_string"
+          translate-attr="{placeholder: 'glossary.type.one'}"
+        )
+
+        .fullscreen-select-search-reset(
+          ng-show="!searchFieldEmpty()"
+          ng-touch-click="clearSearchField()"
+          quiet-click
+        )
+
     .fullscreen-select-list(ng-touch-click="closeKeyboard()")
-      .fullscreen-select-option(ng-show="search_string.length < 2", translate="glossary.search_by_typing")
-      a.fullscreen-select-option(ng-repeat="type in EdibleTypesData.edible_types", ng-show="search_string.length > 1 && type.name.toLowerCase().indexOf(search_string.toLowerCase()) > -1", ng-click="setType(type); setVisible(false);", ng-bind="type.name")
+      .fullscreen-select-option(
+        ng-show="search_string.length < 2"
+        translate="glossary.search_by_typing"
+      )
+
+      a.fullscreen-select-option(
+        ng-repeat="type in EdibleTypesData.edible_types"
+        ng-show="shouldShowType(type)"
+        ng-click="setType(type); setVisible(false);"
+        ng-bind="typeFullName(type)"
+      )
     .fullscreen-select-buttons
       //- a.save(href = "#", translate="glossary.save")
-      a.cancel(ng-click="setVisible(false)", translate="glossary.cancel")
+      a.cancel(
+        ng-click="setVisible(false)"
+        translate="glossary.cancel"
+      )
