@@ -17,7 +17,7 @@
         ng-repeat="type in edible_types_data.edible_types|filter:filters.edible_types|limitTo:et_quantity as filteredTypes",
         ng-click="updateSelectedEdibleType(type)"
       )
-        | {{type.name}}
+        | {{typeFullName(type)}}
 
 .detail-links-container(ng-show="location.type_ids.length")
   p
@@ -26,4 +26,4 @@
       ng-click="removeEdibleType(id)",
       href="#removeType"
     )
-      | {{edible_types_data.edible_types_by_id[id].name}}
+      | {{typeFullName(edible_types_data.edible_types_by_id[id])}}

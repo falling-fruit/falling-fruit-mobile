@@ -302,10 +302,12 @@ directives.locationTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesSer
   link: ($scope, $element, $attrs) ->
     $scope.edible_types_data = edibleTypesService.data
     $scope.show_types = false
-    $scope.filters = {}
+    $scope.filters = { edible_types: null }
     $scope.filtered = false
     $scope.et_quantity = 0
-    $scope.filters.edible_types = null
+
+    $scope.typeFullName = (type) ->
+      type.fullName($translate.use())
 
     $scope.blurInput = ()->
       #wait for all other handlers to run first
@@ -316,6 +318,7 @@ directives.locationTypeSelect = (BASE_PATH, $timeout, $translate, edibleTypesSer
 
     $scope.checkInputTypedLength = ()->
       max_results = $scope.edible_types_data.edible_types.length
+
       if $scope.filters.edible_types.length < 2
         $scope.et_quantity = 0
         $scope.filtered = false
