@@ -161,8 +161,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         observation.fruiting = null
       $scope.location.observation = observation
 
-      console.log($scope.location)
-
       params = $scope.paramsForLocation($scope.location)
 
       $http.post urls.add_location, params
