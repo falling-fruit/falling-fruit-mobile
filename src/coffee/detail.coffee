@@ -28,10 +28,6 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       $scope.location = data
       $scope.location_id = data.id
 
-      # Refresh map
-      # HACK: Manually call the map directive function with just one location worth of data
-      window.add_marker({title: data["title"], lat: data["lat"], lng: data["lng"], location_id: data["id"], types: data["type_ids"]})
-      console.log "Added marker to map"
       console.log "DATA", data
 
   # Pull in useful things from i18n factory
@@ -132,6 +128,18 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       console.log(data)
       $scope.detail_context = "view_location"
 
+  $scope.paramsForLocation = (location) ->
+    {
+      lat: location.lat,
+      lng: location.lng,
+      description: location.description,
+      access: location.access,
+      fruiting: location.observation.fruiting,
+      yield_rating: location.observation.yield_rating,
+      quality_rating: location.observation.quality_rating,
+      type_ids: (location.type_ids || []).join(",")
+    }
+
   $scope.save_location = ()->
     mapStateService.setLoading("status_message.saving")
     console.log("Saving Location: ", $scope.location)
@@ -140,6 +148,7 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       # Since index = -1 implies undefined, we need to unset these before saving
       # Edit copy of observation to avoid changing view
       observation = angular.copy($scope.location.observation)
+
       if observation.quality_rating == "-1"
         observation.quality_rating = null
       if $scope.location.observation.yield_rating == "-1"
@@ -148,18 +157,20 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
         observation.fruiting = null
       $scope.location.observation = observation
 
-      $http.post urls.add_location, location: $scope.location
-      .success (data)->
-        console.log("ADDED LOCATION", data.id)
-        console.log(data)
-        $scope.location_id = data.id
-        load_location(data.id)
-        mapStateService.removeLoading()
-        $scope.detail_context = "view_location"
-      .error (data)->
-        console.log("ADD LOCATION FAILED")
-        console.log(data)
-        $rootScope.$broadcast "SHOW-MAP"
+      params = $scope.paramsForLocation($scope.location)
+
+      $http.post urls.add_location, params
+        .success (data) ->
+          console.log("ADDED LOCATION", data.id)
+          console.log(data)
+          $scope.location_id = data.id
+          load_location(data.id)
+          mapStateService.removeLoading()
+          $scope.detail_context = "view_location"
+        .error (data) ->
+          console.log("ADD LOCATION FAILED")
+          console.log(data)
+          $rootScope.$broadcast "SHOW-MAP"
     else
       $http.put urls.edit_location($scope.location.id), location: $scope.location
       .success (data)->
