@@ -117,19 +117,16 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       observation.yield_rating = null
     if observation.fruiting == "-1"
       observation.fruiting = null
-
+    # Post review
     $http.post urls.add_review($scope.location.id), observation: observation
     .success (data)->
       console.log("ADDED")
-      console.log(data)
-      $scope.location_id = $scope.location.id
-      load_location($scope.location.id)
-      mapStateService.removeLoading()
-      $scope.detail_context = "view_location"
     .error (data)->
       console.log("ADD FAILED")
+    .finally (data)->
+      mapStateService.removeLoading()
       console.log(data)
-      $scope.detail_context = "view_location"
+      $scope.show_reviews()
 
   $scope.save_location = ()->
     mapStateService.setLoading("status_message.saving")
