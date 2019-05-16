@@ -351,3 +351,21 @@ directives.quietClick = ()->
       e.stopPropagation()
       return
     return
+
+# Overwrite built-in email validation to require dot in domain
+# https://docs.angularjs.org/guide/forms#modifying-built-in-validators
+# https://github.com/angular/angular.js/issues/10052
+directives.overwriteEmail = ()->
+  console.log "Overwrite email?"
+  EMAIL_REGEXP = /[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i
+  {
+    require: '?ngModel'
+    link: ($scope, $element, $attrs, $ctrl)->
+      # Apply if ngModel is present and AngularJS has added the email validator
+      if $ctrl and $ctrl.$validators.email
+        # Overwrite default AngularJS email validator
+        $ctrl.$validators.email = (modelValue)->
+          console.log "Overwriting email!"
+          $ctrl.$isEmpty(modelValue) or EMAIL_REGEXP.test(modelValue)
+      return
+  }
