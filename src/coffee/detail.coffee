@@ -99,10 +99,10 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
           background_url = "url('#{item.photo_url}')"
         else
           background_url = "url('img/png/no-image.png')"
-
         item.style =
           "background-image": background_url
-
+      # Sort in reverse chronological order, by review edit date (updated_at)
+      data.sort((a, b) => a.updated_at < b.updated_at)
       $scope.reviews = data
 
   $scope.save_review = ()->
