@@ -11,7 +11,7 @@
     //- Sign in
     form(name="SignInForm", novalidate)
       .auth-input-container.email
-        input(type="email", translate-attr="{placeholder: 'auth.email'}", ng-model="login_user.email", required)
+        input(type="email", translate-attr="{placeholder: 'auth.email'}", ng-model="login_user.email", overwrite-email, required)
       .auth-input-container.password
         input(type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="login_user.password", required)
         .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
@@ -28,7 +28,7 @@
       .auth-input-container.name
         input(type="text", translate-attr="{placeholder: 'auth.name'}", ng-model="register_user.name")
       .auth-input-container.email
-        input(type="email", translate-attr="{placeholder: 'auth.email'}", ng-model="register_user.email", required)
+        input(type="email", translate-attr="{placeholder: 'auth.email'}", ng-model="register_user.email", overwrite-email, required)
       .auth-input-container.password
         input(type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="register_user.password", minlength="6", required, name = "password")
         .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
@@ -42,7 +42,7 @@
     //- Reset password
     form(name="ForgotPassword", novalidate)
       .auth-input-container.email
-        input(type="email", name="email", translate-attr="{placeholder: 'auth.email'}", ng-model="forgot_password_user.email", required)
+        input(type="email", name="email", translate-attr="{placeholder: 'auth.email'}", ng-model="forgot_password_user.email", overwrite-email, required)
       .auth-btn.orange(type="submit", ng-click="forgot_password()", ng-disabled="ForgotPassword.$invalid", translate="auth.send_reset_instructions")
     //- Cancel (back to home)
     .auth-btn.dark.bottom(ng-click="setAuthContext('login')", translate="glossary.cancel")
