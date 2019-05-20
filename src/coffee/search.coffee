@@ -223,16 +223,22 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
       $scope.reset_list()
       if !$scope.trackPosition
         $scope.trackPosition = true
-        listen_for_map_drag()
+        listen_for_map_center_change()
     else
       # Wait until idle, in case map is panning
       google.maps.event.addListenerOnce(window.FFApp.map_obj, "idle", ()->
         $scope.recenter_map()
       )
 
-  listen_for_map_drag = ()->
+  listen_for_map_center_change = ()->
     google.maps.event.addListenerOnce(window.FFApp.map_obj, "dragstart", ()->
-      console.log("Map center changed")
+      console.log("Map center changed: dragstart")
+      $scope.trackPosition = false
+      # Make the recenter button appear immediately:
+      $scope.$apply()
+    )
+    google.maps.event.addListenerOnce(window.FFApp.map_obj, "dblclick", ()->
+      console.log("Map center changed: dblclick")
       $scope.trackPosition = false
       # Make the recenter button appear immediately:
       $scope.$apply()
@@ -279,7 +285,7 @@ controllers.SearchCtrl = ($scope, $rootScope, $http, $location, $timeout, AuthFa
 
     # If first callback, add map drag listener
     if old_position == null
-      listen_for_map_drag()
+      listen_for_map_center_change()
 
   watch_heading = (heading)->
     console.log("Heading watched: ", heading);
