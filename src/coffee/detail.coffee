@@ -219,4 +219,5 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
      )
 
   # Used for showing otherwise disabled features
+  $scope.camera = navigator.camera
   $scope.hostname = window.location.hostname
