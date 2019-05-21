@@ -218,6 +218,9 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
       return ["-1", -1, "", null, undefined].indexOf(x) > -1
      )
 
+  $scope.toggle_unverified = ()->
+    $scope.location.unverified = !$scope.location.unverified
+
   # Used for showing otherwise disabled features
   $scope.camera = navigator.camera
   $scope.hostname = window.location.hostname
