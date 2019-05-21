@@ -16,7 +16,8 @@
           
     .detail-toggle-container
       .detail-toggle-label(ng-class="{placeholder: !location.unverified}", translate="glossary.unverified")
-      .ng-switcher(toggle="location.unverified")
+      .switch(ng-click="toggle_unverified()", ng-class="{on: location.unverified}")
+        .switch-handle
 
     include repeated_review_fields
   
