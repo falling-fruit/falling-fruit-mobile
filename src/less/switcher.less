@@ -1,0 +1,40 @@
+@switch-height: 30px;
+@switch-width: 60px;
+@switch-handle-width: 26px;
+
+.ng-switcher {
+  display: table-cell;
+  height: @switch-height;
+}
+
+.switcher {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  width: @switch-width;
+  height: @switch-height;
+  background-color: @light-gray;
+  .transition-all(300ms, ease);
+  .border-radius(@switch-height);
+}
+
+.switcher.on {
+  background-color: @orange;
+}
+
+.switcher-circle {
+  position: absolute;
+  height: @switch-handle-width;
+  width: @switch-handle-width;
+  left: 2px;
+  top: 2px;
+  background-color: white;
+  border: solid 1px white;
+  .transition-all(325ms, ease);
+  .transform-translate(0,0,0);
+  .border-radius(@switch-handle-width);
+}
+
+.switcher.on .switcher-circle {
+  .transform-translate(@switch-width - @switch-handle-width - 4px, 0 , 0);
+}
