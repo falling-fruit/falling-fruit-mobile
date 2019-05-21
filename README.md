@@ -1,7 +1,7 @@
 Falling Fruit Mobile
 ====================
 
-This is a Cordova mobile application for Falling Fruit. It is a single-page angular app written in jade, less, and coffee. The backend is accessed over a RESTful JSON API served up at [https://fallingfruit.org/api/](https://fallingfruit.org/api/).
+This is a Cordova mobile application for Falling Fruit. It is a single-page angular app written in pug, less, and coffee. The backend is accessed over a RESTful JSON API served up at [https://fallingfruit.org/api/](https://fallingfruit.org/api/).
 
 ## Directory layout
 
@@ -13,7 +13,7 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
   * (`/plugins`) - Cordova plugins (not version-controlled)
   * `/resources` - same as `/icons` (?)
   * `/src` - Source code for the site
-    * `/jade` - compiles to html
+    * `/pug` - compiles to html
     * `/less` - compiles to css
     * `/coffee` - compiles to javascript
   * `/www` - Code compiled by grunt from `/src` (not version controlled), along with static files (e.g. images, js libraries).
@@ -93,7 +93,7 @@ When naming your key, follow this convention:
 
 `<template name>.<key name>`
 
-For example, if you're adding a key called `map_btn` to the `search.jade` template,
+For example, if you're adding a key called `map_btn` to the `search.pug` template,
 you'll want to name the full key `search.map_btn`.
 If the same word or phrase appears often, you can file it as `glossary.<key name>` to avoid
 making many keys with identical or derived (pluralized, capitalized, etc) values.
@@ -135,7 +135,7 @@ Grunt is used to compile source code in `/src` into `/www`:
 
 ```
 cd bin
-grunt jade coffee less
+grunt pug coffee less
 ```
 
 To start a watcher that automatically recompiles when files are saved:

@@ -74,12 +74,12 @@ module.exports = (grunt)->
         files:
           "../www/js/all.js": [SRC_BASE + "coffee/*.coffee"]
 
-    jade:
+    pug:
       index:
         files: [
           expand: true
           cwd: SRC_BASE
-          src: ['index.jade']
+          src: ['index.pug']
           dest: DEST_BASE
           ext: '.html'
         ]
@@ -89,8 +89,8 @@ module.exports = (grunt)->
       compile:
         files: [
           expand: true
-          cwd: SRC_BASE + "jade/"
-          src: ["*.jade", "**/*.jade", "!partials/*.jade"]
+          cwd: SRC_BASE + "pug/"
+          src: ["*.pug", "**/*.pug", "!partials/*.pug"]
           dest: DEST_BASE + "html/"
           ext: ".html"
         ]
@@ -100,7 +100,7 @@ module.exports = (grunt)->
     notify:
       watch:
         options:
-          message: "Coffee, Less & JADE files compiled"
+          message: "Coffee, Less & Pug files compiled"
 
     watch:
       less:
@@ -111,13 +111,13 @@ module.exports = (grunt)->
         files: [SRC_BASE + "coffee/*.coffee"]
         tasks: "coffee:compile_join"
 
-      jade_index:
-        files: [SRC_BASE + "jade/*.jade", SRC_BASE + "*.jade"]
-        tasks: "jade:index"
+      pug_index:
+        files: [SRC_BASE + "pug/*.pug", SRC_BASE + "*.pug"]
+        tasks: "pug:index"
 
-      jade_compile:
-        files: [SRC_BASE + "jade/*.jade", SRC_BASE + "jade/**/*.jade"]
-        tasks: ["jade:compile", "jade:index"]
+      pug_compile:
+        files: [SRC_BASE + "pug/*.pug", SRC_BASE + "pug/**/*.pug"]
+        tasks: ["pug:compile", "pug:index"]
 
       ios_android_copy:
         files: [DEST_BASE + "*.html", DEST_BASE + "html/**/*.html", DEST_BASE + "html/*.html", DEST_BASE + "css/*.css", DEST_BASE + "js/*.js"]
@@ -130,7 +130,7 @@ module.exports = (grunt)->
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-contrib-less"
   grunt.loadNpmTasks "grunt-contrib-coffee"
-  grunt.loadNpmTasks "grunt-contrib-jade"
+  grunt.loadNpmTasks "grunt-contrib-pug"
   grunt.loadNpmTasks "grunt-contrib-copy"
   grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-notify"
