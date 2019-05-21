@@ -13,7 +13,7 @@
       .auth-input-container.email
         input(type="email", translate-attr="{placeholder: 'auth.email'}", ng-model="login_user.email", overwrite-email, required)
       .auth-input-container.password
-        input(type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="login_user.password", required)
+        input(type="password", ng-attr-type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="login_user.password", required)
         .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
       .auth-btn.orange(ng-click="login()", ng-disabled="SignInForm.$invalid", translate="auth.sign_in")
     //- Forgot password
@@ -30,7 +30,7 @@
       .auth-input-container.email
         input(type="email", translate-attr="{placeholder: 'auth.email'}", ng-model="register_user.email", overwrite-email, required)
       .auth-input-container.password
-        input(type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="register_user.password", minlength="6", required, name = "password")
+        input(type="password", ng-attr-type="{{authStateData.show_passwords ? 'text' : 'password'}}", translate-attr="{placeholder: 'auth.password'}", ng-model="register_user.password", minlength="6", required, name="password")
         .visibility-toggle(ng-class="{visible: authStateData.show_passwords}", ng-click="togglePasswordVisibility()")
       .auth-password-help(ng-show="RegisterForm.password.$error.minlength", translate="auth.password_help")
       .auth-btn.orange(ng-click="register()", ng-disabled="RegisterForm.$invalid", translate="auth.sign_up")
