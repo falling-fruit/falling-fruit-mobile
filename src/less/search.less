@@ -22,9 +22,7 @@
 .current-position {
   background: url("../img/svg/control-me-crosshair.svg") no-repeat center center;
   background-size: 30px;
-  // float: left;
   height: @menu-height;
-  // position: relative;
   width: @menu-height + 5px;
   position: absolute;
   right: 0;
@@ -115,20 +113,12 @@
 
 .search-input-container {
   position: relative;
-  // background-color: @light-gray;
-  // margin: 10px 15px 0 @menu-height + 8px;
   margin: 10px 15px 0 0;
   overflow: hidden;
-  // .border-radius(5px);
 }
 
 .search-input-container input[type=submit] {
   display: none;
-  // .auth-input-container-bg(38px);
-  // background: url('../img/svg/input-search.svg') no-repeat center 45%;
-  // background-size: 20px;
-  // border: none;
-  // outline: none;
 }
 
 .search-input-container input[type=text] {
@@ -138,7 +128,6 @@
   border: none;
   color: @gray;
   font-size: @font-size-large;
-  // padding: 0 0 0 38px;
   padding: 0 0 0 10px;
   height: @menu-height - 20px;
   width: 100%;
@@ -162,7 +151,6 @@
     height: 50%;
     width: 100%;
   }
-
   // Required, otherwise disappears on translation of parent in some browsers:
   // http://stackoverflow.com/questions/21447511/css3-transition-on-absolute-positioned-element-disappears-under-canvas-embed
   .transform-translate(0px, 0px, 0px);
@@ -287,9 +275,6 @@
   position: relative;
   width: @menu-height + 5px;
   transform: rotate(0deg);
-  // position: absolute;
-  // right: 0;
-  // top: 0;
 }
 
 .add-location-controls {
@@ -369,44 +354,3 @@
 .btn-group .active {
   color: white;
 }
-
-// @keyframes pulsate {
-//   from {
-//     transform: scale(0.25) translateZ(0);
-//     opacity: .65;
-//   }
-//   95% {
-//     transform: scale(.75) translateZ(0);
-//     opacity: .1;
-//   }
-//   to {
-//     transform: scale(0.25) translateZ(0);
-//     opacity: 0;
-//   }
-// }
-
-// #map {
-//   div.gmnoprint[title="Current Location"] {
-//     img {
-//       display: none;
-//       z-index: 99999;
-//     }
-//     border: 1pt solid #fff;
-//     height: 50px !important;
-//     margin: 4.5% 0 0 4.5%;
-//     width:  50px !important;
-//     box-shadow: inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f,
-//                     0 0 5px #06f,       0 0 5px #06f,       0 0 5px #06f;
-//     -webkit-border-radius: 25px;
-//     border-radius: 25px;
-//     animation: pulsate 1.5s ease-in-out infinite;
-//   }
-// }
-
-// /* compensate for iPhone and Android devices with high DPI, add iPad media query */
-// @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-//        only screen and (device-width: 768px) {
-//   #map div.gmnoprint[title="Current Location"] {
-//     margin: 2.25% 0 0 2.25%;
-//   }
-// }
