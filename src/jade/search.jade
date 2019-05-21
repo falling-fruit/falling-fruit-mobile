@@ -26,7 +26,7 @@
     .search-footer(ng-swipe-right="toggleSideMenu()")
       .current-position(ng-click="toggle_position_watching()", ng-class="{active: watchPositionID}")
       .btn-group-container
-        .btn-group
+        .btn-group(ng-class="current_view")
           .btn-map(ng-class="current_view == 'map' ? 'active' : ''", ng-click="show_map()", translate="glossary.map")
           .btn-list(ng-class="current_view == 'list' ? 'active' : ''", ng-click="show_list()", translate="glossary.list")
 
