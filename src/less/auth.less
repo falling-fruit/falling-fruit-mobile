@@ -37,20 +37,43 @@
   }
 }
 
+/// Logos ///
+
 .auth-splash-logo {
-  height: 10%;
-  min-height: 100px;
-  padding: 0 2%;
-  background: url('../img/png/pears-header.png') center top no-repeat;
-  background-size: contain;
-  background-origin: content-box;
+  height: 13%;
+  max-width: 500px;
+  margin: 0 auto;
+  background: url('../img/png/pears.png') center bottom no-repeat;
+  background-size: cover;
 }
 
 .auth-default-logo {
   height: 10%;
   min-height: 100px;
-  background: url('../img/svg/logo-full.svg') center bottom no-repeat;
-  background-size: 75% 100%;
+  background: url('../img/svg/logo-full.svg') center top no-repeat;
+  background-size: contain;
+  margin: 0 2%;
+}
+
+div:not(.login) > .auth-default-logo {
+  margin-top: 20px;
+}
+
+/// Language Switcher ///
+
+.auth-language-switcher {
+  select {
+    font-size: 16px;
+    color: @gray;
+    font-family: inherit;
+    margin-right: 10%;
+    float: right;
+  }
+  &::after {
+    clear: both;
+    content: '';
+    display: block;
+  }
 }
 
 /// Inputs ///
@@ -147,24 +170,4 @@
   display: inline-block;
   color: @gray;
   font-size: @font-size-small;
-}
-
-/// Hacks ///
-
-div:not(.login) > .auth-default-logo {
-  margin-top: 20px;
-}
-
-/// Language Switcher ///
-
-.auth-language-switcher {
-  position: absolute;
-  top: 180px;
-  right: 11%;
-  display: inline-block;
-  select {
-    font-size: 16px;
-    color: @gray;
-    font-family: inherit;
-  }
 }
