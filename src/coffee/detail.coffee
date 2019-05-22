@@ -84,8 +84,11 @@ controllers.DetailCtrl = ($scope, $rootScope, $http, $timeout, I18nFactory, mapS
     $scope.location_id = null
     if window.FFApp.map_initialized == true
       center = window.FFApp.map_obj.getCenter()
-      $scope.location.lat = center.lat()
-      $scope.location.lng = center.lng()
+      # Wrap coordinates to [-180, 180], [-90, 90]
+      # https://issuetracker.google.com/issues/35820436
+      wrapped = new google.maps.LatLng(center.lat(), center.lng())
+      $scope.location.lat = wrapped.lat()
+      $scope.location.lng = wrapped.lng()
     else
       console.log "ERROR: Map not initialized!"
 
