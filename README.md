@@ -20,9 +20,7 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
 
 ### Plugins & Platforms
 
-Cordova installs plugins (`/plugins/*`) and builds platforms (`/platforms/*`) based on the content of the root `/config.xml` file, which is why these directories are not version-controlled. The names and versions of required plugins are indicated with `<plugin>` tags. The platform-specific preferences that are not supported natively by Cordova are set using the [`cordova-custom-config`](https://github.com/dpa99c/cordova-custom-config) plugin, which dynamically modifies content in `/platforms/*` from `/config.xml` on calls to `cordova platform add *`, `cordova prepare *`, or `cordova build *`. Note that the installation of missing plugins can sometimes revert changes made by `cordova-custom-config`, so please followup with `cordova prepare *` or `cordova build *` if this occurs.
-
-The `/config.xml` has been thoroughly documented. Please do not run `cordova plugin install * --save` to install a plugin and save it to `/config.xml`, as this will blast away all comments and formatting. Instead, add the plugin to `/config.xml` and run `cordova platform add *`, `cordova prepare *` or `cordova build *` instead.
+Cordova installs plugins (`/plugins/*`) and builds platforms (`/platforms/*`) based on the content of the root `/package.json` file, which is why these directories are not version-controlled. Run `cordova prepare` to generate these directories.
 
 ## Code layout
 
@@ -41,26 +39,27 @@ The `/config.xml` has been thoroughly documented. Please do not run `cordova plu
 
 ### Install node and dependencies
 
-  * Node Version Manager (nvm): [installation instructions](https://github.com/creationix/nvm)
-  * Node (0.12):
+  * Install `nvm` (Node Version Manager): [instructions](https://github.com/creationix/nvm)
+  * Install `npm` (Node Package Manager) (10.15.3):
 
   ```
-  nvm install 0.12
+  nvm install 10.15.3
+  nvm use 10.15.3
   ```
 
-  * Cordova (5.4.1):
+  * Install `cordova` (9.0.0):
 
   ```
-  npm install -g cordova@5.4.1
+  npm install -g cordova@9.0.0
   ```
 
-  * grunt-cli:
+  * Install `grunt-cli`:
 
   ```
   npm install -g grunt-cli
   ```
 
-  * Node packages:
+  * Install Node packages:
 
   ```
   cd bin
@@ -68,7 +67,7 @@ The `/config.xml` has been thoroughly documented. Please do not run `cordova plu
   cd ..
   ```
 
-  * PhraseApp cli:
+  * Install and configure `phraseapp`:
 
   ```
   brew tap phrase/brewed
@@ -80,13 +79,13 @@ Edit `.phraseapp.yml`, and replace `YOUR_ACCESS_TOKEN` with your
 [phraseapp.com](phraseapp.com) access token. You can
 generate an access token [here](https://phraseapp.com/settings/oauth_access_tokens).
 
-### Adding new PhraseApp language translations
+### Add new language translations
 
 Adding a new translation is easy!
 
 *Step 1*: Add the new translation key on [phraseapp.com](phraseapp.com).
 
-Sign in to [phraseapp](http://phraseapp.com), browse to the Falling Fruit (mobile)
+Sign in to [phraseapp.com](http://phraseapp.com), browse to the Falling Fruit (mobile)
 project, select the default locale (English/en), and add a new translation key.
 
 When naming your key, follow this convention:
@@ -100,7 +99,7 @@ making many keys with identical or derived (pluralized, capitalized, etc) values
 
 *Step 2*: Update your translation files.
 
-Provided you've setup the PhraseApp CLI (instructions above), run:
+Provided you've installed `phraseapp` (instructions above), run:
 
 ```
 phraseapp pull
@@ -121,7 +120,7 @@ button(type='button', ng-class='map-btn', translate='search.map_btn')
 Your commit should look something like this example:
 [1f65a50](https://github.com/bion/falling-fruit-mobile/commit/1f65a504ab4d0bfb70e3063d30040174c0071cf1)
 
-#### Managing empty translation keys
+#### Manage empty translation keys
 
 By design, `angular-translate` falls back to the default language for a key only if the key is missing in the desired language, not if the key in the desired language is empty (see [here](https://github.com/angular-translate/angular-translate/issues/815)). To ensure that language fallbacks work as expected, empty translation keys can be filled with the value for that key in the default language using the following default parameters for `phraseapp pull` (included in `.phraseapp.yml.sample`):
 
@@ -152,32 +151,20 @@ grunt devserver
 
 Then browse to [http://localhost:9001](http://localhost:9001).
 
-You'll need to disable CORS warnings in your browser. The easiest way to do that is to install [this chrome plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi/related?hl=en).
+You'll need to disable CORS warnings in your browser. The easiest way to do that is to install [this Chrome plugin](https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi/related?hl=en).
 
 ### Run on Android
 
-To build the app for Android, you'll first need to install the Android SDKs.
+To build the app for Android, follow these [instructions](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html) to install the requirements. You will need to download the following packages:
 
-  * Download and install the latest Android SDK Tools: [download links](http://developer.android.com/sdk/index.html#Other),  [instructions](http://spring.io/guides/gs/android/).
-  * Add the new folder to your path:
+    * SDK Platforms:
+      * Android 9.0 (API 29)
+    * SDK Tools:
+      * Android SDK Build-Tools (29-latest)
+      * Android SDK Platform-Tools (latest)
+      * Android SDK Tools (latest)
 
-  ```
-  export ANDROID_HOME=<installation location>
-  export PATH=$PATH:$ANDROID_HOME/tools
-  ```
-
-  * Run the Android SDK Manager:
-
-  ```
-  android
-  ```
-  *  With it, select and install the following packages:
-
-    * Android SDK Platform-tools (latest)
-    * Android SDK Platform (v22)
-    * Android SDK Build-tools (v22.latest)
-
-You can then initialize the android platform directory (deleting any deprecated one):
+You can then initialize the Android platform directory (deleting any deprecated one):
 
 ```
 cordova platform rm android
@@ -235,7 +222,7 @@ To build and install the app on the device:
 
 ```
 cordova build android
-adb -d install -r platforms/android/build/outputs/apk/android-debug.apk
+adb -d install -r adb -d install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
 If you want to debug with Chrome, go to [chrome://inspect/#devices](chrome://inspect/#devices).
