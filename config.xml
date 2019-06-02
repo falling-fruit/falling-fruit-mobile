@@ -3,6 +3,7 @@
 <widget
   id="org.fallingfruit.app"
   version="0.2.2"
+  android-versionCode="2200"
   android-packageName="uh.fallingfruit.app"
   ios-CFBundleIdentifier="com.fiddlemeragged.fallingfruit"
   defaultlocale="en"
