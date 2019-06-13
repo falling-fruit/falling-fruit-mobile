@@ -155,14 +155,16 @@ You'll need to disable CORS warnings in your browser. The easiest way to do that
 
 ### Run on Android
 
-To build the app for Android, follow these [instructions](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html) to install the requirements. You will need to download the following packages:
+To build the app for Android, follow these [instructions](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html) to install the requirements.
 
-    * SDK Platforms:
-      * Android 9.0 (API 29)
-    * SDK Tools:
-      * Android SDK Build-Tools (29-latest)
-      * Android SDK Platform-Tools (latest)
-      * Android SDK Tools (latest)
+You will need to download the following packages:
+
+  * SDK Platforms:
+    * Android 9.0 (API 29)
+  * SDK Tools:
+    * Android SDK Build-Tools (29-latest)
+    * Android SDK Platform-Tools (latest)
+    * Android SDK Tools (latest)
 
 You can then initialize the Android platform directory (deleting any deprecated one):
 
@@ -222,16 +224,35 @@ To build and install the app on the device:
 
 ```
 cordova build android
-adb -d install -r adb -d install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk
+adb -d install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
 If you want to debug with Chrome, go to [chrome://inspect/#devices](chrome://inspect/#devices).
 
+#### Submit to Google Play
+
+Generate a release build:
+
+```
+cordova build android --release
+```
+
+Then sign and zipalign the build for submission to Google Play using the official keystore:
+
+```
+cd platforms/android/app/build/outputs/apk/release
+jarsigner -keystore KEYSTORE_PATH -storepass KEYSTORE_PASS app-release-unsigned.apk ALIAS_NAME
+mv app-release-unsigned.apk app-release-signed.apk
+zipalign -v 4 app-release-signed.apk app-release.apk
+rm app-release-signed.apk
+cd ../../../../../../../
+```
+
 ### Run on iOS
 
-You can only build iOS applications on a Mac ([instructions](http://cordova.apache.org/docs/en/5.4.0/guide/platforms/ios/index.html)).
+You can only build iOS applications on a Mac. Follow these [instructions](https://cordova.apache.org/docs/en/latest/guide/platforms/ios/index.html) to install the requirements.
 
-If so, you can initialize the ios platform directory (deleting any deprecated one):
+You can then initialize the ios platform directory (deleting any deprecated one):
 
 ```
 cordova platform rm ios
@@ -246,7 +267,7 @@ cordova build ios
 
 #### iOS emulators
 
-Once you have built successfully, open `platforms/ios/FallingFruit.xcodeproj` in Xcode and run the app on the selected emulator.
+Once you have built successfully, open `platforms/ios/Falling\ Fruit.xcworkspace` in Xcode and run the app on the selected emulator.
 
 #### iOS devices
 
