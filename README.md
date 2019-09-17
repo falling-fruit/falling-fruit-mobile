@@ -166,11 +166,10 @@ You will need to download the following packages:
     * Android SDK Platform-Tools (latest)
     * Android SDK Tools (latest)
 
-You can then initialize the Android platform directory (deleting any deprecated one):
+You can then initialize the Android platform following the dependencies defined in `package.json`:
 
 ```
-cordova platform rm android
-cordova platform add android
+cordova prepare android
 ```
 
 And build!
@@ -181,53 +180,51 @@ cordova build android
 
 #### Android emulators
 
-Create the android emulator:
+Follow [these instructions](https://developer.android.com/studio/run/managing-avds.html) for creating and managing Android Virtual Devices (AVD) in Android Studio, or use `avdmanager` from the command line.
+
+List available physical and virtual devices:
 
 ```
-android create avd --name cordova --target 1 --abi default/x86
+cordova run android --list
 ```
 
-On linux, you may also need to setup KVM and/or force 32 bit:
+Build and run the app on the default virtual device:
 
 ```
-sudo apt-get install cpu-checker
-kvm-ok
-sudo modprobe kvm_intel
-export ANDROID_EMULATOR_FORCE_32BIT=true
+cordova run android --emulator
 ```
 
-To use your keyboard, edit `~/.android/avd/cordova.ini`, adding these lines
+or on a specific device:
 
 ```
-hw.keyboard=yes
-hw.dPad=yes
+cordova run android --target=<DEVICE_NAME>
 ```
 
-Finally to build and emulate on android:
-
-```
-cordova emulate android
-```
-
-If you want to debug with Chrome, go to [chrome://inspect/#devices](chrome://inspect/#devices).
+You can debug with Chrome at [chrome://inspect/#devices](chrome://inspect/#devices).
 
 #### Android devices
 
-Plug the device into your computer. Ensure that you've enabled USB Debugging (Developer menu) and that you can install apps from Untrusted sources (Security menu). Then start the adb server and make sure the device is detected:
+First, enable USB Debugging (Developer menu) and allow apps from untrusted sources (Security menu).
+Then plug the device into your computer, start the `adb` (Android Debug Bridge) server, and check that the device is listed:
 
 ```
 sudo adb start-server
-adb devices
+cordova run android --list
 ```
 
-To build and install the app on the device:
+Build and run the app on the default physical device:
 
 ```
-cordova build android
-adb -d install -r platforms/android/app/build/outputs/apk/debug/app-debug.apk
+cordova run android --device
 ```
 
-If you want to debug with Chrome, go to [chrome://inspect/#devices](chrome://inspect/#devices).
+or on a specific device:
+
+```
+cordova run android --target=<DEVICE_NAME>
+```
+
+You can debug with Chrome at [chrome://inspect/#devices](chrome://inspect/#devices).
 
 #### Submit to Google Play
 
@@ -237,7 +234,7 @@ Generate a release build:
 cordova build android --release
 ```
 
-Then sign and zipalign the build for submission to Google Play using the official keystore:
+Then sign and zipalign the build for submission to Google Play using the (secret) application keystore:
 
 ```
 cd platforms/android/app/build/outputs/apk/release
