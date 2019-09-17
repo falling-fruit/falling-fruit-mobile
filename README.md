@@ -6,10 +6,9 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
 # Layout
 
   * `/bin` - grunt and npm configuration
-  * `/icons` - Platform icon and splashscreen graphics. Same as `/resources` (?)
   * (`/platforms`) - Platform configuration and code compiled by Cordova and grunt (not version-controlled)
   * (`/plugins`) - Cordova plugins (not version-controlled)
-  * `/resources` - same as `/icons` (?)
+  * `/resources` - Platform icon and splashscreen graphics
   * `/src` - Source code for the site
     * `/pug` - compiles to html
     * `/less` - compiles to css
@@ -298,11 +297,14 @@ A list of archives should appear automatically. If not:
 
 Click `Distribute App` and follow the instructions to validate the archive and submit it to App Store Connect for review.
 
-# Icons & Splashscreens
-http://ionicframework.com/docs/cli/icon-splashscreen.html
+# Icons & Splash screens
 
-  * ionic cli must be installed like comes with a new app (http://ionicframework.com/getting-started/)
-  * Save an icon.png, icon.psd or icon.ai file within the resources directory at the root of the Cordova project. The icon image's minimum dimensions should be 192x192 px, and should have no rounded corners.
-  * Save a splash.png, splash.psd or splash.ai file within the resources directory at the root of the Cordova project. Splash screen dimensions vary for each platform, device and orientation, so a square source image is required the generate each of various sizes. The source image's minimum dimensions should be 2208x2208 px, and its artwork should be centered within the square, knowing that each generated image will be center cropped into landscape and portrait images. The splash screen's artwork should roughly fit within a center square (1200x1200 px).
-  * Run ionic resources in terminal
-  * Move new images to the icons folder as this seems to be an older version of cordova/ionic
+The icon and splash screen versions required for each platform are automatically generated using [`cordova-res`](https://github.com/ionic-team/cordova-res) from the reference files:
+
+  - `resources/icon.png` (1024 × 1024 px)
+  - `resources/splash.png` (2732 × 2732 px, artwork within center 1485 x 1485 px)
+
+```bash
+npm install -g cordova-res
+cordova res
+```
