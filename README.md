@@ -6,8 +6,6 @@ This is a Cordova mobile application for Falling Fruit. It is a single-page angu
 # Layout
 
   * `/bin` - grunt and npm configuration
-  * `/docs` - extra documentation
-  * `/hooks` - Cordova hooks
   * `/icons` - Platform icon and splashscreen graphics. Same as `/resources` (?)
   * (`/platforms`) - Platform configuration and code compiled by Cordova and grunt (not version-controlled)
   * (`/plugins`) - Cordova plugins (not version-controlled)
