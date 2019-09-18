@@ -64,6 +64,22 @@
     <preference name="SuppressesLongPressGesture" value="false" />
     <preference name="deployment-target" value="9.3.5" />
     <preference name="target-device" value="universal" />
+    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Camera required to take photo</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Photo library required to upload photo</string>
+    </edit-config>
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Location required to show your position on the map</string>
+    </edit-config>
+    <edit-config target="NSLocationAlwaysAndWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Location required in background to track your location</string>
+    </edit-config>
+    <!-- Applies only to < iOS 11 -->
+    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+      <string>Location required in background to track your location</string>
+    </edit-config>
   </platform>
 
   <!-- Icon -->
