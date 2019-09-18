@@ -62,7 +62,7 @@
     <preference name="Suppresses3DTouchGesture" value="false" />
     <preference name="SuppressesIncrementalRendering" value="false" />
     <preference name="SuppressesLongPressGesture" value="false" />
-    <preference name="deployment-target" value="8.0" />
+    <preference name="deployment-target" value="9.3.5" />
     <preference name="target-device" value="universal" />
   </platform>
 
