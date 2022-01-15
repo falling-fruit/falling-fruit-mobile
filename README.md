@@ -33,11 +33,11 @@ Note: Cordova installs plugins (`/plugins/*`) and builds platforms (`/platforms/
 
 Install `nvm` (Node Version Manager): [instructions](https://github.com/creationix/nvm)
 
-Install `npm` (Node Package Manager) (10.15.3):
+Install `npm` (Node Package Manager):
 
 ```bash
-nvm install 10.15.3
-nvm use 10.15.3
+nvm install 16.2.0
+nvm use 16.2.0
 ```
 
 Install `cordova` (9.0.0):
