@@ -1,7 +1,13 @@
+![Status](https://img.shields.io/badge/Status-Inactively%20maintained-yellowgreen.svg?style=flat-square)
+
 Falling Fruit Mobile
 ====================
 
-This is a Cordova mobile application for Falling Fruit. It is a single-page angular app written in pug, less, and coffee. The backend is accessed over a RESTful JSON API served up at [https://fallingfruit.org/api/](https://fallingfruit.org/api/).
+This is a Cordova mobile application for Falling Fruit. It is a single-page angular app written in pug, less, and coffee. The backend is accessed over v0.1 of the Falling Fruit API ([falling-fruit](https://github.com/falling-fruit/falling-fruit), under `/app/controllers/api`).
+
+# Status 
+
+The app is available on [Google Play](https://play.google.com/store/apps/details?id=uh.fallingfruit.app&hl=en&gl=US) and Apple's [App Store](https://apps.apple.com/us/app/falling-fruit/id380859409). However, maintaining both a website and a mobile app that do not share any code proved too time consuming, and we are phasing out this project in favor of a mobile-friendly website ([falling-fruit-web](https://github.com/falling-fruit/falling-fruit-web)).
 
 # Layout
 
