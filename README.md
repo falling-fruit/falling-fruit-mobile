@@ -147,11 +147,12 @@ To build the app for Android, follow these [instructions](https://cordova.apache
 You will need to download the following packages:
 
   * SDK Platforms:
-    * Android 9.0 (API 29)
+    * Android 12L (API Level 32)
   * SDK Tools:
-    * Android SDK Build-Tools (29-latest)
-    * Android SDK Platform-Tools (latest)
-    * Android SDK Tools (latest)
+    * Android SDK Build-Tools [32.0.0]
+    * Android SDK Command-line Tools [latest]
+    * Android SDK Platform-Tools
+    * Android SDK Tools (Obsolete)
 
 You can then initialize the Android platform following the dependencies defined in `package.json`:
 
@@ -191,7 +192,7 @@ You can debug with Chrome at [chrome://inspect/#devices](chrome://inspect/#devic
 
 ### Android devices
 
-First, enable USB Debugging (Developer menu) and allow apps from untrusted sources (Security menu).
+First, enable [USB debugging](https://developer.android.com/studio/debug/dev-options) on your device.
 Then plug the device into your computer, start the `adb` (Android Debug Bridge) server, and check that the device is listed:
 
 ```bash

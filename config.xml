@@ -27,15 +27,15 @@
 
   <!-- Android -->
   <platform name="android">
+    <preference name="AndroidXEnabled" value="true" />
     <preference name="AndroidLaunchMode" value="singleTop"/>
     <preference name="android-maxSdkVersion" value="" />
-    <preference name="android-minSdkVersion" value="19" />
-    <preference name="android-targetSdkVersion" value="27" />
+    <preference name="android-minSdkVersion" value="21" />
+    <preference name="android-targetSdkVersion" value="32" />
     <preference name="Fullscreen" value="false" />
     <preference name="KeepRunning" value="true" />
     <preference name="ShowTitle" value="false" />
     <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:name='MainActivity']" mode="merge">
-      <activity android:theme="@android:style/Theme.DeviceDefault" />
       <activity android:windowSoftInputMode="adjustPan" />
     </edit-config>
     <config-file target="AndroidManifest.xml" parent="/*">
@@ -49,7 +49,6 @@
       <uses-feature android:name="android.hardware.camera" android:required="false" />
       <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
       <uses-feature android:name="android.hardware.location" android:required="false" />
-      <uses-feature android:name="android.hardware.location.gps" android:required="false" />
       <uses-feature android:name="android.hardware.location.network" android:required="false" />
     </config-file>
   </platform>
@@ -120,31 +119,22 @@
     <icon height="1024" src="resources/ios/icon/icon-1024.png" width="1024" />
   </platform>
   <platform name="android">
-    <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
-    <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
-    <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
-    <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png" />
-    <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png" />
-    <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png" />
+    <resource-file src="resources/android/colors.xml" target="/app/src/main/res/values/colors-custom.xml" />
+    <icon density="ldpi" background="@color/background" foreground="resources/android/icon.xml" src="resources/android/icon-ldpi.png" />
+    <icon density="mdpi" background="@color/background" foreground="resources/android/icon.xml" src="resources/android/icon-mdpi.png" />
+    <icon density="hdpi" background="@color/background" foreground="resources/android/icon.xml" src="resources/android/icon-hdpi.png" />
+    <icon density="xhdpi" background="@color/background" foreground="resources/android/icon.xml" src="resources/android/icon-xhdpi.png" />
+    <icon density="xxhdpi" background="@color/background" foreground="resources/android/icon.xml" src="resources/android/icon-xxhdpi.png" />
+    <icon density="xxxhdpi" background="@color/background" foreground="resources/android/icon.xml" src="resources/android/icon-xxxhdpi.png" />
   </platform>
 
   <!-- Splashcreen -->
   <!-- https://github.com/apache/cordova-plugin-splashscreen -->
-  <preference name="AutoHideSplashScreen" value="true" />
   <preference name="SplashScreenDelay" value="2000" />
-  <preference name="FadeSplashScreen" value="true" />
-  <preference name="FadeSplashScreenDuration" value="500" />
   <preference name="ShowSplashScreenSpinner" value="false" />
   <platform name="android">
-    <preference name="SplashMaintainAspectRatio" value="true" />
-    <preference name="SplashShowOnlyFirstTime" value="true" />
-    <preference name="SplashScreenSpinnerColor" value="" />
-    <splash density="port-ldpi" src="resources/android/splash/drawable-port-ldpi-screen.png" />
-    <splash density="port-mdpi" src="resources/android/splash/drawable-port-mdpi-screen.png" />
-    <splash density="port-hdpi" src="resources/android/splash/drawable-port-hdpi-screen.png" />
-    <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
-    <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
-    <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="resources/android/splash.xml" />
+    <preference name="AndroidWindowSplashScreenBackground" value="#ffffff" />
   </platform>
   <platform name="ios">
     <splash height="1136" width="640" src="resources/ios/splash/Default-568h@2x~iphone.png" />
@@ -169,7 +159,6 @@
   </platform>
 
   <!-- Whitelist -->
-  <!-- https://github.com/apache/cordova-plugin-whitelist -->
   <allow-navigation href="*://*.fallingfruit.org/*" />
   <allow-intent href="*://*.fallingfruit.org/*" />
   <access origin="*" />
