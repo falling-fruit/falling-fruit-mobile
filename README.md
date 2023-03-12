@@ -217,21 +217,10 @@ You can debug with Chrome at [chrome://inspect/#devices](chrome://inspect/#devic
 ### Submit to Google Play
 _Requires access to the (secret) application keystore._
 
-Generate a release build:
+Build and test the signed APK, then upload it to Google Play:
 
 ```bash
-cordova build android --release
-```
-
-Then sign and zipalign the build for submission to Google Play using the application keystore:
-
-```bash
-cd platforms/android/app/build/outputs/apk/release
-jarsigner -keystore KEYSTORE_PATH -storepass KEYSTORE_PASS app-release-unsigned.apk ALIAS_NAME
-mv app-release-unsigned.apk app-release-signed.apk
-zipalign -v 4 app-release-signed.apk app-release.apk
-rm app-release-signed.apk
-cd ../../../../../../../
+cordova run android --device --release -- --packageType=bundle --alias=alias_name --keystore=KEYSTORE_PATH --storePassword=PASSWORD --password=PASSWORD
 ```
 
 ## iOS
