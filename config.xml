@@ -2,8 +2,8 @@
 <!-- https://cordova.apache.org/docs/en/latest/config_ref/index.html -->
 <widget
   id="org.fallingfruit.app"
-  version="0.2.3"
-  android-versionCode="2300"
+  version="0.2.4"
+  android-versionCode="2400"
   android-packageName="uh.fallingfruit.app"
   ios-CFBundleIdentifier="com.fiddlemeragged.fallingfruit"
   defaultlocale="en"
