@@ -220,7 +220,7 @@ _Requires access to the (secret) application keystore._
 Build and test the signed APK, then upload it to Google Play:
 
 ```bash
-cordova run android --device --release -- --packageType=bundle --alias=alias_name --keystore=KEYSTORE_PATH --storePassword=PASSWORD --password=PASSWORD
+cordova run android --device --release -- --packageType=apk --alias=alias_name --keystore=KEYSTORE_PATH --storePassword=PASSWORD --password=PASSWORD
 ```
 
 ## iOS
