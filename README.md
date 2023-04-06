@@ -46,10 +46,10 @@ nvm install 16.2.0
 nvm use 16.2.0
 ```
 
-Install `cordova` (9.0.0):
+Install `cordova` (11.1.0):
 
 ```bash
-npm install -g cordova@9.0.0
+npm install -g cordova@11.1.0
 ```
 
 Install `grunt-cli`:
