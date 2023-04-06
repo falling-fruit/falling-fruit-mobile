@@ -12,17 +12,19 @@
       "cordova-plugin-device-orientation": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   },
   "dependencies": {
     "cordova-android": "^11.0.0",
-    "cordova-ios": "^5.0.1",
     "cordova-plugin-camera": "^6.0.0",
     "cordova-plugin-device-orientation": "^2.0.1",
     "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-statusbar": "^2.4.3",
     "ionic-plugin-keyboard": "^2.2.1"
+  },
+  "devDependencies": {
+    "cordova-ios": "^6.2.0"
   }
 }
