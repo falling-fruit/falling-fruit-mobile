@@ -142,17 +142,16 @@ See commit [1f65a50](https://github.com/bion/falling-fruit-mobile/commit/1f65a50
 
 ## Android
 
-To build the app for Android, follow these [instructions](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html) to install the requirements.
+To build the app for Android, follow these [instructions](https://cordova.apache.org/announcements/2024/05/23/cordova-android-13.0.0.html) to install the requirements.
 
 You will need to download the following packages:
 
   * SDK Platforms:
-    * Android 12L (API Level 32)
+    * Android 14 (API Level 34)
   * SDK Tools:
-    * Android SDK Build-Tools [32.0.0]
+    * Android SDK Build-Tools [34.0.0]
     * Android SDK Command-line Tools [latest]
-    * Android SDK Platform-Tools
-    * Android SDK Tools (Obsolete)
+    * Android SDK Platform-Tools [latest]
 
 You can then initialize the Android platform following the dependencies defined in `package.json`:
 
@@ -220,7 +219,13 @@ _Requires access to the (secret) application keystore._
 Build and test the signed APK, then upload it to Google Play:
 
 ```bash
-cordova run android --device --release -- --packageType=apk --alias=alias_name --keystore=KEYSTORE_PATH --storePassword=PASSWORD --password=PASSWORD
+cordova run android --device --release -- --packageType=apk --alias=alias_name --keystore=PATH/fallingfruit.keystore --storePassword=PASSWORD --password=PASSWORD
+```
+
+Restrict the Google Maps API key used by the app to the app itself using the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
+
+```bash
+keytool -list -v -keystore PATH/fallingfruit.keystore -alias alias_name --storepass PASSWORD
 ```
 
 ## iOS

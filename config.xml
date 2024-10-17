@@ -2,8 +2,8 @@
 <!-- https://cordova.apache.org/docs/en/latest/config_ref/index.html -->
 <widget
   id="org.fallingfruit.app"
-  version="0.2.5"
-  android-versionCode="2500"
+  version="0.2.6"
+  android-versionCode="2600"
   android-packageName="uh.fallingfruit.app"
   ios-CFBundleIdentifier="com.fiddlemeragged.fallingfruit"
   defaultlocale="en"
@@ -31,7 +31,7 @@
     <preference name="AndroidLaunchMode" value="singleTop"/>
     <preference name="android-maxSdkVersion" value="" />
     <preference name="android-minSdkVersion" value="21" />
-    <preference name="android-targetSdkVersion" value="32" />
+    <preference name="android-targetSdkVersion" value="34" />
     <preference name="Fullscreen" value="false" />
     <preference name="KeepRunning" value="true" />
     <preference name="ShowTitle" value="false" />
