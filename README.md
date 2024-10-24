@@ -97,9 +97,7 @@ Translations are managed via the [Phrase.com](https://phrase.com) project [Falli
 
 ## Install dependencies
 
-First, install the `phraseapp` command line interface ([instructions](https://help.phrase.com/en/articles/2185220-installation)).
-
-Next, configure `phraseapp`, starting by copying the sample file:
+First, install the [Phrase CLI](https://support.phrase.com/hc/en-us/articles/5784093863964-CLI-Installation-Strings-). Next, configure `phrase`, starting by copying the sample file:
 
 ```bash
 cp .phraseapp.yml.sample .phraseapp.yml
@@ -121,7 +119,7 @@ making many keys with identical or derived (pluralized, capitalized, etc) values
 Then, update your local translation files (in `www/locales/*.json`):
 
 ```bash
-phraseapp pull
+phrase pull
 ```
 
 Finally, insert the translation key into the template. For example, instead of:
