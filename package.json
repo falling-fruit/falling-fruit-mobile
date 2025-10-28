@@ -24,7 +24,7 @@
     "ionic-plugin-keyboard": "^2.2.1"
   },
   "devDependencies": {
-    "cordova-android": "^13.0.0",
+    "cordova-android": "^14.0.1",
     "cordova-ios": "^6.2.0"
   }
 }

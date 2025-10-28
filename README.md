@@ -42,14 +42,14 @@ Install `nvm` (Node Version Manager): [instructions](https://github.com/creation
 Install `npm` (Node Package Manager):
 
 ```bash
-nvm install 16.2.0
-nvm use 16.2.0
+nvm install 22.16.0
+nvm use 22.16.0
 ```
 
-Install `cordova` (11.1.0):
+Install `cordova` (12.0.0):
 
 ```bash
-npm install -g cordova@11.1.0
+npm install -g cordova@12.0.0
 ```
 
 Install `grunt-cli`:
@@ -140,14 +140,14 @@ See commit [1f65a50](https://github.com/bion/falling-fruit-mobile/commit/1f65a50
 
 ## Android
 
-To build the app for Android, follow these [instructions](https://cordova.apache.org/announcements/2024/05/23/cordova-android-13.0.0.html) to install the requirements.
+To build the app for Android, follow these [instructions](https://cordova.apache.org/announcements/2025/03/26/cordova-android-14.0.0.html) to install the requirements.
 
 You will need to download the following packages:
 
   * SDK Platforms:
-    * Android 14 (API Level 34)
+    * Android 15 (API Level 35)
   * SDK Tools:
-    * Android SDK Build-Tools [34.0.0]
+    * Android SDK Build-Tools [35.0.0]
     * Android SDK Command-line Tools [latest]
     * Android SDK Platform-Tools [latest]
 
